@@ -9,6 +9,10 @@ $green: #006d2e;
         height: auto;
         display: block;
         margin: auto;
+
+        @media (width <= 700px) {
+            width: 85%;
+        }
     }
 
     h1,p{
@@ -44,6 +48,10 @@ $green: #006d2e;
             background: transparent;
             font-size: 0.8rem;
 
+            @media (width <= 1500px) {
+                width: 75px;
+            }
+
             @media (width <= 700px) {
                 width: 100px;
             }
@@ -71,6 +79,10 @@ $green: #006d2e;
     .Form{
         width: 93%;
         margin: auto;
+
+        @media (width <= 700px) {
+            width: 85%;
+        }
 
         label, a{
             font-size: 0.9rem;
