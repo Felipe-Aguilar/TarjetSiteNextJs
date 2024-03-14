@@ -231,6 +231,18 @@ form a{
   font-size: 0.8rem;
 }
 
+form .error{
+  display: block;
+  > * + *{
+    margin-top: 10px;
+  }
+}
+
+form .error p{
+  color: #d90011;
+  
+}
+
 ::-webkit-scrollbar {
   width: 9px;
   background: (242, 242, 242, 0.2);

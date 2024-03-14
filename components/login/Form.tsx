@@ -7,21 +7,27 @@ const FormLogin = () => {
 
     const [view, setView] = useState<boolean>(false);
     const [accept, setAccept] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<Set<string>>(new Set());
 
     // * Email
     const [email, setEmail] = useState<string>('');
 
-    const onChangeEmail = (email:string) => {
-        setEmail(email);
+    const onBlurEmail = () => {
+        const errorMessage = 'Introduce una dirección de correo válida';
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
-            setError('Introduce una dirección de correo válida');
+
+            if (!error.has(errorMessage)) {
+                // const updateError = new Set([...error, errorMessage]);
+                // setError(updateError);
+            }
         }else{
-            setError('');
+            // const updateError = error.filter(message => message != 'Introduce una dirección de correo válida');
+            // setError(updateError);
         }
     }
+
 
     return ( 
         <form>
@@ -29,7 +35,8 @@ const FormLogin = () => {
                 type="email" 
                 placeholder="Correo electrónico"
                 value={email}
-                onChange={(e)=>onChangeEmail(e.target.value)}
+                onChange={(e)=>setEmail(e.target.value.trim())}
+                onBlur={onBlurEmail}
             />
 
             <div>
@@ -44,6 +51,14 @@ const FormLogin = () => {
             <button className="link">
                 ¿Olvidaste tu contraseña?
             </button>
+
+            { error &&
+                <div className="error">
+                    {/* { error.map((e)=>(
+                        <p key={e}>{e}</p>
+                    ))} */}
+                </div>
+            }
 
             <hr style={{borderColor: '#000', marginBottom: '16px'}}/>
 
