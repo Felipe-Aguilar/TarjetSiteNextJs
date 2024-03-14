@@ -67,7 +67,7 @@ const FormLogin = () => {
     const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (error.length > 0) {
+        if (error.length > 0 || !email || !password) {
             setNotSubmit('Falta uno o más campos por llenar');
             return; 
         }
@@ -99,7 +99,7 @@ const FormLogin = () => {
     const [otpSend, setOtpSend] = useState<boolean>(false);
 
     const registerUser = async () => {
-        if (error.length > 0) {
+        if (error.length > 0 || !email || !password) {
             setNotSubmit('Falta uno o más campos por llenar');
             return;
         }

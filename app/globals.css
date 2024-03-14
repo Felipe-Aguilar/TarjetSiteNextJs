@@ -349,8 +349,8 @@ form .twoButtons div{
   src: url('/fonts/IvyMode-Regular.ttf') format('truetype');
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
-}
+} */
