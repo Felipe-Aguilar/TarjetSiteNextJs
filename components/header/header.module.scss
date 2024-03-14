@@ -1,0 +1,102 @@
+.Header{
+    width: 100%;
+    padding: 15px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(3px);
+    background-color: rgba(234, 237, 240, 0.8);
+    border-bottom: 1px solid rgb(223, 227, 231);
+    position: sticky;
+    top: 0;
+
+    @media (width <= 700px) {
+        padding: 13px 4%;
+
+        img{
+            width: 105px;
+        }
+    }
+
+    img{
+        width: 110px;
+        height: auto;
+    }
+
+    nav, .LinkDesk{
+        display: flex;
+        align-items: center;
+        gap: 25px;
+    }
+
+    nav{
+        color: rgb(72, 101, 124);
+
+        @media (width <= 1100px) {
+            gap: 15px;
+            
+            .LinkDesk{
+                display: none;
+            }
+        }
+
+        svg{
+            font-size: 1.5rem;
+        }
+
+        img{
+            width: 28px;
+
+            @media (width <= 700px) {
+                width: 30px;
+            }
+        }
+
+        .MenuMobile{
+            
+            button{
+                background: transparent;
+                border: transparent;
+                text-transform: uppercase;
+                font-size: inherit;
+                border-bottom: 1px solid #000;
+                padding: 0 5px 5px 5px;
+            }
+
+            @media (width >= 1100px) {
+                display: none;
+            }
+
+            .Container{
+                position: absolute;
+                width: 100%;
+                height: calc(100vh - 60px);
+                overflow: hidden;
+                top: 60px;
+                left: 0;
+                padding: 45px 20px;
+                background: #fff;
+
+                nav{
+                    display: flex;
+                    align-items: start;
+                    flex-direction: column;
+
+                    > * + *{
+                        margin-top: 20px;
+                    }
+                }
+
+                .Social{
+                    display: flex;
+                    justify-content: center;
+                    gap: 15px;
+
+                    svg{
+                        font-size: 2rem;
+                    }
+                }
+            }
+        }
+    }
+}

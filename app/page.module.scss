@@ -1,0 +1,35 @@
+.main{
+  min-height: 100vh;
+}
+
+.NotFound{
+  min-height: 92vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  img{
+    width: 400px;
+  }
+
+  h1{
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  a{
+    text-decoration: underline;
+  }
+
+  @media (width <= 700px) {
+    img{
+      width: 70%;
+    }
+
+    h1{
+      text-align: center;
+    }
+  }
+}
