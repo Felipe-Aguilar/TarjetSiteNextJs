@@ -66,6 +66,7 @@ const OtpCode = ( { email, password, close }:Props ) => {
 
             setTimeout(()=>{
                 setSuccess(true);
+                localStorage.setItem('SessionData', JSON.stringify(data));
 
                 setTimeout(()=>{
                     router.push(`/mi-perfil/${btoa(data.Token)}`);
