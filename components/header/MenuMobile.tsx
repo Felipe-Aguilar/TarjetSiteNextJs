@@ -47,7 +47,7 @@ const MenuMobile = (  ) => {
                 { open && (
                     <motion.div {...animation} className={style.Container}>
                         <nav>
-                            <NavLinks />
+                            <NavLinks close={()=>setOpen(false)}/>
                         </nav>
 
                         <hr/>

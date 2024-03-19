@@ -2,9 +2,7 @@ import userData from "@/apis/userData";
 
 const MiPerfil = async () => {
 
-    const data = await userData();
-
-    console.log(data);
+    // const data = await userData();
 
     return ( 
         <div className="green">

@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+interface Props {
+    close?: () => void;
+}
+
 const Navigation = [
     {path: 'https://shop.tarjet.mx/', text: 'Tienda'},
     {path: '/empresas', text: 'Empresas'},
@@ -9,11 +13,11 @@ const Navigation = [
     {path: '/login', text: 'Mi tarjetero'},
 ]
 
-const NavLinks = () => {
+const NavLinks = ( {close} : Props ) => {
     return ( 
         <>
             { Navigation.map((link)=>(
-                <Link key={link.path} href={link.path}>
+                <Link key={link.path} href={link.path} onClick={close}>
                     {link.text}
                 </Link>
             ))}
