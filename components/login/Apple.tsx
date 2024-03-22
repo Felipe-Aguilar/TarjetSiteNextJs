@@ -11,6 +11,8 @@ const Apple = () => {
 
     const appleLogin = async ( response:any ) => {
 
+        console.log(response);
+
         const idToken = await response.authorization.id_token;
         const decodedToken = jwtDecode(idToken);
 
@@ -71,7 +73,7 @@ const Apple = () => {
             responseType={"code"} 
             responseMode={"query"}  
             callback={appleLogin}
-            // usePopup={true}
+            usePopup={true}
             render={(props) => (
                 <button onClick={props.onClick} disabled={props.disabled}>
                     <Image 
