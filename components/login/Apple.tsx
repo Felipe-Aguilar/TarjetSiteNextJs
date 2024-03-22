@@ -66,7 +66,7 @@ const Apple = () => {
             responseMode={"query"}  
             callback={appleLogin}
             // onError={(error:AppleLoginProps) => console.error(error)}
-            // usePopup={true}
+            usePopup={true}
             render={(props) => (
                 <button onClick={props.onClick} disabled={props.disabled}>
                     <Image 
