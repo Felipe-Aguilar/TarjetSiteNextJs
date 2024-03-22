@@ -9,7 +9,7 @@ const Apple = () => {
 
     const router = useRouter();
 
-    const appleLogin = async ( response:any ) => {
+    const appleLogin = async ( response? : any  ) => {
 
         console.log(response);
 
@@ -68,7 +68,7 @@ const Apple = () => {
         <AppleLogin 
             clientId="site.tarjet.client"
             redirectURI="https://tarjet.site"
-            // state='origin:web'
+            state='origin:web'
             scope = "name email"
             responseType={"code"} 
             responseMode={"query"}  
