@@ -14,6 +14,8 @@ const Apple = () => {
         const idToken = await response.authorization.id_token;
         const decodedToken = jwtDecode(idToken);
 
+        console.log(idToken);
+
         const responseCode = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ValidarCodigoOTP', {
             method: 'POST',
             mode: 'cors',
@@ -31,6 +33,8 @@ const Apple = () => {
         });
 
         const data = await responseCode.json();
+
+        console.log(data);
 
         if (data.Token) {
             localStorage.setItem('SessionData', JSON.stringify(data));
@@ -51,6 +55,8 @@ const Apple = () => {
         });
 
         const dataLogin = await responseLogin.json();
+
+        console.log(dataLogin);
 
         localStorage.setItem('SessionData', JSON.stringify(dataLogin));
         router.push(`/${btoa(dataLogin.Token)}`);
