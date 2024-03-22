@@ -9,7 +9,7 @@ const Navigation = [
     {path: '/empresas', text: 'Empresas'},
     {path: 'https://tarjet.mx/#/hazte-premium', text: 'Planes'},
     {path: 'https://tarjet.mx/#/acerca-tarjet', text: 'Acerca de Tarjet'},
-    {path: '/directorio', text: 'Directorio Tarjet'},
+    {path: '/directorio-tarjet', text: 'Directorio Tarjet'},
     {path: '/login', text: 'Mi tarjetero'},
 ]
 

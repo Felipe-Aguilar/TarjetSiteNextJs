@@ -1,5 +1,9 @@
 .Perfil{
 
+    @media (width <= 700px) {
+        padding: 0 10px;
+    }
+
     .HeaderUser, .Buttons{
         display: flex;
         align-items: center;

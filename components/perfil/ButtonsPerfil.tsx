@@ -15,6 +15,8 @@ const animation = {
 
 const ButtonsPerfil = () => {
 
+    // TODO: Pendiente la animación y open de la información, también de el height del bloque de info para mobile
+
     const [open, setOpen] = useState<boolean>();
 
     const buttonsInfo = [
