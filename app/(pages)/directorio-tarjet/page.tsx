@@ -20,7 +20,7 @@ const Directoy = async () => {
 
     return ( 
         <div className={`body ${style.Directory}`}>
-            <TopUsers data={data.ListTarjets}/>
+            <TopUsers data={data}/>
         </div>
     );
 }

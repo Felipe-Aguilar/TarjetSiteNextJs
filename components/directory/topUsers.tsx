@@ -1,6 +1,9 @@
 'use client';
 
 import { TopUsersResponse, ListTarjet } from "@/interfaces/topUsers-interface";
+import Image from "next/image";
+import Link from "next/link";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import Slider from 'react-slick';
 
 type Props = {
@@ -9,7 +12,9 @@ type Props = {
     };
 }
 
-const TopUsers = (data:Props) => {
+const TopUsers = ({data}:Props) => {
+
+    // TODO: Modificar estilos según correspondan
 
     const settings = {
         dots: true,
@@ -21,12 +26,12 @@ const TopUsers = (data:Props) => {
         slidesToScroll: 3,
         prevArrow: (
             <div className='custom-arrow custom-prev-arrow'>
-                <i className="bi bi-chevron-left" ></i>
+                <BsChevronLeft />
             </div>
         ),
         nextArrow: (
             <div className='custom-arrow custom-prev-arrow'>
-                <i className="bi bi-chevron-right" ></i>
+                <BsChevronRight />
             </div>
         ),
         responsive: [
@@ -42,17 +47,37 @@ const TopUsers = (data:Props) => {
         ]
     }
 
+    if (!data || !data.ListTarjets) {
+        return null; // Si alguno está indefinido, retornamos null para no renderizar nada
+    }
+
     return ( 
         <div>
             <h1>Nuevos usuarios tarjet</h1>
 
             <Slider {...settings}>
-                {data.ListTarjets.map((tarjet: ListTarjet)=>(
-                    <div>
-
-                    </div>
-                ))}
+                {data.ListTarjets.map((user)=>{
+                    if (user.PublicPriva === 0) {
+                        if (user.RegistroTarjet) {
+                            return (
+                                <div key={user.IdUsuario}>
+                                    <Link href={`/st/${btoa(user.Token)}`}>
+                                        <Image 
+                                            src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${user.FondoF}`}
+                                            alt="Tarjeta de presentación"
+                                            width={300}
+                                            height={300}
+                                            priority={false}
+                                        />
+                                    </Link>
+                                </div>
+                            )
+                        }
+                    }
+                })}
             </Slider>
+            
+            <span>Da click sobre la imagen para ver su tarjeta digital</span>
         </div>
     );
 }

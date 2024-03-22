@@ -349,6 +349,17 @@ form .twoButtons div{
   src: url('/fonts/IvyMode-Regular.ttf') format('truetype');
 }
 
+
+.slick-prev:before, .slick-next:before{
+  display: none;
+}
+
+.slick-prev svg, .slick-next svg{
+  z-index: 1;
+  color: #003f81;
+  font-size: 1.5rem;
+}
+
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
