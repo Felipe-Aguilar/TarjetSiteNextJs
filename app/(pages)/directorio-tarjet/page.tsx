@@ -1,5 +1,6 @@
-import TopUsers from '@/components/directory/topUsers';
 import style from './directory.module.scss';
+import TopUsers from '@/components/directory/topUsers';
+import Search from '@/components/directory/Search';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,16 +12,23 @@ export const metadata = {
 
 const Directoy = async () => {
 
-    const response = await fetch('https://souvenir-site.com/WebTarjet/APIDirectorio/ObtenerTopTarjets',{
+    const responseCategories = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaCategorias?Nivel1=&Nivel2=', {
         method: 'GET',
         mode: 'cors',
     });
+    const dataCategories = await responseCategories.json();
 
-    const data = await response.json();
+
+    const responseTop = await fetch('https://souvenir-site.com/WebTarjet/APIDirectorio/ObtenerTopTarjets',{
+        method: 'GET',
+        mode: 'cors',
+    });
+    const dataTop = await responseTop.json();
 
     return ( 
         <div className={`body ${style.Directory}`}>
-            <TopUsers data={data}/>
+            <Search categories={dataCategories}/>
+            <TopUsers data={dataTop}/>
         </div>
     );
 }

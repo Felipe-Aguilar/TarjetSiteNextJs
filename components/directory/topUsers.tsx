@@ -1,6 +1,6 @@
 'use client';
 
-import { TopUsersResponse, ListTarjet } from "@/interfaces/topUsers-interface";
+import { ListTarjet } from "@/interfaces/topUsers-interface";
 import Image from "next/image";
 import Link from "next/link";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
