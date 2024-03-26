@@ -8,8 +8,9 @@ import { useEffect, useState } from 'react';
 import { BsSearch, BsXLg } from 'react-icons/bs';
 import { SDTCategoria } from '@/interfaces/categoriesDirectory-infertace';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ResultUserInterface } from '@/interfaces/resultUser-interface';
+import { ResultUserInterface, ListTarjet } from '@/interfaces/resultUser-interface';
 import Link from 'next/link';
+import searchByName from '@/api/searchByName';
 
 type Props = {
     categories: {
@@ -99,12 +100,15 @@ const Search = ( {categories}:Props ) => {
     const onSearchName = async (name:string) => {
         setName(name);
 
-        const response = await fetch(`https://souvenir-site.com/WebTarjet/APIDirectorio/BuscaXDesc?Actividad=&Nombre=${name}&Latitud=${position?.coords.latitude}&Longitud=${position?.coords.longitude}&Radio=3`);
-
-        const data = await response.json();
+        const data = await searchByName(name, position?.coords.latitude, position?.coords.longitude);
 
         setResults(data);
         setSearch(true);
+
+        if (name.length == 0) {
+            setResults(undefined);
+            setSearch(false);
+        }
     }
 
     const deleteName = () => {
@@ -182,13 +186,13 @@ const Search = ( {categories}:Props ) => {
                 <AnimatePresence>
                     {search &&
                         <motion.div {...animation} className={style.ResultsSearch}>
-                            <button className={style.Close}>
+                            <button className={style.Close} onClick={()=>setSearch(false)}>
                                 <BsXLg />
                                 Cerrar ventana de resultados
                             </button>
 
                             <div className={style.ResultContainer}>
-                                {results?.ListTarjets.map((user)=>(
+                                { results?.ListTarjets.map((user)=>(
                                     <div key={user.IdUsuario} className='userResult'>
                                         <div className='header'>
                                             <Image 
