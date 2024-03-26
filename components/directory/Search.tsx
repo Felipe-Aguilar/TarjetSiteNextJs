@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SDTCategoria } from '@/interfaces/categoriesDirectory-infertace';
 import { ResultUserInterface } from '@/interfaces/resultUser-interface';
-import { BsSearch, BsXLg } from 'react-icons/bs';
+import { BsChevronLeft, BsChevronRight, BsSearch, BsXLg } from 'react-icons/bs';
 import { json } from 'stream/consumers';
 import { OptionCategoriesInterface } from '@/interfaces/optionCategories-interface';
 
@@ -30,6 +30,16 @@ const Search = ( {categories}:Props ) => {
         slidesToShow: 7,
         slidesToScroll: 7,
         initialSlide: 0,
+        prevArrow: (
+            <div className='custom-arrow custom-prev-arrow'>
+                <BsChevronLeft />
+            </div>
+        ),
+        nextArrow: (
+            <div className='custom-arrow custom-prev-arrow'>
+                <BsChevronRight />
+            </div>
+        ),
         responsive: [
             {
                 breakpoint: 1700,
@@ -162,37 +172,39 @@ const Search = ( {categories}:Props ) => {
     return ( 
         <div className={style.Search}>
             <div className={style.HeaderSearch}>
-                <div className={style.SwitchToggle}>
-                    <span className={style.Text}>Mostrar únicamente usuarios cercanos 3km</span>
+                <div className={style.Contain}>
+                    <div className={style.SwitchToggle}>
+                        <span className={style.Text}>Mostrar únicamente usuarios cercanos 3km</span>
 
-                    <div className={style.container}>
+                        <div className={style.container}>
+                            <input 
+                                type="checkbox" 
+                                className={style.checkbox} 
+                                id="checkbox" 
+                                checked={range}
+                                onChange={()=>setRange(!range)}
+                            />
+                            <label className={style.switch} htmlFor="checkbox">
+                                <span className={style.slider}></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div className={style.SearchContainer}>
+                        <div className={style.Search}>
+                            <BsSearch />
+                        </div>
                         <input 
-                            type="checkbox" 
-                            className={style.checkbox} 
-                            id="checkbox" 
-                            checked={range}
-                            onChange={()=>setRange(!range)}
+                            type="text" 
+                            placeholder='Nombre, actividad ó usuario tarjet'
+                            value={name}
+                            onChange={(e)=>onSearchName(e.target.value)}
                         />
-                        <label className={style.switch} htmlFor="checkbox">
-                            <span className={style.slider}></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div className={style.SearchContainer}>
-                    <div className={style.Search}>
-                        <BsSearch />
-                    </div>
-                    <input 
-                        type="text" 
-                        placeholder='Nombre, actividad ó usuario tarjet'
-                        value={name}
-                        onChange={(e)=>onSearchName(e.target.value)}
-                    />
-                    <div className={style.Delete}>
-                        <button onClick={deleteName}>
-                            <BsXLg />
-                        </button>
+                        <div className={style.Delete}>
+                            <button onClick={deleteName}>
+                                <BsXLg />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

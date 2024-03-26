@@ -1,11 +1,15 @@
 .Directory{
-    padding: 20px;
+    padding: 0px;
 
-    h1{
-        text-align: center;
-        font-size: 1.3rem;
-        font-weight: 600;
+    @media (width <= 700px) {
+        padding: 0 2%;
     }
+
+    // h1{
+    //     text-align: center;
+    //     font-size: 1.3rem;
+    //     font-weight: 600;
+    // }
 
     // img{
     //     width: 80%;
