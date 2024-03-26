@@ -7,6 +7,9 @@ import style from './search.module.scss';
 import { useEffect, useState } from 'react';
 import { BsSearch, BsXLg } from 'react-icons/bs';
 import { SDTCategoria } from '@/interfaces/categoriesDirectory-infertace';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ResultUserInterface } from '@/interfaces/resultUser-interface';
+import Link from 'next/link';
 
 type Props = {
     categories: {
@@ -68,6 +71,12 @@ const Search = ( {categories}:Props ) => {
         ]
     };
 
+    const animation = {
+        initial: {scale: 0},
+        animate: {scale: 1},
+        exti: {scale: 0}
+    }
+
     // *Pregunta la posición 
     const [position, setPosition] = useState<GeolocationPosition>();
 
@@ -80,7 +89,7 @@ const Search = ( {categories}:Props ) => {
     },[]);
 
 
-    const [results, setResults] = useState<[]>([]);
+    const [results, setResults] = useState<ResultUserInterface>();
     const [search, setSearch] = useState<boolean>(false);
     const [range, setRange] = useState<boolean>(false);
 
@@ -90,13 +99,12 @@ const Search = ( {categories}:Props ) => {
     const onSearchName = async (name:string) => {
         setName(name);
 
-        if (range) {
-            const response = await fetch(`https://souvenir-site.com/WebTarjet/APIDirectorio/BuscaXDesc?Actividad=&Nombre=${name}&Latitud=${position?.coords.latitude}&Longitud=${position?.coords.longitude}&Radio=3`);
+        const response = await fetch(`https://souvenir-site.com/WebTarjet/APIDirectorio/BuscaXDesc?Actividad=&Nombre=${name}&Latitud=${position?.coords.latitude}&Longitud=${position?.coords.longitude}&Radio=3`);
 
-            const data = await response.json();
+        const data = await response.json();
 
-            console.log(data);
-        }
+        setResults(data);
+        setSearch(true);
     }
 
     const deleteName = () => {
@@ -169,6 +177,57 @@ const Search = ( {categories}:Props ) => {
                     ))}
                 </Slider>
             </div>
+
+            { search && 
+                <AnimatePresence>
+                    {search &&
+                        <motion.div {...animation} className={style.ResultsSearch}>
+                            <button className={style.Close}>
+                                <BsXLg />
+                                Cerrar ventana de resultados
+                            </button>
+
+                            <div className={style.ResultContainer}>
+                                {results?.ListTarjets.map((user)=>(
+                                    <div key={user.IdUsuario} className='userResult'>
+                                        <div className='header'>
+                                            <Image 
+                                                src={
+                                                    user.ImgFoto 
+                                                    ? `https://tarjet.site/imagenes/perfil-imagenes/PERF_${user.Token}.webp`
+                                                    : '/images/perfil-temporal.webp'
+                                                }
+                                                alt='Foto de perfil'
+                                                width={200}
+                                                height={200}
+                                                priority={false}
+                                            />
+                                            <div className='text'>
+                                                <h5>{user.NombreCompleto}</h5>
+                                                <span>{user.Actividad}</span>
+                                            </div>
+                                        </div>
+                                        <div className='card'>
+                                            <Link href={`/st/${btoa(user.Token)}`}>
+                                                <Image 
+                                                    src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/TFRE_${user.Token}.webp`}
+                                                    alt='Tarjeta de presentación'
+                                                    width={500}
+                                                    height={190}
+                                                    priority={false}
+                                                />
+                                            </Link>
+                                        </div>
+                                        <div className='footer'>
+                                            <span>Da click sobre la imagen para ver tarjeta digital</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+                    }
+                </AnimatePresence>
+            }
         </div>
     );
 }

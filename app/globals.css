@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
@@ -38,7 +38,7 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
-}
+} */
 
 /* @media (prefers-color-scheme: dark) {
   :root {
@@ -360,8 +360,52 @@ form .twoButtons div{
   font-size: 1.5rem;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-} */
+.userResult{
+  border-radius: 20px;
+  background: #d4e7f2;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.userResult .header{
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userResult .header img{
+  border-radius: 100%;
+  width: 20%;
+  height: auto;
+}
+
+.userResult .header .text{
+  width: 80%;
+}
+
+.userResult .header .text h5{
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.userResult .header .text span{
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.userResult .card img{
+  width: 100%;
+  height: auto;
+}
+
+.userResult .footer{
+  padding: 10px 15px;
+}
+.userResult .footer span{
+  display: block;
+  text-align: center;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}

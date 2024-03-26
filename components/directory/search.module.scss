@@ -5,7 +5,7 @@
         width: 70%;
         margin: auto;
         // position: sticky;
-        // // top: 500px;
+        // top: 500px;
         z-index: 50;
 
         .SwitchToggle{
@@ -127,7 +127,7 @@
                 padding: 10px 0;
                 
                 img{
-                    width: 75%;
+                    width: 50%;
                     height: auto;
                     margin: auto;
                 }
@@ -138,5 +138,29 @@
             }
         }
         
+    }
+
+    .ResultsSearch{
+        width: 80%;
+        margin: auto;
+        margin-bottom: 40px;
+
+        .Close{
+            margin: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #5f5f5d;
+            background: transparent;
+            border: transparent;
+            font-size: 1rem;
+        }
+    }
+
+    .ResultContainer{
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        justify-content: space-between;
+        // grid-gap: 20px;
     }
 }
