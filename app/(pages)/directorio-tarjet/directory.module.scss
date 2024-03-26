@@ -5,24 +5,32 @@
         padding: 0 2%;
     }
 
-    // h1{
-    //     text-align: center;
-    //     font-size: 1.3rem;
-    //     font-weight: 600;
-    // }
+    .Video{
+        width: 70%;
+        margin: auto;
 
-    // img{
-    //     width: 80%;
-    //     margin: auto;
-    //     height: auto;
-    //     padding: 0 15px;
-    // }
+        @media (width <= 800px) {
+            width: 100%;
+        }
 
-    // span{
-    //     display: block;
-    //     text-align: center;
-    //     text-transform: uppercase;
-    //     margin: 50px 0;
-    //     font-size: 1rem;
-    // }
+        video{
+            width: 100%;
+            height: auto;
+            margin-bottom: 40px;
+        }
+
+        .VideoMobile{
+            display: none;
+        }
+
+        @media (width <= 800px) {
+            .VideoDesk{
+                display: none;
+            }
+
+            .VideoMobile{
+                display: block;
+            }
+        }
+    }
 }

@@ -1,0 +1,40 @@
+.TopUsers{
+    h1{
+        text-align: center;
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+    
+    .Slide{
+        @media (width <= 700px) {
+            width: 90%;
+            margin: auto;
+        }
+    }
+
+    img{
+        width: 80%;
+        height: auto;
+        margin: auto;
+        padding: 0 15px;
+
+        @media (width <= 700px) {   
+            width: 100%;
+        }
+    }
+    
+    span{
+        display: block;
+        text-align: center;
+        text-transform: uppercase;
+        margin: 50px 0;
+        font-size: 1rem;
+
+        @media (width <= 700px) {
+            font-size: 0.9rem;
+        }
+        @media (width <= 400px) {
+            font-size: 0.8rem;
+        }
+    }
+}

@@ -236,6 +236,11 @@
             background: #e1eff2;
             border: transparent;
             text-align: left;
+
+            @media (width <= 700px) {
+                width: 95%;
+                padding: 10px 25px;
+            }
         }
     }
 }

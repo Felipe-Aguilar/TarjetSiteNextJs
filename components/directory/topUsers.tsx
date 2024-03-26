@@ -1,10 +1,11 @@
 'use client';
 
-import { ListTarjet } from "@/interfaces/topUsers-interface";
+import style from './top.module.scss';
 import Image from "next/image";
 import Link from "next/link";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import Slider from 'react-slick';
+import { ListTarjet } from "@/interfaces/topUsers-interface";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 type Props = {
     data: {
@@ -13,8 +14,6 @@ type Props = {
 }
 
 const TopUsers = ({data}:Props) => {
-
-    // TODO: Modificar estilos según correspondan
 
     const settings = {
         dots: true,
@@ -52,30 +51,32 @@ const TopUsers = ({data}:Props) => {
     }
 
     return ( 
-        <div>
+        <div className={style.TopUsers}>
             <h1>Nuevos usuarios tarjet</h1>
 
-            <Slider {...settings}>
-                {data.ListTarjets.map((user)=>{
-                    if (user.PublicPriva === 0) {
-                        if (user.RegistroTarjet) {
-                            return (
-                                <div key={user.IdUsuario}>
-                                    <Link href={`/st/${btoa(user.Token)}`}>
-                                        <Image 
-                                            src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${user.FondoF}`}
-                                            alt="Tarjeta de presentación"
-                                            width={300}
-                                            height={300}
-                                            priority={false}
-                                        />
-                                    </Link>
-                                </div>
-                            )
+            <div className={style.Slide}>
+                <Slider {...settings}>
+                    {data.ListTarjets.map((user)=>{
+                        if (user.PublicPriva === 0) {
+                            if (user.RegistroTarjet) {
+                                return (
+                                    <div key={user.IdUsuario}>
+                                        <Link href={`/st/${btoa(user.Token)}`}>
+                                            <Image 
+                                                src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${user.FondoF}`}
+                                                alt="Tarjeta de presentación"
+                                                width={800}
+                                                height={250}
+                                                priority={false}
+                                            />
+                                        </Link>
+                                    </div>
+                                )
+                            }
                         }
-                    }
-                })}
-            </Slider>
+                    })}
+                </Slider>
+            </div>
             
             <span>Da click sobre la imagen para ver su tarjeta digital</span>
         </div>
