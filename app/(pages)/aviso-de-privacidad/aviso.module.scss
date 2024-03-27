@@ -1,0 +1,47 @@
+.Aviso{
+    h1{
+        text-align: center;
+        font-size: 23px;
+        font-weight: 400;
+    }
+
+    .container{
+        width: 60%;
+        margin: 40px auto;
+
+        button{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #f4f4f4;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .Text{
+            padding: 20px 0;
+            font-size: 0.9rem;
+            color: #545454;
+            line-height: 1.5;
+            background: #fff;
+            overflow: hidden;
+
+            b{
+                font-weight: 600;
+            }
+
+            ul{
+                padding-left: 40px;
+                margin-bottom: 1rem;
+                
+                li{
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}
