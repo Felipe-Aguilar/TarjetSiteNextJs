@@ -5,6 +5,12 @@ import { BsChevronDown } from 'react-icons/bs';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 
+
+export const metadata = {
+    title: 'Aviso de privacidad - Tarjet',
+    description: 'Aviso de privacidad ',
+};
+
 const Aviso = () => {
 
     const [open, setOpen] = useState<boolean>();
