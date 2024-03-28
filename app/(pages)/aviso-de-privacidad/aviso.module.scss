@@ -9,6 +9,10 @@
         width: 60%;
         margin: 40px auto;
 
+        @media (width <= 700px) {
+            width: 95%;
+        }
+
         button{
             display: flex;
             align-items: center;
@@ -20,6 +24,10 @@
             border-bottom: 1px solid #f4f4f4;
             font-weight: 600;
             font-size: 1rem;
+
+            @media (width <= 700px) {
+                text-align: left;
+            }
         }
 
         .Text{
