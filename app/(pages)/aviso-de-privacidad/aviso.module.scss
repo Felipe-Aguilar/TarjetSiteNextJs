@@ -18,8 +18,8 @@
             background: transparent;
             border: none;
             border-bottom: 1px solid #f4f4f4;
-            font-weight: 500;
-            font-size: 1.1rem;
+            font-weight: 600;
+            font-size: 1rem;
         }
 
         .Text{
@@ -40,6 +40,17 @@
                 
                 li{
                     margin-bottom: 10px;
+                }
+            }
+
+            p{
+                a{
+                    color: #0056b3;
+                    transition: all 0.3s ease;
+
+                    &:hover{
+                        text-decoration: underline;
+                    }
                 }
             }
         }
