@@ -2,8 +2,8 @@
 
 import AppleLogin from 'react-apple-login';
 import { jwtDecode } from 'jwt-decode';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const Apple = () => {
 
@@ -73,7 +73,7 @@ const Apple = () => {
             responseType={"code"} 
             responseMode={"query"}  
             callback={appleLogin}
-            usePopup={true}
+            // usePopup={true}
             render={(props) => (
                 <button onClick={props.onClick} disabled={props.disabled}>
                     <Image 

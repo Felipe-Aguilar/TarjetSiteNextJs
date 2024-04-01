@@ -1,26 +1,15 @@
 'use client';
 
-import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { signIn } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import OtpCode from "../pop-ups/OtpCode";
 
 const FormLogin = () => {
 
-    const router = useRouter();
-
+    const pathname = usePathname();
     const [view, setView] = useState<boolean>(false);
-    const [accept, setAccept] = useState<boolean>(false);
     const [error, setError] = useState<string[]>([]);
-
-
-    // * Comprueba si la sesión ya está iniciada.
-    useEffect(()=>{
-        const storageData = localStorage.getItem('SessionData');
-        const data = storageData ? JSON.parse(storageData) : null;
-
-        if (data) redirect(`/mi-perfil/${btoa(data.Token)}`);
-    },[]);
 
     // * Email
     const [email, setEmail] = useState<string>('');
@@ -72,15 +61,13 @@ const FormLogin = () => {
             return; 
         }
 
-        const response = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/Login',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
+        const response = await fetch("https://souvenir-site.com/WebTarjet/APIUsuDtos/Login", {
+            method: "POST",
+            mode: 'cors',
             body: JSON.stringify({
                 "Cuenta": email,
-                "Password": password,
-            })
+                "Password": password
+            }),
         });
 
         const data = await response.json();
@@ -91,8 +78,9 @@ const FormLogin = () => {
         }
 
         setNotSubmit('');
-        localStorage.setItem('SessionData', JSON.stringify(data));
-        router.push(`/${btoa(data.Token)}`);
+        const usuId = await data.usuId;
+        const token = await data.Token;
+        await signIn('credentials', { usuId, token, callbackUrl: '/login'});
     }
 
     // * Registrar Usuario
@@ -114,10 +102,14 @@ const FormLogin = () => {
                 <OtpCode email={email} password={password} close={() => setOtpSend(false)}/>
             }
 
+            { pathname == '/login' && <h1>Inicia Sesión en Tarjet</h1> }
+            { pathname == '/registro' && <h1>Regístrate en Tarjet</h1> }
+            
+
             <form onSubmit={onSubmitForm}>
                 <input 
                     type="email" 
-                    placeholder="Correo electrónico"
+                    placeholder="correo / teléfono"
                     value={email}
                     onChange={(e)=>setEmail(e.target.value.trim())}
                     onBlur={onBlurEmail}
@@ -126,7 +118,7 @@ const FormLogin = () => {
                 <div>
                     <input 
                         type={view ? 'text' : 'password'} 
-                        placeholder="Escribe tu contraseña"
+                        placeholder="contraseña"
                         value={password}
                         onChange={(e)=>setPassword(e.target.value.trim())}
                         onBlur={onBlurPassword}
@@ -138,7 +130,7 @@ const FormLogin = () => {
                     </button>
                 </div>
 
-                <button className="link">
+                <button className="link" style={{display: 'block'}}>
                     ¿Olvidaste tu contraseña?
                 </button>
 
@@ -150,52 +142,34 @@ const FormLogin = () => {
                     </div>
                 }
 
-                <hr style={{borderColor: '#000', marginBottom: '16px'}}/>
-
-                <div className="check">
-                    <input 
-                        type="checkbox" 
-                        id="accept" 
-                        checked={accept} 
-                        onChange={(e)=>setAccept(e.target.checked)}
-                    />
-
-                    <label htmlFor="accept">
-                        Acepto las condiciones de uso y la <Link href={'/aviso-de-privacidad'}>política de privacidad</Link>
-                    </label>
-                </div>
-
                 { notSubmit &&
                     <div className="error">
                         <p>{notSubmit}</p>
                     </div>
                 }
 
-                <div className="twoButtons">
-
-                    <div>
+                <div style={{justifyContent: 'end'}}>
+                    {pathname == '/login' && (
+                        <button 
+                            className="btn"
+                            type="submit"
+                            style={{margin: '0'}}
+                        >
+                            Iniciar sesión
+                        </button>
+                    )}
+                    {pathname == '/registro' && (
                         <button 
                             className="btn" 
-                            style={{background: '#fdc40a'}}
-                            disabled={!accept}
+                            style={{background: '#f58634'}}
                             type="button"
                             onClick={registerUser}
                         >
                             Registrar
                         </button>
-                    </div>
-
-                    <div style={{ borderLeft: '1px solid #000'}}>
-                        <button 
-                            className="btn"
-                            disabled={!accept}
-                            type="submit"
-                        >
-                            Iniciar sesión
-                        </button>
-                    </div>
-
+                    )}
                 </div>
+
             </form>
         </>
     );

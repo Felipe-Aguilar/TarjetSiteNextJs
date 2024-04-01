@@ -1,23 +1,21 @@
+import Image from 'next/image';
+import style from '../login/login.module.scss';
+import FormLogin from '@/components/login/Form';
+import Google from '@/components/login/Google';
+import Apple from '@/components/login/Apple';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-import Image from 'next/image';
-import style from './login.module.scss';
-import Google from '@/components/login/Google';
-import Apple from '@/components/login/Apple';
-import FormLogin from '@/components/login/Form';
-import Link from 'next/link';
-
-const Login = async () => {
+const SignUp = async () => {
 
     const session = await getServerSession();
 
     if (session) {
-        redirect(`/${btoa(session!.user!.email!)}`);
+        redirect(`/mi-perfil/${btoa(session!.user!.email!)}`);
     }
 
     return ( 
-        <div className='green'>
+        <div className="green">
             <div className="background">
                 <div className="body">
                     <div className={`contain ${style.Login}`}>
@@ -32,7 +30,7 @@ const Login = async () => {
                             <FormLogin />
                         </div>
 
-                        <span>ó inicia sesión con:</span>
+                        <span>ó regístrate con:</span>
 
                         <div className={style.LoginButtons}>
                             <Google />
@@ -40,13 +38,8 @@ const Login = async () => {
                         </div>
 
                         <div className={style.SignUp}>
-                            <Link href={'/registro'}>
-                                Regístrate Gratis
-                            </Link>
-
                             <span>Al iniciar sesión aceptas nuestras políticas de privacidad</span>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -54,4 +47,4 @@ const Login = async () => {
     );
 }
 
-export default Login;
+export default SignUp;

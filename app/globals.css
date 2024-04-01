@@ -223,28 +223,6 @@ form .link{
   font-size: 0.8rem;
 }
 
-form .check{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  width: 50%;
-  margin: auto;
-
-  @media (width <= 1350px) {
-    width: 70%;
-  }
-
-  @media (width <= 700px) {
-    width: 80%;
-  }
-}
-
-form .check input{
-  width: 25px;
-  height: 25px;
-}
-
 form a{
   color: #007bff;
   font-size: 0.8rem;
@@ -260,23 +238,6 @@ form .error{
 form .error p{
   color: #d90011;
   
-}
-
-form .twoButtons{
-  display: flex;
-  justify-content: center;
-}
-
-form .twoButtons div{
-  width: 35%;
-
-  @media (width <= 1500px) {
-    width: 100%;
-  }
-
-  @media (width <= 700px) {
-    width: 100%;
-  }
 }
 
 .pop{

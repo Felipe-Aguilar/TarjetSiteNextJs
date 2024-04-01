@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import style from './otp.module.scss';
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 interface Props {
     email:string;
@@ -66,10 +67,9 @@ const OtpCode = ( { email, password, close }:Props ) => {
 
             setTimeout(()=>{
                 setSuccess(true);
-                localStorage.setItem('SessionData', JSON.stringify(data));
 
                 setTimeout(()=>{
-                    router.push(`/mi-perfil/${btoa(data.Token)}`);
+                    signIn('credentials', { email, password, callbackUrl: '/registro'});
                 },3000);
             },3500)
         }

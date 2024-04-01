@@ -1,3 +1,6 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
 import userData from "@/api/userData";
 import style from './perfil.module.scss';
@@ -7,9 +10,13 @@ import ButtonsPerfil from "@/components/perfil/ButtonsPerfil";
 
 const MiPerfil = async () => {
 
-    // TODO: Implementar autenticación de ruta y redireccionamiento.
+    const session = await getServerSession(authOptions);
 
-    const data = await userData();
+    if (!session) {
+        redirect('/login');
+    }
+
+    const data = await userData(session.user?.name ?? undefined);
 
     return ( 
         <div className="green">

@@ -1,10 +1,8 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 
 const BtnGoogle = () => {
-
-    const route = useRouter();
 
     const login = useGoogleLogin({
         onSuccess: tokenResponse => Register(tokenResponse)
@@ -31,8 +29,10 @@ const BtnGoogle = () => {
         const data = await response.json();
 
         if (data.Token) {
-            localStorage.setItem('SessionData', JSON.stringify(data));
-            route.push(`/${btoa(data.Token)}`);
+            const usuId = await data.usuId;
+            const token = await data.Token;
+            
+            await signIn('credentials', {usuId, token, callbackUrl: '/registro'});
 
             return;
         }
@@ -48,11 +48,12 @@ const BtnGoogle = () => {
         });
 
         const dataLogin = await responseLogin.json();
-
+        
         if (dataLogin.Token) {
-            localStorage.setItem('SessionData', JSON.stringify(dataLogin));
+            const usuId = await dataLogin.usuId;
+            const token = await dataLogin.Token;
 
-            route.push(`/${btoa(dataLogin.Token)}`);
+            await signIn('credentials', { usuId, token, callbackUrl: '/login'});
         }
 
     }
