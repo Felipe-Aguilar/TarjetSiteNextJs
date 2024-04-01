@@ -2,12 +2,10 @@
 
 import AppleLogin from 'react-apple-login';
 import { jwtDecode } from 'jwt-decode';
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 
 const Apple = () => {
-
-    const router = useRouter();
 
     const appleLogin = async ( response? : any  ) => {
 
@@ -15,8 +13,6 @@ const Apple = () => {
 
         const idToken = await response.authorization.id_token;
         const decodedToken = jwtDecode(idToken);
-
-        console.log(idToken);
 
         const responseCode = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ValidarCodigoOTP', {
             method: 'POST',
@@ -36,12 +32,11 @@ const Apple = () => {
 
         const data = await responseCode.json();
 
-        console.log(data);
-
         if (data.Token) {
-            localStorage.setItem('SessionData', JSON.stringify(data));
+            const usuId= await data.usuId;
+            const token= await data.Token;
 
-            router.push(`/${btoa(data.Token)}`);
+            await signIn('credentials', {usuId, token, callbackUrl: '/registro'});
 
             return;
         }
@@ -58,22 +53,22 @@ const Apple = () => {
 
         const dataLogin = await responseLogin.json();
 
-        console.log(dataLogin);
+        const usuId= await dataLogin.usuId;
+        const token= await dataLogin.Token;
 
-        localStorage.setItem('SessionData', JSON.stringify(dataLogin));
-        router.push(`/${btoa(dataLogin.Token)}`);
+        await signIn('credentials', {usuId, token, callbackUrl: '/login'});
     }
 
     return ( 
         <AppleLogin 
             clientId="site.tarjet.client"
-            redirectURI="https://tarjet.site"
+            redirectURI="https://tarjet-site.vercel.app/login"
             state='origin:web'
             scope = "name email"
             responseType={"code"} 
             responseMode={"query"}  
             callback={appleLogin}
-            // usePopup={true}
+            usePopup={true}
             render={(props) => (
                 <button onClick={props.onClick} disabled={props.disabled}>
                     <Image 
