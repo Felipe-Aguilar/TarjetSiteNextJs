@@ -15,7 +15,7 @@ const MiPerfil = async () => {
         redirect('/login');
     }
 
-    const data = await userData(session!.user!.name!);
+    const data = await userData(session.user!.name!);
 
     return ( 
         <div className="green">

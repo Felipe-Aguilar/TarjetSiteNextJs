@@ -1,0 +1,91 @@
+.MyTarjet{
+    padding: 0 0 40px 0;
+
+    .Head{
+        position: relative;
+
+        img{
+            width: 100%;
+            height: auto;
+        }
+
+        a{
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+
+            img{
+                width: 64px;
+                height: 64px;
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+    }
+
+    .Title{
+        text-align: center;
+        margin-top: 20px;
+
+        h1{
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin: 0.5rem;
+        }
+
+        h2{
+            font-weight: 400;
+            font-size: 1.25rem;
+
+            span{
+                display: block;
+                font-weight: 700;
+                font-size: 1.5rem;
+                color: #03894a;
+            }
+        }
+    }
+
+    .Card{
+        img{
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 
+            2.8px 2.8px 2.2px #00000005, 
+            6.7px 6.7px 5.3px #00000007, 
+            12.5px 12.5px 10px #00000009, 
+            22.3px 22.3px 17.9px #0000000b, 
+            41.8px 41.8px 33.4px #0000000d, 
+            100px 100px 80px #00000012;
+        }
+
+        span{
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            display: block;
+            text-align: center;
+            font-weight: 500;
+        }
+    }
+
+    .ButtonsShare{
+        width: 100%;
+        display: flex;
+        padding: 40px 0;
+        gap: 20px;
+
+        a, button{
+            font-size: 0.9rem;
+            text-align: center;
+            
+            img{
+                display: block;
+                width: 78px;
+                height: 78px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+}
