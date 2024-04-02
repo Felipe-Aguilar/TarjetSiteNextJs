@@ -1,0 +1,27 @@
+.Social{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px 0;
+
+    a{
+        background: #e8ecf1;
+        padding: 10px;
+        border-radius: 10px;
+        
+        svg{
+            font-size: 2rem;
+        }
+    }
+
+
+    .Facebook{
+        color: #1877F2;
+    }
+    .WhatsApp{
+        color: #128c7e;
+    }
+    .Telegram{
+        color: #0088cc;
+    }
+}

@@ -52,13 +52,10 @@
         img{
             width: 100%;
             border-radius: 10px;
-            box-shadow: 
-            2.8px 2.8px 2.2px #00000005, 
-            6.7px 6.7px 5.3px #00000007, 
-            12.5px 12.5px 10px #00000009, 
-            22.3px 22.3px 17.9px #0000000b, 
-            41.8px 41.8px 33.4px #0000000d, 
-            100px 100px 80px #00000012;
+            box-shadow:
+            8.1px 6.3px 10px rgba(0, 0, 0, 0.035),
+            65px 50px 80px rgba(0, 0, 0, 0.07)
+            ;
         }
 
         span{
@@ -70,22 +67,35 @@
         }
     }
 
-    .ButtonsShare{
+    .Links, .ButtonsShare{
         width: 100%;
         display: flex;
+        align-items: center;
         padding: 40px 0;
-        gap: 20px;
 
         a, button{
             font-size: 0.9rem;
             text-align: center;
-            
+
             img{
                 display: block;
                 width: 78px;
                 height: 78px;
                 margin-bottom: 10px;
             }
+        }
+    }
+
+    .Links{
+        gap: 20px;
+    }
+    
+    .ButtonsShare{
+        justify-content: space-around;
+
+        button{
+            background: transparent;
+            border: none;
         }
     }
 }

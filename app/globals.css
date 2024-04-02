@@ -284,12 +284,14 @@ form .error p{
 }
 
 .pop .container .close {
-  margin-top: 10px;
   text-transform: uppercase;
   font-size: 0.75rem;
   color: #5b8f94;
   background: transparent;
   border: transparent;
+  display: block;
+  margin: auto;
+  margin-top: 10px;
 }
 
 .pop .container .error{

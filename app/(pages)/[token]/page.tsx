@@ -5,6 +5,13 @@ import userData from '@/api/userData';
 import Image from 'next/image';
 import Link from 'next/link';
 import Card from '@/components/mytarjet/Card';
+import ButtonsShare from '@/components/mytarjet/ButtonsShare';
+
+
+export const metadata = {
+    title: 'Mi tarjetero - Tarjet',
+    description: 'Mi tarjetero tarjet',
+};
 
 const MyTarjet = async () => {
 
@@ -51,8 +58,8 @@ const MyTarjet = async () => {
                             </div>
                         )}
 
-                        {data.RegistroTarjet ? (
-                            <div className={style.ButtonsShare}>
+                        {!data.RegistroTarjet ? (
+                            <div className={style.Links}>
                                 <Link href={'/directorio-tarjet'}>
                                     <Image 
                                         src={'/images/btn-directorio.svg'}
@@ -76,8 +83,8 @@ const MyTarjet = async () => {
                                 </Link>
                             </div>
                         ) : (
-                            <div>
-
+                            <div className={style.ButtonsShare}>
+                                <ButtonsShare />
                             </div>
                         )}
 

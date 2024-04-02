@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import OtpCode from "../pop-ups/OtpCode";
+import OtpCode from "../pop-ups/otp/OtpCode";
 
 const FormLogin = () => {
 

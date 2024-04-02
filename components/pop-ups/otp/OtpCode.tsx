@@ -2,10 +2,9 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
 import OTPInput from "react-otp-input";
 import style from './otp.module.scss';
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
 
 interface Props {
     email:string;
@@ -22,8 +21,6 @@ const animate = {
 
 
 const OtpCode = ( { email, password, close }:Props ) => {
-
-    const router = useRouter();
     
     useEffect(()=>{
 
