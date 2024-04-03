@@ -1,0 +1,168 @@
+.MyTarjetSearch{
+    padding: 0 20px;
+
+    h4{
+        font-size: 1.15rem;
+        font-weight: 600;
+    }
+
+    .OrderContain, .SearchContain{
+        background: #e5e8e8;
+        border-radius: 20px;
+        color: #212529;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .OrderContain{
+
+        .Buttons{
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+
+            button{
+                margin: 0;
+                background: transparent;
+            }
+            .selected {
+                background: #9dc85a;
+            }
+        }
+    }
+
+
+    .SearchContain{
+        margin-top: 20px;
+
+        .Input{
+            display: flex;
+
+            div{
+                width: 10%;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 8px 0 0 8px;
+            }
+            input{
+                width: 90%;
+                border-radius: 0 8px 8px 0;
+                padding: 10px 10px 10px 0;
+            }
+        }
+    }
+
+    .Results{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        > * + * {
+            margin-top: 15px;
+        }
+    }
+
+    .SegmentContainer{
+        padding: 15px 0;
+        background: #d4e7f3;
+        border: none;
+        width: 70%;
+        border-radius: 15px 15px 0 0;
+        font-size: 0.95rem;
+    }
+
+    .UserResult{
+        width: 90%;
+        display: flex;
+        align-items: center;
+        // background: #d7eedc;
+        background: #c4e9cd;
+        border-radius: 20px 20px 0 0;
+        padding: 10px;
+        border: none;
+        gap: 20px;
+
+        img{
+            width: 73px;
+            height: 73px;
+            border-radius: 100%;
+        }
+
+        span{
+            font-size: 1.20rem;
+            font-weight: 500;
+        }
+    }
+    .UserResultContainer{
+        width: 90%;
+        margin-top: 0;
+        background: #c4e9cd;
+        padding-bottom: 10px;
+        border-radius: 0 0 20px 20px;
+
+        .Card{
+            width: 100%;
+            height: auto;
+        }
+
+        span{
+            text-align: center;
+            font-size: 0.9rem;
+            display: block;
+            color: #57585b;
+            padding: 15px 0;
+        }
+
+        svg{
+            display: block;
+            margin: auto;
+            width: 50%;
+            height: auto;
+
+            path{
+                width: 1000px;
+            }
+        }
+
+        .Buttons, .Eliminate{
+            display: flex;
+            justify-content: center;
+        }
+
+        .Buttons{
+            gap: 40px;
+
+            button{
+                background: transparent;
+                border: none;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                font-size: 0.9rem;
+
+                img{
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+        }
+
+        .Eliminate{
+            margin: auto;
+            padding: 20px;
+            align-items: center;
+            gap: 5px;
+
+            font-size: 1rem;
+            background: transparent;
+            border: none;
+
+            svg{
+                font-size: 1.4rem;
+            }
+        }
+    }
+}

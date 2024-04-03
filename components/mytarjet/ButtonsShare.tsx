@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { Toaster, toast } from "react-hot-toast";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,6 +23,11 @@ const ButtonsShare = () => {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
+
+        toast.success('Copiado en el portapapeles', {
+            duration: 4500,
+            position: 'bottom-center'
+        });
     }
 
     return ( 
@@ -65,6 +71,7 @@ const ButtonsShare = () => {
             
             { qr && <QrPop close={()=>setQr(false)}/> }
             { social && <Social close={()=>setSocial(false)}/> }
+            <Toaster />
         </>
     );
 }

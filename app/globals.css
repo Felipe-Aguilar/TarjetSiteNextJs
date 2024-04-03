@@ -113,6 +113,14 @@ hr{
     background: #f4ede8;
   }
 }
+.greenWhite{
+  width: 100%;
+  background: rgba(0, 128, 0, .1098039216);
+
+  @media (width <= 700px) {
+    background: #fff;
+  }
+}
 .background{
   background: url('../public/images/fondo-tarjet.png');
   background-size: 50cqw;

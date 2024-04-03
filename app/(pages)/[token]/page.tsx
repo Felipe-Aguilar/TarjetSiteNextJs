@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Card from '@/components/mytarjet/Card';
 import ButtonsShare from '@/components/mytarjet/ButtonsShare';
+import MyTarjetSearch from '@/components/mytarjet/MyTarjetSearch';
 
 
 export const metadata = {
@@ -23,8 +24,17 @@ const MyTarjet = async () => {
 
     const data = await userData(session.user!.name!);
 
+    const response = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaTarjetero/?Usutarjetid=${data.UUID}`, {
+        method: 'GET',
+        mode: 'cors'
+    });
+
+    const responseTarjets = await response.json();
+
+    const dataTarjets = await responseTarjets.SDTTarjetsG;
+
     return ( 
-        <div className="green">
+        <div className="greenWhite">
             <div className="background">
                 <div className={`body ${style.MyTarjet}`}>
                     <div className="contain">
@@ -87,6 +97,13 @@ const MyTarjet = async () => {
                                 <ButtonsShare />
                             </div>
                         )}
+
+                        <div className={style.TarjetTitle}>
+                            <h3>Tu tarjetero</h3>
+                            <p>Actualmente tienes <span>{dataTarjets.length}</span> Tarjets</p>
+                        </div>
+
+                        <MyTarjetSearch uuId={data.UUID}/>
 
                     </div>
                 </div>
