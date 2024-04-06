@@ -4,12 +4,13 @@ import { Fragment, useEffect, useState } from 'react';
 import { BsSearch, BsTrash } from 'react-icons/bs';
 import { SegmentsInterface } from '@/interfaces/mytarjet/segments-interface';
 import { UsersMyTarjetResultInterface } from '@/interfaces/mytarjet/usersSegments-interface';
+import { QRCodeSVG } from 'qrcode.react';
+import toast, { Toaster } from 'react-hot-toast';
+
 import style from './mytarjet.module.scss';
 import Image from 'next/image';
-import { QRCodeSVG } from 'qrcode.react';
 import Link from 'next/link';
 import Social from '../pop-ups/social/Social';
-import toast, { Toaster } from 'react-hot-toast';
 
 interface Props {
     uuId: string;
@@ -38,7 +39,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
 
     }, []);
 
-    // * Orden alfabético
+    // *Orden alfabético
     const AlphabetOrder = async () => {
         const response = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaTarjetero/?Usutarjetid=${uuId}`,{
             method: 'GET',
@@ -52,6 +53,10 @@ const MyTarjetSearch = ({ uuId }:Props) => {
         setOrder(1);
     }
 
+    // *Búsqueda por nombre 
+    const searchByName = async (name:string) => {
+        
+    }
     
     // *Selección de Segmento
     const [results, setResults] = useState<UsersMyTarjetResultInterface>();
@@ -130,7 +135,11 @@ const MyTarjetSearch = ({ uuId }:Props) => {
 
                     <div className={style.Input}>
                         <div><BsSearch /></div>
-                        <input type="text" placeholder='Escribe el nombre o giro comercial'/>
+                        <input 
+                            type="text" 
+                            placeholder='Escribe el nombre o giro comercial'
+                            onChange={(e)=>searchByName(e.target.value)}
+                        />
                     </div>
                 </div>
 

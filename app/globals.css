@@ -105,18 +105,19 @@ hr{
   margin: 40px 0;
 }
 
-.green{
+.green, .greenWhite {
   width: 100%;
   background: rgba(0, 128, 0, .1098039216);
 
+}
+
+.green{
   @media (width <= 700px) {
     background: #f4ede8;
   }
 }
-.greenWhite{
-  width: 100%;
-  background: rgba(0, 128, 0, .1098039216);
 
+.greenWhite{
   @media (width <= 700px) {
     background: #fff;
   }
