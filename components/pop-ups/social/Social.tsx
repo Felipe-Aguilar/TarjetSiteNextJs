@@ -1,12 +1,12 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { usePathname } from "next/navigation";
 import { BsFacebook, BsTelegram, BsWhatsapp } from "react-icons/bs";
 
 import style from './social.module.scss';
 
 interface Props {
+    token: string;
     close: () => void;
 }
 
@@ -16,11 +16,9 @@ const animate = {
     transition: {delay: 1}
 }
 
-const Social = ({close} :Props) => {
+const Social = ({token, close} :Props) => {
 
-    const pathname = usePathname();
-
-    const url = `https://tarjet.site/st${pathname}`;
+    const url = `https://tarjet.site/st/${btoa(token)}`;
 
     return ( 
         <div className="pop">

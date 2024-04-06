@@ -9,7 +9,11 @@ import Link from "next/link";
 import QrPop from "../pop-ups/qr/QrPop";
 import Social from "../pop-ups/social/Social";
 
-const ButtonsShare = () => {
+interface Props{
+    token: string
+}
+
+const ButtonsShare = ({ token }:Props) => {
     
     const pathname = usePathname();
 
@@ -70,7 +74,7 @@ const ButtonsShare = () => {
             </Link>
             
             { qr && <QrPop close={()=>setQr(false)}/> }
-            { social && <Social close={()=>setSocial(false)}/> }
+            { social && <Social token={token} close={()=>setSocial(false)}/> }
             <Toaster />
         </>
     );

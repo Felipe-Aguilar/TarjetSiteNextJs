@@ -94,7 +94,7 @@ const MyTarjet = async () => {
                             </div>
                         ) : (
                             <div className={style.ButtonsShare}>
-                                <ButtonsShare />
+                                <ButtonsShare token={data.TokenId}/>
                             </div>
                         )}
 
