@@ -30,7 +30,7 @@ hr{
   margin: 40px 0;
 }
 
-.green, .greenWhite {
+.green, .gWhite {
   width: 100%;
   background: rgba(0, 128, 0, .1098039216);
 }
@@ -41,7 +41,7 @@ hr{
   }
 }
 
-.greenWhite{
+.gWhite{
   @media (width <= 700px) {
     background: #fff!important;
   }
