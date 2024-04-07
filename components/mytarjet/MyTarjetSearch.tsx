@@ -55,7 +55,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
 
     // *Búsqueda por nombre 
     const searchByName = async (name:string) => {
-        
+        console.log(name);
     }
     
     // *Selección de Segmento
