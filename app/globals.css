@@ -29,29 +29,22 @@ hr{
   margin: 40px 0;
 }
 
-.green{
+.green, .greenWhite{
   width: 100%;
-  background: rgba(0, 128, 0, .1098039216);
+  /* background: rgba(0, 128, 0, .1098039216); */
   background: #0080001c;
-}
-
-.green{
-  @media (width <= 700px) {
-    background: #f4ede8;
-  }
 }
 
 @media screen and (max-width: 700px){
   .green{
-    background: red;
+    background: #f4ede8;
+  }
+
+  .greenWhite{
+    background: #fff;
   }
 }
 
-/* .gWhite{
-  @media (width <= 700px) {
-    background: #fff;
-  }
-} */
 
 .background{
   background: url('../public/images/fondo-tarjet.png');

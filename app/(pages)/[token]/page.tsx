@@ -34,7 +34,7 @@ const MyTarjet = async () => {
     const dataTarjets = await responseTarjets.SDTTarjetsG;
 
     return ( 
-        <div className="gWhite">
+        <div className="greenWhite">
             <div className="background">
                 <div className={`body ${style.MyTarjet}`}>
                     <div className="contain">
