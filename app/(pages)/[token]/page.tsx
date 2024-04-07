@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import style from './mytarjet.module.scss';
-import userData from '@/api/userData';
+import userData from '@/app/api/userData';
 import Image from 'next/image';
 import Link from 'next/link';
 import Card from '@/components/mytarjet/Card';

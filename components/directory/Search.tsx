@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import Image from 'next/image';
 import style from './search.module.scss';
 import Link from 'next/link';
-import searchByName from '@/api/searchByName';
+import searchByName from '@/app/api/searchByName';
 
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';

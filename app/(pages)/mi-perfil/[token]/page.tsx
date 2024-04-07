@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import userData from "@/api/userData";
+import userData from "@/app/api/userData";
 import style from './perfil.module.scss';
 import Image from "next/image";
 import Link from "next/link";
