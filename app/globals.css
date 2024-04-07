@@ -29,7 +29,7 @@ hr{
   margin: 40px 0;
 }
 
-.green, .gWhite {
+.green {
   width: 100%;
   background: rgba(0, 128, 0, .1098039216);
 }
@@ -40,11 +40,11 @@ hr{
   }
 }
 
-.gWhite{
+/* .gWhite{
   @media (width <= 700px) {
     background: #fff;
   }
-}
+} */
 
 .background{
   background: url('../public/images/fondo-tarjet.png');
