@@ -41,6 +41,12 @@ hr{
   }
 }
 
+@media screen and (max-width: 700px){
+  .green{
+    background: red;
+  }
+}
+
 /* .gWhite{
   @media (width <= 700px) {
     background: #fff;
