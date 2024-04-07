@@ -80,6 +80,9 @@ const FormLogin = () => {
         setNotSubmit('');
         const usuId = await data.usuId;
         const token = await data.Token;
+
+        console.log(data, usuId, token);
+
         await signIn('credentials', { usuId, token, callbackUrl: '/login'});
     }
 
