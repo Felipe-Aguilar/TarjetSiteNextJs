@@ -7,6 +7,12 @@ import Image from "next/image";
 import Link from "next/link";
 import ButtonsPerfil from "@/components/perfil/ButtonsPerfil";
 
+
+export const metadata = {
+    title: 'Mi perfil - Tarjet',
+    description: 'Mi perfil - Tarjet',
+};
+
 const MiPerfil = async () => {
 
     const session = await getServerSession();
@@ -54,7 +60,7 @@ const MiPerfil = async () => {
 
                         <hr/>
 
-                        <ButtonsPerfil />
+                        <ButtonsPerfil token={data.TokenId}/>
                     </div>
                 </div>
             </div>
