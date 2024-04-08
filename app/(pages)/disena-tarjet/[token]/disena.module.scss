@@ -1,0 +1,37 @@
+.DesignTarjet {
+
+    .Head {
+
+        img{
+            width: 53%;
+            height: auto;
+            margin: auto;
+            display: block;
+        }
+        h1, p{
+            text-align: center;
+        }
+        h1{
+            font-size: 1.2rem;
+            color: #006d2e;
+            font-weight: 500;
+        }
+        p{
+            color: #e93700;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+        a{
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-left: auto;
+            
+
+            img{
+                width: 64px;
+                height: 64px;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
