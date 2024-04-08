@@ -11,6 +11,7 @@ import style from './mytarjet.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import Social from '../pop-ups/social/Social';
+import EliminateUser from '../pop-ups/eliminate-user/EliminateUser';
 
 interface Props {
     uuId: string;
@@ -39,8 +40,17 @@ const MyTarjetSearch = ({ uuId }:Props) => {
 
     }, []);
 
+    // *Orden Giro Comercial
+    const ComercialOrder = () => {
+        setName('');
+        setOrder(2);
+    }
+
     // *Orden alfabético
     const AlphabetOrder = async () => {
+
+        setName('');
+
         const response = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaTarjetero/?Usutarjetid=${uuId}`,{
             method: 'GET',
             mode: 'cors'
@@ -54,8 +64,20 @@ const MyTarjetSearch = ({ uuId }:Props) => {
     }
 
     // *Búsqueda por nombre 
+    const [name, setName] = useState<string>('');
+
     const searchByName = async (name:string) => {
-        console.log(name);
+        setName(name);
+        setOrder(1);
+
+        const response = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaTarjetero/?Usutarjetid=${uuId}&Nombre=${name}`, {
+            method: 'GET',
+            mode: 'cors'
+        });
+
+        const data = await response.json();
+
+        setResults(data);
     }
     
     // *Selección de Segmento
@@ -108,6 +130,15 @@ const MyTarjetSearch = ({ uuId }:Props) => {
         });
     }
 
+    // *Eliminar usuario
+    const [eliminate, setEliminate] = useState<boolean>(false);
+    const [idUserEliminate, setIdUserEliminate] = useState<string>('');
+
+    const onEliminate = (idEliminate:string) => {
+        setIdUserEliminate(idEliminate);
+        setEliminate(true);
+    }
+
     return ( 
         <>
             <div className={style.MyTarjetSearch}>
@@ -116,14 +147,14 @@ const MyTarjetSearch = ({ uuId }:Props) => {
 
                     <div className={style.Buttons}>
                         <button 
-                            className={`btn ${order == 1 ? style.selected : ''}`}
+                            className={`btn ${(order == 1 && !name) ? style.selected : ''}`}
                             onClick={()=>AlphabetOrder()}
                         >
                             Alfabeto A-Z
                         </button>
                         <button 
                             className={`btn ${order == 2 ? style.selected : ''}`}
-                            onClick={()=>setOrder(2)}
+                            onClick={()=>ComercialOrder()}
                         >
                             Giro comercial
                         </button>
@@ -139,6 +170,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                             type="text" 
                             placeholder='Escribe el nombre o giro comercial'
                             onChange={(e)=>searchByName(e.target.value)}
+                            value={name}
                         />
                     </div>
                 </div>
@@ -202,7 +234,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                             </button>
                                         </div>
 
-                                        <button className={style.Eliminate}>
+                                        <button className={style.Eliminate} onClick={()=>onEliminate(result.IdUsuario)}>
                                             <BsTrash />
                                             Eliminar
                                         </button>
@@ -210,6 +242,8 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                 )}
                             </Fragment>
                         )) }
+
+                        {results?.SDTTarjetsG.length == 0 && <span>Sin resultados</span>}
                     </div>
                 )}
 
@@ -282,7 +316,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                                         </button>
                                                     </div>
 
-                                                    <button className={style.Eliminate}>
+                                                    <button className={style.Eliminate} onClick={()=>onEliminate(result.IdUsuario)}>
                                                         <BsTrash />
                                                         Eliminar
                                                     </button>
@@ -297,8 +331,15 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                 )}
             </div>
 
-            {share && <Social token={tokenShare} close={()=>setShare(false)}/>}
+            { share && <Social token={tokenShare} close={()=>setShare(false)}/> }
             <Toaster />
+            { eliminate && 
+                <EliminateUser 
+                    idUserEliminate={idUserEliminate} 
+                    uuId={uuId}
+                    close={()=>setEliminate(false)}
+                /> 
+            }
         </>
     );
 }
