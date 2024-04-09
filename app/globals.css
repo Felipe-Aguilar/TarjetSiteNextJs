@@ -95,7 +95,7 @@ form{
     margin-top: 16px;
   }
 }
-input{
+input, select{
   width: 100%;
   padding: 10px;
   background: #fff;
@@ -170,7 +170,92 @@ form .error{
 
 form .error p{
   color: #d90011;
-  
+}
+
+form .two{
+  gap: 10px;
+  align-items: center;
+}
+
+form .two input{
+  gap: 10px;
+  border-radius: 8px;
+  width: 50%;
+}
+
+form .two span{
+  font-size: 0.7rem;
+  width: 50%;
+}
+
+form input :disabled {
+  background: red;
+}
+
+form datalist option{
+  display: none;
+  text-transform: uppercase;
+}
+
+form .title{
+  display: flex;
+  margin: auto;
+  margin-top: 16px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  background: transparent;
+  border: none;
+  font-weight: 600;
+}
+
+form .contact{
+  display: block;
+
+  > * + * {
+    margin-top: 16px;
+  }
+}
+
+form .contact .input-contact{
+  width: 100%;
+}
+
+form .contact .input-contact div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  border-radius: 8px 0 0 8px;
+  background: #6b989e;
+}
+
+form .contact div svg{
+  color: #fff;
+  font-size: 1.5rem;
+}
+form .contact div img{
+  width: 60%;
+  height: auto;
+}
+
+form .contact input, select{
+  border-radius: 0 8px 8px 0;
+}
+
+form .contact select{
+  width: 90%;
+}
+
+form .input-checkbox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+form .input-checkbox input{
+  width: auto;
 }
 
 .pop{

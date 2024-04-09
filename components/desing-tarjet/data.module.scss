@@ -29,4 +29,55 @@
             }
         }
     }
+
+    form{
+        .PrefixContainer{
+            align-items: end;
+            gap: 10px;
+
+            div{
+                flex-direction: column;
+                width: 25%;
+
+                span{
+                    text-align: center;
+                    font-size: 0.9rem;
+                    margin-bottom: 5px;
+                }
+            }
+            input{
+                border-radius: 8px;
+            }
+        }
+
+        .DataList{
+            display: block;
+            text-transform: uppercase;
+
+            @media (width <= 700px) {
+                display: none;
+            }
+        }
+        .DataListSelect{
+            display: none;
+
+            @media (width <= 700px) {
+                display: block;
+            }
+        }
+
+        a{
+            display: block;
+            text-align: center;
+            text-decoration: underline;
+            color: #000;
+        }
+
+        input{
+            &:disabled{
+                background: #e4e4e4;
+                // color: ;
+            }
+        }
+    }
 }
