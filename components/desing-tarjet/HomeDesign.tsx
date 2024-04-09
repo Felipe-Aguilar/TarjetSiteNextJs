@@ -2,8 +2,14 @@
 
 import { useState } from 'react';
 import style from './home.module.scss';
+import Data from './Data';
+import { UserDataResponse } from '@/interfaces/userData-interface';
 
-const HomeDesign = () => {
+interface Props {
+    userData: UserDataResponse;
+}
+
+const HomeDesign = ( {userData}:Props ) => {
 
     const [order, setOrder] = useState(1);
 
@@ -27,6 +33,10 @@ const HomeDesign = () => {
                     Diseño de fondo
                 </button>
             </div>
+
+            <hr/>
+
+            { order == 1 && <Data userData={userData}/> }
             
         </div>
     );

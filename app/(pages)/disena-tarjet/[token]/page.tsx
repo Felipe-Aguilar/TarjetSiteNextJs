@@ -51,7 +51,7 @@ const DisenaTarjet = async () => {
                             </Link>
                         </div>
 
-                        <HomeDesign />
+                        <HomeDesign userData={data}/>
                     </div>
                 </div>
             </div>
