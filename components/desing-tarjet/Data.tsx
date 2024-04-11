@@ -7,9 +7,19 @@ import Image from 'next/image';
 import style from './data.module.scss';
 import Link from 'next/link';
 import ContactData from './ContactData';
+import { ResultUserInterface } from '@/interfaces/resultUser-interface';
 
 interface Props {
     userData: UserDataResponse;
+}
+
+interface SegmentLevel {
+    Descripcion: string;
+    Nivel1Desc: string;
+    Nivel1Id: string;
+    Nivel2Desc: string;
+    Nivel2Id: string;
+    Nivel3Id: string;
 }
 
 const Data = ( {userData}:Props ) => {
@@ -53,9 +63,16 @@ const Data = ( {userData}:Props ) => {
     const [userName, setUserName] = useState<string>(userData.Alias);
     const [businessName, setBusinessName] = useState<string>(userData.NomNegocio);
     const [workPosition, setWorkPosition] = useState<string>(userData.Cargo);
+    const [prefix, setPrefix] = useState<string>(userData.TituloDes);
     const [activity, setActivity] = useState<string>(userData.Lev3Desc);
-    const [segment1, setSegment1] = useState<string>(userData.Lev1Desc);
-    const [segment2, setSegment2] = useState<string>(userData.Lev2Desc);
+    const [segment, setSegment] = useState<SegmentLevel>({
+        Descripcion: userData.Lev3Desc,
+        Nivel1Desc: userData.Lev1Desc,
+        Nivel1Id: userData.Lev1Id,
+        Nivel2Desc: userData.Lev2Desc,
+        Nivel2Id: userData.Lev2Id,
+        Nivel3Id: userData.Lev3Id
+    })
 
     // *Busca de actividad - datalist
     const SearchActivity = async (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -70,9 +87,64 @@ const Data = ( {userData}:Props ) => {
 
             const data = await response.json();
 
-            setSegment1(data.ListSegmentos[0]?.Nivel1Desc);
-            setSegment2(data.ListSegmentos[0]?.Nivel2Desc);
+            setSegment(data.ListSegmentos[0]);
         }
+    }
+
+    // *Comprobar nombre de usuario
+    const onChangeUserName = async (name:string) => {
+        setUserName(name);
+
+        const response = await fetch(`https://souvenir-site.com/WebTarjet/APIDirectorio/BuscaXDesc?Actividad=&Nombre=&Alias=${name}`, {
+            method: 'GET',
+            mode: 'cors'
+        });
+
+        const data:ResultUserInterface = await response.json();
+
+        const same = data.ListTarjets.find(user => user.Alias === name);
+
+        if (same) {
+            setError([...error, 'Nombre de usuario ya existe']);
+        }
+    }
+
+    // *Guardar datos formulario
+    const [error, setError] = useState<string[]>([]);
+
+    const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const response = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizaUsu',{
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify({
+                "usuId": userData.UUID,
+                "ListUsuario": {
+                    "UUID": userData.UUID,
+                    "TokenId": userData.TokenId,
+                    "EmpleadoId": userData.EmpleadoId,
+                    "Alias": userName,
+                    "Nom": name,
+                    "AppP": paternal,
+                    "AppM": maternal,
+                    "Cargo": workPosition,
+                    // "Tipo": datosGenerales.Tipo,
+                    "Titulo": prefix,
+                    "Lev1Id": segment.Nivel1Id,
+                    // "Lev1Desc": segment.Nivel1Desc,
+                    "Lev2Id": segment.Nivel2Id,
+                    // "Lev2Desc": segment.Nivel2Desc,
+                    "Lev3Id": segment.Nivel3Id,
+                    // "Lev3Desc": activity,
+                    "NomNegocio": businessName,
+                }
+            })
+        })
+
+        const data = await response.json();
+
+        console.log(data);
     }
 
     return ( 
@@ -81,7 +153,10 @@ const Data = ( {userData}:Props ) => {
 
             <div className={style.SubmitImage}>
                 <Image 
-                    src={`https://tarjet.site/imagenes/perfil-imagenes/${userData.ImgFoto}`}
+                    src={userData.ImgFoto
+                        ? `https://tarjet.site/imagenes/perfil-imagenes/${userData.ImgFoto}`
+                        : `/images/perfil-temporal.webp`
+                    }
                     alt='Imagen de perfil'
                     width={500}
                     height={500}
@@ -92,11 +167,16 @@ const Data = ( {userData}:Props ) => {
                     <span>cargar ó cambiar imagen</span>
                 </button>
             </div>
-            <form>
+
+            <form onSubmit={onSubmitForm}>
                 <div className={style.PrefixContainer}>
                     <div>
                         <span>Prefijo</span>
-                        <select>
+                        <select 
+                            value={prefix} 
+                            onChange={(e)=>setPrefix(e.target.value)} 
+                            style={{borderRadius: '8px'}}
+                        >
                             { prefixList?.sdtTitulos.map((prefixOption)=>(
                                 <option 
                                     value={prefixOption.TituloPersonaDesc} 
@@ -139,7 +219,7 @@ const Data = ( {userData}:Props ) => {
                         placeholder='Nombre de usuario'
                         maxLength={15}
                         value={userName}
-                        onChange={(e)=>setUserName(e.target.value)}
+                        onChange={(e)=>onChangeUserName(e.target.value.trim())}
                     />
 
                     <span>(con este usuario te podrán encontrar más fácil en el directorio)</span>
@@ -189,14 +269,14 @@ const Data = ( {userData}:Props ) => {
                     type="text" 
                     disabled
                     placeholder='Categoría*'
-                    value={segment1}
+                    value={segment.Nivel1Desc}
                 />
 
                 <input 
                     type="text" 
                     disabled
                     placeholder='Categoría*'
-                    value={segment2}
+                    value={segment.Nivel2Desc}
                 />
 
                 <ContactData userData={userData}/>

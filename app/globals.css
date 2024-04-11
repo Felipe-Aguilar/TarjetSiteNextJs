@@ -222,6 +222,11 @@ form .contact .input-contact{
   width: 100%;
 }
 
+form .contact input, select{
+  width: 100%;
+  border-radius: 8px;
+}
+
 form .contact .input-contact div{
   display: flex;
   justify-content: center;
@@ -240,11 +245,11 @@ form .contact div img{
   height: auto;
 }
 
-form .contact input, select{
+form .contact .input-contact input, select{
   border-radius: 0 8px 8px 0;
 }
 
-form .contact select{
+form .contact .input-contact select{
   width: 90%;
 }
 
