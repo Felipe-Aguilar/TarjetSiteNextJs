@@ -25,13 +25,11 @@ const MapGoogle = ({address} : Props) => {
 
     return ( 
         <div style={{width: '100%', height: '300px'}}>
-            {address && (
-                <APIProvider apiKey='AIzaSyCPj4WhXm_VMY3W6MMQ2UwDOdTkrBAednk'>
-                    <Map zoom={15} center={{lat: latitude, lng: longitude}} mapId={'ab8d519ae945deed'}>
-                        <AdvancedMarker position={{lat: latitude, lng: longitude}}></AdvancedMarker>
-                    </Map>
-                </APIProvider>
-            )}
+            <APIProvider apiKey='AIzaSyCPj4WhXm_VMY3W6MMQ2UwDOdTkrBAednk'>
+                <Map zoom={15} center={{lat: latitude, lng: longitude}} mapId={'ab8d519ae945deed'}>
+                    <AdvancedMarker position={{lat: latitude, lng: longitude}}></AdvancedMarker>
+                </Map>
+            </APIProvider>
         </div>
     );
 }

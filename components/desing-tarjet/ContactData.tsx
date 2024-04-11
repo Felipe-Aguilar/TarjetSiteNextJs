@@ -2,9 +2,11 @@ import { Fragment, useEffect, useState } from "react";
 import { UserDataResponse } from '../../interfaces/userData-interface';
 import { BsCaretDownFill, BsTelephoneFill, BsWhatsapp } from "react-icons/bs";
 import { AnimatePresence, motion } from "framer-motion";
+import { ListColoniesInterface } from "@/interfaces/design-tarjet/listColonies-interface";
+
 import Image from "next/image";
 import MapGoogle from "./MapGoogle";
-import { ListColoniesInterface } from "@/interfaces/design-tarjet/listColonies-interface";
+import style from './contact.module.scss';
 
 interface Props {
     userData: UserDataResponse;
@@ -31,6 +33,7 @@ const ContactData = ( {userData}:Props ) => {
     const [state, setState] = useState(userData.Estado);
     const [mun, setMun] = useState(userData.Municip);
     const [colony, setColony] = useState(userData.Colonia);
+    const [range, setRange] = useState(userData.RangoLocal);
 
     // *Mostrar Mapa
     const [showMap, setShowMap] = useState<boolean>(userData.CodP ? true : false);
@@ -241,6 +244,60 @@ const ContactData = ( {userData}:Props ) => {
                         { showMap && (
                             <MapGoogle address={`${avenue} ${number}, ${postalCode}, ${mun}`}/>
                         )}
+
+                        <div className="input-selected">
+                            <select disabled={!userData.Premium} value={range}>
+                                <option value="3" key="3">3km</option>
+                                <option value="10" key="10">10km</option>
+                                <option value="20" key="20">20km</option>
+                                <option value="10000" key="10000">Sin límite</option>
+                            </select>
+
+                            <label>Rango de visualización en el mapa</label>
+                        </div>
+
+                        <span>Tu tarjet podrá ser vista en el buscador por personas que se encuentren dentro del rango configurado</span>
+
+                        <a href="https://shop.tarjet.mx/" className={style.Link}>
+                            Necesitas ser encontrado en mayor rango, <span>inscríbete a Premium, tu tarjeta sin límites.</span>
+                        </a>
+
+                        <div className={style.Switch}>
+                            <label className={style.switch}>
+                                <input type="checkbox"/>
+                                <span className={style.slider}></span>
+                            </label>
+
+                            <span className={style.Text}>Mostrar mi tarjet en el directorio</span>
+                        </div>
+
+                        <div className={style.Switch}>
+                            <label className={style.switch}>
+                                <input type="checkbox"/>
+                                <span className={style.slider}></span>
+                            </label>
+
+                            <span className={style.Text}>Permitir calificación por usuarios</span>
+                        </div>
+
+                        <div className={style.Switch}>
+                            <label className={style.switch}>
+                                <input type="checkbox"/>
+                                <span className={style.slider}></span>
+                            </label>
+
+                            <span className={style.Text}>Permitir comentarios en directorio</span>
+                        </div>
+
+                        <div className={style.Switch}>
+                            <label className={style.switch}>
+                                <input type="checkbox"/>
+                                <span className={style.slider}></span>
+                            </label>
+
+                            <span className={style.Text}>Pertenece a Empresa</span>
+                        </div>
+
                     </motion.div>
                 )}
             </AnimatePresence>

@@ -263,6 +263,16 @@ form .input-checkbox input{
   width: auto;
 }
 
+form .contact .input-selected{
+  align-items: center;
+  gap: 20px;
+}
+
+form .contact .input-selected select{
+  border-radius: 8px;
+  width: 20%;
+}
+
 .pop{
   position: fixed;
   z-index: 1;
