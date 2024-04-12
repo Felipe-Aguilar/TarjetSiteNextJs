@@ -9,7 +9,7 @@ import Link from 'next/link';
 import ContactData from './ContactData';
 import { ResultUserInterface } from '@/interfaces/resultUser-interface';
 import SocialNetworks from './SocialNetworks';
-import userData from '@/app/api/userData';
+import UploadImage from '../pop-ups/upload-image/UploadImage';
 
 interface Props {
     userData: UserDataResponse;
@@ -149,6 +149,9 @@ const Data = ( {userData}:Props ) => {
         console.log(data);
     }
 
+    // *Abrir Subir imagen
+    const [open, setOpen] = useState<boolean>(false);
+
     return ( 
         <div className={style.Data}>
             <p>Esta información se mostrará en el directorio</p>
@@ -164,11 +167,15 @@ const Data = ( {userData}:Props ) => {
                     height={500}
                 />
 
-                <button className='btn'>
+                <button className='btn' onClick={()=>setOpen(true)}>
                     Imagen ó Logotipo
                     <span>cargar ó cambiar imagen</span>
                 </button>
             </div>
+
+            { open && (
+                <UploadImage token={userData.TokenId} imageType={'PERF'} close={()=>setOpen(false)}/>
+            )}
 
             <form onSubmit={onSubmitForm}>
                 <div className={style.PrefixContainer}>
