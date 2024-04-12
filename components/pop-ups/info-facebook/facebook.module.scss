@@ -1,0 +1,22 @@
+.Info{
+    display: block;
+
+    img{
+        width: 60%;
+        height: auto;
+        display: block;
+        margin: auto;
+        margin-bottom: 1rem;
+
+        @media (width <= 700px) {
+            width: 70%;
+        }
+    }
+    p{
+        font-size: 0.9rem!important;
+    }
+
+    button{
+        width: inherit;
+    }
+}

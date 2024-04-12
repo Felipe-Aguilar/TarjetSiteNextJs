@@ -34,6 +34,10 @@ const ContactData = ( {userData}:Props ) => {
     const [mun, setMun] = useState(userData.Municip);
     const [colony, setColony] = useState(userData.Colonia);
     const [range, setRange] = useState(userData.RangoLocal);
+    const [publicTarjet, setPublicTarjet] = useState(userData.PublicPriva == 0 ? true : false);
+    const [qualification, setQualification] = useState(userData.PermitirCalif == 0 ? true : false);
+    const [comments, setComments] = useState(userData.PermitirComments == 0 ? true : false);
+
 
     // *Mostrar Mapa
     const [showMap, setShowMap] = useState<boolean>(userData.CodP ? true : false);
@@ -77,7 +81,10 @@ const ContactData = ( {userData}:Props ) => {
         <Fragment>
             <button className="title" type="button" onClick={()=>setOpen(!open)}>
                 Datos de contacto
-                <BsCaretDownFill />
+
+                <motion.div animate={open ? {rotate: 180} : {rotate: 0}}>
+                    <BsCaretDownFill />
+                </motion.div>
             </button>
 
             <AnimatePresence>
@@ -264,7 +271,11 @@ const ContactData = ( {userData}:Props ) => {
 
                         <div className={style.Switch}>
                             <label className={style.switch}>
-                                <input type="checkbox"/>
+                                <input 
+                                    type="checkbox"
+                                    checked={publicTarjet}
+                                    onChange={()=>setPublicTarjet(!publicTarjet)}
+                                />
                                 <span className={style.slider}></span>
                             </label>
 
@@ -273,7 +284,11 @@ const ContactData = ( {userData}:Props ) => {
 
                         <div className={style.Switch}>
                             <label className={style.switch}>
-                                <input type="checkbox"/>
+                                <input 
+                                    type="checkbox"
+                                    checked={qualification}
+                                    onChange={()=>setQualification(!qualification)}
+                                />
                                 <span className={style.slider}></span>
                             </label>
 
@@ -282,7 +297,11 @@ const ContactData = ( {userData}:Props ) => {
 
                         <div className={style.Switch}>
                             <label className={style.switch}>
-                                <input type="checkbox"/>
+                                <input 
+                                    type="checkbox"
+                                    checked={comments}
+                                    onChange={()=>setComments(!comments)}
+                                />
                                 <span className={style.slider}></span>
                             </label>
 
@@ -291,7 +310,8 @@ const ContactData = ( {userData}:Props ) => {
 
                         <div className={style.Switch}>
                             <label className={style.switch}>
-                                <input type="checkbox"/>
+                                <input 
+                                    type="checkbox"/>
                                 <span className={style.slider}></span>
                             </label>
 

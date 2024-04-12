@@ -184,7 +184,9 @@ form .two input{
 }
 
 form .two span{
-  font-size: 0.7rem;
+  font-size: 0.7rem!important;
+  text-transform: inherit!important;
+  text-align: left!important;
   width: 50%;
 }
 
@@ -236,13 +238,27 @@ form .contact .input-contact div{
   background: #6b989e;
 }
 
+@media screen and (max-width: 700px) {
+  form .contact .input-contact div{
+    width: 15%;
+  }
+}
+
 form .contact div svg{
   color: #fff;
   font-size: 1.5rem;
 }
+
 form .contact div img{
   width: 60%;
   height: auto;
+}
+
+@media screen and (max-width: 700px) {
+  form .contact div img{
+    width: 50%;
+    height: auto;
+  }
 }
 
 form .contact .input-contact input, select{
@@ -251,6 +267,12 @@ form .contact .input-contact input, select{
 
 form .contact .input-contact select{
   width: 90%;
+}
+
+@media screen and (max-width: 700px) {
+  form .contact .input-contact select{
+    width: 100%;
+  }
 }
 
 form .input-checkbox{

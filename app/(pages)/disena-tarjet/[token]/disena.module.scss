@@ -25,6 +25,10 @@
             font-size: 0.9rem;
             display: inline-block;
             margin-left: auto;
+
+            @media (width <= 700px) {
+                margin-left: 20px;
+            }
             
 
             img{

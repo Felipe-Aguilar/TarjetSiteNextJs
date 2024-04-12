@@ -8,6 +8,8 @@ import style from './data.module.scss';
 import Link from 'next/link';
 import ContactData from './ContactData';
 import { ResultUserInterface } from '@/interfaces/resultUser-interface';
+import SocialNetworks from './SocialNetworks';
+import userData from '@/app/api/userData';
 
 interface Props {
     userData: UserDataResponse;
@@ -280,6 +282,7 @@ const Data = ( {userData}:Props ) => {
                 />
 
                 <ContactData userData={userData}/>
+                <SocialNetworks userData={userData}/>
             </form>
         </div>
     );
