@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 import { UserDataResponse } from '@/interfaces/userData-interface';
 import { ListPrefixInterface } from '@/interfaces/design-tarjet/listPrefix-interface';
 import { ListSegmentsInterface } from '@/interfaces/design-tarjet/listSegments-interface';
+import { ResultUserInterface } from '@/interfaces/resultUser-interface';
 
 import Image from 'next/image';
 import style from './data.module.scss';
 import Link from 'next/link';
 import ContactData from './ContactData';
-import { ResultUserInterface } from '@/interfaces/resultUser-interface';
 import SocialNetworks from './SocialNetworks';
 import UploadImage from '../pop-ups/upload-image/UploadImage';
+import EditData from '@/app/api/editData';
+import DataSuccessfully from '../pop-ups/data-successfully/DataSuccessfully';
+import { useRouter } from 'next/navigation';
 
 interface Props {
     userData: UserDataResponse;
@@ -25,6 +28,8 @@ interface SegmentLevel {
 }
 
 const Data = ( {userData}:Props ) => {
+
+    const router = useRouter();
 
     // *Listado de Prefijos y segmentos
     const [prefixList, setPrefixList] = useState<ListPrefixInterface>();
@@ -113,37 +118,34 @@ const Data = ( {userData}:Props ) => {
 
     // *Guardar datos formulario
     const [error, setError] = useState<string[]>([]);
+    const [success, setSuccess] = useState<boolean>(false);
 
     const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const response = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizaUsu',{
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify({
-                "usuId": userData.UUID,
-                "ListUsuario": {
-                    "UUID": userData.UUID,
-                    "TokenId": userData.TokenId,
-                    "EmpleadoId": userData.EmpleadoId,
-                    "Alias": userName,
-                    "Nom": name,
-                    "AppP": paternal,
-                    "AppM": maternal,
-                    "Cargo": workPosition,
-                    "Titulo": prefix,
-                    "Lev1Id": segment.Nivel1Id,
-                    "Lev2Id": segment.Nivel2Id,
-                    "Lev3Id": segment.Nivel3Id,
-                    "NomNegocio": businessName,
-                    "ImgFoto": userData.ImgFoto
-                }
-            })
-        })
+        const dataForm = {
+            "Alias": userName,
+            "Nom": name,
+            "AppP": paternal,
+            "AppM": maternal,
+            "Cargo": workPosition,
+            "Titulo": prefix,
+            "Lev1Id": segment.Nivel1Id,
+            "Lev2Id": segment.Nivel2Id,
+            "Lev3Id": segment.Nivel3Id,
+            "NomNegocio": businessName,
+        }
 
-        const data = await response.json();
+        await EditData({ userData, dataForm });
 
-        console.log(data);
+        setTimeout(()=>{
+            setSuccess(true);
+
+            setTimeout(()=>{
+                router.replace(`/disena-tarjet/${btoa(userData.TokenId)}`);
+                setSuccess(false);
+            }, 2500)
+        }, 1000)
     }
 
     // *Abrir Subir imagen
@@ -285,13 +287,17 @@ const Data = ( {userData}:Props ) => {
                     value={segment.Nivel2Desc}
                 />
 
-                <ContactData userData={userData} onSubmitForm={onSubmitForm}/>
+                <ContactData userData={userData}/>
                 <SocialNetworks userData={userData}/>
 
                 <button type='submit' className='btn' style={{marginTop: '16px'}}>
                     Guardar datos de tarjeta
                 </button>
             </form>
+
+            { success && (
+                <DataSuccessfully />
+            )}
         </div>
     );
 }

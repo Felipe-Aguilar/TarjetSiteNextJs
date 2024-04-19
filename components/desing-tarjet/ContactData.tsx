@@ -7,10 +7,10 @@ import { ListColoniesInterface } from "@/interfaces/design-tarjet/listColonies-i
 import Image from "next/image";
 import MapGoogle from "./MapGoogle";
 import style from './contact.module.scss';
+import EditData from "@/app/api/editData";
 
 interface Props {
     userData: UserDataResponse;
-    onSubmitForm: (event:React.FormEvent<HTMLFormElement>)=>void;
 }
 
 const animate = {
@@ -19,11 +19,11 @@ const animate = {
     exit: {opacity: 0, height: 0},
 }
 
-const ContactData = ( { userData, onSubmitForm }:Props ) => {
+const ContactData = ( { userData }:Props ) => {
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const [whatsApp, setWhatsApp] = useState(userData.Telefono2);
+    const [whatsApp, setWhatsApp] = useState(userData.Telefono1);
     const [phone, setPhone] = useState(userData.Telefono2);
     const [showUbication, setShowUbication] = useState(userData.VerUbicacion == 0 ? false : true);
     const [email, setEmail] = useState(userData.Mail);
@@ -53,14 +53,26 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
     const [listColonies, setListColonies] = useState<ListColoniesInterface>();
 
 
-    const onSubmitData = () => {
+    const onSubmitData = async () => {
+
         const contactForm = {
             "Telefono1": whatsApp,
-            "Tel1WP": phone,
+            "Telefono2": phone,
+            "VerUbicacion": showUbication ? 1 : 0,
+            "Mail": email,
+            "Web": website,
+            "Calle": avenue,
+            "NumExt": number,
+            "CodP": postalCode,
+            "Colonia": colony,
+            "Municip": mun,
+            "Estado": state,
+            "PublicPriva": publicTarjet ? 0 : 1,
+            "PermitirCalif": qualification ? 0 : 1,
+            "PermitirComments": comments ? 0 : 1,
         }
 
-        // Todo: Arreglar subir datos 
-        // onSubmitForm();
+        await EditData({userData, contactForm});
     }
 
     useEffect(()=>{
@@ -113,7 +125,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                                 maxLength={10}
                                 value={whatsApp}
                                 onChange={(e)=>setWhatsApp(e.target.value.trim())}
-                                // onBlur={onSubmitForm}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
@@ -128,6 +140,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                                 maxLength={10}
                                 value={phone}
                                 onChange={(e)=>setPhone(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
@@ -137,6 +150,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                                 id="ubication"
                                 checked={showUbication}
                                 onChange={()=>setShowUbication(!showUbication)}
+                                onBlur={onSubmitData}
                             />
 
                             <label htmlFor="ubication">Mostrar mi ubicación registrada en mi perfil</label>
@@ -174,6 +188,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                                 placeholder="Correo electrónico"
                                 value={email}
                                 onChange={(e)=>setEmail(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
@@ -193,6 +208,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                                 placeholder="Sitio Web"
                                 value={website}
                                 onChange={(e)=>setWebsite(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
@@ -203,6 +219,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                             placeholder="Calle, privada, avenida"
                             value={avenue}
                             onChange={(e)=>setAvenue(e.target.value)}
+                            onBlur={onSubmitData}
                         />
 
                         <div className="two">
@@ -212,6 +229,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                                 placeholder="Número"
                                 value={number}
                                 onChange={(e)=>setNumber(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
 
                             <input 
@@ -220,6 +238,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                                 placeholder="Código postal"
                                 value={postalCode}
                                 onChange={(e)=>setPostalCode(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
@@ -242,6 +261,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                             style={{borderRadius: '8px'}}
                             value={colony}
                             onChange={(e)=>setColony(e.target.value)}
+                            onBlur={onSubmitData}
                         >
                             <option value="colonia" key="colonia">Colonia*</option>
 
@@ -288,6 +308,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                                     type="checkbox"
                                     checked={publicTarjet}
                                     onChange={()=>setPublicTarjet(!publicTarjet)}
+                                    onBlur={onSubmitData}
                                 />
                                 <span className={style.slider}></span>
                             </label>
@@ -301,6 +322,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                                     type="checkbox"
                                     checked={qualification}
                                     onChange={()=>setQualification(!qualification)}
+                                    onBlur={onSubmitData}
                                 />
                                 <span className={style.slider}></span>
                             </label>
@@ -314,6 +336,7 @@ const ContactData = ( { userData, onSubmitForm }:Props ) => {
                                     type="checkbox"
                                     checked={comments}
                                     onChange={()=>setComments(!comments)}
+                                    onBlur={onSubmitData}
                                 />
                                 <span className={style.slider}></span>
                             </label>

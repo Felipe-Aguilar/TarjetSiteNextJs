@@ -2,10 +2,11 @@ import { Fragment, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BsCaretDownFill, BsQuestionCircle } from "react-icons/bs";
 import { UserDataResponse } from "@/interfaces/userData-interface";
-import { FaFacebookF, FaInstagram, FaLinkedin, FaLinkedinIn, FaTelegramPlane, FaTiktok, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTelegramPlane, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import Image from "next/image";
+
 import InfoFacebook from "../pop-ups/info-facebook/InfoFacebook";
+import EditData from "@/app/api/editData";
 
 interface Props {
     userData: UserDataResponse;
@@ -30,6 +31,19 @@ const SocialNetworks = ( {userData}: Props ) => {
     const [telegram, setTelegram] = useState<string>(userData.Telegram);
 
     const [openInfo, setOpenInfo] = useState<boolean>(false);
+
+    const onSubmitData = async () => {
+        const socialForm = {
+            "Facebook": facebook,
+            "Instagram": instagram,
+            "Tiktok": tiktok,
+            "Twitter": twitter,
+            "Youtube": youtube,
+            "Telegram": telegram,
+        }
+
+        await EditData({userData, socialForm});
+    }
 
     return ( 
         <Fragment>
@@ -56,6 +70,7 @@ const SocialNetworks = ( {userData}: Props ) => {
                                 value={facebook}
                                 onChange={(e)=>setFacebook(e.target.value.trim())}
                                 style={{borderRadius: 0}}
+                                onBlur={onSubmitData}
                             />
 
                             <button onClick={()=>setOpenInfo(true)}>
@@ -74,6 +89,7 @@ const SocialNetworks = ( {userData}: Props ) => {
                                 maxLength={10}
                                 value={instagram}
                                 onChange={(e)=>setInstagram(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
@@ -88,6 +104,7 @@ const SocialNetworks = ( {userData}: Props ) => {
                                 maxLength={10}
                                 value={tiktok}
                                 onChange={(e)=>setTiktok(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
@@ -102,6 +119,7 @@ const SocialNetworks = ( {userData}: Props ) => {
                                 maxLength={10}
                                 value={twitter}
                                 onChange={(e)=>setTwitter(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
@@ -116,6 +134,7 @@ const SocialNetworks = ( {userData}: Props ) => {
                                 maxLength={10}
                                 value={youtube}
                                 onChange={(e)=>setYoutube(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
@@ -130,6 +149,7 @@ const SocialNetworks = ( {userData}: Props ) => {
                                 maxLength={10}
                                 value={linkedin}
                                 onChange={(e)=>setLinkedin(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
@@ -144,6 +164,7 @@ const SocialNetworks = ( {userData}: Props ) => {
                                 maxLength={10}
                                 value={telegram}
                                 onChange={(e)=>setTelegram(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
