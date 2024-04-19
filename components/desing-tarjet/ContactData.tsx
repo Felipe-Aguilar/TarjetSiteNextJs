@@ -10,6 +10,7 @@ import style from './contact.module.scss';
 
 interface Props {
     userData: UserDataResponse;
+    onSubmitForm: (event:React.FormEvent<HTMLFormElement>)=>void;
 }
 
 const animate = {
@@ -18,7 +19,7 @@ const animate = {
     exit: {opacity: 0, height: 0},
 }
 
-const ContactData = ( {userData}:Props ) => {
+const ContactData = ( { userData, onSubmitForm }:Props ) => {
 
     const [open, setOpen] = useState<boolean>(false);
 
@@ -50,6 +51,17 @@ const ContactData = ( {userData}:Props ) => {
 
     // *Asignación de Municipio y Estado
     const [listColonies, setListColonies] = useState<ListColoniesInterface>();
+
+
+    const onSubmitData = () => {
+        const contactForm = {
+            "Telefono1": whatsApp,
+            "Tel1WP": phone,
+        }
+
+        // Todo: Arreglar subir datos 
+        // onSubmitForm();
+    }
 
     useEffect(()=>{
         const onChangePostalCode = async (postalCode:string) => {
@@ -101,6 +113,7 @@ const ContactData = ( {userData}:Props ) => {
                                 maxLength={10}
                                 value={whatsApp}
                                 onChange={(e)=>setWhatsApp(e.target.value.trim())}
+                                // onBlur={onSubmitForm}
                             />
                         </div>
 

@@ -131,15 +131,12 @@ const Data = ( {userData}:Props ) => {
                     "AppP": paternal,
                     "AppM": maternal,
                     "Cargo": workPosition,
-                    // "Tipo": datosGenerales.Tipo,
                     "Titulo": prefix,
                     "Lev1Id": segment.Nivel1Id,
-                    // "Lev1Desc": segment.Nivel1Desc,
                     "Lev2Id": segment.Nivel2Id,
-                    // "Lev2Desc": segment.Nivel2Desc,
                     "Lev3Id": segment.Nivel3Id,
-                    // "Lev3Desc": activity,
                     "NomNegocio": businessName,
+                    "ImgFoto": userData.ImgFoto
                 }
             })
         })
@@ -288,8 +285,12 @@ const Data = ( {userData}:Props ) => {
                     value={segment.Nivel2Desc}
                 />
 
-                <ContactData userData={userData}/>
+                <ContactData userData={userData} onSubmitForm={onSubmitForm}/>
                 <SocialNetworks userData={userData}/>
+
+                <button type='submit' className='btn' style={{marginTop: '16px'}}>
+                    Guardar datos de tarjeta
+                </button>
             </form>
         </div>
     );
