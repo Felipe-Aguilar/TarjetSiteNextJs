@@ -82,6 +82,7 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                     "Twitter": socialForm?.Twitter ?? userData.Twitter,
                     "Youtube": socialForm?.Youtube ?? userData.Youtube,
                     "Telegram": socialForm?.Telegram ?? userData.Telegram,
+                    "RegistroTarjet": userData.RegistroTarjet,
                 }
         })
     });
