@@ -1,0 +1,165 @@
+.DesignCard{
+    p, h3, h4{
+        text-align: center;
+        font-weight: 600;
+    }
+    h4{
+        color: #e93700;
+    }
+
+    .InstructionsTitle{
+        text-align: left;
+        text-transform: uppercase;
+        color: #e93700;
+
+        @media (width <= 700px) {
+            padding: 0 2%;
+        }
+    }
+
+    .Instructions{
+
+        > * + *{
+            margin-top: 20px;
+        }
+        
+        .InstructionsContainer{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            svg{
+                font-size: 1.7rem;
+                color: #5558af;
+                width: 10%;
+            }
+
+            p{
+                margin: 0;
+                font-weight: 400;
+                text-align: left;
+                width: 90%;
+
+                span{
+                    font-weight: 600;
+                    background: none;
+                }
+            }
+        }
+    }
+
+    .Ready{
+        margin: 20px 0;
+        font-weight: 400;
+    }
+
+    .ButtonsSelect{
+        display: flex;
+        
+        button{
+            width: calc(100%/3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1rem;
+            padding: 5px 0;
+            background: transparent;
+            border: transparent;
+            transition: all 0.3s ease;
+            margin: 0;
+        }
+
+        .Border{
+            border-left: 1px solid #000;
+            border-right: 1px solid #000;
+        }
+
+        .Selected{
+            color: #d45524;
+        }
+    }
+
+    .Actual{
+        span{
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        img{
+            width: 80%;
+            height: auto;
+            display: block;
+            margin: auto;
+            border-radius: 10px;
+        }
+    }
+
+    .SliderImages{
+        margin: 20px 0;
+
+        @media (width <= 700px) {
+            padding: 0 6%;
+        }
+
+        img{
+            width: 80%!important;
+            height: auto;
+            display: block!important;
+            margin: auto!important;
+            border-radius: 10px;
+
+            @media (width <= 700px) {
+                width: 90%!important;
+            }
+        }
+
+        span{
+            font-size: 0.9rem;
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+        }
+    }
+
+    .Options{
+        display: block;
+        width: 80%;
+
+        > * + * {
+            margin-top: 10px;
+        }
+
+        margin: auto;
+
+        .Option{
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 10px;
+
+            input{
+                width: auto;
+            }
+            label{
+                cursor: pointer;
+            }
+        }
+    }
+
+    button{
+        margin-top: 20px;
+        background: #a7a7d4;
+    }
+
+    a{
+        display: block;
+        text-align: center;
+        margin: auto;
+        margin-top: 20px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: #4f8b92;
+    }
+}

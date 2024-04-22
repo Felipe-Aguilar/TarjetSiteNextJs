@@ -1,9 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { UserDataResponse } from '@/interfaces/userData-interface';
+
 import style from './home.module.scss';
 import Data from './Data';
-import { UserDataResponse } from '@/interfaces/userData-interface';
+import DesignCard from './DesignCard';
+import userData from '@/app/api/userData';
 
 interface Props {
     userData: UserDataResponse;
@@ -37,7 +40,7 @@ const HomeDesign = ( {userData}:Props ) => {
             <hr/>
 
             { order == 1 && <Data userData={userData}/> }
-            
+            { order == 2 && <DesignCard userData={userData}/>}
         </div>
     );
 }
