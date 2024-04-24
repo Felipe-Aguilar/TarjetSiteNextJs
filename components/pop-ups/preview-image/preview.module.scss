@@ -1,0 +1,88 @@
+.Preview{
+    width: 33%!important;
+    background: #fff!important;
+
+    @media (width <= 700px) {
+        width: 95%!important;
+    }
+
+    @media (width <= 400px) {
+        padding: 20px 10px!important;
+    }
+
+    p{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        font-weight: 400!important;
+        color: #7a7a7a!important;
+        font-size: 0.9rem!important;
+
+        @media (width <= 400px) {
+            font-size: 0.8rem!important;
+        }
+
+        img{
+            width: 38px;
+            height: auto;
+
+            @media (width <= 400px) {
+                width: 32px;
+            }
+        }
+    }
+
+    .BackgroundImage{
+        width: 100%;
+        height: auto;
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
+
+        img{
+            width: 100%;
+        }
+
+        .Text{
+            position: absolute;
+            vertical-align: top;
+            cursor: move;
+            text-wrap: nowrap;
+            font-size: 1.3rem;
+
+            @media (width <= 700px) {
+                font-size: 1rem!important;
+            }
+
+            @media (width <= 400px) {
+                font-size: 0.9rem!important;
+            }
+        }
+
+        .TextName{
+            font-size: 1.6rem;
+
+            @media (width <= 700px) {
+                font-size: 1.2rem!important;
+            }
+
+            @media (width <= 400px) {
+                font-size:  1.1rem!important;
+            }
+        }
+    }
+
+    .SaveButton{
+        background-color: #91ba14;
+        margin-bottom: 20px;
+    }
+}
+.SuccessPop{
+    svg{
+        display: block!important;
+        margin: auto!important;
+        font-size: 2rem!important;
+        color: #006d2e!important;
+    }
+}

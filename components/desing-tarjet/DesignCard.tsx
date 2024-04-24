@@ -9,6 +9,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from 'next/link';
+import PreviewImage from '../pop-ups/preview-image/PreviewImage';
 
 interface Props {
     userData: UserDataResponse;
@@ -46,6 +47,7 @@ const DesignCard = ({ userData } : Props) => {
     const [showWorkStation, setShowWorkStation] = useState<boolean>(true);
     const [showBusinessName, setShowBusinessName] = useState<boolean>(true);
     const [showPhoneNumber, setShowPhoneNumber] = useState<boolean>(true);
+    const [preview, setPreview] = useState<boolean>(false);
 
     useEffect(()=>{
 
@@ -68,9 +70,44 @@ const DesignCard = ({ userData } : Props) => {
 
     }, [])
 
+    // *Contador de slider regresa a 1 después de cambio de premium o gratuita
     useEffect(()=>{
         setCurrentSlide(1);
     },[order]);
+
+    
+    // *Previsualizazión de imagen
+    const [premiumPreview, setPremiumPreview] = useState<boolean>(false);
+    const [backgroundCard, setBackgroundCard] = useState<ListTarjeta>();
+    const [data, setData] = useState<{
+        name: string;
+        workStation: string;
+        businessName: string;
+        phone: string;
+    }>();
+
+    const onPreview = (premium:boolean) => {
+
+        const data = {
+            name: showName ? `${userData.Nom} ${userData.AppP} ${userData.AppM}` : '',
+            workStation: showWorkStation ? `${userData.Cargo}` : '',
+            businessName: showBusinessName ? `${userData.NomNegocio}` : '',
+            phone: showPhoneNumber ? `${userData.Telefono1}` : ''
+        }
+
+        setData(data);
+
+        if (!premium) {
+            setPremiumPreview(false);
+            setBackgroundCard(imagesFree![currentSlide-1]);
+            setPreview(true);
+        }
+        if (premium) {
+            setPremiumPreview(true);
+            setBackgroundCard(imagesPremium![currentSlide-1]);
+            setPreview(true);
+        }
+    }
 
     return ( 
         <div className={style.DesignCard}>
@@ -183,13 +220,14 @@ const DesignCard = ({ userData } : Props) => {
                     </div>
 
                     { order === 1 && (
-                        <button className='btn'>Previsualizar</button>
+                        <button className='btn' onClick={()=>onPreview(false)}>Previsualizar</button>
                     )} 
 
                     { order === 2 && (
                         <button 
                             className='btn'
-                            disabled={userData.Premium ? false : true}
+                            disabled={!userData.Premium ? false : true}
+                            onClick={()=>onPreview(true)}
                         >
                             Previsualizar
                         </button>
@@ -207,6 +245,7 @@ const DesignCard = ({ userData } : Props) => {
                             alt='Tarjeta de presentación'
                             width={820}
                             height={484}
+                            quality={100}
                         />
                     ): (
                         <p>Aún no cuentas con una tarjeta personalizada</p>
@@ -217,6 +256,16 @@ const DesignCard = ({ userData } : Props) => {
             <Link href={`/mi-perfil/${btoa(userData.TokenId)}`}>
                 Regresar a perfil (x)
             </Link>
+
+            { preview && 
+                <PreviewImage 
+                    token={userData.TokenId}
+                    premiumPreview={premiumPreview} 
+                    backgroundCard={backgroundCard!} 
+                    data={data!} 
+                    close={()=>setPreview(false)}
+                /> 
+            }
         </div>
     );
 }
