@@ -226,7 +226,7 @@ const DesignCard = ({ userData } : Props) => {
                     { order === 2 && (
                         <button 
                             className='btn'
-                            disabled={!userData.Premium ? false : true}
+                            disabled={userData.Premium ? false : true}
                             onClick={()=>onPreview(true)}
                         >
                             Previsualizar
