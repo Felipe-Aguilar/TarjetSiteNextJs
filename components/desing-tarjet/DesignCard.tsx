@@ -109,6 +109,14 @@ const DesignCard = ({ userData } : Props) => {
         }
     }
 
+    useEffect(()=>{
+        if (preview) {
+            document.body.style.overflow = 'hidden';
+        }else{
+            document.body.style.overflow = 'auto';
+        }
+    },[preview])
+
     return ( 
         <div className={style.DesignCard}>
             <p>Esta imagen se mostrará en el directorio</p>
