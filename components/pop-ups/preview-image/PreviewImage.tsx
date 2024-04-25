@@ -170,7 +170,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
             ctx!.fillStyle = `${backgroundCard.TarjetaColorFont}`;
             ctx!.fillText(text2, (position2.x / (image!.current! as Element).clientWidth ) * img.width, (position2.y / (image!.current! as Element).clientHeight) * img.height + scaledFontSize); // Ajusta la posición del texto según sea necesario
 
-            ctx!.font = `35px Arial`;
+            ctx!.font = `41px Arial`;
             ctx!.fillStyle = `${backgroundCard.TarjetaColorFont}`;
             ctx!.fillText(text3, (position3.x / (image!.current! as Element).clientWidth ) * img.width, (position3.y / (image!.current! as Element).clientHeight) * img.height + scaledFontSize); // Ajusta la posición del texto según sea necesario
 
@@ -262,7 +262,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
 
                         { data.businessName && (
                             <div 
-                                className={style.Text} 
+                                className={`${style.Text} ${style.TextBusiness}`} 
                                 ref={text3Reference}
                                 style={{
                                     top: `${position3.y}px`, 
@@ -282,7 +282,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
 
                         { data.phone && (
                             <div 
-                                className={style.Text} 
+                                className={`${style.Text} ${style.TextPhone}`} 
                                 ref={text4Reference}
                                 style={{
                                     top: `${position4.y}px`, 
