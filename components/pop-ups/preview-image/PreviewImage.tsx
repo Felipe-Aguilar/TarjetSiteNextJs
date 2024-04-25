@@ -282,7 +282,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
 
                         { data.phone && (
                             <div 
-                                className={`${style.Text} ${style.TextPhone}`} 
+                                className={style.Text} 
                                 ref={text4Reference}
                                 style={{
                                     top: `${position4.y}px`, 
