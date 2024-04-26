@@ -33,7 +33,7 @@ const ButtonsPerfil = ( {token}:Props ) => {
             firstText: 'Es tu propio espacio en donde describes tus servicios e imágenes de lo que haces. Funciona como tu propio sitio Web.',
             image: '/images/ilustracion-perfil-2.webp',
             secondText: '',
-            path: `/disena-tu-tarjetsite/`,
+            path: `/disena-micro-sitio/`,
         },
         {
             title: 'Tarjetero Virtual', 

@@ -1,0 +1,50 @@
+.MicroSite{
+    .Head{
+        img{
+            width: 53%;
+            height: auto;
+            display: block;
+            margin: auto;
+        }
+
+        h1{
+            text-align: center;
+            font-size: 1.2rem;
+            color: #006d2e;
+            font-weight: 500;
+        }
+
+        p{
+            text-align: center;
+            color: #e93700;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+        a{
+            font-size: 0.9rem;
+            text-align: center!important;
+            display: inline-block;
+
+            @media (width <= 700px) {
+                margin-left: 20px;
+            }
+
+            img{
+                width: 64px;
+                height: 64px;
+                display: block;
+                margin: 0;
+                margin-bottom: 5px;
+            }
+        }
+    }
+    .Design{
+        margin-top: 20px;
+
+        h2{
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+    }
+}
