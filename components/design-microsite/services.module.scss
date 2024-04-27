@@ -71,6 +71,15 @@
                 font-weight: 700;
                 font-size: 1rem;
 
+                &:disabled{
+                    background: #d2dfe5!important;
+                    cursor: not-allowed;
+
+                    span{
+                        background: #968e76
+                    }
+                }
+
                 span{
                     width: 10%;
                     background: #f28f11;
@@ -82,6 +91,72 @@
                     color: #fff;
                 }
             }
+
+            .ServiceContainer{
+                width: 95%;
+                display: block;
+                margin: auto;
+                margin-top: 16px;
+
+                > * + *{
+                    margin-top: 16px;
+                }
+
+                input{
+                    width: 100%;
+                    border-radius: 8px;
+                }
+
+                .UploadImage{
+                    width: 100%;
+                    height: 300px;
+                }
+
+                .UploadButton{
+                    justify-content: center;
+                    background: #c4e4e9;
+                    font-weight: 500;
+                }
+
+                textarea{
+                    max-width: 100%;
+                    min-width: 100%;
+                    max-height: 130px;
+                    min-height: 130px;
+                    border: transparent;
+                    border-radius: 8px;
+                    padding: 10px;
+                    outline: none;
+                    font-family: inherit;
+                    font-size: 0.9rem;
+                }
+                .ClearButton{
+                    // background: transparent;
+                    width: auto;
+                    margin: auto;
+                    margin-top: 16px;
+                    justify-content: center;
+                    padding: 0 10px;
+                    font-weight: 500;
+                    text-decoration: underline;
+                    background: transparent;
+                }
+            }
+        }
+        p{
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+        }
+        a{
+            margin: auto!important;
+            display: block;
+            width: 40%;
+            background: #fab947;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #000;
         }
     }
 }
