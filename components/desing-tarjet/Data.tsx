@@ -82,7 +82,7 @@ const Data = ( {userData}:Props ) => {
     })
 
     // *Busca de actividad - datalist
-    const SearchActivity = async (e : React.ChangeEvent<HTMLInputElement>) => {
+    const SearchActivity = async (e : React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
 
         setActivity(e.target.value);
 
@@ -265,8 +265,10 @@ const Data = ( {userData}:Props ) => {
                     ))}
                 </datalist>
 
-                <select className={style.DataListSelect}>
-                    <option value="" key="">Hola mundo</option>
+                <select className={style.DataListSelect} value={activity} onChange={(e)=>SearchActivity(e)}>
+                    { segments?.ListSegmentos.map((segment)=>(
+                        <option value={segment.Descripcion} key={segment.Nivel3Id}>{segment.Descripcion}</option>
+                    )) }
                 </select>
 
                 <Link href={'/contacto'}>
