@@ -16,13 +16,13 @@ const UploadImageFirst = async (blob:any, token:string, type:string, serviceNumb
 
 const UploadImageSecond = async (token:string, type:string, image: any, serviceNumber?:string) => {
 
-    await fetch('https://souvenir-site.com/WebTarjet/APIImagen/ServiceUpload',{
+    const response = await fetch('https://souvenir-site.com/WebTarjet/APIImagen/ServiceUpload',{
         method: 'POST',
         body: JSON.stringify({
             "UsuToken": token,
             "ImageFileImage": image,
             "TipoImagen": type,
-            "ServId": serviceNumber === undefined ? '0' : `${serviceNumber}`
+            "ServId": (serviceNumber === '' || serviceNumber === undefined) ? '0' : `${serviceNumber}`
         })
     });
 

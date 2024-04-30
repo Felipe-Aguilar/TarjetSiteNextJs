@@ -105,6 +105,8 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                     "Youtube": socialForm?.Youtube ?? userData.Youtube,
                     "Telegram": socialForm?.Telegram ?? userData.Telegram,
                     "RegistroTarjet": userData.RegistroTarjet,
+                    "ImgHeader": userData.ImgHeader,
+                    "ImgTarFrente": userData.ImgTarFrente,
                     "Serv": [
                         {
                             "ServNum": "1",

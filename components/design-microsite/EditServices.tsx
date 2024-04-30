@@ -138,8 +138,26 @@ const EditServices = ({ userData } : Props) => {
 
     const onUploadImage = async (type:string, serviceNumber?:string) => {
         setImageType(type);
-        setServiceNumber(serviceNumber ? serviceNumber : '');
+
+        if (serviceNumber) {
+            setServiceNumber(serviceNumber);
+        }
+
         setOpenUpload(true);
+    }
+
+    // *Borrar contenido del bloque
+    const clearInfo = (key: string) => {
+
+        setSecondServices(prev => ({
+            ...prev,
+            [key]: {
+                ...prev[key],
+                ServSubTitulo: '',
+                ServDescrip: '',
+                ServImg: ''
+            }
+        }))
     }
 
     return ( 
@@ -239,7 +257,11 @@ const EditServices = ({ userData } : Props) => {
                                             onChange={(e)=>SecondTextAreaChange(key, DOMPurify.sanitize(e.target.value, {ALLOWED_TAGS: []}))}
                                             onBlur={SubmitData}
                                         ></textarea>
-                                        <button  type='button' className={style.ClearButton}>Borrar contenido del bloque</button>
+                                        <button  
+                                            type='button' 
+                                            className={style.ClearButton}
+                                            onClick={()=>clearInfo(key)}
+                                        >Borrar contenido del bloque</button>
                                     </motion.div>
                                 ) }
                             </AnimatePresence>

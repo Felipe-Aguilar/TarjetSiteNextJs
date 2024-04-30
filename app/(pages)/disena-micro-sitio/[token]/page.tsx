@@ -54,6 +54,10 @@ const MicroSitePage = async () => {
                         <hr/>
 
                         <EditServices userData={data}/>
+
+                        <Link href={`/mi-perfil/${btoa(data.TokenId)}`} className={style.BtnReturn}>
+                            regresar a perfil (x)
+                        </Link>
                     </div>
                 </div>
             </div>
