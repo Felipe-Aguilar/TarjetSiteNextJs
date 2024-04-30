@@ -53,6 +53,20 @@
             }
         }
 
+        .LogOutButton{
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-size: inherit;
+            font-family: inherit;
+
+            @media (width <= 700px) {
+                text-transform: none!important;
+                border: none!important;
+                padding: 0!important;
+            }
+        }
+
         .MenuMobile{
             
             button{
