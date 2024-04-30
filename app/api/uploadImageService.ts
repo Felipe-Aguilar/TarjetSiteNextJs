@@ -25,6 +25,7 @@ const UploadImageSecond = async (token:string, type:string, image: any, serviceN
             "ServId": serviceNumber === undefined ? '0' : `${serviceNumber}`
         })
     });
+
 }
 
 export { UploadImageFirst }

@@ -1,5 +1,4 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
-import userData from '@/app/api/userData';
 
 interface Props {
     userData: UserDataResponse,
@@ -38,10 +37,33 @@ interface Props {
         "Twitter": string,
         "Youtube": string,
         "Telegram": string,
-    }
+    },
+    servicesForm?: {
+        "FirstServices": {
+            service1: string;
+            service2: string;
+            service3: string;
+            service4: string;
+            service5: string;
+            service6: string;
+            service7: string;
+            service8: string;
+        };
+        "SecondServices": {
+            [key: string]: {
+                ServNum: string;
+                ServDescrip: string;
+                ServSubTitulo: string;
+                ServImg: string;
+                ServIcono: string;
+                ServSiteId: number;
+            };
+        };
+    };
 }
 
-export default async function EditData ({ userData, dataForm, contactForm, socialForm }: Props) {
+export default async function EditData ({ userData, dataForm, contactForm, socialForm, servicesForm }: Props) {
+
     await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizaUsu', {
         method: 'POST',
         mode: 'cors',
@@ -83,6 +105,128 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                     "Youtube": socialForm?.Youtube ?? userData.Youtube,
                     "Telegram": socialForm?.Telegram ?? userData.Telegram,
                     "RegistroTarjet": userData.RegistroTarjet,
+                    "Serv": [
+                        {
+                            "ServNum": "1",
+                            "ServDescrip": servicesForm?.FirstServices.service1,
+                            "ServSiteId": 1
+                        },
+                        {
+                            "ServNum": "2",
+                            "ServDescrip": servicesForm?.FirstServices.service2,
+                            "ServSiteId": 1
+                        },
+                        {
+                            "ServNum": "3",
+                            "ServDescrip": servicesForm?.FirstServices.service3,
+                            "ServSiteId": 1
+                        },
+                        {
+                            "ServNum": "4",
+                            "ServDescrip": servicesForm?.FirstServices.service4,
+                            "ServSiteId": 1
+                        },
+                        {
+                            "ServNum": "5",
+                            "ServDescrip": servicesForm?.SecondServices.service9.ServDescrip,
+                            "ServSubTitulo": servicesForm?.SecondServices.service9.ServSubTitulo,
+                            "ServImg": servicesForm?.SecondServices.service9.ServImg,
+                            "ServIcono": "",
+                            "ServSiteId": 2
+                        },
+                        {
+                            "ServNum": "6",
+                            "ServDescrip": servicesForm?.SecondServices.service10.ServDescrip,
+                            "ServSubTitulo": servicesForm?.SecondServices.service10.ServSubTitulo,
+                            "ServImg": servicesForm?.SecondServices.service10.ServImg,
+                            "ServIcono": "",
+                            "ServSiteId": 2
+                        },
+                        {
+                            "ServNum": "7",
+                            "ServDescrip": servicesForm?.SecondServices.service11.ServDescrip,
+                            "ServSubTitulo": servicesForm?.SecondServices.service11.ServSubTitulo,
+                            "ServImg": servicesForm?.SecondServices.service11.ServImg,
+                            "ServIcono": "",
+                            "ServSiteId": 2
+                        },
+                        {
+                            "ServNum": "8",
+                            "ServDescrip": servicesForm?.SecondServices.service12.ServDescrip,
+                            "ServSubTitulo": servicesForm?.SecondServices.service12.ServSubTitulo,
+                            "ServImg": servicesForm?.SecondServices.service12.ServImg,
+                            "ServIcono": "",
+                            "ServSiteId": 2
+                        },
+                        {
+                            "ServNum": "9",
+                            "ServDescrip": servicesForm?.SecondServices.service13.ServDescrip,
+                            "ServSubTitulo": servicesForm?.SecondServices.service13.ServSubTitulo,
+                            "ServImg": servicesForm?.SecondServices.service13.ServImg,
+                            "ServIcono": "",
+                            "ServSiteId": 2
+                        },
+                        {
+                            "ServNum": "10",
+                            "ServDescrip": servicesForm?.SecondServices.service14.ServDescrip,
+                            "ServSubTitulo": servicesForm?.SecondServices.service14.ServSubTitulo,
+                            "ServImg": servicesForm?.SecondServices.service14.ServImg,
+                            "ServIcono": "",
+                            "ServSiteId": 2
+                        },
+                        {
+                            "ServNum": "11",
+                            "ServDescrip": servicesForm?.SecondServices.service15.ServDescrip,
+                            "ServSubTitulo": servicesForm?.SecondServices.service15.ServSubTitulo,
+                            "ServImg": servicesForm?.SecondServices.service15.ServImg,
+                            "ServIcono": "",
+                            "ServSiteId": 2
+                        },
+                        {
+                            "ServNum": "12",
+                            "ServDescrip": servicesForm?.SecondServices.service16.ServDescrip,
+                            "ServSubTitulo": servicesForm?.SecondServices.service16.ServSubTitulo,
+                            "ServImg": servicesForm?.SecondServices.service16.ServImg,
+                            "ServIcono": "",
+                            "ServSiteId": 2
+                        },
+                        {
+                            "ServNum": "13",
+                            "ServDescrip": servicesForm?.SecondServices.service17.ServDescrip,
+                            "ServSubTitulo": servicesForm?.SecondServices.service17.ServSubTitulo,
+                            "ServImg": servicesForm?.SecondServices.service17.ServImg,
+                            "ServIcono": "",
+                            "ServSiteId": 2
+                        },
+                        {
+                            "ServNum": "14",
+                            "ServDescrip": servicesForm?.SecondServices.service18.ServDescrip,
+                            "ServSubTitulo": servicesForm?.SecondServices.service18.ServSubTitulo,
+                            "ServImg": servicesForm?.SecondServices.service18.ServImg,
+                            "ServIcono": "",
+                            "ServSiteId": 2
+                        },
+                        {
+                            "ServNum": "15",
+                            "ServDescrip": servicesForm?.FirstServices.service5,
+                            "ServSiteId": 1
+                        },
+                        {
+                            "ServNum": "16",
+                            "ServDescrip": servicesForm?.FirstServices.service6,
+                            "ServSiteId": 1
+                        },
+                        {
+                            "ServNum": "17",
+                            "ServDescrip": servicesForm?.FirstServices.service7,
+                            "ServSiteId": 1
+                        },
+                        {
+                            "ServNum": "18",
+                            "ServDescrip": servicesForm?.FirstServices.service8,
+                            "ServSiteId": 1
+                        }
+                    ]
                 }
         })
     });

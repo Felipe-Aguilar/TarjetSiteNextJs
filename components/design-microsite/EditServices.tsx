@@ -7,6 +7,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import style from './services.module.scss';
 import Link from 'next/link';
+import DOMPurify from 'dompurify';
+import EditData from '@/app/api/editData';
+import UploadImage from '../pop-ups/upload-image/UploadImage';
+import Image from 'next/image';
 
 interface Props {
     userData: UserDataResponse;
@@ -31,6 +35,15 @@ type ServiceState = {
     service18: boolean;
 };
 
+interface SecondSerivce {
+    ServNum: string;
+    ServDescrip: string;
+    ServSubTitulo: string;
+    ServImg: string;
+    ServIcono: string;
+    ServSiteId: number;
+}
+
 const EditServices = ({ userData } : Props) => {
 
     // *Primeros 4 (8) servicios
@@ -52,69 +65,39 @@ const EditServices = ({ userData } : Props) => {
     }
 
     // *Bloques de 4 (8) servicios
-    const [secondServices, setSecondServices] = useState({
-        service9: { 
-            ServDescrip: userData.Serv ? userData.Serv[4].ServDescrip : '', 
-            ServSubTitulo: userData.Serv ? userData.Serv[4].ServSubTitulo : '', 
-            ServImg: userData.Serv ? userData.Serv[4].ServImg : ''
-        },
-        service10: { 
-            ServDescrip: userData.Serv ? userData.Serv[5].ServDescrip : '', 
-            ServSubTitulo: userData.Serv ? userData.Serv[5].ServSubTitulo : '', 
-            ServImg: userData.Serv ? userData.Serv[5].ServImg : ''
-        },
-        service11: { 
-            ServDescrip: userData.Serv ? userData.Serv[6].ServDescrip : '', 
-            ServSubTitulo: userData.Serv ? userData.Serv[6].ServSubTitulo : '', 
-            ServImg: userData.Serv ? userData.Serv[6].ServImg : ''
-        },
-        service12: { 
-            ServDescrip: userData.Serv ? userData.Serv[7].ServDescrip : '', 
-            ServSubTitulo: userData.Serv ? userData.Serv[7].ServSubTitulo : '', 
-            ServImg: userData.Serv ? userData.Serv[7].ServImg : ''
-        },
-        service13: { 
-            ServDescrip: userData.Serv ? userData.Serv[8].ServDescrip : '', 
-            ServSubTitulo: userData.Serv ? userData.Serv[8].ServSubTitulo : '', 
-            ServImg: userData.Serv ? userData.Serv[8].ServImg : ''
-        },
-        service14: { 
-            ServDescrip: userData.Serv ? userData.Serv[9].ServDescrip : '', 
-            ServSubTitulo: userData.Serv ? userData.Serv[9].ServSubTitulo : '', 
-            ServImg: userData.Serv ? userData.Serv[9].ServImg : ''
-        },
-        service15: { 
-            ServDescrip: userData.Serv ? userData.Serv[10].ServDescrip : '', 
-            ServSubTitulo: userData.Serv ? userData.Serv[10].ServSubTitulo : '', 
-            ServImg: userData.Serv ? userData.Serv[10].ServImg : ''
-        },
-        service16: { 
-            ServDescrip: userData.Serv ? userData.Serv[11].ServDescrip : '', 
-            ServSubTitulo: userData.Serv ? userData.Serv[11].ServSubTitulo : '', 
-            ServImg: userData.Serv ? userData.Serv[11].ServImg : ''
-        },
-        service17: { 
-            ServDescrip: userData.Serv ? userData.Serv[12].ServDescrip : '', 
-            ServSubTitulo: userData.Serv ? userData.Serv[12].ServSubTitulo : '', 
-            ServImg: userData.Serv ? userData.Serv[12].ServImg : ''
-        },
-        service18: { 
-            ServDescrip: userData.Serv ? userData.Serv[13].ServDescrip : '', 
-            ServSubTitulo: userData.Serv ? userData.Serv[13].ServSubTitulo : '', 
-            ServImg: userData.Serv ? userData.Serv[13].ServImg : ''
-        },
-    });
+    const initialSecondServices : SecondSerivce[] = userData.Serv ? userData.Serv.slice(4, 14) : [];
+    const initialSecond: Record<string, SecondSerivce> = initialSecondServices.reduce(
+        (acc, service, index) => ({
+            ...acc,
+            [`service${index+9}`]: service
+        }),
+        {}
+    );
 
-    const SecondInputChange = (e : React.ChangeEvent<HTMLInputElement>, serviceName: string) => {
-        const {name, value} = e.target;
+    const [secondServices, setSecondServices] = useState(initialSecond);
 
-        console.log(serviceName, name);
+    const SecondInputChange = (key: string, value: string) => {
+        setSecondServices(prev => ({
+            ...prev,
+            [key]: {
+                ...prev[key],
+                ServSubTitulo: value
+            }
+        }))
+    }
 
-        setSecondServices({...secondServices, [serviceName]: { [name]: value}});
+    const SecondTextAreaChange = (key: string, value:string) => {
+        setSecondServices(prev => ({
+            ...prev,
+            [key]: {
+                ...prev[key],
+                ServDescrip: value
+            }
+        }))
     }
 
     // *Abrir servicios de bloque
-    const [openServices, setOpenServices] = useState({
+    const initialOpenServices: ServiceState = {
         service9: false,
         service10: false,
         service11: false,
@@ -124,12 +107,12 @@ const EditServices = ({ userData } : Props) => {
         service15: false,
         service16: false,
         service17: false,
-        service18: false
-    })
+        service18: false,
+    } 
+
+    const [openServices, setOpenServices] = useState(initialOpenServices);
 
     const OpenService = (serviceName: keyof ServiceState) => {
-
-    // TODO: FALTA TERMINAR
 
         setOpenServices(prev => ({
             ...prev, 
@@ -137,7 +120,27 @@ const EditServices = ({ userData } : Props) => {
         }));
     }
 
-    console.log(secondServices);
+    // *Subir Datos al formulario y guardar
+    const SubmitData = async () => {
+
+        const servicesForm = {
+            "FirstServices": firstServices,
+            "SecondServices": secondServices
+        }
+
+        await EditData({userData, servicesForm});
+    }
+
+    // *Subir imagen
+    const [openUpload, setOpenUpload] = useState<boolean>(false);
+    const [imageType, setImageType] = useState<string>('');
+    const [serviceNumber, setServiceNumber] = useState<string>('');
+
+    const onUploadImage = async (type:string, serviceNumber?:string) => {
+        setImageType(type);
+        setServiceNumber(serviceNumber ? serviceNumber : '');
+        setOpenUpload(true);
+    }
 
     return ( 
         <div className={style.Services}>
@@ -149,161 +152,110 @@ const EditServices = ({ userData } : Props) => {
                 Sugerimos uses enunciados en forma de lista que describan tus actividades o principales servicios.
             </p>
 
-            <div className={style.UploadImage}>
-                <BsCardImage />
-            </div>
+            { userData.ImgHeader
+                ? ( 
+                    <Image 
+                        src={`https://tarjet.site/imagenes/encabezados/SITE_${userData.TokenId}.webp`}
+                        alt='Encabezado de perfil'
+                        width={500}
+                        height={500}
+                        className={style.ImageHeader}
+                    />
+                )
+                : (
+                    <div className={style.UploadImage}>
+                        <BsCardImage />
+                    </div>
+                )
+            }
 
-            <button className={`btn ${style.UploadButton}`}>
+            <button className={`btn ${style.UploadButton}`} onClick={()=>onUploadImage('SITE')}>
                 Subir imagen
             </button>
+
+            { openUpload && (
+                <UploadImage token={userData.TokenId} imageType={imageType} close={()=>setOpenUpload(false)} serviceNumber={serviceNumber}/>
+            )}
 
             <div className={style.FormServices}>
                 <h4>Servicios</h4>
                 <form>
-                    <input type="text" placeholder='• Listado de servicio' name='service1' value={firstServices.service1} onChange={FirstInputChange}/>
-                    <input type="text" placeholder='• Listado de servicio' name='service2' value={firstServices.service2} onChange={FirstInputChange}/>
-                    <input type="text" placeholder='• Listado de servicio' name='service3' value={firstServices.service3} onChange={FirstInputChange}/>
-                    <input type="text" placeholder='• Listado de servicio' name='service4' value={firstServices.service4} onChange={FirstInputChange}/>
+                    <input type="text" placeholder='• Listado de servicio' name='service1' value={firstServices.service1} onChange={FirstInputChange} onBlur={SubmitData}/>
+                    <input type="text" placeholder='• Listado de servicio' name='service2' value={firstServices.service2} onChange={FirstInputChange} onBlur={SubmitData}/>
+                    <input type="text" placeholder='• Listado de servicio' name='service3' value={firstServices.service3} onChange={FirstInputChange} onBlur={SubmitData}/>
+                    <input type="text" placeholder='• Listado de servicio' name='service4' value={firstServices.service4} onChange={FirstInputChange} onBlur={SubmitData}/>
 
                     { userData.Premium && (
                         <Fragment>
-                            <input type="text" placeholder='• Listado de servicio' name='service5' value={firstServices.service5} onChange={FirstInputChange}/>
-                            <input type="text" placeholder='• Listado de servicio' name='service6' value={firstServices.service6} onChange={FirstInputChange}/>
-                            <input type="text" placeholder='• Listado de servicio' name='service7' value={firstServices.service7} onChange={FirstInputChange}/>
-                            <input type="text" placeholder='• Listado de servicio' name='service8' value={firstServices.service8} onChange={FirstInputChange}/>
+                            <input type="text" placeholder='• Listado de servicio' name='service5' value={firstServices.service5} onChange={FirstInputChange} onBlur={SubmitData}/>
+                            <input type="text" placeholder='• Listado de servicio' name='service6' value={firstServices.service6} onChange={FirstInputChange} onBlur={SubmitData}/>
+                            <input type="text" placeholder='• Listado de servicio' name='service7' value={firstServices.service7} onChange={FirstInputChange} onBlur={SubmitData}/>
+                            <input type="text" placeholder='• Listado de servicio' name='service8' value={firstServices.service8} onChange={FirstInputChange} onBlur={SubmitData}/>
                         </Fragment>
                     )}
 
                     <h4>Muestra de productos ó servicios</h4>
 
-                    <button type='button' onClick={()=>OpenService('service9')}> 
-                        Bloque de servicio No. 1
-                        <span><BsPlusLg /></span>
-                    </button>
+                    { Object.entries(secondServices).map(([key, service], index)=>(
+                        <Fragment key={key}>
+                            <button 
+                                type='button' 
+                                onClick={()=>OpenService(key as keyof ServiceState)}
+                                disabled={(index >= 4 && !userData.Premium) ? true : false}
+                            >
+                                Bloque de servicio No. {index+1}
+                                <span><BsPlusLg /></span>
+                            </button>
 
-                    <AnimatePresence>
-                        { openServices.service9 && (
-                            <motion.div className={style.ServiceContainer} {...animate}>
-                                <input 
-                                    type="text" 
-                                    placeholder='Título de imagen' 
-                                    name='ServSubTitulo' 
-                                    value={secondServices.service9.ServSubTitulo} 
-                                    onChange={(e)=>SecondInputChange(e, 'service9')}
-                                />
-                                <div className={style.UploadImage}><BsCardImage/></div>
-                                <button type='button' className={`btn ${style.UploadButton}`}>
-                                    Subir imagen
-                                </button>
-                                <textarea 
-                                    placeholder='Descripción de la foto (hasta 300 caracteres)' 
-                                    maxLength={300}
-                                    name='ServDescrip'
-                                    value={secondServices.service9.ServDescrip}
-                                    // onChange={(e)=>SecondInputChange(e, 'service9')}
-                                    
-                                ></textarea>
-                                <button  type='button' className={style.ClearButton}>Borrar contenido del bloque</button>
-                            </motion.div>
-                        ) }
-                    </AnimatePresence>
+                            <AnimatePresence>
+                                { openServices[key as keyof ServiceState] && (
+                                    <motion.div className={style.ServiceContainer} {...animate}>
+                                        <input 
+                                            type="text" 
+                                            placeholder='Título de imagen'
+                                            value={service.ServSubTitulo}
+                                            onChange={(e)=>SecondInputChange(key, e.target.value)}
+                                            onBlur={SubmitData}
+                                        />
+                                        { service.ServImg 
+                                            ? (
+                                                <Image 
+                                                    src={`https://tarjet.site/imagenes/servicios/${service.ServImg}`}
+                                                    alt='Imagen de servicio personalizado'
+                                                    width={500}
+                                                    height={500}
+                                                    className={style.ImageService}
+                                                />
+                                            )
+                                            : (<div className={style.UploadImage}><BsCardImage/></div>)
+                                        }
+                                        <button type='button' className={`btn ${style.UploadButton}`} onClick={()=>onUploadImage('SERV', (index + 5).toString())}>
+                                            Subir imagen
+                                        </button>
+                                        <textarea 
+                                            placeholder='Descripción de la foto (hasta 300 caracteres)' 
+                                            maxLength={300}
+                                            value={service.ServDescrip}
+                                            onChange={(e)=>SecondTextAreaChange(key, DOMPurify.sanitize(e.target.value, {ALLOWED_TAGS: []}))}
+                                            onBlur={SubmitData}
+                                        ></textarea>
+                                        <button  type='button' className={style.ClearButton}>Borrar contenido del bloque</button>
+                                    </motion.div>
+                                ) }
+                            </AnimatePresence>
 
-                    <button type='button' onClick={()=>OpenService('service10')}>
-                        Bloque de servicio No. 2
-                        <span><BsPlusLg /></span>
-                    </button>
+                            { (!userData.Premium && index === 3) && (
+                                <Fragment>
+                                    <p>Al adquirir el plan premium, puedes agregar hasta 10 servicios</p>
+        
+                                    <Link href={'/contacto'}>
+                                        ¡Adquiérelo aquí!
+                                    </Link>
+                                </Fragment>
+                            ) }
 
-                    <AnimatePresence>
-                        { openServices.service10 && (
-                            <motion.div className={style.ServiceContainer} {...animate}>
-                                <input type="text" placeholder='Título de imagen'/>
-                                <div className={style.UploadImage}><BsCardImage/></div>
-                                <button type='button' className={`btn ${style.UploadButton}`}>
-                                    Subir imagen
-                                </button>
-                                <textarea placeholder='Descripción de la foto (hasta 300 caracteres)' maxLength={300}></textarea>
-                                <button  type='button' className={style.ClearButton}>Borrar contenido del bloque</button>
-                            </motion.div>
-                        ) }
-                    </AnimatePresence>
-
-                    <button type='button' onClick={()=>OpenService('service11')}>
-                        Bloque de servicio No. 3
-                        <span><BsPlusLg /></span>
-                    </button>
-
-                    <AnimatePresence>
-                        { openServices.service11 && (
-                            <motion.div className={style.ServiceContainer} {...animate}>
-                                <input type="text" placeholder='Título de imagen'/>
-                                <div className={style.UploadImage}><BsCardImage/></div>
-                                <button type='button' className={`btn ${style.UploadButton}`}>
-                                    Subir imagen
-                                </button>
-                                <textarea placeholder='Descripción de la foto (hasta 300 caracteres)' maxLength={300}></textarea>
-                                <button  type='button' className={style.ClearButton}>Borrar contenido del bloque</button>
-                            </motion.div>
-                        ) }
-                    </AnimatePresence>
-
-                    <button type='button' onClick={()=>OpenService('service12')}>
-                        Bloque de servicio No. 4
-                        <span><BsPlusLg /></span>
-                    </button>
-
-                    <AnimatePresence>
-                        { openServices.service12 && (
-                            <motion.div className={style.ServiceContainer} {...animate}>
-                                <input type="text" placeholder='Título de imagen'/>
-                                <div className={style.UploadImage}><BsCardImage/></div>
-                                <button type='button' className={`btn ${style.UploadButton}`}>
-                                    Subir imagen
-                                </button>
-                                <textarea placeholder='Descripción de la foto (hasta 300 caracteres)' maxLength={300}></textarea>
-                                <button  type='button' className={style.ClearButton}>Borrar contenido del bloque</button>
-                            </motion.div>
-                        ) }
-                    </AnimatePresence>
-
-                    { !userData.Premium && (
-                        <Fragment>
-                            <p>Al adquirir el plan premium, puedes agregar hasta 10 servicios</p>
-
-                            <Link href={'/contacto'}>
-                                ¡Adquiérelo aquí!
-                            </Link>
                         </Fragment>
-                    )}
-
-                    <button type='button' onClick={()=>OpenService('service13')} disabled={userData.Premium ? false : true}>
-                        Bloque de servicio No. 5
-                        <span><BsPlusLg /></span>
-                    </button>
-
-                    <button type='button' onClick={()=>OpenService('service14')} disabled={userData.Premium ? false : true}>
-                        Bloque de servicio No. 6
-                        <span><BsPlusLg /></span>
-                    </button>
-
-                    <button type='button' onClick={()=>OpenService('service15')} disabled={userData.Premium ? false : true}>
-                        Bloque de servicio No. 7
-                        <span><BsPlusLg /></span>
-                    </button>
-
-                    <button type='button' onClick={()=>OpenService('service16')} disabled={userData.Premium ? false : true}>
-                        Bloque de servicio No. 8
-                        <span><BsPlusLg /></span>
-                    </button>
-
-                    <button type='button' onClick={()=>OpenService('service17')} disabled={userData.Premium ? false : true}>
-                        Bloque de servicio No. 9
-                        <span><BsPlusLg /></span>
-                    </button>
-
-                    <button type='button' onClick={()=>OpenService('service18')} disabled={userData.Premium ? false : true}>
-                        Bloque de servicio No. 10
-                        <span><BsPlusLg /></span>
-                    </button>
+                    ))}
                 </form>
             </div>
         </div>
