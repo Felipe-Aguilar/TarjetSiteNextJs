@@ -56,7 +56,7 @@ const MiPerfil = async () => {
                             </Link>
                         </div>
 
-                        <p>Miembro desde: {data.RegistroFecha}</p>
+                        <p>Miembro desde: {data.RegistroFecha.toString()}</p>
 
                         <hr/>
 
