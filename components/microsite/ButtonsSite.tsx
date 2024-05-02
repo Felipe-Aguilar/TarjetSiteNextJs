@@ -27,15 +27,15 @@ const ButtonsSite = ({userData} :Props) => {
         const nameUser = `${userData.Nom} ${userData.AppP} ${userData.AppM}`;
 
         const content = `BEGIN:VCARD
-        VERSION:3.0
-        N:${nameUser};;;
-        FN:${nameUser}
-        TITLE:${nameUser};
-        EMAIL;type=INTERNET;type=pref:${userData.Mail}
-        TEL;type=MAIN:${userData.Activid}
-        TEL;type=CELL;type=VOICE;type=pref:${userData.Telefono1}
-        ADR;type=WORK;type=pref:;;;${userData.Colonia};;;
-        END:VCARD`;
+VERSION:3.0
+N:${nameUser};;;
+FN:${nameUser}
+TITLE:${nameUser};
+EMAIL;type=INTERNET;type=pref:${userData.Mail}
+TEL;type=MAIN:${userData.Activid}
+TEL;type=CELL;type=VOICE;type=pref:${userData.Telefono1}
+ADR;type=WORK;type=pref:;;;${userData.Colonia};;;
+END:VCARD`;
 
         const blob = new Blob([content], { type: "text/vcard;charset=utf-8" });
         FileSaver.saveAs(blob, `${nameUser}.vcf`, true);
