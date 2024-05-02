@@ -11,7 +11,7 @@ interface Props {
 
 const SocialNetworsSite = ({userData} :Props) => {
     return ( 
-        <div className={style.Social}>
+        <div className={style.Social} id='SocialSection'>
             { userData && (
                 <Fragment>
                     <h4>Mis redes sociales</h4>

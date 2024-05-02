@@ -14,7 +14,7 @@ const SitePage = async () => {
 
     return ( 
         <Fragment>
-            <MicrositeHome tokenServer={session?.user?.email}/>
+            <MicrositeHome tokenServer={session?.user?.email} uuidServer={session?.user?.name}/>
         </Fragment>
     );
 }

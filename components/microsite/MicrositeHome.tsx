@@ -13,17 +13,20 @@ import SocialNetworsSite from './SocialNetworksSite';
 
 interface Props {
     tokenServer: string | undefined | null;
+    uuidServer: string | undefined | null;
 }
 
-const MicrositeHome = ({tokenServer}: Props) => {
+const MicrositeHome = ({tokenServer, uuidServer}: Props) => {
 
     const { token } = useParams();
     const [data, setData] = useState<UserDataResponse>();
+    const [tokenClient, setTokenClient] = useState<string>('');
 
     useEffect(()=>{
         const getUserData = async () => {
 
             const tk = atob(Array.isArray(token) ? token[0].toString() : token);
+            setTokenClient(tk);
 
             const responseToken = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaUsuXToken`,{
                 method: 'POST',
@@ -46,17 +49,19 @@ const MicrositeHome = ({tokenServer}: Props) => {
     return ( 
         <div className="greenWhite">
             <div className="background">
-                <div className={`body ${style.Site}`}>
-                    <div className="contain">
-                        <HeadSite userData={data!} />
+                { data && (
+                    <div className={`body ${style.Site}`}>
+                        <div className="contain">
+                            <HeadSite userData={data!} />
 
-                        <ButtonsSite userData={data!} />
+                            <ButtonsSite userData={data!} tokenServer={tokenServer} tokenClient={tokenClient} uuidServer={uuidServer} uuidClient={data!.UUID}/>
 
-                        <ServicesSite userData={data!}/>
+                            <ServicesSite userData={data!}/>
 
-                        <SocialNetworsSite userData={data!}/>
+                            <SocialNetworsSite userData={data!}/>
+                        </div>
                     </div>
-                </div>
+                ) }
             </div>
         </div>
     );
