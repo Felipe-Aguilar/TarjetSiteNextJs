@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { UserDataResponse } from '@/interfaces/userData-interface';
 
 import style from './site.module.scss';
@@ -10,6 +10,7 @@ import HeadSite from './HeadSite';
 import ButtonsSite from './ButtonsSite';
 import ServicesSite from './ServicesSite';
 import SocialNetworsSite from './SocialNetworksSite';
+import WhatsAppMessage from '../pop-ups/whatsapp-message/WhatsAppMessage';
 
 interface Props {
     tokenServer: string | undefined | null;
@@ -46,21 +47,35 @@ const MicrositeHome = ({tokenServer, uuidServer}: Props) => {
         getUserData();
     },[])
 
+    // *Mensaje de WhatsApp
+    const [message, setMessage] = useState<boolean>(false);
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            setMessage(true);
+        }, 3500)
+    },[])
+
     return ( 
         <div className="greenWhite">
             <div className="background">
                 { data && (
-                    <div className={`body ${style.Site}`}>
-                        <div className="contain">
-                            <HeadSite userData={data!} />
+                    <Fragment>
+                        <div className={`body ${style.Site}`}>
+                            <div className="contain">
+                                <HeadSite userData={data!} />
 
-                            <ButtonsSite userData={data!} tokenServer={tokenServer} tokenClient={tokenClient} uuidServer={uuidServer} uuidClient={data!.UUID}/>
+                                <ButtonsSite userData={data!} tokenServer={tokenServer} tokenClient={tokenClient} uuidServer={uuidServer} uuidClient={data!.UUID}/>
 
-                            <ServicesSite userData={data!}/>
+                                <ServicesSite userData={data!}/>
 
-                            <SocialNetworsSite userData={data!}/>
+                                <SocialNetworsSite userData={data!}/>
+                            </div>
                         </div>
-                    </div>
+
+                        { message &&  <WhatsAppMessage close={()=>setMessage(false)} phone={data.Telefono1}/> }
+
+                    </Fragment>
                 ) }
             </div>
         </div>
