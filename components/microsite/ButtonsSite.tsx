@@ -1,10 +1,12 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
 import { motion } from 'framer-motion';
 
-import style from './site.module.scss';
-import Image from 'next/image';
 import { Fragment } from 'react';
 import { BsWhatsapp } from 'react-icons/bs';
+
+import style from './site.module.scss';
+import Image from 'next/image';
+import FileSaver from 'file-saver';
 
 interface Props {
     userData: UserDataResponse;
@@ -18,13 +20,33 @@ const animate = {
 
 const ButtonsSite = ({userData} :Props) => {
 
+    
+    // *Guardar contacto
+    const SaveContact = async () => {
+
+        const nameUser = `${userData.Nom} ${userData.AppP} ${userData.AppM}`;
+
+        const content = `BEGIN:VCARD
+        VERSION:3.0
+        N:${nameUser};;;
+        FN:${nameUser}
+        TITLE:${nameUser};
+        EMAIL;type=INTERNET;type=pref:${userData.Mail}
+        TEL;type=MAIN:${userData.Activid}
+        TEL;type=CELL;type=VOICE;type=pref:${userData.Telefono1}
+        ADR;type=WORK;type=pref:;;;${userData.Colonia};;;
+        END:VCARD`;
+
+        const blob = new Blob([content], { type: "text/vcard;charset=utf-8" });
+        FileSaver.saveAs(blob, `${nameUser}.vcf`, true);
+    }
 
     return ( 
 
         <div className={style.Buttons}>
             { userData && (
                 <Fragment>
-                    <motion.button transition={{delay: 1}}>
+                    <motion.button {...animate} {...animate} transition={{delay: 1}} onClick={()=>SaveContact()}>
                         Guardar en mis contactos
         
                         <span>
@@ -38,7 +60,7 @@ const ButtonsSite = ({userData} :Props) => {
                     </motion.button>
         
                     { userData.Telefono1 && (
-                        <motion.a href={''} transition={{delay: 1}} className={style.WhatsApp}>
+                        <motion.a href={''} {...animate} transition={{delay: 1.2}} className={style.WhatsApp}>
                             Envíame un WhatsApp
         
                             <span>
@@ -48,7 +70,7 @@ const ButtonsSite = ({userData} :Props) => {
                     ) }
 
                     { userData.Telefono2 && (
-                        <motion.a href={''} transition={{delay: 1}} className={style.WhatsApp}>
+                        <motion.a href={''} {...animate} transition={{delay: 1.4}} className={style.WhatsApp}>
                             Envíame un WhatsApp
         
                             <span>
@@ -58,7 +80,7 @@ const ButtonsSite = ({userData} :Props) => {
                     ) }
 
                     { userData.VerUbicacion === 1 && (
-                        <motion.a href={''} transition={{delay: 1}} className={style.Ubication}>
+                        <motion.a href={''} {...animate} transition={{delay: 1.4}} className={style.Ubication}>
                             {userData.TexoUbica && `${userData.TexoUbica} `}
                             {userData.Colonia}
 
@@ -74,7 +96,7 @@ const ButtonsSite = ({userData} :Props) => {
                     ) }
                     
                     { userData.Mail && (
-                        <motion.a href={''} transition={{delay: 1}} className={style.Email}>
+                        <motion.a href={''} {...animate} transition={{delay: 1.6}} className={style.Email}>
                             {userData.Mail}
 
                             <span>
@@ -89,7 +111,7 @@ const ButtonsSite = ({userData} :Props) => {
                     ) }
 
                     { userData.Web && (
-                        <motion.a href={''} transition={{delay: 1}} className={style.Web}>
+                        <motion.a href={''} {...animate} transition={{delay: 1.8}} className={style.Web}>
                             {userData.Web}
 
                             <span>
@@ -103,7 +125,7 @@ const ButtonsSite = ({userData} :Props) => {
                         </motion.a>
                     ) }
 
-                    <motion.button transition={{delay: 1}} className={style.Social}>
+                    <motion.button {...animate} transition={{delay: 2}} className={style.Social}>
                         Mis redes sociales
         
                         <span>
@@ -116,7 +138,7 @@ const ButtonsSite = ({userData} :Props) => {
                         </span>
                     </motion.button>
 
-                    <motion.button transition={{delay: 1}} className={style.Share}>
+                    <motion.button {...animate} transition={{delay: 2.2}} className={style.Share}>
                         Comparte mi tarjeta
         
                         <span>
@@ -129,7 +151,7 @@ const ButtonsSite = ({userData} :Props) => {
                         </span>
                     </motion.button>
 
-                    <motion.button transition={{delay: 1}} className={style.Save}>
+                    <motion.button {...animate} transition={{delay: 2.4}} className={style.Save}>
                         Guarda en mi tarjetero tarjet
         
                         <span>

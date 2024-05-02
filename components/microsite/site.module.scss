@@ -174,4 +174,169 @@
             }
         }
     }
+
+    .Social{
+        h4{
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .SocialButtons{
+            display: grid;
+            grid-template-columns: 25% 25% 25% 25%;
+            place-items: center;
+            row-gap: 20px;
+
+            a,button{
+                padding: 15px;
+                border-radius: 20px;
+                background: #e8ecf1;
+                width: fit-content;
+                border: transparent;
+
+                svg{
+                    font-size: 2.5rem;
+                }
+            }
+
+            .Disabled{
+
+                cursor: none;
+                pointer-events: none;
+
+                .Blue{
+                    display: none;
+                }
+                svg{
+                    color: #cfd6d5!important;
+                }
+            }
+
+            .Facebook{
+                color: #0056b3;
+            }
+            .Instagram{
+                color: #E4405F;
+            }
+            .Tiktok{
+                position: relative;
+
+                svg{
+                    z-index: 1;
+                }
+                
+                .Blue, .Red{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                }
+
+                .Blue{
+                    color:  #00f2ea42;
+                    top: 12px;
+                    left: 12px;
+                }
+                .Red{
+                    color:  #ff005147;
+                    left: 17px;
+                    top: 17px;
+                }
+            }
+            .Twitter{
+                color:  #1DA1F2;
+            }
+            .Youtube{
+                color:  #FF0000;
+            }
+            .Linkedin{
+                color:  #0A66C2;
+            }
+            .Telegram{
+                color:  #0088cc;
+            }
+
+        }
+
+        .Username{
+            text-align: center;
+
+            h5{
+                color: #055b7d;
+                font-family: "IvyModeRegular"!important;
+                font-size: 1.25rem;
+            }
+            p{
+                text-transform: uppercase;
+            }
+            .user{
+                text-transform: lowercase;
+                font-size: 1.1rem;
+            }
+        }
+        .Info{
+            background: #ecf0f8;
+            border-radius: 30px;
+            padding: 40px 20px;
+            text-align: center;
+
+            img{
+                display: block;
+                margin: auto;
+                margin-bottom: 20px;
+
+                width: 25%;
+                height: auto;
+            }
+
+            h6{
+                font-size: 1.15rem;
+                font-weight: 400;
+                color: #212529;
+
+                span{
+                    font-weight: 600;
+                    color: #2b5035;
+                    font-size: 1.2rem;
+                }
+            }
+            a{
+                background: #03894a;
+                border-radius: 8px;
+                padding: 10px 20px;
+                color: #fff;
+                font-weight: 600;
+                font-size: 0.9rem;
+                display: block;
+                width: 80%;
+                margin: auto;
+                margin-bottom: 20px;
+
+                span{
+                    font-weight: 400;
+                }
+            }
+            .Card{
+                width: 50%;
+            }
+            .Orange{
+                background: #ff6b0f;
+            }
+            .Violet{
+                background: #5f6e9f;
+                margin-bottom: 0;
+            }
+        }
+        .LinkFooter{
+            text-align: center;
+            display: block;
+            width: 50%;
+            margin: auto;
+            margin-top: 20px;
+            text-decoration: underline;
+            color: #038950;
+        }
+    }
 }

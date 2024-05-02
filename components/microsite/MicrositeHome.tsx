@@ -9,6 +9,7 @@ import userData from '@/app/api/userData';
 import HeadSite from './HeadSite';
 import ButtonsSite from './ButtonsSite';
 import ServicesSite from './ServicesSite';
+import SocialNetworsSite from './SocialNetworksSite';
 
 interface Props {
     tokenServer: string | undefined | null;
@@ -52,6 +53,8 @@ const MicrositeHome = ({tokenServer}: Props) => {
                         <ButtonsSite userData={data!} />
 
                         <ServicesSite userData={data!}/>
+
+                        <SocialNetworsSite userData={data!}/>
                     </div>
                 </div>
             </div>
