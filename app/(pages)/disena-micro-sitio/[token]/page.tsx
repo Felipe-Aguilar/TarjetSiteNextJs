@@ -35,7 +35,7 @@ const MicroSitePage = async () => {
                                 height={1000}
                             />
                             <h1>Tu Micro Sitio Web</h1>
-                            <p>Tu propio espacio para escribir tus servicios, acompañados con imágenes.</p>
+                            <p>Un espacio para describir tus servicios con imágenes ilustrativas.</p>
                             <Link href={`/mi-perfil/${btoa(data.TokenId)}`}>
                                 <Image 
                                     src={'/images/icono-mi-perfil.svg'}
@@ -56,7 +56,7 @@ const MicroSitePage = async () => {
                         <EditServices userData={data}/>
 
                         <Link href={`/mi-perfil/${btoa(data.TokenId)}`} className={style.BtnReturn}>
-                            regresar a perfil (x)
+                            guardar y regresar a perfil (x)
                         </Link>
                     </div>
                 </div>

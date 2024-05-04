@@ -165,10 +165,8 @@ const EditServices = ({ userData } : Props) => {
             <p>
                 En tu Tarjet Site, se mostrarán los campos con la información que llenes, mientras que los campos vacíos permanecerán ocultos.
             </p>
-            <h3>Listado de actividades</h3>
-            <p>
-                Sugerimos uses enunciados en forma de lista que describan tus actividades o principales servicios.
-            </p>
+
+            <h3>Encabezado para tu micrositio (premium)</h3>
 
             { userData.ImgHeader
                 ? ( 
@@ -187,13 +185,18 @@ const EditServices = ({ userData } : Props) => {
                 )
             }
 
-            <button className={`btn ${style.UploadButton}`} onClick={()=>onUploadImage('SITE')}>
+            <button className={`btn ${style.UploadButton}`} onClick={()=>onUploadImage('SITE')} disabled={userData.Premium ? false : true}>
                 Subir imagen
             </button>
 
             { openUpload && (
                 <UploadImage token={userData.TokenId} imageType={imageType} close={()=>setOpenUpload(false)} serviceNumber={serviceNumber}/>
             )}
+
+            <h3>Listado de servicios</h3>
+            <p>
+                Te sugerimos uses enunciados en forma de lista que describan tus actividades o principales servicios.
+            </p>
 
             <div className={style.FormServices}>
                 <h4>Servicios</h4>
