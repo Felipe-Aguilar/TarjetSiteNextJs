@@ -1,0 +1,52 @@
+.RegistrosUsers{
+
+    @media (width <= 700px) {
+        padding: 0 2%;
+    }
+
+    h1{
+        text-align: center;
+        color: #006d2e;
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+
+    table{
+        width: 100%;
+        background: #fff;
+        border-radius: 8px;
+        margin-bottom: 20px;
+
+        thead{
+            border-bottom: 1px solid #e5e5e5;
+
+            th{
+                padding: 5px 0;
+                text-align: center;
+                color: #7a7a7a;
+                font-weight: 400;
+
+                @media (width <= 700px) {
+                    font-size: 0.7rem;
+                }
+            }
+        }
+
+        tbody{
+            td{
+                padding: 5px 0;
+                font-size: 0.9rem;
+                text-align: center;
+
+                @media (width <= 700px) {
+                    font-size: 0.7rem;
+                }
+            }
+        }
+    }
+    a{
+        color: #4f8b92;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+}

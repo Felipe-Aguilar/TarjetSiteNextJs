@@ -1,0 +1,25 @@
+.PerfilPartner{
+    h1{
+        text-align: center;
+        color: #006d2e;
+        font-weight: 400;
+        font-size: 1.5rem;
+    }
+    .Buttons{
+        > * + *{
+            margin-top: 16px;
+        }
+
+        @media (width <= 700px) {   
+            padding: 0 2%;
+        }
+
+        a{
+            text-align: center;
+        }
+        button{
+            width: 100%;
+            background: #d9d1ea;
+        }
+    }
+}

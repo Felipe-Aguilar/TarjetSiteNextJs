@@ -41,7 +41,7 @@ const Directoy = async () => {
                 </video>
             </div>
 
-            <TopUsers data={dataTop}/>
+            {/* <TopUsers data={dataTop}/> */}
         </div>
     );
 }
