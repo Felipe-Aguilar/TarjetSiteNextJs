@@ -17,7 +17,7 @@ const HeadSite = ({userData} : Props) => {
         <div className={style.Head}>
             <motion.div {...animateCard}>
                 <Image 
-                    src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${userData?.ImgTarFrente}`}
+                    src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${userData.ImgTarFrente}`}
                     alt='Tarjeta de presentación'
                     width={820}
                     height={515}
@@ -27,7 +27,7 @@ const HeadSite = ({userData} : Props) => {
             </motion.div>
 
             <Image 
-                src={`https://tarjet.site/imagenes/perfil-imagenes/${userData?.ImgFoto}`}
+                src={`https://tarjet.site/imagenes/perfil-imagenes/${userData.ImgFoto}`}
                 alt='Imagen de perfil'
                 width={500}
                 height={500}
