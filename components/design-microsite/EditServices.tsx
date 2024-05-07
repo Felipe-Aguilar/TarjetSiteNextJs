@@ -171,7 +171,7 @@ const EditServices = ({ userData } : Props) => {
             { userData.ImgHeader
                 ? ( 
                     <Image 
-                        src={`https://tarjet.site/imagenes/encabezados/SITE_${userData.TokenId}.webp`}
+                        src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/Headers/${userData.ImgHeader}`}
                         alt='Encabezado de perfil'
                         width={500}
                         height={500}
@@ -241,7 +241,7 @@ const EditServices = ({ userData } : Props) => {
                                         { service.ServImg 
                                             ? (
                                                 <Image 
-                                                    src={`https://tarjet.site/imagenes/servicios/${service.ServImg}`}
+                                                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}`}
                                                     alt='Imagen de servicio personalizado'
                                                     width={500}
                                                     height={500}

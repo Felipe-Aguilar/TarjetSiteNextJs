@@ -173,7 +173,7 @@ const DesignCard = ({ userData } : Props) => {
                         <Slider {...settings}>
                             { imagesFree?.map((image)=>(
                                 <Image 
-                                    src={`https://tarjet.site/imagenes/tarjetas_frente/${image.TarjetaImagen}`}
+                                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/FreeTarjets/${image.TarjetaImagen}`}
                                     alt='Tarjeta gratuita'
                                     width={820}
                                     height={484}
@@ -188,7 +188,7 @@ const DesignCard = ({ userData } : Props) => {
                         <Slider {...settings}>
                             { imagesPremium?.map((image)=>(
                                 <Image 
-                                    src={`https://tarjet.site/imagenes/tarjetas_frente/premium/${image.TarjetaImagen}`}
+                                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/PremiumTarjets/${image.TarjetaImagen}`}
                                     alt='Tarjeta premium'
                                     width={820}
                                     height={484}
@@ -249,7 +249,7 @@ const DesignCard = ({ userData } : Props) => {
 
                     { userData.ImgTarFrente ? (
                         <Image 
-                            src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${userData.ImgTarFrente}`}
+                            src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}`}
                             alt='Tarjeta de presentación'
                             width={820}
                             height={484}

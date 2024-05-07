@@ -182,7 +182,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                 <button className={style.UserResult} onClick={()=>onOpenUser(result.IdUsuario)}>
                                     <Image 
                                         src={ result.ImgFoto 
-                                            ? `https://tarjet.site/imagenes/perfil-imagenes/${result.ImgFoto}` 
+                                            ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${result.ImgFoto}` 
                                             : '/images/perfil-temporal.webp'
                                         }
                                         alt='Imagen de perfil usuario tarjet'
@@ -196,7 +196,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                     <div className={style.UserResultContainer}>
                                         <Link href={`/st/${btoa(result.UsuToken)}`}>
                                             <Image 
-                                                src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${result.UsuFondoF}`}
+                                                src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${result.UsuFondoF}`}
                                                 alt='tarjeta de presentación'
                                                 width={500}
                                                 height={300}
@@ -264,7 +264,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                             <button className={style.UserResult} onClick={()=>onOpenUser(result.IdUsuario)}>
                                                 <Image 
                                                     src={ result.ImgFoto 
-                                                        ? `https://tarjet.site/imagenes/perfil-imagenes/${result.ImgFoto}` 
+                                                        ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${result.ImgFoto}` 
                                                         : '/images/perfil-temporal.webp'
                                                     }
                                                     alt='Imagen de perfil usuario tarjet'
@@ -278,7 +278,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                                 <div className={style.UserResultContainer}>
                                                     <Link href={`/st/${btoa(result.UsuToken)}`}>
                                                         <Image 
-                                                            src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${result.UsuFondoF}`}
+                                                            src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${result.UsuFondoF}`}
                                                             alt='tarjeta de presentación'
                                                             width={500}
                                                             height={300}

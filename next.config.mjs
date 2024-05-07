@@ -6,6 +6,10 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'tarjet.site'
+            },
+            {
+                protocol: 'https',
+                hostname: 'souvenir-site.com'
             }
         ]
     }

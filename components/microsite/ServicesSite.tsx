@@ -38,7 +38,7 @@ const ServicesSite = ({userData} : Props) => {
                             <div key={service.ServNum} className={style.ServiceContainer}>
                                 <h3>{service.ServSubTitulo}</h3>
                                 <Image 
-                                    src={`https://tarjet.site/imagenes/servicios/${service.ServImg}`}
+                                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}`}
                                     alt='Imagen de servicio'
                                     width={800}
                                     height={800}

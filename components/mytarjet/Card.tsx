@@ -12,7 +12,7 @@ const Card = ({image, token} : Props) => {
     return ( 
         <Link href={`/st/${btoa(token)}`}>
             <motion.img 
-                src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${image}`} 
+                src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${image}`} 
                 alt="Tarjeta de presentación" 
                 animate={{rotate: [0, -1.5, 1.5, 0]}}
                 transition={{ease: "linear", delay: 2, duration: 0.3,repeat: Infinity, repeatDelay: 2}}

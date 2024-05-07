@@ -248,7 +248,7 @@ const Search = ( {categories}:Props ) => {
                                                     <Image 
                                                         src={
                                                             user.ImgFoto 
-                                                            ? `https://tarjet.site/imagenes/perfil-imagenes/${user.ImgFoto}`
+                                                            ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${user.ImgFoto}`
                                                             : '/images/perfil-temporal.webp'
                                                         }
                                                         alt='Foto de perfil'
@@ -264,7 +264,7 @@ const Search = ( {categories}:Props ) => {
                                                 <div className='card'>
                                                     <Link href={`/st/${btoa(user.Token)}`}>
                                                         <Image 
-                                                            src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${user.FondoF}`}
+                                                            src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${user.FondoF}`}
                                                             alt='Tarjeta de presentación'
                                                             width={500}
                                                             height={190}
@@ -283,7 +283,7 @@ const Search = ( {categories}:Props ) => {
                                                 <Image 
                                                     src={
                                                         user.ImgFoto 
-                                                        ? `https://tarjet.site/imagenes/perfil-imagenes/${user.ImgFoto}`
+                                                        ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${user.ImgFoto}`
                                                         : '/images/perfil-temporal.webp'
                                                     }
                                                     alt='Foto de perfil'
@@ -299,7 +299,7 @@ const Search = ( {categories}:Props ) => {
                                             <div className='card'>
                                                 <Link href={`/st/${btoa(user.Token)}`}>
                                                     <Image 
-                                                        src={`https://tarjet.site/imagenes/tarjetas_frente_usuarios/${user.FondoF}`}
+                                                        src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${user.FondoF}`}
                                                         alt='Tarjeta de presentación'
                                                         width={500}
                                                         height={190}
