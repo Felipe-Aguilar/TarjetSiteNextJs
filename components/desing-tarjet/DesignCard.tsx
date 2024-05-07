@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Bs1CircleFill, Bs2CircleFill, Bs3CircleFill, BsCaretDownFill, BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { UserDataResponse } from '@/interfaces/userData-interface';
 import { ImagesCollectionInterface, ListTarjeta } from '@/interfaces/design-tarjet/imagesCollection-interface';
@@ -193,6 +193,7 @@ const DesignCard = ({ userData } : Props) => {
                                     width={820}
                                     height={484}
                                     key={image.TarjetaImagen}
+                                    priority={false}
                                 />
                             )) }
                         </Slider>
@@ -254,6 +255,8 @@ const DesignCard = ({ userData } : Props) => {
                             width={820}
                             height={484}
                             quality={100}
+                            loader={()=>`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}?w=820&q=75`}
+                            priority={false}
                         />
                     ): (
                         <p>Aún no cuentas con una tarjeta personalizada</p>

@@ -246,6 +246,8 @@ const EditServices = ({ userData } : Props) => {
                                                     width={500}
                                                     height={500}
                                                     className={style.ImageService}
+                                                    priority={false}
+                                                    loader={()=>`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?w=500&q=75`}
                                                 />
                                             )
                                             : (<div className={style.UploadImage}><BsCardImage/></div>)
