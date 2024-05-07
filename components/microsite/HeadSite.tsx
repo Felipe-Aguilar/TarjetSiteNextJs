@@ -27,7 +27,7 @@ const HeadSite = ({userData} : Props) => {
             </motion.div>
 
             <Image 
-                src={`https://tarjet.site/imagenes/perfil-imagenes/${userData.ImgFoto}`}
+                src={`${userData.ImgFoto ? `https://tarjet.site/imagenes/perfil-imagenes/${userData.ImgFoto}` : '/images/perfil-temporal.webp'}`}
                 alt='Imagen de perfil'
                 width={500}
                 height={500}
