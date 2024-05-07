@@ -28,7 +28,7 @@ const Header = () => {
             />
 
             <nav>
-                <Link href={'/directorio'}>
+                <Link href={'/directorio-tarjet'}>
                     <Image 
                         src={'/images/icono-lupa-header.svg'}
                         alt='Icono lupa'
