@@ -12,10 +12,14 @@ const usuarios = [
 
 const PageRegistros = async () => {
 
-    const sesssion = await getServerSession();
+    const session = await getServerSession();
 
-    if (!sesssion) {
+    if (!session) {
         redirect('/login-partners');
+    }
+
+    if (session.user?.email !== '0') {
+        redirect('/login');
     }
 
     return ( 
@@ -51,7 +55,7 @@ const PageRegistros = async () => {
                             </tbody>
                         </table>
 
-                        <Link href={`/perfil-partner/${sesssion.user?.name}`}>
+                        <Link href={`/perfil-partner/${session.user?.name}`}>
                             Regresar
                         </Link>
                     </div>

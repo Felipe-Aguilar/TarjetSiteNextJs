@@ -20,6 +20,10 @@ const DisenaTarjet = async () => {
         redirect('/login');
     }
 
+    if (session.user?.email === '0') {
+        redirect('/login-partners');
+    }
+
     const data = await userData(session.user?.name!);
 
     return ( 

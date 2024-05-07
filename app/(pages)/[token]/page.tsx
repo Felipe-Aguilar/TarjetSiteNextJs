@@ -22,6 +22,10 @@ const MyTarjet = async () => {
         redirect('/login');
     }
 
+    if (session.user?.email === '0') {
+        redirect('/login-partners');
+    }
+
     const data = await userData(session.user!.name!);
 
     const response = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaTarjetero/?Usutarjetid=${data.UUID}`, {

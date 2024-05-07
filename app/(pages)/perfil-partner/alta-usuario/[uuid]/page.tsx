@@ -18,6 +18,10 @@ const PageAltaUser = async () => {
         redirect('/login-partners');
     }
 
+    if (session.user?.email !== '0') {
+        redirect('/login');
+    }
+
     return ( 
         <div className='green'>
             <div className="background">
