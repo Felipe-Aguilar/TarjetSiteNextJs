@@ -218,7 +218,7 @@ const Search = ( {categories}:Props ) => {
                                 className={category.Id === categorySelected ? style.Selected : ''}
                             >
                                 <Image 
-                                    src={`https://tarjet.site/imagenes/icons/icon-${index+1}.svg`}
+                                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/IconosDirectorio/icon-${index+1}.svg`}
                                     alt='ícono de categoría'
                                     width={200}
                                     height={200}
