@@ -66,6 +66,10 @@ const MicrositeHome = ({tokenServer, uuidServer}: Props) => {
                         <NextSeo 
                             title='NEXT SEO TITLE'
                             description='NEXT SEO DESCRIPTION'
+                            openGraph={{
+                                title: 'Title next seo',
+                                description: 'description next seo'
+                            }}
                         />
 
                         <div className={`body ${style.Site}`}>
