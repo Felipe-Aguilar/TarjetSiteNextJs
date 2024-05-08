@@ -7,8 +7,9 @@ export const metadata = {
     title: 'Tarjet - Perfil',
     description: 'Perfil Tarjet',
     openGraph: {
-        title: 'Acme',
-        description: 'Acme is a...',
+        title: 'Felipe',
+        description: 'Felipe description',
+        image: 'https://www.tarjet.site/images/logo.svg'
     },
 };
 
