@@ -6,11 +6,10 @@ import { Fragment } from "react";
 export const metadata = {
     title: 'Tarjet - Perfil',
     description: 'Perfil Tarjet',
-    openGraph: {
-        title: 'Felipe',
-        description: 'Felipe description',
-        image: 'https://www.tarjet.site/images/logo.svg'
-    },
+    // openGraph: {
+    //     title: 'Felipe',
+    //     description: 'Felipe description',
+    // },
 };
 
 const SitePage = async () => {
