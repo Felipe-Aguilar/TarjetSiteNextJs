@@ -158,7 +158,7 @@ const Data = ( {userData}:Props ) => {
             <div className={style.SubmitImage}>
                 <Image 
                     src={userData.ImgFoto
-                        ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}`
+                        ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}?timestamp=${Date.now()}`
                         : `/images/perfil-temporal.webp`
                     }
                     alt='Imagen de perfil'

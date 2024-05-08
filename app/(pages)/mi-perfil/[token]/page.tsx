@@ -36,7 +36,7 @@ const MiPerfil = async () => {
                             <div className={style.Image}>
                                 <Image 
                                     src={data?.ImgFoto
-                                        ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${data.ImgFoto}`
+                                        ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${data.ImgFoto}?timestamp=${Date.now()}`
                                         : '/images/perfil-temporal.webp'
                                     }
                                     alt="Imagen de perfil"
