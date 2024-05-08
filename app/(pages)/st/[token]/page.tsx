@@ -6,6 +6,10 @@ import { Fragment } from "react";
 export const metadata = {
     title: 'Tarjet - Perfil',
     description: 'Perfil Tarjet',
+    openGraph: {
+        title: 'Acme',
+        description: 'Acme is a...',
+    },
 };
 
 const SitePage = async () => {
