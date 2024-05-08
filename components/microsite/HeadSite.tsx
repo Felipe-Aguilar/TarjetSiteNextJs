@@ -23,6 +23,7 @@ const HeadSite = ({userData} : Props) => {
                     height={515}
                     quality={100}
                     className={style.Card}
+                    loader={()=>`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}`}
                 />
             </motion.div>
 
