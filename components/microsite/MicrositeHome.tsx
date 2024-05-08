@@ -3,6 +3,7 @@
 import { useParams } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
 import { UserDataResponse } from '@/interfaces/userData-interface';
+import { NextSeo } from 'next-seo';
 
 import style from './site.module.scss';
 import userData from '@/app/api/userData';
@@ -61,6 +62,12 @@ const MicrositeHome = ({tokenServer, uuidServer}: Props) => {
             <div className="background">
                 { data && (
                     <Fragment>
+
+                        <NextSeo 
+                            title='NEXT SEO TITLE'
+                            description='NEXT SEO DESCRIPTION'
+                        />
+
                         <div className={`body ${style.Site}`}>
                             <div className="contain">
                                 <HeadSite userData={data!} />
