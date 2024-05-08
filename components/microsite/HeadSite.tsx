@@ -23,7 +23,7 @@ const HeadSite = ({userData} : Props) => {
                     alt='Tarjeta de presentación'
                     width={820}
                     height={515}
-                    quality={100}
+                    quality={80}
                     className={style.Card}
                 />
             </motion.div>
@@ -36,7 +36,7 @@ const HeadSite = ({userData} : Props) => {
                 alt='Imagen de perfil'
                 width={500}
                 height={500}
-                quality={100}
+                quality={80}
                 className={style.Perfil}
             />
         </div>

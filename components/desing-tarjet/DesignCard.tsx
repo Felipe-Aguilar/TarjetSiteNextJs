@@ -250,12 +250,10 @@ const DesignCard = ({ userData } : Props) => {
 
                     { userData.ImgTarFrente ? (
                         <Image 
-                            src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}`}
+                            src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}?timestamp=${Date.now()}`}
                             alt='Tarjeta de presentación'
                             width={820}
                             height={484}
-                            quality={100}
-                            loader={()=>`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}?w=820&q=75`}
                             priority={false}
                         />
                     ): (

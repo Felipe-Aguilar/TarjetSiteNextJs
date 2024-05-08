@@ -241,13 +241,12 @@ const EditServices = ({ userData } : Props) => {
                                         { service.ServImg 
                                             ? (
                                                 <Image 
-                                                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}`}
+                                                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?timestamp=${Date.now()}`}
                                                     alt='Imagen de servicio personalizado'
                                                     width={500}
                                                     height={500}
                                                     className={style.ImageService}
                                                     priority={false}
-                                                    loader={()=>`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?w=500&q=75`}
                                                 />
                                             )
                                             : (<div className={style.UploadImage}><BsCardImage/></div>)
