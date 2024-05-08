@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
+import { UserDataResponse } from "@/interfaces/userData-interface";
+
 import style from './site.module.scss';
 import Image from "next/image";
-import { UserDataResponse } from "@/interfaces/userData-interface";
 
 interface Props {
     userData: UserDataResponse;
@@ -13,23 +14,23 @@ const animateCard = {
 }
 
 const HeadSite = ({userData} : Props) => {
+
     return ( 
         <div className={style.Head}>
             <motion.div {...animateCard}>
                 <Image 
-                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}`}
+                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}?timestamp=${Date.now()}`}
                     alt='Tarjeta de presentación'
                     width={820}
                     height={515}
                     quality={100}
                     className={style.Card}
-                    loader={()=>`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}`}
                 />
             </motion.div>
 
             <Image 
                 src={`${userData.ImgFoto 
-                    ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}` 
+                    ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}?timestamp=${Date.now()}` 
                     : '/images/perfil-temporal.webp'
                 }`}
                 alt='Imagen de perfil'
