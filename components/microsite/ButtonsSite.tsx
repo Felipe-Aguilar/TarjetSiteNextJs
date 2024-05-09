@@ -14,9 +14,7 @@ import SaveSuccessfully from '../pop-ups/save-successfully/SaveSuccessfully';
 interface Props {
     userData: UserDataResponse;
     tokenServer: string | null | undefined;
-    tokenClient: string;
     uuidServer: string | null | undefined;
-    uuidClient: string;
 }
 
 const animate = {
@@ -25,7 +23,7 @@ const animate = {
     viewport: { once:true }
 }
 
-const ButtonsSite = ({userData, tokenServer, tokenClient, uuidServer, uuidClient} :Props) => {
+const ButtonsSite = ({userData, tokenServer, uuidServer} :Props) => {
 
     
     // *Guardar contacto
@@ -62,7 +60,7 @@ END:VCARD`;
             mode: 'cors',
             body: JSON.stringify({
                 "TarjetGIdUsuario": uuidServer,
-                "TarjetGIdTarjet": uuidClient
+                "TarjetGIdTarjet": userData.UUID
             })
         });
 
@@ -206,7 +204,7 @@ END:VCARD`;
                         {...animate} 
                         transition={{delay: 2.4}} 
                         className={style.Save} 
-                        disabled={tokenServer === tokenClient ? true : false}
+                        disabled={tokenServer === userData.TokenId ? true : false}
                         onClick={()=>SaveUser()}
                     >
                         Guarda en mi tarjetero tarjet

@@ -1,11 +1,9 @@
 'use client';
 
-import { useParams } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
 import { UserDataResponse } from '@/interfaces/userData-interface';
 
 import style from './site.module.scss';
-import userData from '@/app/api/userData';
 import HeadSite from './HeadSite';
 import ButtonsSite from './ButtonsSite';
 import ServicesSite from './ServicesSite';
@@ -13,39 +11,12 @@ import SocialNetworsSite from './SocialNetworksSite';
 import WhatsAppMessage from '../pop-ups/whatsapp-message/WhatsAppMessage';
 
 interface Props {
+    userData: UserDataResponse;
     tokenServer: string | undefined | null;
     uuidServer: string | undefined | null;
 }
 
-const MicrositeHome = ({tokenServer, uuidServer}: Props) => {
-
-    const { token } = useParams();
-    const [data, setData] = useState<UserDataResponse>();
-    const [tokenClient, setTokenClient] = useState<string>('');
-
-    useEffect(()=>{
-        const getUserData = async () => {
-
-            const tk = atob(Array.isArray(token) ? token[0].toString() : token);
-            setTokenClient(tk);
-
-            const responseToken = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaUsuXToken`,{
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify({
-                    "Token": tk
-                })
-            });
-
-            const dataToken = await responseToken.json();
-
-            const response = await userData(dataToken.usuId);
-
-            setData(response);
-        }
-
-        getUserData();
-    },[])
+const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
 
     // *Mensaje de WhatsApp
     const [message, setMessage] = useState<boolean>(false);
@@ -59,24 +30,22 @@ const MicrositeHome = ({tokenServer, uuidServer}: Props) => {
     return ( 
         <div className="greenWhite">
             <div className="background">
-                { data && (
-                    <Fragment>
-                        <div className={`body ${style.Site}`}>
-                            <div className="contain">
-                                <HeadSite userData={data!} />
+                <Fragment>
+                    <div className={`body ${style.Site}`}>
+                        <div className="contain">
+                            <HeadSite userData={userData} />
 
-                                <ButtonsSite userData={data!} tokenServer={tokenServer} tokenClient={tokenClient} uuidServer={uuidServer} uuidClient={data!.UUID}/>
+                            <ButtonsSite userData={userData} tokenServer={tokenServer} uuidServer={uuidServer}/>
 
-                                <ServicesSite userData={data!}/>
+                            <ServicesSite userData={userData}/>
 
-                                <SocialNetworsSite userData={data!}/>
-                            </div>
+                            <SocialNetworsSite userData={userData}/>
                         </div>
+                    </div>
 
-                        { message &&  <WhatsAppMessage close={()=>setMessage(false)} phone={data.Telefono1}/> }
+                    { message &&  <WhatsAppMessage close={()=>setMessage(false)} phone={userData.Telefono1}/> }
 
-                    </Fragment>
-                ) }
+                </Fragment>
             </div>
         </div>
     );

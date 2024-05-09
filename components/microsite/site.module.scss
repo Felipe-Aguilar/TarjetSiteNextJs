@@ -159,6 +159,14 @@
         }
         ul{
             padding: 0 50px;
+
+            > * + * {
+                margin-top: 8px;
+
+                @media (width <= 700px) {
+                    margin-top: 10px;
+                }
+            }
         }
 
         .ServiceContainer{
