@@ -254,6 +254,7 @@ const DesignCard = ({ userData } : Props) => {
                             alt='Tarjeta de presentación'
                             width={820}
                             height={484}
+                            unoptimized
                             priority={false}
                         />
                     ): (

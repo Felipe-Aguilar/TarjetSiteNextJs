@@ -164,6 +164,7 @@ const Data = ( {userData}:Props ) => {
                     alt='Imagen de perfil'
                     width={500}
                     height={500}
+                    unoptimized
                 />
 
                 <button className='btn' onClick={()=>setOpen(true)}>

@@ -22,7 +22,7 @@ const Card = ({image, token} : Props) => {
                     width={820}
                     height={484}
                     priority={false}
-
+                    unoptimized
                     style={{width: '100%', height: 'auto'}}
                 />
                 <span>Da click sobre la imagen para ver tu tarjeta digital</span>

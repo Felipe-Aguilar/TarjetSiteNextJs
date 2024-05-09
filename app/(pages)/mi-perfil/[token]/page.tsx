@@ -42,6 +42,7 @@ const MiPerfil = async () => {
                                     alt="Imagen de perfil"
                                     width={500}
                                     height={500}
+                                    unoptimized
                                 />
                             </div>
                             <div className={style.Info}>

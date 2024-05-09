@@ -171,10 +171,11 @@ const EditServices = ({ userData } : Props) => {
             { userData.ImgHeader
                 ? ( 
                     <Image 
-                        src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/Headers/${userData.ImgHeader}`}
+                        src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/Headers/${userData.ImgHeader}?timestamp=${Date.now()}`}
                         alt='Encabezado de perfil'
                         width={500}
                         height={500}
+                        unoptimized
                         className={style.ImageHeader}
                     />
                 )
@@ -247,6 +248,7 @@ const EditServices = ({ userData } : Props) => {
                                                     height={500}
                                                     className={style.ImageService}
                                                     priority={false}
+                                                    unoptimized
                                                 />
                                             )
                                             : (<div className={style.UploadImage}><BsCardImage/></div>)
