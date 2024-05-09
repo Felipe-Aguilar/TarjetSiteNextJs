@@ -25,6 +25,7 @@ const HeadSite = ({userData} : Props) => {
                     height={515}
                     quality={80}
                     className={style.Card}
+                    unoptimized
                 />
             </motion.div>
 
@@ -38,6 +39,7 @@ const HeadSite = ({userData} : Props) => {
                 height={500}
                 quality={80}
                 className={style.Perfil}
+                unoptimized
             />
         </div>
     );

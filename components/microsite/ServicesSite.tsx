@@ -44,6 +44,7 @@ const ServicesSite = ({userData} : Props) => {
                                         width={800}
                                         height={800}
                                         priority={false}
+                                        unoptimized
                                     />
                                 ) }
                                 <p>{service.ServDescrip}</p>
