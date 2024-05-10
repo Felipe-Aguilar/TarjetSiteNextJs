@@ -5,7 +5,7 @@ import Link from 'next/link';
 const navLinks = [
     {path: '/aviso-de-privacidad', name: 'Aviso de privacidad'},
     {path: '/contacto', name: 'Contacto'},
-    {path: '/tarjet-parners', name: 'Tarjet para partners'},
+    {path: '/login-partners', name: 'Tarjet para partners'},
 ]
 
 const Footer = () => {
