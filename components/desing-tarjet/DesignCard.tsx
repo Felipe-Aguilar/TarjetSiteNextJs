@@ -179,6 +179,7 @@ const DesignCard = ({ userData } : Props) => {
                                     height={484}
                                     key={image.TarjetaImagen}
                                     priority={false}
+                                    unoptimized
                                 />
                             )) }
                         </Slider>
@@ -194,6 +195,7 @@ const DesignCard = ({ userData } : Props) => {
                                     height={484}
                                     key={image.TarjetaImagen}
                                     priority={false}
+                                    unoptimized
                                 />
                             )) }
                         </Slider>

@@ -7,9 +7,10 @@ import Link from 'next/link';
 
 interface Props {
     userData: UserDataResponse;
+    tokenServer: string | undefined | null;
 }
 
-const SocialNetworsSite = ({userData} :Props) => {
+const SocialNetworsSite = ({userData, tokenServer} :Props) => {
     return ( 
         <div className={style.Social} id='SocialSection'>
             { userData && (
@@ -55,51 +56,59 @@ const SocialNetworsSite = ({userData} :Props) => {
                         <p className={style.user}>{userData.Alias}</p>
                     </div>
 
-                    <div className={style.Info}>
-                        <Image 
-                            src={'/images/logo.svg'}
-                            alt='logo tarjet'
-                            width={100}
-                            height={100}
-                            priority={false}
-                        />
-                        <p>Conectamos personas con tu negocio</p>
-                        <h6>
-                            Te agradó esta tarjeta digital <br/>
-                            <span>Tú también puedes tener la tuya</span>
-                        </h6>
-                        <Link href="/login">
-                            Solicita gratuitamente tu tarjeta digital Tarjet
-                        </Link>
-                        <h6>
-                            Actualízate <br/>
-                            <span>Genera un impacto positivo con tu tarjeta Física tarjet</span>
-                        </h6>
-                        <Image 
-                            src={'/images/tarjeta-fisica.webp'}
-                            alt='Tarjeta física tarjet'
-                            width={200}
-                            height={200}
-                            priority={false}
-                            className={style.Card}
-                        />
-                        <a href="" className={style.Orange}>
-                            Compra tu tarjeta física Tarjet con NFC <br/>
-                            <span>Es personalizada</span>
-                        </a>
-                        <h6>
-                            <span>Hagamos Networking</span> <br/>
-                    
-                            En nuestro directorio puedes ser encontrado fácilmente por personas que buscan lo que haces
-                        </h6>
-                        <Link href="/login" className={style.Violet}>
-                            Regístrate gratuitamente <span>y accede a tu tarjetero digital tarjet</span>
-                        </Link>
-                    </div>
+                    { !tokenServer && (
+                        <Fragment>
+                            <div className={style.Info}>
+                                <Image 
+                                    src={'/images/logo.svg'}
+                                    alt='logo tarjet'
+                                    width={100}
+                                    height={100}
+                                    priority={false}
+                                />
+                                <p>Conectamos personas con tu negocio</p>
+                                <h6>
+                                    Te agradó esta tarjeta digital <br/>
+                                    <span>Tú también puedes tener la tuya</span>
+                                </h6>
+                                <Link href="/login">
+                                    Solicita gratuitamente tu tarjeta digital Tarjet
+                                </Link>
+                                <h6>
+                                    Actualízate <br/>
+                                    <span>Genera un impacto positivo con tu tarjeta Física tarjet</span>
+                                </h6>
+                                <Image 
+                                    src={'/images/tarjeta-fisica.webp'}
+                                    alt='Tarjeta física tarjet'
+                                    width={200}
+                                    height={200}
+                                    priority={false}
+                                    className={style.Card}
+                                />
+                                <a href="" className={style.Orange}>
+                                    Compra tu tarjeta física Tarjet con NFC <br/>
+                                    <span>Es personalizada</span>
+                                </a>
+                                <h6>
+                                    <span>Hagamos Networking</span> <br/>
+                            
+                                    En nuestro directorio puedes ser encontrado fácilmente por personas que buscan lo que haces
+                                </h6>
+                                <Link href="/login" className={style.Violet}>
+                                    Regístrate gratuitamente <span>y accede a tu tarjetero digital tarjet</span>
+                                </Link>
+                            </div>
 
-                    <Link href={'/directorio-tarjet'} className={style.LinkFooter}>
-                        Te invitamos a conocernos, visita nuestro sitio oficial
-                    </Link>
+                            <Link href={'/directorio-tarjet'} className={style.LinkFooter}>
+                                Te invitamos a conocernos, visita nuestro sitio oficial
+                            </Link>
+                        </Fragment>
+                    )
+
+                    }
+
+
                 </Fragment>
             )}
         </div>

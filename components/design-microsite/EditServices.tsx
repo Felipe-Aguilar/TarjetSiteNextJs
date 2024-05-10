@@ -186,7 +186,7 @@ const EditServices = ({ userData } : Props) => {
                 )
             }
 
-            <button className={`btn ${style.UploadButton}`} onClick={()=>onUploadImage('SITE')} disabled={userData.Premium ? false : true}>
+            <button className={`btn ${style.UploadButton}`} onClick={()=>onUploadImage('SITE')} disabled={!userData.Premium ? false : true}>
                 Subir imagen
             </button>
 

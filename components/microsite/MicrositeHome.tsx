@@ -39,7 +39,7 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
 
                             <ServicesSite userData={userData}/>
 
-                            <SocialNetworsSite userData={userData}/>
+                            <SocialNetworsSite userData={userData} tokenServer={tokenServer}/>
                         </div>
                     </div>
 
