@@ -8,26 +8,6 @@ interface Props {
     params: { token:string }
 }
 
-// export const metadata = {
-//     title: 'Perfil - Tarjet',
-//     description: 'Perfil - Tarjet',
-//     openGraph: {
-//         title: 'Felipe',
-//         description: 'Felipe description',
-//         url: 'https://nextjs.org', //TODO: No muestra nada en el open, pero si en la data, recomendaría si usarla
-//         siteName: 'tarjet.site',
-//         images: [
-//             {
-//                 url: 'https://www.tarjet.site/images/logo.svg',
-//                 width: 800,
-//                 height: 600,
-//             },
-//         ],
-//         locale: 'es_MEX',
-//         type: 'website',
-//     },
-// };
-
 export async function generateMetadata({params} : Props): Promise<Metadata>{
     
     const data = await getData(params.token);
@@ -42,9 +22,9 @@ export async function generateMetadata({params} : Props): Promise<Metadata>{
             siteName: 'tarjet.site',
             images: [
                 {
-                    url: data.ImgFoto ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${data.ImgFoto}` : 'https://www.tarjet.site/_next/image?url=%2Fimages%2Filustracion-perfil-3.webp&w=640&q=75',
-                    width: 800,
-                    height: 600,
+                    url: data.ImgFoto ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${data.ImgTarFrente}` : 'https://www.tarjet.site/_next/image?url=%2Fimages%2Filustracion-perfil-3.webp&w=640&q=75',
+                    width: 451,
+                    height: 266,
                 },
             ],
             locale: 'es_MEX',
