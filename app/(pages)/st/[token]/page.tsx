@@ -38,7 +38,7 @@ export async function generateMetadata({params} : Props): Promise<Metadata>{
         openGraph: {
             title: `${data.Nom} ${data.AppP}`,
             description: `¡Hola! Soy ${data.Nom} ${data.AppP}, te comparto mi perfil Tarjet donde podrás ver más acerca de mi trabajo. Explora mi tarjeta digital en tarjet.site. ¡Conecta fácilmente con profesionales y emprendedores en un solo clic!"`,
-            url: 'https://tarjet.site', //TODO: No muestra nada en el open, pero si en la data, recomendaría si usarla
+            url: 'https://tarjet.site',
             siteName: 'tarjet.site',
             images: [
                 {

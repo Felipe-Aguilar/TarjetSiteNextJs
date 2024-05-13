@@ -16,11 +16,12 @@ const ServicesSite = ({userData} : Props) => {
 
                     { userData.ImgHeader && (
                         <Image 
-                            src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/Headers/${userData.ImgHeader}?timestamp=${Date.now()}`}
+                            src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/usuHeaders/${userData.ImgHeader}?timestamp=${Date.now()}`}
                             alt='imagen de encabezado de servicios'
                             width={400}
                             height={800}
                             unoptimized
+                            style={{width: '100%', height: 'auto', marginBottom: '20px'}}
                         />
                     )} 
 

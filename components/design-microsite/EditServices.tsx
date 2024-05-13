@@ -171,12 +171,13 @@ const EditServices = ({ userData } : Props) => {
             { userData.ImgHeader
                 ? ( 
                     <Image 
-                        src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/Headers/${userData.ImgHeader}?timestamp=${Date.now()}`}
+                        src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/usuHeaders/${userData.ImgHeader}?timestamp=${Date.now()}`}
                         alt='Encabezado de perfil'
                         width={500}
                         height={500}
                         unoptimized
                         className={style.ImageHeader}
+                        style={{width: '100%', height: 'auto'}}
                     />
                 )
                 : (

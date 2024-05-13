@@ -66,7 +66,6 @@ const SocialNetworks = ( {userData}: Props ) => {
                             <input 
                                 type="text" 
                                 placeholder="Url Facebook"
-                                maxLength={10}
                                 value={facebook}
                                 onChange={(e)=>setFacebook(e.target.value.trim())}
                                 style={{borderRadius: 0}}
@@ -86,7 +85,6 @@ const SocialNetworks = ( {userData}: Props ) => {
                             <input 
                                 type="text" 
                                 placeholder="Url Instagram"
-                                maxLength={10}
                                 value={instagram}
                                 onChange={(e)=>setInstagram(e.target.value.trim())}
                                 onBlur={onSubmitData}
@@ -101,7 +99,6 @@ const SocialNetworks = ( {userData}: Props ) => {
                             <input 
                                 type="text" 
                                 placeholder="Url Tiktok"
-                                maxLength={10}
                                 value={tiktok}
                                 onChange={(e)=>setTiktok(e.target.value.trim())}
                                 onBlur={onSubmitData}
@@ -116,7 +113,6 @@ const SocialNetworks = ( {userData}: Props ) => {
                             <input 
                                 type="text" 
                                 placeholder="Url Twitter"
-                                maxLength={10}
                                 value={twitter}
                                 onChange={(e)=>setTwitter(e.target.value.trim())}
                                 onBlur={onSubmitData}
@@ -131,7 +127,6 @@ const SocialNetworks = ( {userData}: Props ) => {
                             <input 
                                 type="text" 
                                 placeholder="Url Youtube"
-                                maxLength={10}
                                 value={youtube}
                                 onChange={(e)=>setYoutube(e.target.value.trim())}
                                 onBlur={onSubmitData}
@@ -146,7 +141,6 @@ const SocialNetworks = ( {userData}: Props ) => {
                             <input 
                                 type="text" 
                                 placeholder="Url Linkedin"
-                                maxLength={10}
                                 value={linkedin}
                                 onChange={(e)=>setLinkedin(e.target.value.trim())}
                                 onBlur={onSubmitData}
@@ -161,7 +155,6 @@ const SocialNetworks = ( {userData}: Props ) => {
                             <input 
                                 type="text" 
                                 placeholder="Url Telegram"
-                                maxLength={10}
                                 value={telegram}
                                 onChange={(e)=>setTelegram(e.target.value.trim())}
                                 onBlur={onSubmitData}
