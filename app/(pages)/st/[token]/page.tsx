@@ -23,8 +23,8 @@ export async function generateMetadata({params} : Props): Promise<Metadata>{
             images: [
                 {
                     url: data.ImgFoto ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${data.ImgTarFrente}` : 'https://www.tarjet.site/_next/image?url=%2Fimages%2Filustracion-perfil-3.webp&w=640&q=75',
-                    width: 451,
-                    height: 266,
+                    width: 600,
+                    height: 250,
                 },
             ],
             locale: 'es_MEX',
