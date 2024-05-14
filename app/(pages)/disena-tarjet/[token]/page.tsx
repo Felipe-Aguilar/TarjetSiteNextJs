@@ -37,6 +37,7 @@ const DisenaTarjet = async () => {
                                 alt='Ilustración diseña tu tarjet'
                                 width={500}
                                 height={500}
+                                unoptimized
                             />
 
                             <h1>Gracias por pertenecer a esta gran comunidad</h1>
