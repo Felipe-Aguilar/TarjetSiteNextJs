@@ -255,6 +255,7 @@ const Search = ( {categories}:Props ) => {
                                                         width={200}
                                                         height={200}
                                                         priority={false}
+                                                        unoptimized
                                                     />
                                                     <div className='text'>
                                                         <h5>{user.NombreCompleto}</h5>
@@ -269,6 +270,7 @@ const Search = ( {categories}:Props ) => {
                                                             width={500}
                                                             height={190}
                                                             priority={false}
+                                                            unoptimized
                                                         />
                                                     </Link>
                                                 </div>
@@ -289,6 +291,7 @@ const Search = ( {categories}:Props ) => {
                                                     alt='Foto de perfil'
                                                     width={200}
                                                     height={200}
+                                                    unoptimized
                                                     priority={false}
                                                 />
                                                 <div className='text'>
@@ -304,6 +307,7 @@ const Search = ( {categories}:Props ) => {
                                                         width={500}
                                                         height={190}
                                                         priority={false}
+                                                        unoptimized
                                                     />
                                                 </Link>
                                             </div>
