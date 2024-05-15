@@ -11,52 +11,52 @@ const Apple = () => {
 
         console.log(response);
 
-        const idToken = await response.authorization.id_token;
-        const decodedToken = jwtDecode(idToken);
+        // const idToken = await response.authorization.id_token;
+        // const decodedToken = jwtDecode(idToken);
 
-        const responseCode = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ValidarCodigoOTP', {
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify({
-                "RegistroUsu": {
-                    "Nombre": response.user?.name.firstName ? response.user.name.firstName : '',
-                    "ApellidoPat": response.user?.name.lastName ? response.user.name.lastName : '',
-                    "ApellidoMat": "",
-                    "Codigo": decodedToken.sub,
-                    "Correo": response.user?.email ? response.user.email : '',
-                    "Password": decodedToken.sub,
-                    "TipoAut": "A"
-                }
-            })
-        });
+        // const responseCode = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ValidarCodigoOTP', {
+        //     method: 'POST',
+        //     mode: 'cors',
+        //     body: JSON.stringify({
+        //         "RegistroUsu": {
+        //             "Nombre": response.user?.name.firstName ? response.user.name.firstName : '',
+        //             "ApellidoPat": response.user?.name.lastName ? response.user.name.lastName : '',
+        //             "ApellidoMat": "",
+        //             "Codigo": decodedToken.sub,
+        //             "Correo": response.user?.email ? response.user.email : '',
+        //             "Password": decodedToken.sub,
+        //             "TipoAut": "A"
+        //         }
+        //     })
+        // });
 
-        const data = await responseCode.json();
+        // const data = await responseCode.json();
 
-        if (data.Token) {
-            const usuId= await data.usuId;
-            const token= await data.Token;
+        // if (data.Token) {
+        //     const usuId= await data.usuId;
+        //     const token= await data.Token;
 
-            await signIn('credentials', {usuId, token, callbackUrl: '/registro'});
+        //     await signIn('credentials', {usuId, token, callbackUrl: '/registro'});
 
-            return;
-        }
+        //     return;
+        // }
 
-        const responseLogin = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/Login', {
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify({
-                "Cuenta": "",
-                "Password": decodedToken.sub,
-                "tipoLogin": "A"
-            })
-        });
+        // const responseLogin = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/Login', {
+        //     method: 'POST',
+        //     mode: 'cors',
+        //     body: JSON.stringify({
+        //         "Cuenta": "",
+        //         "Password": decodedToken.sub,
+        //         "tipoLogin": "A"
+        //     })
+        // });
 
-        const dataLogin = await responseLogin.json();
+        // const dataLogin = await responseLogin.json();
 
-        const usuId= await dataLogin.usuId;
-        const token= await dataLogin.Token;
+        // const usuId= await dataLogin.usuId;
+        // const token= await dataLogin.Token;
 
-        await signIn('credentials', {usuId, token, callbackUrl: '/login'});
+        // await signIn('credentials', {usuId, token, callbackUrl: '/login'});
     }
 
     return ( 
