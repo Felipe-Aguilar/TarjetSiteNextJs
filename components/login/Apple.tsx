@@ -62,7 +62,7 @@ const Apple = () => {
     return ( 
         <AppleLogin 
             clientId="site.tarjet.client"
-            redirectURI="https://tarjet.site"
+            redirectURI="https://www.tarjet.site/login"
             state='origin:web'
             scope = "name email"
             responseType={"code"} 
