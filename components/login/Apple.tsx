@@ -62,7 +62,7 @@ const Apple = () => {
     return ( 
         <AppleLogin 
             clientId="site.tarjet.client"
-            redirectURI="https://tarjet-site.vercel.app/login"
+            redirectURI="https://tarjet.site"
             state='origin:web'
             scope = "name email"
             responseType={"code"} 
