@@ -43,7 +43,9 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                         </div>
                     </div>
 
-                    { message &&  <WhatsAppMessage close={()=>setMessage(false)} phone={userData.Telefono1}/> }
+                    { userData.Telefono1 && 
+                        message &&  <WhatsAppMessage close={()=>setMessage(false)} phone={userData.Telefono1} token={userData.TokenId}/> 
+                    }
 
                 </Fragment>
             </div>

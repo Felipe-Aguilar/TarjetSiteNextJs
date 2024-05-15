@@ -9,8 +9,6 @@ const Apple = () => {
 
     const appleLogin = async ( response? : any  ) => {
 
-        console.log(response);
-
         const idToken = await response.authorization.id_token;
         const decodedToken = jwtDecode(idToken);
 

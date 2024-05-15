@@ -98,7 +98,12 @@ END:VCARD`;
                 </motion.button>
     
                 { userData.Telefono1 && (
-                    <motion.a href={`https://wa.me/${userData.Telefono1}`} target='_blank' {...animate} transition={{delay: 1.2}} className={style.WhatsApp}>
+                    <motion.a 
+                        href={`https://api.whatsapp.com/send?phone=+52${userData.Telefono1}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/%23/st/${btoa(userData.TokenId)}`} 
+                        target='_blank' {...animate} 
+                        transition={{delay: 1.2}} 
+                        className={style.WhatsApp}
+                    >
                         Envíame un WhatsApp
     
                         <span>
@@ -108,7 +113,12 @@ END:VCARD`;
                 ) }
 
                 { userData.Telefono2 && (
-                    <motion.a href={`https://wa.me/${userData.Telefono2}`} target='_blank' {...animate} transition={{delay: 1.4}} className={style.WhatsApp}>
+                    <motion.a 
+                        href={`https://api.whatsapp.com/send?phone=+52${userData.Telefono2}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/%23/st/${btoa(userData.TokenId)}`} 
+                        target='_blank' {...animate} 
+                        transition={{delay: 1.4}} 
+                        className={style.WhatsApp}
+                    >
                         Envíame un WhatsApp
     
                         <span>
