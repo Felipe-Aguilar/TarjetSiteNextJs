@@ -118,11 +118,8 @@ const Data = ( {userData}:Props ) => {
 
     // *Guardar datos formulario
     const [error, setError] = useState<string[]>([]);
-    const [success, setSuccess] = useState<boolean>(false);
 
-    const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
+    const submitData = async () => {
         const dataForm = {
             "Alias": userName,
             "Nom": name,
@@ -137,15 +134,6 @@ const Data = ( {userData}:Props ) => {
         }
 
         await EditData({ userData, dataForm });
-
-        setTimeout(()=>{
-            setSuccess(true);
-
-            setTimeout(()=>{
-                router.replace(`/disena-tarjet/${btoa(userData.TokenId)}`);
-                setSuccess(false);
-            }, 2500)
-        }, 1000)
     }
 
     // *Abrir Subir imagen
@@ -177,7 +165,7 @@ const Data = ( {userData}:Props ) => {
                 <UploadImage token={userData.TokenId} imageType={'PERF'} close={()=>setOpen(false)}/>
             )}
 
-            <form onSubmit={onSubmitForm}>
+            <form>
                 <div className={style.PrefixContainer}>
                     <div>
                         <span>Prefijo</span>
@@ -185,6 +173,7 @@ const Data = ( {userData}:Props ) => {
                             value={prefix} 
                             onChange={(e)=>setPrefix(e.target.value)} 
                             style={{borderRadius: '8px'}}
+                            onBlur={submitData}
                         >
                             { prefixList?.sdtTitulos.map((prefixOption)=>(
                                 <option 
@@ -201,6 +190,7 @@ const Data = ( {userData}:Props ) => {
                         maxLength={10}
                         value={name}
                         onChange={(e)=>setName(e.target.value.trim())}
+                        onBlur={submitData}
                     />
                 </div>
 
@@ -211,6 +201,7 @@ const Data = ( {userData}:Props ) => {
                         maxLength={10}
                         value={paternal}
                         onChange={(e)=>setPaternal(e.target.value.trim())}
+                        onBlur={submitData}
                     />
 
                     <input 
@@ -219,6 +210,7 @@ const Data = ( {userData}:Props ) => {
                         maxLength={10}
                         value={maternal}
                         onChange={(e)=>setMaternal(e.target.value.trim())}
+                        onBlur={submitData}
                     />
                 </div>
 
@@ -229,6 +221,7 @@ const Data = ( {userData}:Props ) => {
                         maxLength={15}
                         value={userName}
                         onChange={(e)=>onChangeUserName(e.target.value.trim())}
+                        onBlur={submitData}
                     />
 
                     <span>(con este usuario te podrán encontrar más fácil en el directorio)</span>
@@ -240,6 +233,7 @@ const Data = ( {userData}:Props ) => {
                     maxLength={30}
                     value={businessName}
                     onChange={(e)=>setBusinessName(e.target.value)}
+                    onBlur={submitData}
                 />
 
                 <input 
@@ -248,6 +242,7 @@ const Data = ( {userData}:Props ) => {
                     maxLength={30}
                     value={workPosition}
                     onChange={(e)=>setWorkPosition(e.target.value)}
+                    onBlur={submitData}
                 />
 
                 <input 
@@ -258,6 +253,7 @@ const Data = ( {userData}:Props ) => {
                     maxLength={80}
                     value={activity}
                     onChange={(e)=>SearchActivity(e)}
+                    onBlur={submitData}
                 />
 
                 <datalist id='activity-list' className={style.DataList}>
@@ -266,7 +262,7 @@ const Data = ( {userData}:Props ) => {
                     ))}
                 </datalist>
 
-                <select className={style.DataListSelect} value={activity} onChange={(e)=>SearchActivity(e)}>
+                <select className={style.DataListSelect} value={activity} onChange={(e)=>SearchActivity(e)} onBlur={submitData}>
                     { segments?.ListSegmentos.map((segment)=>(
                         <option value={segment.Descripcion} key={segment.Nivel3Id}>{segment.Descripcion}</option>
                     )) }
@@ -280,27 +276,23 @@ const Data = ( {userData}:Props ) => {
                     type="text" 
                     disabled
                     placeholder='Categoría*'
-                    value={segment.Nivel1Desc}
+                    value={segment ? segment.Nivel1Desc : ''}
                 />
 
                 <input 
                     type="text" 
                     disabled
                     placeholder='Categoría*'
-                    value={segment.Nivel2Desc}
+                    value={segment ? segment.Nivel2Desc : ''}
                 />
 
                 <ContactData userData={userData}/>
                 <SocialNetworks userData={userData}/>
 
-                <button type='submit' className='btn' style={{marginTop: '16px'}}>
+                {/* <button type='submit' className='btn' style={{marginTop: '16px'}}>
                     Guardar datos de tarjeta
-                </button>
+                </button> */}
             </form>
-
-            { success && (
-                <DataSuccessfully />
-            )}
         </div>
     );
 }

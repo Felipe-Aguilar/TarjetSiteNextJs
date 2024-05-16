@@ -6,7 +6,6 @@ import { UserDataResponse } from '@/interfaces/userData-interface';
 import style from './home.module.scss';
 import Data from './Data';
 import DesignCard from './DesignCard';
-import userData from '@/app/api/userData';
 
 interface Props {
     userData: UserDataResponse;
