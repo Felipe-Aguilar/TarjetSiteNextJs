@@ -1,0 +1,125 @@
+.Buttons{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > * + * {
+        margin-top: 20px;
+    }
+
+    button,a{
+        width: 95%;
+        background: #dce6ec;
+        border: transparent;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+        padding-left: 20px;
+        font-size: 1rem;
+
+        &:disabled{
+            cursor: not-allowed;
+            
+            span{
+                background: gray;
+            }
+        }
+
+        span{
+            background: #4186a0;
+            border-radius: 0 10px 10px 0;
+            width: 15%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img{
+                width: 60px;
+                height: 50px;
+            }
+
+            svg{
+                height: 50px;
+                color: #fff;
+                font-size: 1.9rem;
+            }
+        }
+    }
+    .WhatsApp{
+        background: #d0ead6;
+
+        span{
+            background: #00943e;
+        }
+    }
+    .Ubication{
+        background: #ffecd2;
+
+        span{
+            background: #ffa200;
+
+            img{
+                height: 50px;
+                width: 37px;
+            }
+        }
+    }
+    .Email{
+        background: #d4e0f6;
+
+        span{
+            background: #0073ce;
+
+            img{
+                width: 50px;
+            }
+        }
+    }
+    .Web{
+        background: #e1dcf4;
+
+        span{
+            background: #5060c6;
+            img{
+                width: 50px;
+            }
+        }
+    }
+    .Social{
+        background: #f1d1d9;
+
+        span{
+            background: #9b034f;
+        }
+    }
+    .Share{
+        background: #e1dcf4;
+
+        span{
+            background: #5060c6;
+        }
+    }
+    .Save{
+        background: #d8d9f8;
+
+        span{
+            background: #4c5187;
+        }
+    }
+    .Seller{
+        background: #dce6ec;
+
+        span{
+            background: #4186a0;
+        }
+    }
+    .Catalog{
+        background: #cdd1de;
+
+        span{
+            background: #2a3e68;
+        }
+    }
+}
