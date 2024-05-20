@@ -72,7 +72,7 @@ const MyTarjet = async () => {
                             </div>
                         )}
 
-                        {!data.RegistroTarjet ? (
+                        {(!data.RegistroTarjet || !data.ImgTarFrente) ? (
                             <div className={style.Links}>
                                 <Link href={'/directorio-tarjet'}>
                                     <Image 
