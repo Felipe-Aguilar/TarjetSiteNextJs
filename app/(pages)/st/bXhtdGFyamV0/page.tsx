@@ -16,8 +16,8 @@ export const metadata = {
         images: [
             {
                 url: 'https://www.tarjet.site/mxm/perfil.webp',
-                width: 300,
-                height: 266,
+                width: 500,
+                height: 500,
             },
         ],
         locale: 'es_MEX',
