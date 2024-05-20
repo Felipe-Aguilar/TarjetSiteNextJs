@@ -15,7 +15,7 @@ export const metadata = {
         siteName: 'tarjet.site',
         images: [
             {
-                url: 'https://www.tarjet.site/_next/image?url=%2Fimages%2Filustracion-perfil-3.webp&w=640&q=75',
+                url: 'https://www.tarjet.site/mxm/perfil.webp',
                 width: 300,
                 height: 266,
             },
