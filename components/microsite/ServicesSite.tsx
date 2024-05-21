@@ -46,10 +46,12 @@ const ServicesSite = ({userData} : Props) => {
                     <hr/>
 
                     { userData.Serv?.map((service)=>(
-                        (service.ServSiteId === 2 && service.ServSubTitulo) && (
+                        (service.ServSiteId === 2 || service.ServSiteId === 3) && (
                             <div key={service.ServNum} className={style.ServiceContainer}>
-                                <h3>{service.ServSubTitulo}</h3>
-                                { service.ServImg && (
+                                {service.ServSubTitulo && (
+                                    <h3>{service.ServSubTitulo}</h3>
+                                )}
+                                { (service.ServImg && service.ServSiteId === 2) && (
                                     <Image 
                                         src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?timestamp=${Date.now()}`}
                                         alt='Imagen de servicio'
@@ -59,7 +61,15 @@ const ServicesSite = ({userData} : Props) => {
                                         unoptimized
                                     />
                                 ) }
-                                <p>{service.ServDescrip}</p>
+                                { (service.ServImg && service.ServSiteId === 3) && (
+                                    <video width="1000" height="720" autoPlay muted preload="none" style={{width: '100%', height: 'auto'}}>
+                                        <source src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}`} type="video/mp4" />
+                                        Tu navegador no soporta etiquetas de video.
+                                    </video>
+                                ) }
+                                {service.ServDescrip && (
+                                    <p>{service.ServDescrip}</p>
+                                )}
                                 <hr/>
                             </div>
                         )
