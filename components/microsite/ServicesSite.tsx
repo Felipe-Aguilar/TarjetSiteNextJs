@@ -46,7 +46,7 @@ const ServicesSite = ({userData} : Props) => {
                     <hr/>
 
                     { userData.Serv?.map((service)=>(
-                        (service.ServSiteId === 2 || service.ServSiteId === 3) && (
+                        (service.ServSiteId === 2 || service.ServSiteId === 3) && (service.ServSubTitulo || service.ServImg) && (
                             <div key={service.ServNum} className={style.ServiceContainer}>
                                 {service.ServSubTitulo && (
                                     <h3>{service.ServSubTitulo}</h3>
