@@ -287,7 +287,7 @@ const ContactData = ( { userData }:Props ) => {
                         )}
 
                         <div className="input-selected">
-                            <select disabled={userData.Premium} value={range} onChange={(e)=>setRange(e.target.value)} onBlur={onSubmitData}>
+                            <select disabled={!userData.Premium} value={range} onChange={(e)=>setRange(e.target.value)} onBlur={onSubmitData}>
                                 <option value="3" key="3">3km</option>
                                 <option value="10" key="10">10km</option>
                                 <option value="20" key="20">20km</option>
