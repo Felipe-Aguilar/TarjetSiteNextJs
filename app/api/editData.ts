@@ -29,6 +29,7 @@ interface Props {
         "PublicPriva": number,
         "PermitirCalif": number,
         "PermitirComments": number,
+        "RangoLocal": string
     },
     socialForm?: {
         "Facebook": string,
@@ -107,6 +108,7 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                     "RegistroTarjet": true,
                     "ImgHeader": userData.ImgHeader,
                     "ImgTarFrente": userData.ImgTarFrente,
+                    "RangoLocal": contactForm?.RangoLocal ?? userData.RangoLocal,
                     "Serv": [
                         {
                             "ServNum": "1",
