@@ -189,6 +189,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                         width={100}
                                         height={100}
                                         priority={false}
+                                        unoptimized
                                     />
                                     <span>{result.NombreCompleto}</span>
                                 </button>
@@ -228,6 +229,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                                     alt='botón copiar'
                                                     width={150}
                                                     height={150}
+                                                    unoptimized
                                                 />
 
                                                 Copiar enlace
@@ -271,6 +273,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                                     width={100}
                                                     height={100}
                                                     priority={false}
+                                                    unoptimized
                                                 />
                                                 <span>{result.NombreCompleto}</span>
                                             </button>
@@ -283,6 +286,7 @@ const MyTarjetSearch = ({ uuId }:Props) => {
                                                             width={500}
                                                             height={300}
                                                             className={style.Card}
+                                                            unoptimized
                                                         />
                                                     </Link>
                                                     <span>DA CLICK SOBRE LA IMAGEN PARA VER TARJETA DIGITAL</span>
