@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google';
+
 import "./globals.css";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
@@ -19,6 +21,9 @@ export default function RootLayout({children,}: Readonly<{
     <AuthProvider>
       <html lang="es">
         <body className={inter.className}>
+          
+          <GoogleAnalytics gaId="GTM-KPRXGMP9"/>
+
           <Header />
             {children}
           <Footer />

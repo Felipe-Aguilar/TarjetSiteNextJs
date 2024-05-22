@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/third-parties": "^14.2.3",
     "@react-oauth/google": "^0.12.1",
     "@types/file-saver": "^2.0.7",
     "@types/react-scroll": "^1.8.10",
