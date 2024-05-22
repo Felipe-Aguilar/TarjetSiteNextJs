@@ -8,6 +8,12 @@ import Apple from '@/components/login/Apple';
 import FormLogin from '@/components/login/Form';
 import Link from 'next/link';
 
+
+export const metadata = {
+    title: 'Login - Tarjet',
+    description: 'Login - Tarjet, inicia sesión y construye tu propia tarjeta digital',
+};
+
 const Login = async () => {
 
     const session = await getServerSession();
