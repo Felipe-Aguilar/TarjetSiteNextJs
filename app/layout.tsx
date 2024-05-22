@@ -20,8 +20,9 @@ export default function RootLayout({children,}: Readonly<{
   return (
     <AuthProvider>
       <html lang="es">
+        <GoogleTagManager gtmId="GTM-KPRXGMP9"/>
+
         <body className={inter.className}>
-          <GoogleTagManager gtmId="GTM-KPRXGMP9"/>
           <Header />
             {children}
           <Footer />
