@@ -120,7 +120,7 @@ const FormCreateUser = ({uuid}: Props) => {
                             onChange={(e)=>setPrefix(e.target.value)}
                         >
                             {prefixList?.sdtTitulos.map((prefix)=>(
-                                <option value={prefix.TituloPersonaDesc} key={prefix.TituloPersonaId}>{prefix.TituloPersonaDesc}</option>
+                                <option value={prefix.TituloPersonaId} key={prefix.TituloPersonaId}>{prefix.TituloPersonaDesc}</option>
                             ))}
                         </select>
                     </div>
