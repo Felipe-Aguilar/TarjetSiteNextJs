@@ -37,19 +37,28 @@ const FormCreateUser = ({uuid}: Props) => {
     const [maternal, setMaternal] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<string[]>([]);
     const [success, setSuccess] = useState<boolean>(false);
 
     // *Subir formulario 
     const SubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!name || !paternal || !maternal || !email || !password) {
-            setError('Uno de los campos se encuentra vacío, por favor intente nuevamente');
+        const errorMessage = 'Uno de los campos se encuentra vacío, por favor intente nuevamente';
+
+        if (!name || !paternal || !email || !password) {
+            if (error.find(message => message === errorMessage)) {
+                return;
+            }
+
+            setError([...error, errorMessage]);
             return; 
+
+        }else{
+            const updateError = error.filter(message => message != errorMessage);
+            setError(updateError);
         }
 
-        setError('');
         const response = await fetch('https://souvenir-site.com/WebTarjet/APIPartner/CrearCuenta', {
             method: 'POST',
             mode: 'cors',
@@ -80,6 +89,23 @@ const FormCreateUser = ({uuid}: Props) => {
             }, 1000)
         }
 
+    }
+
+    // *Analisar contraseña
+    const onBlurPassword = () => {
+        const errorMessage = 'La contraseña debe tener al menos 8 caracteres, incluyendo letras y números.';
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+        if (!regex.test(password)) {
+            const repeat = error.find(message => message === errorMessage);
+
+            if (repeat) return;
+
+            setError([...error, errorMessage]);
+        }else{
+            const updateError = error.filter(message => message != errorMessage);
+            setError(updateError);
+        }
     }
 
     return ( 
@@ -139,11 +165,15 @@ const FormCreateUser = ({uuid}: Props) => {
                     maxLength={30}
                     value={password}
                     onChange={(e)=>setPassword(e.target.value.trim())}
+                    onBlur={onBlurPassword}
                 />
 
                 { error && (
                     <div className='error'>
-                        <p>{error}</p>
+                        {error.map((err)=>(
+                            <p key={err}>{err}</p>
+                        ))}
+                        {/* <p>{error}</p> */}
                     </div>
                 )}
 
