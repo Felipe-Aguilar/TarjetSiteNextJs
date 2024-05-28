@@ -115,8 +115,17 @@
         .Web{
             background: #e1dcf4;
 
+            @media (width <= 700px) {
+                font-size: .9rem;
+            }
+            @media (width <= 400px) {
+                font-size: .8rem;   
+            }
+
             span{
                 background: #5060c6;
+                max-width: 15%;
+
                 img{
                     width: 50px;
                 }

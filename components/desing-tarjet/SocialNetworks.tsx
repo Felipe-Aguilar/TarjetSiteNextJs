@@ -72,7 +72,7 @@ const SocialNetworks = ( {userData}: Props ) => {
                                 onBlur={onSubmitData}
                             />
 
-                            <button onClick={()=>setOpenInfo(true)}>
+                            <button onClick={()=>setOpenInfo(true)} type="button">
                                 <BsQuestionCircle style={{color: '#000', fontSize: '1rem'}}/>
                             </button>
                         </div>
