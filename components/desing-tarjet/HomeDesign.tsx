@@ -1,19 +1,36 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UserDataResponse } from '@/interfaces/userData-interface';
 
 import style from './home.module.scss';
 import Data from './Data';
 import DesignCard from './DesignCard';
+import userData from '@/app/api/userData';
 
 interface Props {
-    userData: UserDataResponse;
+    // userData: UserDataResponse;
+    uuid: string;
 }
 
-const HomeDesign = ( {userData}:Props ) => {
+const HomeDesign = ( {uuid}:Props ) => {
 
     const [order, setOrder] = useState(1);
+
+    const [data, setData] = useState<UserDataResponse>();
+
+    useEffect(()=>{
+        const getData = async ()=> {
+            const response = await userData(uuid);
+
+            setData(response);
+
+            console.log(response);
+        }
+
+        getData();
+
+    },[])
 
     return ( 
         <div className={style.HomeDesign}>
@@ -38,8 +55,10 @@ const HomeDesign = ( {userData}:Props ) => {
 
             <hr/>
 
-            { order == 1 && <Data userData={userData}/> }
-            { order == 2 && <DesignCard userData={userData}/>}
+            {/* { order == 1 && <Data userData={userData}/> }
+            { order == 2 && <DesignCard userData={userData}/>} */}
+            { order == 1 && data && <Data userData={data}/>}
+            { order == 2 && data && <DesignCard userData={data}/>}
         </div>
     );
 }

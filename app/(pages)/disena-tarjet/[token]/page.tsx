@@ -56,7 +56,7 @@ const DisenaTarjet = async () => {
                             </Link>
                         </div>
 
-                        <HomeDesign userData={data}/>
+                        <HomeDesign uuid={session.user?.name!}/>
 
                         <Link href={`/mi-perfil/${btoa(data.TokenId)}`} className={style.BtnReturn}>
                             guardar y regresar a perfil (x)

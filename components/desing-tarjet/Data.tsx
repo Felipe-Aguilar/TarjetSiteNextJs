@@ -11,8 +11,6 @@ import ContactData from './ContactData';
 import SocialNetworks from './SocialNetworks';
 import UploadImage from '../pop-ups/upload-image/UploadImage';
 import EditData from '@/app/api/editData';
-import DataSuccessfully from '../pop-ups/data-successfully/DataSuccessfully';
-import { useRouter } from 'next/navigation';
 
 interface Props {
     userData: UserDataResponse;
@@ -28,8 +26,6 @@ interface SegmentLevel {
 }
 
 const Data = ( {userData}:Props ) => {
-
-    const router = useRouter();
 
     // *Listado de Prefijos y segmentos
     const [prefixList, setPrefixList] = useState<ListPrefixInterface>();
@@ -177,7 +173,7 @@ const Data = ( {userData}:Props ) => {
                         >
                             { prefixList?.sdtTitulos.map((prefixOption)=>(
                                 <option 
-                                    value={prefixOption.TituloPersonaDesc} 
+                                    value={prefixOption.TituloPersonaId} 
                                     key={prefixOption.TituloPersonaId}
                                 >{prefixOption.TituloPersonaDesc}</option>
                             ))}
