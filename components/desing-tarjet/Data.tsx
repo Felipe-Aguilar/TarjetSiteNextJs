@@ -66,7 +66,7 @@ const Data = ( {userData}:Props ) => {
     const [userName, setUserName] = useState<string>(userData.Alias);
     const [businessName, setBusinessName] = useState<string>(userData.NomNegocio);
     const [workPosition, setWorkPosition] = useState<string>(userData.Cargo);
-    const [prefix, setPrefix] = useState<string>(userData.TituloDes);
+    const [prefix, setPrefix] = useState<string>(userData.Titulo);
     const [activity, setActivity] = useState<string>(userData.Lev3Desc);
     const [segment, setSegment] = useState<SegmentLevel>({
         Descripcion: userData.Lev3Desc,
