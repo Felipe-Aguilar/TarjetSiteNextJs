@@ -195,7 +195,7 @@ const Data = ( {userData}:Props ) => {
                         type="text" 
                         placeholder='Apellido Paterno (10 caracteres)'
                         maxLength={10}
-                        value={paternal}
+                        value={prefix == 'Empr' ? '' : paternal}
                         onChange={(e)=>setPaternal(e.target.value.trim())}
                         onBlur={submitData}
                         disabled={prefix == 'Empr' ? true : false}
@@ -205,7 +205,7 @@ const Data = ( {userData}:Props ) => {
                         type="text" 
                         placeholder='Apellido Materno (10 caracteres)'
                         maxLength={10}
-                        value={maternal}
+                        value={prefix == 'Empr' ? '' : maternal}
                         onChange={(e)=>setMaternal(e.target.value.trim())}
                         onBlur={submitData}
                         disabled={prefix == 'Empr' ? true : false}
