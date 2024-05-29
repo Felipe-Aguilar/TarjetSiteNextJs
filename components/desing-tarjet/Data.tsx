@@ -183,7 +183,7 @@ const Data = ( {userData}:Props ) => {
                     <input 
                         type="text" 
                         placeholder='Empresa o tú Nombre (10 caracteres)'
-                        maxLength={10}
+                        maxLength={prefix == 'Empr' ? 40 : 10}
                         value={name}
                         onChange={(e)=>setName(e.target.value.trim())}
                         onBlur={submitData}
@@ -198,6 +198,7 @@ const Data = ( {userData}:Props ) => {
                         value={paternal}
                         onChange={(e)=>setPaternal(e.target.value.trim())}
                         onBlur={submitData}
+                        disabled={prefix == 'Empr' ? true : false}
                     />
 
                     <input 
@@ -207,6 +208,7 @@ const Data = ( {userData}:Props ) => {
                         value={maternal}
                         onChange={(e)=>setMaternal(e.target.value.trim())}
                         onBlur={submitData}
+                        disabled={prefix == 'Empr' ? true : false}
                     />
                 </div>
 
