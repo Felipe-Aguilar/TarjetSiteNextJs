@@ -65,7 +65,7 @@ interface Props {
 
 export default async function EditData ({ userData, dataForm, contactForm, socialForm, servicesForm }: Props) {
 
-    await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizaUsu', {
+    const response = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizaUsu', {
         method: 'POST',
         mode: 'cors',
         body: JSON.stringify({
@@ -113,21 +113,33 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                         {
                             "ServNum": "1",
                             "ServDescrip": servicesForm ? servicesForm.FirstServices.service1 : userData.Serv ? userData.Serv![0].ServDescrip : '',
+                            "ServSubTitulo": "",
+                            "ServImg": "",
+                            "ServIcono": "",
                             "ServSiteId": 1
                         },
                         {
                             "ServNum": "2",
                             "ServDescrip": servicesForm ? servicesForm.FirstServices.service2 : userData.Serv ? userData.Serv![1].ServDescrip : '',
+                            "ServSubTitulo": "",
+                            "ServImg": "",
+                            "ServIcono": "",
                             "ServSiteId": 1
                         },
                         {
                             "ServNum": "3",
                             "ServDescrip": servicesForm ? servicesForm.FirstServices.service3 : userData.Serv ? userData.Serv![2].ServDescrip : '',
+                            "ServSubTitulo": "",
+                            "ServImg": "",
+                            "ServIcono": "",
                             "ServSiteId": 1
                         },
                         {
                             "ServNum": "4",
                             "ServDescrip": servicesForm ? servicesForm.FirstServices.service4 : userData.Serv ? userData.Serv![3].ServDescrip : '',
+                            "ServSubTitulo": "",
+                            "ServImg": "",
+                            "ServIcono": "",
                             "ServSiteId": 1
                         },
                         {
@@ -213,25 +225,43 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                         {
                             "ServNum": "15",
                             "ServDescrip": servicesForm ? servicesForm.FirstServices.service5 : userData.Serv ? userData.Serv![14].ServDescrip : '',
+                            "ServSubTitulo": "",
+                            "ServImg": "",
+                            "ServIcono": "",
                             "ServSiteId": 1
                         },
                         {
                             "ServNum": "16",
                             "ServDescrip": servicesForm ? servicesForm.FirstServices.service6 : userData.Serv ? userData.Serv![15].ServDescrip : '',
+                            "ServSubTitulo": "",
+                            "ServImg": "",
+                            "ServIcono": "",
                             "ServSiteId": 1
                         },
                         {
                             "ServNum": "17",
                             "ServDescrip": servicesForm ? servicesForm.FirstServices.service7 : userData.Serv ? userData.Serv![16].ServDescrip : '',
+                            "ServSubTitulo": "",
+                            "ServImg": "",
+                            "ServIcono": "",
                             "ServSiteId": 1
                         },
                         {
                             "ServNum": "18",
                             "ServDescrip": servicesForm ? servicesForm.FirstServices.service8 : userData.Serv ? userData.Serv![17].ServDescrip : '',
+                            "ServSubTitulo": "",
+                            "ServImg": "",
+                            "ServIcono": "",
                             "ServSiteId": 1
                         }
                     ]
                 }
         })
     });
+
+
+    const data = await response.json();
+
+    console.log(data);
+    console.log('here');
 }
