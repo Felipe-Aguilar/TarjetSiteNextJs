@@ -8,6 +8,7 @@ import Image from "next/image";
 import MapGoogle from "./MapGoogle";
 import style from './contact.module.scss';
 import EditData from "@/app/api/editData";
+import Company from "./Company";
 
 interface Props {
     userData: UserDataResponse;
@@ -22,6 +23,7 @@ const animate = {
 const ContactData = ( { userData }:Props ) => {
 
     const [open, setOpen] = useState<boolean>(false);
+    const [company, setCompany] = useState<boolean>(userData.Tipo === 'COL' ? true : false);
 
     const [whatsApp, setWhatsApp] = useState(userData.Telefono1);
     const [phone, setPhone] = useState(userData.Telefono2);
@@ -348,12 +350,18 @@ const ContactData = ( { userData }:Props ) => {
                         <div className={style.Switch}>
                             <label className={style.switch}>
                                 <input 
-                                    type="checkbox"/>
+                                    type="checkbox" 
+                                    onChange={()=>setCompany(!company)} 
+                                    checked={company}
+                                    disabled={company}
+                                />
                                 <span className={style.slider}></span>
                             </label>
 
                             <span className={style.Text}>Pertenece a Empresa</span>
                         </div>
+
+                        {company && <Company uuid={userData.UUID} tken={userData.TokenId} businessName={userData.NomNegocio}/>}
 
                     </motion.div>
                 )}

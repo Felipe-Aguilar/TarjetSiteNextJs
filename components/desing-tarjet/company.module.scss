@@ -1,0 +1,19 @@
+.Company{
+    display: block;
+    width: 95%;
+    margin: auto;
+
+    > * + *{
+        margin-top: 16px;
+    }
+    
+    input{
+        width: 100%!important;
+        display: block!important;
+    }
+
+    p{
+        font-size: 0.8rem;
+        color: red;
+    }
+}
