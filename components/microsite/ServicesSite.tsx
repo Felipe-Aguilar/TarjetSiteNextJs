@@ -1,6 +1,7 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
+import { Fragment, useEffect, useState } from 'react';
+
 import style from './site.module.scss';
-import { Fragment } from 'react';
 import Image from 'next/image';
 
 interface Props {
@@ -8,6 +9,29 @@ interface Props {
 }
 
 const ServicesSite = ({userData} : Props) => {
+
+    // Colaboradores de una empresa
+    const [workers, setWorkers] = useState<string []>();
+
+    useEffect(()=>{
+
+        const getWorkersCompany = async () => {
+            const response = await fetch('', {
+                method: 'GET',
+                mode: 'cors'
+            });
+
+            const data = await response.json();
+
+            setWorkers(data);
+        }
+
+        if (userData.Tipo === 'EMP') {
+            getWorkersCompany();
+        }
+
+    }, []);
+
     return ( 
         <div className={style.Services}>
             { userData && ( 
@@ -42,6 +66,20 @@ const ServicesSite = ({userData} : Props) => {
                             )
                         ))}
                     </ul>
+
+                    {/* TODO: Terminar mostrar empleados aquí */}
+
+                    {/* Debe ser un arreglo de colaboradores y usarlos en un map. El diseño según me lo pasa él pero esto no tiene ni pies ni cabeza */}
+                    {userData.Tipo === 'EMPR' && (
+                        <Fragment>
+                            <hr/>
+
+                            <div className='Empleado'>
+                                
+                            </div>
+
+                        </Fragment>
+                    )}
 
                     <hr/>
 
