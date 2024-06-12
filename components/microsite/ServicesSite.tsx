@@ -4,6 +4,7 @@ import { WorkersResponse } from '@/interfaces/workers/workers-interface';
 
 import style from './site.module.scss';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Props {
     userData: UserDataResponse;
@@ -87,17 +88,18 @@ const ServicesSite = ({userData} : Props) => {
                                             className={style.Wave}
                                         />
 
-                                        {/* <span>{worker.Nom} {worker.AppP} {worker.AppM}</span> */}
                                         <span>{worker.Cargo}</span>
 
-                                        <Image 
-                                            src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${worker.ImgTarFrente}`}
-                                            alt='Tarjeta de presentación'
-                                            width={500}
-                                            height={184}
-                                            unoptimized
-                                            className={style.Card}
-                                        />
+                                        <Link href={`/st/${btoa(worker.TokenId)}`}> 
+                                            <Image 
+                                                src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${worker.ImgTarFrente}`}
+                                                alt='Tarjeta de presentación'
+                                                width={500}
+                                                height={184}
+                                                unoptimized
+                                                className={style.Card}
+                                            />
+                                        </Link>
                                     </div>
                                 )) }
                             </div>
