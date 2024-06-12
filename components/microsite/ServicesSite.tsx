@@ -1,5 +1,6 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
 import { Fragment, useEffect, useState } from 'react';
+import { WorkersResponse } from '@/interfaces/workers/workers-interface';
 
 import style from './site.module.scss';
 import Image from 'next/image';
@@ -11,12 +12,12 @@ interface Props {
 const ServicesSite = ({userData} : Props) => {
 
     // Colaboradores de una empresa
-    const [workers, setWorkers] = useState<string []>();
+    const [workers, setWorkers] = useState<WorkersResponse []>();
 
     useEffect(()=>{
 
         const getWorkersCompany = async () => {
-            const response = await fetch('', {
+            const response = await fetch(`https://souvenir-site.com/WebTarjet/APIEmpresas/Colaboradores/${userData.UUID}`, {
                 method: 'GET',
                 mode: 'cors'
             });
@@ -70,14 +71,36 @@ const ServicesSite = ({userData} : Props) => {
                     {/* TODO: Terminar mostrar empleados aquí */}
 
                     {/* Debe ser un arreglo de colaboradores y usarlos en un map. El diseño según me lo pasa él pero esto no tiene ni pies ni cabeza */}
-                    {userData.Tipo === 'EMPR' && (
+                    {userData.Tipo === 'EMP' && (
                         <Fragment>
                             <hr/>
 
-                            <div className='Empleado'>
-                                
-                            </div>
+                            <div className={style.Workers}>
+                                { workers?.map((worker)=>(
+                                    <div className={style.Worker} key={worker.UUID}>
+                                        <Image 
+                                            src={'/images/wavesOpacity.svg'}
+                                            alt='Wave'
+                                            width={100}
+                                            height={0}
+                                            unoptimized
+                                            className={style.Wave}
+                                        />
 
+                                        {/* <span>{worker.Nom} {worker.AppP} {worker.AppM}</span> */}
+                                        <span>{worker.Cargo}</span>
+
+                                        <Image 
+                                            src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${worker.ImgTarFrente}`}
+                                            alt='Tarjeta de presentación'
+                                            width={500}
+                                            height={184}
+                                            unoptimized
+                                            className={style.Card}
+                                        />
+                                    </div>
+                                )) }
+                            </div>
                         </Fragment>
                     )}
 

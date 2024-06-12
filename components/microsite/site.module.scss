@@ -178,6 +178,46 @@
             }
         }
 
+        .Workers{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            > * + *{
+                margin-top: 20px;
+            }
+
+            .Worker{
+                width: 60%;
+                background: #c4e9cd;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+
+                @media (width <= 700px) {
+                    width: 70%;
+                }
+    
+                .Wave{
+                    width: 300%;
+                    height: 46px;
+                }
+                .Card{
+                    width: 100%;
+                    height: auto;
+                }
+
+                span{
+                    display: block;
+                    text-align: right;
+                    margin-bottom: 1rem;
+                    margin-right: 20px;
+                    font-weight: 600;
+                    font-size: 1.3rem;
+                }
+            }
+        }
+
         .ServiceContainer{
             text-align: center;
 
