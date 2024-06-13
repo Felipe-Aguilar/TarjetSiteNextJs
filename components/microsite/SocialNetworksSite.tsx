@@ -50,10 +50,8 @@ const SocialNetworsSite = ({userData, tokenServer} :Props) => {
                     </div>
                     <hr/>
                     <div className={style.Username}>
-                        <h5>Gracias por visitarme</h5>
-                        <p>Tarjeta digital tarjet</p>
-                        <p>Nombre de usuario en directorio tarjet:</p>
-                        <p className={style.user}>{userData.Alias}</p>
+                        <h5>Gracias por visitar mi Tarjeta</h5>
+                        <p>Usuario: {userData.Alias}</p>
                     </div>
 
                     { (!tokenServer && !userData.Premium) && (
