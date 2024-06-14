@@ -243,15 +243,15 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                         { data.workStation && (
                             <div 
                                 className={style.Text} 
-                                ref={text2Reference}
+                                ref={ data.name ? text2Reference : text1Reference}
                                 style={{
                                     top: `${position2.y}px`, 
                                     left: `${position2.x}px`, 
                                     color: backgroundCard.TarjetaColorFont
                                 }}
-                                onMouseMove={e => handleMouseMove(e, setPosition2, dragOffset2, text2Reference)}
+                                onMouseMove={e => handleMouseMove(e, setPosition2, dragOffset2, data.name ? text2Reference : text1Reference)}
                                 onMouseUp={handleMouseUp}
-                                onTouchMove={e => handleTouchMove(e, setPosition2, dragOffset2, text2Reference)}
+                                onTouchMove={e => handleTouchMove(e, setPosition2, dragOffset2, data.name ? text2Reference : text1Reference)}
                                 onTouchEnd={handleMouseUp}
                                 onMouseDown={e => handleMouseDown(e, setDragOffset2, position2)}
                                 onTouchStart={e => handleTouchStart(e, setDragOffset2, position2)}
@@ -263,15 +263,15 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                         { data.businessName && (
                             <div 
                                 className={`${style.Text} ${style.TextBusiness}`} 
-                                ref={text3Reference}
+                                ref={(data.name || data.workStation) ? text3Reference : text1Reference}
                                 style={{
                                     top: `${position3.y}px`, 
                                     left: `${position3.x}px`, 
                                     color: backgroundCard.TarjetaColorFont
                                 }}
-                                onMouseMove={e => handleMouseMove(e, setPosition3, dragOffset3, text3Reference)}
+                                onMouseMove={e => handleMouseMove(e, setPosition3, dragOffset3, (data.name || data.workStation) ? text3Reference : text1Reference)}
                                 onMouseUp={handleMouseUp}
-                                onTouchMove={e => handleTouchMove(e, setPosition3, dragOffset3, text3Reference)}
+                                onTouchMove={e => handleTouchMove(e, setPosition3, dragOffset3, (data.name || data.workStation) ? text3Reference : text1Reference)}
                                 onTouchEnd={handleMouseUp}
                                 onMouseDown={e => handleMouseDown(e, setDragOffset3, position3)}
                                 onTouchStart={e => handleTouchStart(e, setDragOffset3, position3)}
@@ -283,15 +283,15 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                         { data.phone && (
                             <div 
                                 className={style.Text} 
-                                ref={text4Reference}
+                                ref={(data.name || data.workStation || data.businessName) ? text4Reference : text1Reference}
                                 style={{
                                     top: `${position4.y}px`, 
                                     left: `${position4.x}px`, 
                                     color: backgroundCard.TarjetaColorFont
                                 }}
-                                onMouseMove={e => handleMouseMove(e, setPosition4, dragOffset4, text4Reference)}
+                                onMouseMove={e => handleMouseMove(e, setPosition4, dragOffset4, (data.name || data.workStation || data.businessName) ? text4Reference : text1Reference)}
                                 onMouseUp={handleMouseUp}
-                                onTouchMove={e => handleTouchMove(e, setPosition4, dragOffset4, text4Reference)}
+                                onTouchMove={e => handleTouchMove(e, setPosition4, dragOffset4, (data.name || data.workStation || data.businessName) ? text4Reference : text1Reference)}
                                 onTouchEnd={handleMouseUp}
                                 onMouseDown={e => handleMouseDown(e, setDragOffset4, position4)}
                                 onTouchStart={e => handleTouchStart(e, setDragOffset4, position4)}

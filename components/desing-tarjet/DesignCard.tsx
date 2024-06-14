@@ -209,29 +209,39 @@ const DesignCard = ({ userData } : Props) => {
 
                     <h4>¿Que datos deseas mostrar en tu Tarjeta?</h4>
                     <div className={style.Options}>
-                        <div className={style.Option}>
-                            <input type="checkbox" checked={showName} onChange={()=>setShowName(!showName)} id='name'/>
-                            <label htmlFor='name'>{userData.Nom} {userData.AppP} {userData.AppM}</label>
-                        </div>
+                        { (userData.Nom || userData.AppM || userData.AppP) && (
+                            <div className={style.Option}>
+                                <input type="checkbox" checked={showName} onChange={()=>setShowName(!showName)} id='name'/>
+                                <label htmlFor='name'>{userData.Nom} {userData.AppP} {userData.AppM}</label>
+                            </div>
+                        ) }
 
-                        <div className={style.Option}>
-                            <input type="checkbox" checked={showWorkStation} onChange={()=>setShowWorkStation(!showWorkStation)} id='work'/>
-                            <label htmlFor='work'>{userData.Cargo}</label>
-                        </div>
+                        { userData.Cargo && (
+                            <div className={style.Option}>
+                                <input type="checkbox" checked={showWorkStation} onChange={()=>setShowWorkStation(!showWorkStation)} id='work'/>
+                                <label htmlFor='work'>{userData.Cargo}</label>
+                            </div>
+                        )}
 
-                        <div className={style.Option}>
-                            <input type="checkbox" checked={showBusinessName} onChange={()=>setShowBusinessName(!showBusinessName)} id='business'/>
-                            <label htmlFor='business'>{userData.NomNegocio}</label>
-                        </div>
+                        { userData.NomNegocio && (
+                            <div className={style.Option}>
+                                <input type="checkbox" checked={showBusinessName} onChange={()=>setShowBusinessName(!showBusinessName)} id='business'/>
+                                <label htmlFor='business'>{userData.NomNegocio}</label>
+                            </div>
+                        ) }
 
-                        <div className={style.Option}>
-                            <input type="checkbox" checked={showPhoneNumber} onChange={()=>setShowPhoneNumber(!showPhoneNumber)} id='phone'/>
-                            <label htmlFor='phone'>{userData.Telefono1}</label>
-                        </div>
+                        { userData.Telefono1 && (
+                            <div className={style.Option}>
+                                <input type="checkbox" checked={showPhoneNumber} onChange={()=>setShowPhoneNumber(!showPhoneNumber)} id='phone'/>
+                                <label htmlFor='phone'>{userData.Telefono1}</label>
+                            </div>
+                        ) }
                     </div>
 
                     { order === 1 && (
-                        <button className='btn' onClick={()=>onPreview(false)}>Previsualizar</button>
+                        <button className='btn' onClick={()=>onPreview(false)}>
+                            Previsualizar
+                        </button>
                     )} 
 
                     { order === 2 && (
@@ -264,10 +274,6 @@ const DesignCard = ({ userData } : Props) => {
                     )}
                 </div>
             )}
-
-            <Link href={`/mi-perfil/${btoa(userData.TokenId)}`}>
-                Regresar a perfil (x)
-            </Link>
 
             { preview && 
                 <PreviewImage 
