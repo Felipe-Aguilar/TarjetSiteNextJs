@@ -50,7 +50,7 @@ const Workers = ({uuid} : Props) => {
             { workers?.map((worker, index)=>(
                 <div key={worker.UUID} className={style.Worker}>
 
-                    <div className={`${style.Header} ${index == 1 ? style.Header2 : ''}`} onClick={()=>onOpenUser(worker.UUID)}>
+                    <div className={`${style.Header} ${index % 2 != 0 ? style.Header2 : ''}`} onClick={()=>onOpenUser(worker.UUID)}>
                         <span>{worker.Cargo}</span>
 
                         <div className={style.Image}>
@@ -70,7 +70,7 @@ const Workers = ({uuid} : Props) => {
 
                     <AnimatePresence>
                         {openUser == worker.UUID && (
-                            <motion.div {...animate} className={`${style.Contain} ${index == 1 ? style.Contain2 : ''}`}>
+                            <motion.div {...animate} className={`${style.Contain} ${index % 2 != 0 ? style.Contain2 : ''}`}>
                                 <Link href={`/st/${btoa(worker.TokenId)}`}>
                                     <Image 
                                         src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${worker.ImgTarFrente}?timestamp=${Date.now()}`}

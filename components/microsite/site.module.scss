@@ -248,8 +248,11 @@
                 }
 
                 .Contain2{
-                    display: flex;
-                    justify-content: end;
+
+                    a{
+                        display: flex;
+                        justify-content: end;
+                    }
                 }
             }
         }
