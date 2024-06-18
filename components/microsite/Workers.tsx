@@ -5,6 +5,7 @@ import { BsEjectFill } from "react-icons/bs";
 
 import style from './site.module.scss';
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
     uuid: string;
@@ -70,13 +71,15 @@ const Workers = ({uuid} : Props) => {
                     <AnimatePresence>
                         {openUser == worker.UUID && (
                             <motion.div {...animate} className={`${style.Contain} ${index == 1 ? style.Contain2 : ''}`}>
-                                <Image 
-                                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${worker.ImgTarFrente}?timestamp=${Date.now()}`}
-                                    alt="Tarjeta de presentación"
-                                    width={400}
-                                    height={300}
-                                    unoptimized
-                                />
+                                <Link href={`/st/${btoa(worker.TokenId)}`}>
+                                    <Image 
+                                        src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${worker.ImgTarFrente}?timestamp=${Date.now()}`}
+                                        alt="Tarjeta de presentación"
+                                        width={400}
+                                        height={300}
+                                        unoptimized
+                                    />
+                                </Link>
                             </motion.div>
                         )}
                     </AnimatePresence>
