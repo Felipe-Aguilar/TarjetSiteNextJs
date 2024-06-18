@@ -51,6 +51,8 @@ const ServicesSite = ({userData} : Props) => {
                         <Fragment>
                             <hr/>
 
+                            <h3 style={{textAlign: 'left'}}>Colaboradores</h3>
+
                             <Workers uuid={userData.UUID}/>
                         </Fragment>
                     )}
