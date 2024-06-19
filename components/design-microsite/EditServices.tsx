@@ -257,13 +257,16 @@ const EditServices = ({ userData } : Props) => {
                                         <button type='button' className={`btn ${style.UploadButton}`} onClick={()=>onUploadImage('SERV', (index + 5).toString())}>
                                             Subir imagen
                                         </button>
-                                        <textarea 
-                                            placeholder='Descripción de la foto (hasta 300 caracteres)' 
-                                            maxLength={300}
-                                            value={service.ServDescrip}
-                                            onChange={(e)=>SecondTextAreaChange(key, DOMPurify.sanitize(e.target.value, {ALLOWED_TAGS: []}))}
-                                            onBlur={SubmitData}
-                                        ></textarea>
+                                        <div className={style.TextAreaContent}>
+                                            <textarea 
+                                                placeholder='Descripción de la foto (hasta 300 caracteres)' 
+                                                maxLength={300}
+                                                value={service.ServDescrip}
+                                                onChange={(e)=>SecondTextAreaChange(key, DOMPurify.sanitize(e.target.value, {ALLOWED_TAGS: []}))}
+                                                onBlur={SubmitData}
+                                            ></textarea>
+                                            <span>{service.ServDescrip.length} / 300</span>
+                                        </div>
                                         <button  
                                             type='button' 
                                             className={style.ClearButton}
