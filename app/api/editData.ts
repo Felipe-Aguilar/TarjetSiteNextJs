@@ -38,6 +38,7 @@ interface Props {
         "Twitter": string,
         "Youtube": string,
         "Telegram": string,
+        "Linkedin": string,
     },
     servicesForm?: {
         "FirstServices": {
@@ -101,6 +102,7 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                     "PermitirComments": contactForm?.PermitirComments ?? userData.PermitirComments,
                     "Facebook": socialForm?.Facebook ?? userData.Facebook,
                     "Instagram": socialForm?.Instagram ?? userData.Instagram,
+                    "Linkedin": socialForm?.Linkedin ?? userData.Linkedin,
                     "Tiktok": socialForm?.Tiktok ?? userData.Tiktok,
                     "Twitter": socialForm?.Twitter ?? userData.Twitter,
                     "Youtube": socialForm?.Youtube ?? userData.Youtube,

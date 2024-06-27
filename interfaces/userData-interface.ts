@@ -52,6 +52,7 @@ export interface UserDataResponse {
     Pinterest:        string;
     Twitter:          string;
     Telegram:         string;
+    Linkedin:         string;
     TituloServ:       string;
     SubTituloServ:    string;
     ColorBton1:       string;
@@ -62,7 +63,8 @@ export interface UserDataResponse {
     RegistroFecha:    Date;
     Alias:            string;
     Premium:          boolean;
-    Serv?:             Serv[];
+    Orden:            number;
+    Serv:             Serv[];
 }
 
 export interface Serv {

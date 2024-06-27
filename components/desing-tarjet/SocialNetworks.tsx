@@ -27,7 +27,7 @@ const SocialNetworks = ( {userData}: Props ) => {
     const [tiktok, setTiktok] = useState<string>(userData.Tiktok);
     const [twitter, setTwitter] = useState<string>(userData.Twitter);
     const [youtube, setYoutube] = useState<string>(userData.Youtube);
-    const [linkedin, setLinkedin] = useState<string>('');
+    const [linkedin, setLinkedin] = useState<string>(userData.Linkedin);
     const [telegram, setTelegram] = useState<string>(userData.Telegram);
 
     const [openInfo, setOpenInfo] = useState<boolean>(false);
@@ -40,6 +40,7 @@ const SocialNetworks = ( {userData}: Props ) => {
             "Twitter": twitter,
             "Youtube": youtube,
             "Telegram": telegram,
+            "Linkedin": linkedin,
         }
 
         await EditData({userData, socialForm});
