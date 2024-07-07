@@ -40,7 +40,7 @@ const SocialNetworsSite = ({userData, tokenServer} :Props) => {
                             <FaYoutube />
                         </a>
 
-                        <a href={userData.Linkedin} className={`${style.Linkedin} ${!userData.Pinterest ? style.Disabled : ''}`}>
+                        <a href={userData.Linkedin} className={`${style.Linkedin} ${!userData.Linkedin ? style.Disabled : ''}`}>
                             <FaLinkedinIn />
                         </a>
 
