@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import { Fragment } from "react";
 import { signOut, useSession } from "next-auth/react";
