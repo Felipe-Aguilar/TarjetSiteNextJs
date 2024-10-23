@@ -145,7 +145,7 @@ END:VCARD`;
                 
                 { userData.Mail && (
                     <motion.a href={`mailto: ${userData.Mail}`} {...animate} transition={{delay: 1.6}} className={style.Email}>
-                        {userData.Mail}
+                        Envíame un correo
 
                         <span>
                             <Image 
@@ -160,7 +160,7 @@ END:VCARD`;
 
                 { userData.Web && (
                     <motion.a href={`${userData.Web}`} target='_blank' {...animate} transition={{delay: 1.8}} className={style.Web}>
-                        {userData.Web}
+                        Visita mi página web
 
                         <span>
                             <Image 
