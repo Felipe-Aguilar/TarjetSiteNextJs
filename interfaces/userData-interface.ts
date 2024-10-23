@@ -65,6 +65,7 @@ export interface UserDataResponse {
     Premium:          boolean;
     Orden:            number;
     Serv:             Serv[];
+    BotonesAdicionales: BotonesAdicionales[];
 }
 
 export interface Serv {
@@ -74,4 +75,15 @@ export interface Serv {
     ServImg:       string;
     ServIcono:     string;
     ServSiteId:    number;
+}
+
+export interface BotonesAdicionales {
+    ButtonId: number;
+    ButtonNom: string;
+    ButtonTexto: string;
+    ButtonUrl: string;
+    ButtonColor1: string;
+    ButtonColor2: string;
+    ButtonIcono: string;
+    ButtonColorTxt: string;
 }

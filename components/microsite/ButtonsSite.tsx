@@ -209,6 +209,69 @@ END:VCARD`;
                     </span>
                 </motion.button>
 
+                {userData.BotonesAdicionales && userData.BotonesAdicionales.length > 0 && (
+  userData.BotonesAdicionales.map((boton, index) => (
+    <motion.a
+      key={index}
+      href={boton.ButtonUrl}
+      target='_blank'
+      {...animate}
+      transition={{ delay: 1.8 }}
+      className={style.Web}
+      style={{
+        backgroundColor: boton.ButtonColor1,
+        height: '50px', // Altura del botón
+        display: 'flex', // Alinear elementos en el mismo nivel
+       // justifyContent: 'space-between', // Separar texto e icono
+       alignItems: 'left', // Centrar verticalmente
+        padding: '0 0px', // Añadir espacio interno
+        //justifyItems: 'left',
+        //width: '100%', // Ancho total
+        borderRadius: '8px', // Bordes redondeados
+        transition: 'background-color 0.3s ease', // Transición suave al pasar el mouse
+      }}
+      
+    >
+      <span style={{
+        flexGrow: 1,
+        marginLeft: '20px', // Separación del lado izquierdo
+        textAlign: 'left', // Alineado a la izquierda
+        color: boton.ButtonColorTxt, // Texto en color blanco
+        maxWidth: '100%',
+        background: 'transparent',
+        justifyContent: 'left'
+
+      }}>
+        {boton.ButtonTexto}
+      </span>
+
+      {/* Contenedor del icono con color de fondo y tamaño fijo */}
+      <div
+        style={{
+          width: '55px',
+          height: '100%',
+          backgroundColor: boton.ButtonColor2,
+          borderRadius: '0px 10px 10px 0px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = boton.ButtonColor1} // Cambia el color al pasar el mouse
+onMouseLeave={(e) => e.currentTarget.style.backgroundColor = boton.ButtonColor2} // Vuelve al color original
+      >
+        <Image 
+          src={boton.ButtonIcono}
+          alt={`Icono de ${boton.ButtonNom}`}
+          width={36}
+          height={36} // Tamaño de 36x36 para el icono
+        />
+      </div>
+    </motion.a>
+  ))
+)}
+
+
                 { tokenServer && (
                     <motion.button 
                         {...animate} 
@@ -229,6 +292,7 @@ END:VCARD`;
                         </span>
                     </motion.button>
                 ) }
+
             </div>
 
             { shareProfile && <Social token={userData.TokenId} close={()=>setShareProfile(false)}/> }
