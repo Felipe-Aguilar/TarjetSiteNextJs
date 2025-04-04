@@ -76,7 +76,7 @@ const ServicesSite = ({userData} : Props) => {
                                     />
                                 ) }
                                 { (service.ServImg && service.ServSiteId === 3) && (
-                                    <video width="1000" height="720" autoPlay controls muted preload="none" style={{width: '100%', height: 'auto'}}>
+                                    <video width="1000" height="720" autoPlay controls preload="none" style={{width: '100%', height: 'auto'}}>
                                         <source src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}`} type="video/mp4" />
                                         Tu navegador no soporta etiquetas de video.
                                     </video>
