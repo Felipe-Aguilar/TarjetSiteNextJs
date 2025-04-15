@@ -11,21 +11,27 @@ import SocialNetworsSite from './SocialNetworksSite';
 import WhatsAppMessage from '../pop-ups/whatsapp-message/WhatsAppMessage';
 
 interface Props {
-    userData: UserDataResponse;
+    userData: UserDataResponse & {
+        MostrarPopup?: boolean;
+    };
     tokenServer: string | undefined | null;
     uuidServer: string | undefined | null;
 }
 
 const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
-
-    // *Mensaje de WhatsApp
+    // Estado para controlar si mostrar el mensaje
     const [message, setMessage] = useState<boolean>(false);
+    
+    // Obtener la preferencia del usuario (por defecto true si no está definido)
+    const showPopup = userData?.MostrarPopup ?? true;
 
-    useEffect(()=>{
-        setTimeout(()=>{
-            setMessage(true);
-        }, 3500)
-    },[])
+    useEffect(() => {
+        if (showPopup) {
+            setTimeout(() => {
+                setMessage(true);
+            }, 3500);
+        }
+    }, [showPopup]);
 
     return ( 
         <div className="greenWhite">
@@ -35,18 +41,28 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                         <div className="contain">
                             <HeadSite userData={userData} />
 
-                            <ButtonsSite userData={userData} tokenServer={tokenServer} uuidServer={uuidServer}/>
+                            <ButtonsSite 
+                                userData={userData} 
+                                tokenServer={tokenServer} 
+                                uuidServer={uuidServer}
+                            />
 
-                            <ServicesSite userData={userData}/>
+                            <ServicesSite userData={userData} />
 
-                            <SocialNetworsSite userData={userData} tokenServer={tokenServer}/>
+                            <SocialNetworsSite 
+                                userData={userData} 
+                                tokenServer={tokenServer}
+                            />
                         </div>
                     </div>
 
-                    { userData.Telefono1 && 
-                        message &&  <WhatsAppMessage close={()=>setMessage(false)} phone={userData.Telefono1} token={userData.TokenId}/> 
-                    }
-
+                    {userData.Telefono1 && message && (
+                        <WhatsAppMessage 
+                            close={() => setMessage(false)} 
+                            phone={userData.Telefono1} 
+                            token={userData.TokenId}
+                        />
+                    )}
                 </Fragment>
             </div>
         </div>

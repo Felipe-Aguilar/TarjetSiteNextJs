@@ -34,8 +34,8 @@ export async function generateMetadata({params} : Props): Promise<Metadata>{
 
 }
 
-const getData = async ( token:string ) => {
-    const response = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaUsuXToken`,{
+const getData = async (token: string) => {
+    const response = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaUsuXToken`, {
         method: 'POST',
         mode: 'cors',
         body: JSON.stringify({
@@ -45,9 +45,18 @@ const getData = async ( token:string ) => {
 
     const userId = await response.json();
 
-    const data = await userData(userId.usuId);
-
-    return data;
+    // Obtener datos básicos del usuario
+    const basicData = await userData(userId.usuId);
+    
+    // Obtener configuración del sitio
+    const siteResponse = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${userId.usuId}`);
+    const siteData = await siteResponse.json();
+    
+    // Combinar los datos
+    return {
+        ...basicData,
+        MostrarPopup: siteData.SDTSite?.MostrarPopup ?? true
+    };
 }
 
 const SitePage = async ({params} : Props) => {
