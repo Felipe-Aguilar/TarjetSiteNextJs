@@ -1,3 +1,4 @@
+// components/microsite/MicrositeHome.tsx
 'use client';
 
 import { Fragment, useEffect, useState } from 'react';
@@ -8,30 +9,27 @@ import HeadSite from './HeadSite';
 import ButtonsSite from './ButtonsSite';
 import ServicesSite from './ServicesSite';
 import SocialNetworsSite from './SocialNetworksSite';
-import WhatsAppMessage from '../pop-ups/whatsapp-message/WhatsAppMessage';
+import PopupSelector from '../pop-ups/PopupSelector';
 
 interface Props {
     userData: UserDataResponse & {
         MostrarPopup?: boolean;
+        TipoPopup?: string;
     };
     tokenServer: string | undefined | null;
     uuidServer: string | undefined | null;
 }
 
 const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
-    // Estado para controlar si mostrar el mensaje
-    const [message, setMessage] = useState<boolean>(false);
-    
-    // Obtener la preferencia del usuario (por defecto true si no está definido)
-    const showPopup = userData?.MostrarPopup ?? true;
+    const [showPopup, setShowPopup] = useState<boolean>(false);
 
     useEffect(() => {
-        if (showPopup) {
+        if (userData.MostrarPopup && userData.TipoPopup) {
             setTimeout(() => {
-                setMessage(true);
-            }, 3500);
+                setShowPopup(true);
+            }, 1500);
         }
-    }, [showPopup]);
+    }, [userData.MostrarPopup, userData.TipoPopup]);
 
     return ( 
         <div className="greenWhite">
@@ -56,11 +54,12 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                         </div>
                     </div>
 
-                    {userData.Telefono1 && message && (
-                        <WhatsAppMessage 
-                            close={() => setMessage(false)} 
-                            phone={userData.Telefono1} 
+                    {showPopup && (
+                        <PopupSelector 
+                            tipoPopup={userData.TipoPopup || ''}
+                            phone={userData.Telefono1}
                             token={userData.TokenId}
+                            onClose={() => setShowPopup(false)}
                         />
                     )}
                 </Fragment>

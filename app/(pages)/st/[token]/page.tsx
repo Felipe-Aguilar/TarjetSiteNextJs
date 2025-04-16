@@ -52,10 +52,11 @@ const getData = async (token: string) => {
     const siteResponse = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${userId.usuId}`);
     const siteData = await siteResponse.json();
     
-    // Combinar los datos
+    // Combinar los datos con valores por defecto
     return {
         ...basicData,
-        MostrarPopup: siteData.SDTSite?.MostrarPopup ?? true
+        MostrarPopup: siteData.SDTSite?.MostrarPopup ?? false,
+        TipoPopup: siteData.SDTSite?.TipoPopup || 'PopWhats' // Valor por defecto aquí
     };
 }
 
