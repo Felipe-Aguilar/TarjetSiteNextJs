@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 
 interface Props {
     close: () => void;
+    googleUrl: string; // Nueva prop para la URL de Google
 }
 
 const animate = {
@@ -14,7 +15,7 @@ const animate = {
     transition: {delay: 0.2}
 }
 
-const GoogleMessage = ({ close }: Props) => {
+const GoogleMessage = ({ close, googleUrl }: Props) => {
     return ( 
         <div className="pop">
             <motion.div className="container" {...animate}>
@@ -29,7 +30,7 @@ const GoogleMessage = ({ close }: Props) => {
                 <h5>Visita mi perfil de Google</h5>
 
                 <a 
-                    href={`https://maps.google.com`} 
+                    href={googleUrl || 'https://maps.google.com'} // Usar la URL de la API o un fallback
                     target="_blank" 
                     rel="noopener noreferrer"
                     className={`btn ${style.Link}`}

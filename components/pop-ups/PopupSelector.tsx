@@ -1,3 +1,4 @@
+// components/pop-ups/PopupSelector.tsx
 'use client';
 
 import WhatsAppMessage from './whatsapp-message/WhatsAppMessage';
@@ -7,11 +8,11 @@ interface PopupSelectorProps {
     tipoPopup: string;
     phone?: string;
     token?: string;
+    googleUrl: string; // Nueva prop para la URL de Google
     onClose: () => void;
 }
 
-const PopupSelector = ({ tipoPopup, phone, token, onClose }: PopupSelectorProps) => {
-    // Asignar 'PopWhats' como valor por defecto si está vacío
+const PopupSelector = ({ tipoPopup, phone, token, googleUrl, onClose }: PopupSelectorProps) => {
     const popupType = tipoPopup || 'PopWhats';
 
     switch(popupType) {
@@ -25,10 +26,12 @@ const PopupSelector = ({ tipoPopup, phone, token, onClose }: PopupSelectorProps)
             ) : null;
         
         case 'PopGoogle':
-            return <GoogleMessage close={onClose} />;
+            return <GoogleMessage 
+                     close={onClose} 
+                     googleUrl={googleUrl} // Pasar la URL de Google
+                   />;
             
         default:
-            // Por seguridad, si llega un tipo desconocido, no mostrar nada
             return null;
     }
 };

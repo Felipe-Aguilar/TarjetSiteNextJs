@@ -15,6 +15,7 @@ interface Props {
     userData: UserDataResponse & {
         MostrarPopup?: boolean;
         TipoPopup?: string;
+        ImagenPopup: string; // Nuevo campo para la URL de Google
     };
     tokenServer: string | undefined | null;
     uuidServer: string | undefined | null;
@@ -24,12 +25,12 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     const [showPopup, setShowPopup] = useState<boolean>(false);
 
     useEffect(() => {
-        if (userData.MostrarPopup && userData.TipoPopup) {
+        if (userData.MostrarPopup) {
             setTimeout(() => {
                 setShowPopup(true);
-            }, 1500);
+            }, 3500);
         }
-    }, [userData.MostrarPopup, userData.TipoPopup]);
+    }, [userData.MostrarPopup]);
 
     return ( 
         <div className="greenWhite">
@@ -56,9 +57,10 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
 
                     {showPopup && (
                         <PopupSelector 
-                            tipoPopup={userData.TipoPopup || ''}
+                            tipoPopup={userData.TipoPopup || 'PopWhats'}
                             phone={userData.Telefono1}
                             token={userData.TokenId}
+                            googleUrl={userData.ImagenPopup} // Pasar la URL de Google
                             onClose={() => setShowPopup(false)}
                         />
                     )}
