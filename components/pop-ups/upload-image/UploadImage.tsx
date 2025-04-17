@@ -6,7 +6,6 @@ import { useDropzone } from "react-dropzone";
 import { Cropper, ReactCropperElement } from "react-cropper";
 import { UploadImageFirst } from "@/app/api/uploadImageService";
 import { BsCheckCircle } from "react-icons/bs";
-
 import FileResizer from "react-image-file-resizer";
 import style from './upload.module.scss';
 import "cropperjs/dist/cropper.css";
@@ -19,121 +18,186 @@ interface Props {
 }
 
 const animate = {
-    initial: {scale: 0},
-    animate: {scale: 1},
-    transition: {delay: 1}
+    initial: { scale: 0 },
+    animate: { scale: 1 },
+    transition: { delay: 1 }
 }
 
-
-const UploadImage = ({token, imageType, serviceNumber, close} : Props) => {
-
-    // *Recortar imagen
+const UploadImage = ({ token, imageType, serviceNumber, close }: Props) => {
     const cropperReference = useRef<ReactCropperElement>(null);
-    const onCrop = () => { 
-        const cropper = cropperReference.current?.cropper; 
-    }
-    
-    // *Dropzone
+    const [insertCorrect, setInsertCorrect] = useState<boolean>(false);
+    const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+    const [cropData, setCropData] = useState<any>(null);
+    const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+    const onCrop = () => {
+        const cropper = cropperReference.current?.cropper;
+        if (cropper) {
+            const data = cropper.getData(true); // Guarda el área actual recortada
+            setCropData(data);
+        }
+    };
+
     const { acceptedFiles, fileRejections, getRootProps, getInputProps } = useDropzone({
         maxFiles: 1,
         maxSize: 5000000,
-        accept: {'image/jpeg': [], 'image/png': [], 'image/webp': []}
-    })
+        accept: { 'image/jpeg': [], 'image/png': [], 'image/webp': [] },
+        onDrop: (acceptedFiles) => {
+            if (acceptedFiles.length > 0) {
+                const fileURL = URL.createObjectURL(acceptedFiles[0]);
+                setImageSrc(fileURL);
+                setCropData(null); // Reiniciar datos de recorte al cargar nueva imagen
+            }
+        }
+    });
 
-    const files = acceptedFiles.map((file,index)=>(
+    const files = acceptedFiles.map((file, index) => (
         <Fragment key={index}>
-            <li>{file.name} - {file.size} bytes</li>
+            <div className={style.FileInfo}>{file.name} - {(file.size / 1024).toFixed(2)} KB</div>
 
-            <Cropper 
-                src={URL.createObjectURL(file)}
-                className={style.ImagePreview}
-                initialAspectRatio={1/1}
-                aspectRatio={1}
-                guides={true}
-                crop={onCrop}
-                ref={cropperReference}
-                viewMode={2}
-                dragMode={'none'}
-                minCropBoxWidth={500}
-            />
+            <div className={style.CropperContainer}>
+                <Cropper
+                    src={imageSrc || ''}
+                    className={style.ImagePreview}
+                    initialAspectRatio={undefined}
+                    aspectRatio={undefined}
+                    guides={true}
+                    crop={onCrop}
+                    ref={cropperReference}
+                    viewMode={1}
+                    dragMode={'move'}
+                    minCropBoxWidth={100}
+                    minCropBoxHeight={100}
+                    autoCropArea={0.8}
+                    movable={true}
+                    zoomable={true}
+                    rotatable={true}
+                    scalable={true}
+                    background={false}
+                    responsive={true}
+                    toggleDragModeOnDblclick={true}
+                    ready={() => {
+                        setImageLoaded(true);
+                        if (cropData && cropperReference.current) {
+                            cropperReference.current.cropper.setData(cropData);
+                        }
+                    }}
+                />
+            </div>
         </Fragment>
     ));
 
     const fileRejectionItems = fileRejections.map(({ file, errors }) => (
         <li key={file.name}>
-            {file.name} - {file.size} bytes
-
+            {file.name} - {(file.size / 1024).toFixed(2)} KB
             <ul>
-                { errors.map(e => (
-                    <li key={e.code}>Error: el tipo de archivo debe ser image/jpeg, image/png ó hay más de 1 archivo seleccionado</li>
+                {errors.map(e => (
+                    <li key={e.code}>Error: {e.message}</li>
                 ))}
             </ul>
         </li>
     ));
 
-    // *Subir imagen
     const uploadImage = async () => {
-        
         const cropper = cropperReference.current?.cropper;
 
-        const image = cropper?.getCroppedCanvas();
-
-        if (image) {
-            image.toBlob((img)=>{
-                FileResizer.imageFileResizer(img!, 500, 500, "WEBP", 98, 0, (blob) => {
-                    UploadImageFirst(blob, token, imageType, serviceNumber);
-
-                    setTimeout(()=>{
-                        setInsertCorrect(true);
-
-                        setTimeout(()=>{
-                            window.location.reload();
-                        },3000)
-                    }, 2000)
-                    
-                }, "blob")
-            });
+        if (!cropper || !imageLoaded) {
+            alert('Por favor, selecciona y recorta una imagen primero');
+            return;
         }
-    }
 
-    const [insertCorrect, setInsertCorrect] = useState<boolean>(false);
+        if (!cropData) {
+            alert('No se detectó recorte. Por favor, ajusta el área a recortar.');
+            return;
+        }
 
-    return ( 
+        const canvas = cropper.getCroppedCanvas({
+            width: cropData.width,
+            height: cropData.height,
+            fillColor: '#fff',
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+        });
+
+        if (!canvas) {
+            alert('Error al procesar la imagen recortada');
+            return;
+        }
+
+        canvas.toBlob(async (blob) => {
+            if (!blob) {
+                alert('Error al convertir la imagen');
+                return;
+            }
+
+            try {
+                FileResizer.imageFileResizer(
+                    blob,
+                    500,
+                    500,
+                    "WEBP",
+                    90,
+                    0,
+                    async (resizedBlob) => {
+                        await UploadImageFirst(
+                            resizedBlob,
+                            token,
+                            imageType,
+                            serviceNumber
+                        );
+                        setInsertCorrect(true);
+                        setTimeout(() => window.location.reload(), 2000);
+                    },
+                    "blob"
+                );
+            } catch (error) {
+                console.error('Error al procesar la imagen:', error);
+                alert('Error al procesar la imagen');
+            }
+        }, 'image/webp', 0.9);
+    };
+
+    return (
         <div className="pop">
-            { !insertCorrect && (
+            {!insertCorrect && (
                 <motion.div className={`container ${style.UploadImage}`} {...animate}>
                     <h5>Cambia tu logotipo o imagen</h5>
 
                     <div className={style.Dropzone} {...getRootProps()}>
-                        <input {...getInputProps()}/>
+                        <input {...getInputProps()} />
                         <span>
                             Arrastra y suelta tu imagen aquí, o haz clic para seleccionar imagen.
-                            (solo se permite subir un archivo con extension .jpg ó .png y un tamaño máximo de 5MB)
+                            <br />(Formatos: .jpg, .png, .webp | Tamaño máximo: 5MB)
                         </span>
                     </div>
 
-                    <p>Imagen</p>
-                    <ul>{ files }</ul>
-                    <ul className={style.Error}>{ fileRejectionItems }</ul>
+                    <aside className={style.PreviewSection}>
+                        {files.length > 0 && <p>Vista previa y editor:</p>}
+                        <ul>{files}</ul>
+                        <ul className={style.Error}>{fileRejectionItems}</ul>
+                    </aside>
 
-                    <button 
-                        className={`btn ${style.Save}`} 
-                        onClick={()=>uploadImage()}
-                        disabled={files.length > 0 ? false : true}
-                    >
-                        Guardar imagen
-                    </button>
+                    <div className={style.ActionButtons}>
+                        <button
+                            className={`btn ${style.Save}`}
+                            onClick={uploadImage}
+                            disabled={files.length === 0}
+                        >
+                            Guardar imagen
+                        </button>
 
-                    <button className="close" onClick={close}>
-                        cerrar ventana (x)
-                    </button>
+                        <button className={style.CloseButton} onClick={close}>
+                            Cerrar ventana
+                        </button>
+                    </div>
                 </motion.div>
             )}
 
-            { insertCorrect && (
+            {insertCorrect && (
                 <motion.div className={`container ${style.Correct}`} {...animate}>
                     <h5>La imagen se subió correctamente</h5>
                     <BsCheckCircle />
+                    <p>La página se recargará automáticamente...</p>
                 </motion.div>
             )}
         </div>

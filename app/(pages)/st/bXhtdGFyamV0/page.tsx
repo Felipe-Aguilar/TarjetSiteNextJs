@@ -3,7 +3,8 @@ import style from './mxm.module.scss';
 import Image from "next/image";
 import ButtonsSiteMxm from "@/components/profile-mxm/ButtonsSite";
 import Link from "next/link";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTelegramPlane, FaTiktok, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTelegramPlane, FaTiktok, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 export const metadata = {
     title: 'Perfil - Tarjet',
@@ -171,7 +172,7 @@ const PageMxmx = () => {
                                     </a>
 
                                     <a href={''} className={`${style.Twitter} ${style.Disabled}`}>
-                                        <FaTwitter />
+                                        <FaXTwitter  />
                                     </a>
 
                                     <a href={''} className={`${style.Youtube} ${style.Disabled}`}>

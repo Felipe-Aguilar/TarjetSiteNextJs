@@ -1,10 +1,10 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
 import style from './site.module.scss';
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTelegramPlane, FaTiktok, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTelegramPlane, FaTiktok, FaYoutube } from 'react-icons/fa';
+import { FaXTwitter  } from "react-icons/fa6";
 import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
 interface Props {
     userData: UserDataResponse;
     tokenServer: string | undefined | null;
@@ -33,7 +33,7 @@ const SocialNetworsSite = ({userData, tokenServer} :Props) => {
                         </a>
 
                         <a href={userData.Twitter} className={`${style.Twitter} ${!userData.Twitter ? style.Disabled : ''}`}>
-                            <FaTwitter />
+                            <FaXTwitter />
                         </a>
 
                         <a href={userData.Youtube} className={`${style.Youtube} ${!userData.Youtube ? style.Disabled : ''}`}>
