@@ -185,7 +185,7 @@ const Data = ( {userData}:Props ) => {
                         placeholder='Empresa o tú Nombre (15 caracteres)'
                         maxLength={prefix == 'Empr' ? 40 : 15}
                         value={name}
-                        onChange={(e)=>setName( prefix == 'Empr' ? e.target.value : e.target.valu e.trim())}
+                        onChange={(e)=>setName( prefix == 'Empr' ? e.target.value : e.target.value.trim())}
                         onBlur={submitData}
                     />
                 </div>
