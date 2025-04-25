@@ -30,12 +30,12 @@ const Directoy = async () => {
             <Search categories={dataCategories}/>
 
             <div className={style.Video}>
-                <video width="1100" height="360" autoPlay preload="auto" className={style.VideoDesk}>
+                <video width="1100" height="360" autoPlay muted preload="auto" className={style.VideoDesk}>
                     <source src="/images/video-directorio.mp4" type="video/mp4" />
                     Tu navegador no soporta etiquetas de video.
                 </video>
 
-                <video width="1000" height="720" autoPlay preload="auto" className={style.VideoMobile}>
+                <video width="1000" height="720" autoPlay muted preload="auto" className={style.VideoMobile}>
                     <source src="/images/video-directorio-mobile.mp4" type="video/mp4" />
                     Tu navegador no soporta etiquetas de video.
                 </video>
