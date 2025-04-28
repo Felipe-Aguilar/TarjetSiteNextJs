@@ -15,6 +15,7 @@ interface Props {
     imageType: string;
     serviceNumber?: string;
     close: ()=>void;
+    forceSquare?: boolean;  
 }
 
 const animate = {
@@ -23,7 +24,7 @@ const animate = {
     transition: { delay: 1 }
 }
 
-const UploadImage = ({ token, imageType, serviceNumber, close }: Props) => {
+const UploadImage = ({ token, imageType, serviceNumber, close, forceSquare = false }: Props) => {
     const cropperReference = useRef<ReactCropperElement>(null);
     const [insertCorrect, setInsertCorrect] = useState<boolean>(false);
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
@@ -59,8 +60,8 @@ const UploadImage = ({ token, imageType, serviceNumber, close }: Props) => {
                 <Cropper
                     src={imageSrc || ''}
                     className={style.ImagePreview}
-                    initialAspectRatio={undefined}
-                    aspectRatio={undefined}
+                    initialAspectRatio={forceSquare ? 1 : undefined}  // Modificado
+                    aspectRatio={forceSquare ? 1 : undefined}         // Modificado
                     guides={true}
                     crop={onCrop}
                     ref={cropperReference}

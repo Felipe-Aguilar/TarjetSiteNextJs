@@ -148,7 +148,14 @@ const Data = ({ userData }: Props) => {
         </button>
       </div>
 
-      {open && <UploadImage token={userData.TokenId} imageType='PERF' close={() => setOpen(false)} />}
+      {open && (
+          <UploadImage 
+              token={userData.TokenId} 
+              imageType='PERF' 
+              close={() => setOpen(false)}
+              forceSquare={true}  // Esto forzará el aspecto cuadrado
+          />
+      )}
 
       <form>
         <div className={style.PrefixContainer}>
@@ -230,6 +237,7 @@ const Data = ({ userData }: Props) => {
         <Select
             options={activityOptions}
             onChange={handleActivitySelect}
+            onBlur={submitData}  
             value={activityOptions.find((opt) => opt.label === activity) || null}
             placeholder='Selecciona o escribe para buscar...'
             isClearable
@@ -250,8 +258,7 @@ const Data = ({ userData }: Props) => {
                 }),
                 menu: (base) => ({
                 ...base,
-                position: 'absolute',
-                zIndex: 20
+                position: 'absolute'
                 }),
                 menuList: (base) => ({
                 ...base,
@@ -274,6 +281,7 @@ const Data = ({ userData }: Props) => {
             }}
             />
         </div>
+        
 
         <Link href='/contacto'>Si no aparece tu área, solicítala aquí, con tu apoyo nos ayudas a aprender.</Link>
 
