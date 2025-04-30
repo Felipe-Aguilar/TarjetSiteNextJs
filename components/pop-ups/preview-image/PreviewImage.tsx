@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { UploadImageFirst } from "@/app/api/uploadImageService";
 import { BsCheckCircle } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 import style from './preview.module.scss';
 import Image from "next/image";
@@ -42,7 +44,7 @@ const animate = {
 }
 
 const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Props) => {
-
+    const [fontSize, setFontSize] = useState<number>(16); // Tamaño base en px
     const image = useRef(null);
     const text1Reference = useRef(null);
     const text2Reference = useRef(null);
@@ -65,6 +67,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
     const [dragOffset4, setDragOffset4] = useState({x: 50, y: 50});
 
     const [backgroundImage, setBackgroundImage] = useState<string>();
+    const [dragging, setDragging] = useState<boolean>(false);
 
     useEffect(()=>{
         if (!premiumPreview) {
@@ -82,8 +85,6 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
         }
     },[])
 
-    const [dragging, setDragging] = useState<boolean>(false);
-
     function handleMouseDown(event: React.MouseEvent, setOffset: SetOffsetFunction, position: Position) {
         event.preventDefault()
         if (!dragging) {
@@ -92,8 +93,8 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
             const offsetY = event.clientY - position.y
             setOffset({ x: offsetX, y: offsetY });
         }
-
     }
+
     function handleTouchStart(event: React.TouchEvent, setOffset: SetOffsetFunction, position: Position) {
         if (event.touches.length === 1) {
             const touch = event.touches[0];
@@ -103,6 +104,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
             setOffset({ x: offsetX, y: offsetY });
         }
     }
+
     function handleTouchMove(event: React.TouchEvent, setPosition: SetPositionFunction, dragOffset: DragOffset, texto: React.RefObject<HTMLDivElement>) {
         if (dragging && event.touches.length === 1 && image.current) {
             const touch = event.touches[0];
@@ -123,6 +125,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
             });
         }
     }
+
     function handleMouseMove(event: React.MouseEvent, setPosition: SetPositionFunction, dragOffset: DragOffset, texto:React.RefObject<HTMLDivElement>) {
         if (dragging && image.current) {
             event.preventDefault()
@@ -134,17 +137,16 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
             const maxX = parseInt(containerRect.width) - texto.current!.clientWidth
             const maxY = (image.current as Element).clientHeight - texto.current!.clientHeight;
             
-            
             const newX = Math.max(minX, Math.min(maxX, offsetX));
             const newY = Math.max(minY, Math.min(maxY, offsetY));
             setPosition({ x: newX, y: newY });
         }
     }
+
     function handleMouseUp() {
         setDragging(false);
     }
 
-    // *Guardar tarjeta.
     const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
     const route = useRouter();
 
@@ -156,47 +158,47 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
             canvas.width = img.width;
             canvas.height = img.height;
             ctx!.drawImage(img, 0, 0);
-            ctx!.fillStyle = "black";
-            const width = parseInt(getComputedStyle(image!.current!).width)
-            const scaledFontSize = (parseInt(getComputedStyle(text1Reference!.current!).fontSize) / width) * img.width
-
-
-            ctx!.font = `45px Arial`;
+            
+            // Aplicar tamaño de fuente uniforme
+            const baseFontSize = fontSize;
+            const nameFontSize = baseFontSize * 1.2; // 20% más grande para el nombre
+            const businessFontSize = baseFontSize * 1.1; // 10% más grande para el negocio
+            
+            ctx!.font = `${nameFontSize}px Arial`;
             ctx!.fillStyle = `${backgroundCard.TarjetaColorFont}`;
-            ctx!.fillText(text1, (position1.x / (image!.current! as Element).clientWidth ) * img.width, (position1.y / (image!.current! as Element).clientHeight) * img.height + scaledFontSize); // Ajusta la posición del texto según sea necesario
+            ctx!.fillText(text1, (position1.x / (image!.current! as Element).clientWidth ) * img.width, 
+                            (position1.y / (image!.current! as Element).clientHeight) * img.height + nameFontSize);
 
-
-            ctx!.font = `35px Arial`;
+            ctx!.font = `${baseFontSize}px Arial`;
             ctx!.fillStyle = `${backgroundCard.TarjetaColorFont}`;
-            ctx!.fillText(text2, (position2.x / (image!.current! as Element).clientWidth ) * img.width, (position2.y / (image!.current! as Element).clientHeight) * img.height + scaledFontSize); // Ajusta la posición del texto según sea necesario
+            ctx!.fillText(text2, (position2.x / (image!.current! as Element).clientWidth ) * img.width, 
+                            (position2.y / (image!.current! as Element).clientHeight) * img.height + baseFontSize);
 
-            ctx!.font = `41px Arial`;
+            ctx!.font = `${businessFontSize}px Arial`;
             ctx!.fillStyle = `${backgroundCard.TarjetaColorFont}`;
-            ctx!.fillText(text3, (position3.x / (image!.current! as Element).clientWidth ) * img.width, (position3.y / (image!.current! as Element).clientHeight) * img.height + scaledFontSize); // Ajusta la posición del texto según sea necesario
+            ctx!.fillText(text3, (position3.x / (image!.current! as Element).clientWidth ) * img.width, 
+                            (position3.y / (image!.current! as Element).clientHeight) * img.height + businessFontSize);
 
-            ctx!.font = `35px Arial`;
+            ctx!.font = `${baseFontSize}px Arial`;
             ctx!.fillStyle = `${backgroundCard.TarjetaColorFont}`;
-            ctx!.fillText(text4, (position4.x / (image!.current! as Element).clientWidth ) * img.width, (position4.y / (image!.current! as Element).clientHeight) * img.height + scaledFontSize); // Ajusta la posición del texto según sea necesario
-
+            ctx!.fillText(text4, (position4.x / (image!.current! as Element).clientWidth ) * img.width, 
+                            (position4.y / (image!.current! as Element).clientHeight) * img.height + baseFontSize);
 
             canvas.toBlob((blob)=>{
                 UploadImageFirst(blob, token, "TFRE");
 
                 setTimeout(()=>{
                     setUploadSuccess(true);
-
                     setTimeout(()=>{
                         route.replace(`/disena-tarjet/${btoa(token)}`);
                         setUploadSuccess(false);
                         close();
                     }, 3000)
-
                 },1500);
             })
         };
 
         img.src = backgroundImage!;
-        
     }
 
     return ( 
@@ -215,6 +217,23 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                         />
                     </p>
 
+                    {/* Nuevo control de tamaño de fuente */}
+                    <div className={style.FontSizeControl}>
+                        <label>Tamaño de fuente: {fontSize}px</label>
+                        <Slider 
+                            min={8}
+                            max={32}
+                            step={1}
+                            value={fontSize}
+                            onChange={(value) => setFontSize(value as number)}
+                            trackStyle={{ backgroundColor: '#91ba14' }}
+                            handleStyle={{ 
+                                borderColor: '#91ba14',
+                                boxShadow: '0 0 5px #91ba14'
+                            }}
+                        />
+                    </div>
+
                     <div className={style.BackgroundImage} ref={image}>
                         <img 
                             src={ backgroundImage } 
@@ -227,7 +246,8 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                                 style={{
                                     top: `${position1.y}px`, 
                                     left: `${position1.x}px`, 
-                                    color: backgroundCard.TarjetaColorFont
+                                    color: backgroundCard.TarjetaColorFont,
+                                    fontSize: `${fontSize * 1.2}px` // 20% más grande para el nombre
                                 }}
                                 onMouseMove={e => handleMouseMove(e, setPosition1, dragOffset1, text1Reference)}
                                 onMouseUp={handleMouseUp}
@@ -247,7 +267,8 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                                 style={{
                                     top: `${position2.y}px`, 
                                     left: `${position2.x}px`, 
-                                    color: backgroundCard.TarjetaColorFont
+                                    color: backgroundCard.TarjetaColorFont,
+                                    fontSize: `${fontSize}px`
                                 }}
                                 onMouseMove={e => handleMouseMove(e, setPosition2, dragOffset2, data.name ? text2Reference : text1Reference)}
                                 onMouseUp={handleMouseUp}
@@ -267,7 +288,8 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                                 style={{
                                     top: `${position3.y}px`, 
                                     left: `${position3.x}px`, 
-                                    color: backgroundCard.TarjetaColorFont
+                                    color: backgroundCard.TarjetaColorFont,
+                                    fontSize: `${fontSize * 1.1}px` // 10% más grande para el negocio
                                 }}
                                 onMouseMove={e => handleMouseMove(e, setPosition3, dragOffset3, (data.name || data.workStation) ? text3Reference : text1Reference)}
                                 onMouseUp={handleMouseUp}
@@ -287,7 +309,8 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                                 style={{
                                     top: `${position4.y}px`, 
                                     left: `${position4.x}px`, 
-                                    color: backgroundCard.TarjetaColorFont
+                                    color: backgroundCard.TarjetaColorFont,
+                                    fontSize: `${fontSize}px`
                                 }}
                                 onMouseMove={e => handleMouseMove(e, setPosition4, dragOffset4, (data.name || data.workStation || data.businessName) ? text4Reference : text1Reference)}
                                 onMouseUp={handleMouseUp}
