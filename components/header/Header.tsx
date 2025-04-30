@@ -79,7 +79,7 @@ const Header = () => {
                     />
                 </Link>
 
-                <a href={'https://shop.tarjet.mx/'}>
+                <a href={'https://tarjetshop.com/'}>
                     <Image 
                         src={'/images/icono-bolsa-header.svg'}
                         alt='Icono lupa'

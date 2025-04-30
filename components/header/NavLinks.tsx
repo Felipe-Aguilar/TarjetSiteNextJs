@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Navigation = [
-    {path: 'https://shop.tarjet.mx/', text: 'Tienda'},
+    {path: 'https://tarjetshop.com/', text: 'Tienda'},
     {path: '/empresas', text: 'Empresas'},
     {path: 'https://tarjet.mx/#/hazte-premium', text: 'Planes'},
     {path: 'https://tarjet.mx/#/acerca-tarjet', text: 'Acerca de Tarjet'},

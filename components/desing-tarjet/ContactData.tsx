@@ -301,7 +301,7 @@ const ContactData = ( { userData }:Props ) => {
 
                         <span>Tu tarjet podrá ser vista en el buscador por personas que se encuentren dentro del rango configurado</span>
 
-                        <a href="https://shop.tarjet.mx/" className={style.Link}>
+                        <a href="https://tarjetshop.com/" className={style.Link}>
                             Necesitas ser encontrado en mayor rango, <span>inscríbete a Premium, tu tarjeta sin límites.</span>
                         </a>
 
