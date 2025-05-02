@@ -6,9 +6,21 @@ import { BsCheckCircle } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-
+import Head from 'next/head';
 import style from './preview.module.scss';
 import Image from "next/image";
+
+import useGoogleFonts from "@/app/hooks/useGoogleFonts";
+
+// Definimos las 5 fuentes más populares de Google Fonts
+const GOOGLE_FONTS = [
+  { name: 'Lato', value: 'Lato' },
+  { name: 'Open Sans', value: 'Open Sans' },
+  { name: 'Oswald', value: 'Oswald' },
+  { name: 'Poppins', value: 'Poppins' },
+  { name: 'Roboto Condensed', value: 'Roboto Condensed' },
+  { name: 'Roboto', value: 'Roboto' }
+];
 
 interface Props {
     token: string;
@@ -22,6 +34,7 @@ interface Props {
     },
     close: ()=> void;
 }
+
 
 interface Position {
     x: number;
@@ -44,7 +57,10 @@ const animate = {
 }
 
 const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Props) => {
-    const [fontSize, setFontSize] = useState<number>(16); // Tamaño base en px
+    const [fontSize, setFontSize] = useState<number>(16);
+    const [selectedFont, setSelectedFont] = useState<string>('Roboto');
+    useGoogleFonts(selectedFont);
+
     const image = useRef(null);
     const text1Reference = useRef(null);
     const text2Reference = useRef(null);
@@ -156,33 +172,26 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
         const img = document.createElement('img');
         
         img.onload = function() {
-            // Obtener dimensiones reales de la imagen
             const imgWidth = img.naturalWidth;
             const imgHeight = img.naturalHeight;
             
-            // Establecer dimensiones del canvas igual a la imagen original
             canvas.width = imgWidth;
             canvas.height = imgHeight;
             
-            // Dibujar la imagen de fondo
             ctx!.drawImage(img, 0, 0, imgWidth, imgHeight);
             
-            // Calcular factor de escala entre la previsualización y la imagen real
             const previewWidth = image.current ? (image.current as HTMLElement).clientWidth : 0;
             const scaleFactor = imgWidth / previewWidth;
             
-            // Ajustar tamaños de fuente (eliminamos el factor adicional de 1.5)
             const baseFontSize = fontSize * scaleFactor;
             const nameFontSize = baseFontSize * 1.1;
             const businessFontSize = baseFontSize * 1.1;
             
-            // Configurar estilo de texto
             ctx!.textBaseline = 'top';
             ctx!.fillStyle = backgroundCard.TarjetaColorFont;
             
-            // Dibujar cada texto con posiciones y tamaños escalados
             if (text1) {
-                ctx!.font = `bold ${nameFontSize}px Arial`;
+                ctx!.font = `bold ${nameFontSize}px ${selectedFont}`; // Usamos la fuente seleccionada
                 ctx!.fillText(
                     text1, 
                     (position1.x / previewWidth) * imgWidth,
@@ -191,7 +200,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
             }
             
             if (text2) {
-                ctx!.font = `${baseFontSize}px Arial`;
+                ctx!.font = `${baseFontSize}px ${selectedFont}`;
                 ctx!.fillText(
                     text2,
                     (position2.x / previewWidth) * imgWidth,
@@ -200,7 +209,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
             }
             
             if (text3) {
-                ctx!.font = `bold ${businessFontSize}px Arial`;
+                ctx!.font = `bold ${businessFontSize}px ${selectedFont}`;
                 ctx!.fillText(
                     text3,
                     (position3.x / previewWidth) * imgWidth,
@@ -209,7 +218,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
             }
             
             if (text4) {
-                ctx!.font = `${baseFontSize}px Arial`;
+                ctx!.font = `${baseFontSize}px ${selectedFont}`;
                 ctx!.fillText(
                     text4,
                     (position4.x / previewWidth) * imgWidth,
@@ -217,7 +226,6 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                 );
             }
     
-            // Generar y subir la imagen
             canvas.toBlob((blob) => {
                 if (blob) {
                     UploadImageFirst(blob, token, "TFRE");
@@ -237,8 +245,15 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
         img.src = backgroundImage!;
     };
 
+    useEffect(() => {
+        console.log(`Fuente actual: ${selectedFont}`);
+        document.fonts.ready.then(() => {
+          console.log('Fuentes cargadas:', document.fonts);
+        });
+      }, [selectedFont]);
+
     return ( 
-        <div className="pop">
+        <div className="pop">            
             { !uploadSuccess && (
                 <motion.div className={`container ${style.Preview}`} {...animate} >
                     <h5>Previsualiza tu Tarjet</h5>
@@ -253,12 +268,34 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                         />
                     </p>
 
-                    {/* Nuevo control de tamaño de fuente */}
+                    {/* Selector de fuente */}
+                    <div className={style.FontSelector}>
+                        <label>Selecciona una fuente:</label>
+                        <select 
+                            value={selectedFont}
+                            onChange={(e) => setSelectedFont(e.target.value)}
+                            className={style.FontSelect}
+                        >
+                            {GOOGLE_FONTS.map((font) => (
+                                <option 
+                                    key={font.value} 
+                                    value={font.value}
+                                    style={{ 
+                                        fontFamily: `${selectedFont}, sans-serif`,
+                                        fontWeight: '400' // o '700' para negrita
+                                    }}
+                                >
+                                    {font.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
                     <div className={style.FontSizeControl}>
                         <label>Tamaño de fuente: {fontSize}px</label>
                         <Slider 
-                            min={10}  // Tamaño mínimo más legible
-                            max={30}  // Tamaño máximo adecuado
+                            min={8}
+                            max={36}
                             step={1}
                             value={fontSize}
                             onChange={(value) => setFontSize(value as number)}
@@ -271,19 +308,19 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                     </div>
 
                     <div className={style.BackgroundImage} ref={image}>
-                        <img 
-                            src={ backgroundImage } 
-                            alt="tarjeta de presentación" 
-                        />
+                        <img src={backgroundImage} alt="tarjeta de presentación" />
+                        
                         { data.name && (
                             <div 
-                                className={`${style.Text} ${style.TextName}`} 
-                                ref={text1Reference} 
+                                className={`${style.Text} ${style.TextName}`}
+                                ref={text1Reference}
                                 style={{
-                                    top: `${position1.y}px`, 
-                                    left: `${position1.x}px`, 
+                                    top: `${position1.y}px`,
+                                    left: `${position1.x}px`,
                                     color: backgroundCard.TarjetaColorFont,
-                                    fontSize: `${fontSize * 1.2}px` // 20% más grande para el nombre
+                                    fontSize: `${fontSize * 1.2}px`,
+                                    fontFamily: `${selectedFont}, sans-serif`,
+                                    fontWeight: '700'
                                 }}
                                 onMouseMove={e => handleMouseMove(e, setPosition1, dragOffset1, text1Reference)}
                                 onMouseUp={handleMouseUp}
@@ -299,12 +336,14 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                         { data.workStation && (
                             <div 
                                 className={style.Text} 
-                                ref={ data.name ? text2Reference : text1Reference}
+                                ref={data.name ? text2Reference : text1Reference}
                                 style={{
                                     top: `${position2.y}px`, 
                                     left: `${position2.x}px`, 
                                     color: backgroundCard.TarjetaColorFont,
-                                    fontSize: `${fontSize}px`
+                                    fontSize: `${fontSize}px`,
+                                    fontFamily: `${selectedFont}, sans-serif`,
+                                    fontWeight: '400' // o '700' para negrita
                                 }}
                                 onMouseMove={e => handleMouseMove(e, setPosition2, dragOffset2, data.name ? text2Reference : text1Reference)}
                                 onMouseUp={handleMouseUp}
@@ -325,7 +364,9 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                                     top: `${position3.y}px`, 
                                     left: `${position3.x}px`, 
                                     color: backgroundCard.TarjetaColorFont,
-                                    fontSize: `${fontSize * 1.1}px` // 10% más grande para el negocio
+                                    fontSize: `${fontSize * 1.1}px`,
+                                    fontFamily: `${selectedFont}, sans-serif`,
+                                    fontWeight: '400' // o '700' para negrita
                                 }}
                                 onMouseMove={e => handleMouseMove(e, setPosition3, dragOffset3, (data.name || data.workStation) ? text3Reference : text1Reference)}
                                 onMouseUp={handleMouseUp}
@@ -346,7 +387,9 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                                     top: `${position4.y}px`, 
                                     left: `${position4.x}px`, 
                                     color: backgroundCard.TarjetaColorFont,
-                                    fontSize: `${fontSize}px`
+                                    fontSize: `${fontSize}px`,
+                                    fontFamily: `${selectedFont}, sans-serif`,
+                                    fontWeight: '400' // o '700' para negrita
                                 }}
                                 onMouseMove={e => handleMouseMove(e, setPosition4, dragOffset4, (data.name || data.workStation || data.businessName) ? text4Reference : text1Reference)}
                                 onMouseUp={handleMouseUp}

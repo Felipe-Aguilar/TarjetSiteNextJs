@@ -52,22 +52,22 @@
             font-size: 1.3rem;
 
             @media (width <= 700px) {
-                font-size: 1rem!important;
+                font-size: inherit;
             }
 
             @media (width <= 400px) {
-                font-size: 0.9rem!important;
+                font-size: inherit;
             }
         }
         .TextBusiness{
             font-size: 1.6rem;
 
             @media (width <= 700px) {
-                font-size: 1.3rem!important;
+                font-size: inherit;
             }
 
             @media (width <= 400px) {
-                font-size: 1.4rem!important;
+                font-size: inherit;
             }
         }
 
@@ -75,11 +75,11 @@
             font-size: 1.6rem;
 
             @media (width <= 700px) {
-                font-size: 1.2rem!important;
+                font-size: inherit;
             }
 
             @media (width <= 400px) {
-                font-size:  1.1rem!important;
+                font-size:  inherit;
             }
         }
     }
@@ -128,16 +128,44 @@
       width: 90%;
     }
   }
-  
-  // Ajustar tamaños de texto responsivos
-  .Text {
-    font-size: 1rem; // Tamaño base, será sobrescrito por el estilo en línea
+
+.Text {
+    font-family: inherit; /* Hereda la fuente del padre */
+    font-weight: 400;
+    
+    &.TextName, &.TextBusiness {
+      font-weight: 700;
+    }
   }
   
-  .TextBusiness {
-    font-size: 1.1rem;
+  /* Selector de fuentes */
+  .FontSelector {
+    margin: 15px auto;
+    width: 90%;
+    max-width: 400px;
+  
+    select {
+      font-family: inherit; /* Hereda la fuente */
+      
+      option {
+        font-weight: 400; // Peso normal para las opciones
+        
+        &[value="Lato"] { font-family: 'Lato', sans-serif; }
+        &[value="Open Sans"] { font-family: 'Open Sans', sans-serif; }
+        &[value="Oswald"] { font-family: 'Oswald', sans-serif; }
+        &[value="Poppins"] { font-family: 'Poppins', sans-serif; }
+        &[value="Roboto Condensed"] { font-family: 'Roboto Condensed', sans-serif; }
+        &[value="Roboto"] { font-family: 'Roboto', sans-serif; }
+      }
+    }
   }
   
-  .TextName {
-    font-size: 1.2rem;
+  /* Contenedor principal */
+  .Preview {
+    font-family: 'Roboto', sans-serif; /* Fuente por defecto */
+    
+    /* Asegura que todos los elementos hereden la fuente */
+    * {
+      font-family: inherit;
+    }
   }
