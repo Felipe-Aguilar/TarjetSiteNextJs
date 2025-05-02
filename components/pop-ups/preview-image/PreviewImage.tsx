@@ -333,7 +333,7 @@ const PreviewImage = ({token, premiumPreview, backgroundCard, data, close} : Pro
                             </div>
                         )}
 
-                        { data.workStation && (
+                        {data.workStation && (
                             <div 
                                 className={style.Text} 
                                 ref={data.name ? text2Reference : text1Reference}
