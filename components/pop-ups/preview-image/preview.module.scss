@@ -97,3 +97,47 @@
         color: #006d2e!important;
     }
 }
+// Añadir al archivo preview.module.scss
+.FontSizeControl {
+    margin: 20px 0;
+    padding: 0 10px;
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  
+    .rc-slider {
+      padding: 10px 0;
+    }
+  
+    .rc-slider-track {
+      background-color: #91ba14;
+    }
+  
+    .rc-slider-handle {
+      border: solid 2px #91ba14;
+      width: 20px;
+      height: 20px;
+      margin-top: -8px;
+    }
+  
+    @media (width <= 700px) {
+      width: 90%;
+    }
+  }
+  
+  // Ajustar tamaños de texto responsivos
+  .Text {
+    font-size: 1rem; // Tamaño base, será sobrescrito por el estilo en línea
+  }
+  
+  .TextBusiness {
+    font-size: 1.1rem;
+  }
+  
+  .TextName {
+    font-size: 1.2rem;
+  }
