@@ -16,10 +16,10 @@ import useGoogleFonts from "@/app/hooks/useGoogleFonts";
 const GOOGLE_FONTS = [
   { name: 'Lato', value: 'Lato' },
   { name: 'Open Sans', value: 'Open Sans' },
-  { name: 'Oswald', value: 'Oswald' },
   { name: 'Poppins', value: 'Poppins' },
   { name: 'Roboto Condensed', value: 'Roboto Condensed' },
-  { name: 'Roboto', value: 'Roboto' }
+  { name: 'Roboto', value: 'Roboto' },
+  { name: 'Tangerine', value: 'Tangerine' }
 ];
 
 interface Props {
