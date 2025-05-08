@@ -2,11 +2,12 @@ import { Fragment, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BsCaretDownFill, BsQuestionCircle } from "react-icons/bs";
 import { UserDataResponse } from "@/interfaces/userData-interface";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTelegramPlane, FaTiktok, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaGoogle, FaInstagram, FaLinkedinIn, FaTelegramPlane, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 import InfoFacebook from "../pop-ups/info-facebook/InfoFacebook";
 import EditData from "@/app/api/editData";
+import PopupSwitch from "../pop-ups/Popupswitch/PopupSwitch";
 
 interface Props {
     userData: UserDataResponse;
@@ -29,6 +30,7 @@ const SocialNetworks = ( {userData}: Props ) => {
     const [youtube, setYoutube] = useState<string>(userData.Youtube);
     const [linkedin, setLinkedin] = useState<string>(userData.Linkedin);
     const [telegram, setTelegram] = useState<string>(userData.Telegram);
+    // const [google, setGoogle] = useState<string>(userData.google);
 
     const [openInfo, setOpenInfo] = useState<boolean>(false);
 
@@ -162,6 +164,21 @@ const SocialNetworks = ( {userData}: Props ) => {
                             />
                         </div>
 
+                        <div className="input-contact">
+                            <div>
+                                <FaGoogle  />
+                            </div>
+
+                            <input 
+                                type="text" 
+                                placeholder="Url Google"
+                                // value={telegram}
+                                // onChange={(e)=>setTelegram(e.target.value.trim())}
+                                // onBlur={onSubmitData}
+                            />
+                        </div>
+
+                        <PopupSwitch />
                     </motion.div>
                 )}
             </AnimatePresence>
