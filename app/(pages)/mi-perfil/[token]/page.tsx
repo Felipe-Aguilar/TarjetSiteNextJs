@@ -52,11 +52,11 @@ const MiPerfil = async () => {
                         </div>
 
                         <div className={style.Buttons}>
-                            <Link href={`disena-tu-tarjet/${btoa(data.TokenId)}`} className={style.first}>
+                            <Link href={`/disena-tarjet/${btoa(data.TokenId)}`} className={style.first}>
                                 Cambiar foto
                             </Link>
 
-                            <Link href={`disena-tu-tarjet/${btoa(data.TokenId)}`} className={style.second}>
+                            <Link href={`/disena-tarjet/${btoa(data.TokenId)}`} className={style.second}>
                                 Editar nombre de usuario
                             </Link>
                         </div>
