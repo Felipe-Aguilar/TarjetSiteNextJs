@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './Popupswitchsocial.module.scss';
 
 const PopupSwitch = () => {
@@ -9,13 +9,13 @@ const PopupSwitch = () => {
     const newState = !showPopup;
     setShowPopup(newState);
     console.log('Mostrar popup:', newState);
-    // Aquí luego podrás agregar la llamada a la API
+    // llamada a la API
   };
 
   const handlePopupTypeChange = (type: 'whatsapp' | 'google') => {
     setPopupType(type);
     console.log('Tipo de popup seleccionado:', type);
-    // Aquí también podrás agregar la llamada a la API cuando cambie
+    // llamada a la API
   };
 
   return (
