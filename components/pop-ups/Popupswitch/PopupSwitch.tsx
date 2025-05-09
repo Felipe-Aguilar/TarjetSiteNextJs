@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './Popupswitchsocial.module.scss';
 
 interface PopupSwitchProps {
-  uuid: string; // Añadimos prop para el UUID del usuario
+  uuid: string;
 }
 
 const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
@@ -10,57 +10,58 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
   const [popupType, setPopupType] = useState<'whatsapp' | 'google'>('whatsapp');
   const [loading, setLoading] = useState(false);
 
-  // Función para obtener el estado actual del popup
+  // Obtener estado actual del popup
   const fetchPopupStatus = async () => {
     try {
       const response = await fetch(
         `https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${uuid}`
       );
+  
+      if (!response.ok) throw new Error('Error al consultar el sitio');
+  
       const data = await response.json();
-      console.log('Estado del data:', data);
-      const mostrar = data.SDTSite.MostrarPopup;
-      console.log('Estado del popup:', mostrar);
-      setShowPopup(mostrar || false);
+      const mostrar = data?.SDTSite?.MostrarPopup;
+  console.log('Estado del popup:', mostrar);
+      setShowPopup(mostrar);
+
     } catch (error) {
-      console.error('Error fetching popup status:', error);
+      console.error('Error al obtener el estado del popup:', error);
     }
   };
+  
 
-  // Función para actualizar el estado del popup
+  // Actualizar estado del popup
   const updatePopupStatus = async (mostrar: boolean) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://souvenir-site.com/WebTarjet/APIUsuDtos/MostrarPopupSite?Usutarjetid=${uuid}&Activo=${mostrar ? 'TRUE' : 'FALSE'}`,
+        `https://souvenir-site.com/WebTarjet/APIUsuDtos/MostrarPopupSite?Usutarjetid=${uuid}&Activo=${mostrar}`,
         {
           method: 'GET',
         }
       );
-      console.log('Respuesta de la API:', response);
-      
-      if (response.ok) {
-        setShowPopup(mostrar);
-      }
+  
+      if (!response.ok) throw new Error('Error al actualizar el estado del popup');
+  
+      setShowPopup(mostrar);
     } catch (error) {
-      console.error('Error updating popup status:', error);
+      console.error('Error al actualizar popup:', error);
     } finally {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchPopupStatus();
   }, [uuid]);
 
   const handleToggleChange = () => {
-    const newState = !showPopup;
-    updatePopupStatus(newState);
+    updatePopupStatus(!showPopup);
   };
 
   const handlePopupTypeChange = (type: 'whatsapp' | 'google') => {
     setPopupType(type);
-    console.log('Tipo de popup seleccionado:', type);
-    // Aquí puedes agregar la llamada a la API cuando esté disponible
   };
 
   return (
