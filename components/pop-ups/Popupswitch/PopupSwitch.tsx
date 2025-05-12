@@ -13,36 +13,40 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
   // Obtener estado actual del popup
   const fetchPopupStatus = async () => {
     try {
+      const timestamp = new Date().getTime();
       const response = await fetch(
-        `https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${uuid}`
-      );
-  
-      if (!response.ok) throw new Error('Error al consultar el sitio');
-  
-      const data = await response.json();
-      const mostrar = data?.SDTSite?.MostrarPopup;
-  console.log('Estado del popup:', mostrar);
-      setShowPopup(mostrar);
+        `https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${uuid}&_=${timestamp}`
+      );     
 
+      if (!response.ok) throw new Error('Error al consultar el sitio');
+
+      const data = await response.json();
+      console.log('Respuesta completa:', data);
+
+      const mostrar = data?.SDTSite?.MostrarPopup ?? false;
+      console.log('Estado del popup (mostrar):', mostrar);
+      setShowPopup(mostrar);
     } catch (error) {
       console.error('Error al obtener el estado del popup:', error);
     }
   };
-  
 
   // Actualizar estado del popup
   const updatePopupStatus = async (mostrar: boolean) => {
+    console.log('Intentando actualizar popup a:', mostrar);
     setLoading(true);
+  
     try {
+      const timestamp = new Date().getTime();
       const response = await fetch(
-        `https://souvenir-site.com/WebTarjet/APIUsuDtos/MostrarPopupSite?Usutarjetid=${uuid}&Activo=${mostrar}`,
-        {
-          method: 'GET',
-        }
+        `https://souvenir-site.com/WebTarjet/APIUsuDtos/MostrarPopupSite?Usutarjetid=${uuid}&Activo=${mostrar}&_=${timestamp}`
       );
+  
+      console.log('Respuesta al actualizar popup:', response);
   
       if (!response.ok) throw new Error('Error al actualizar el estado del popup');
   
+      // Actualizamos el estado directamente sin esperar al backend
       setShowPopup(mostrar);
     } catch (error) {
       console.error('Error al actualizar popup:', error);
@@ -52,12 +56,18 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
   };
   
 
+  // Obtener el estado inicial
   useEffect(() => {
     fetchPopupStatus();
   }, [uuid]);
 
-  const handleToggleChange = () => {
-    updatePopupStatus(!showPopup);
+  // Volver a consultar si showPopup cambia
+  useEffect(() => {
+    console.log('Cambio en showPopup:', showPopup);
+  }, [showPopup]);
+
+  const handleSetPopup = (status: boolean) => {
+    updatePopupStatus(status);
   };
 
   const handlePopupTypeChange = (type: 'whatsapp' | 'google') => {
@@ -67,17 +77,22 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.toggleContainer}>
-        <label className={styles.toggleSwitch}>
-          <input 
-            type="checkbox" 
-            checked={showPopup} 
-            onChange={handleToggleChange}
-            disabled={loading}
-          />
-          <span className={styles.slider}></span>
-        </label>
+        <button
+          className={styles.popupTypeButton}
+          onClick={() => handleSetPopup(true)}
+          disabled={loading}
+        >
+          Mostrar popup
+        </button>
+        <button
+          className={styles.popupTypeButton}
+          onClick={() => handleSetPopup(false)}
+          disabled={loading}
+        >
+          Ocultar popup
+        </button>
         <span className={styles.toggleLabel}>
-          {showPopup ? 'Ocultar pop-up social' : 'Mostrar pop-up social'}
+          Estado actual: {showPopup ? 'Mostrado' : 'Oculto'}
           {loading && ' (cargando...)'}
         </span>
       </div>
