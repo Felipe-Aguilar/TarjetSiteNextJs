@@ -8,7 +8,7 @@ interface PopupSelectorProps {
     tipoPopup: string;
     phone?: string;
     token?: string;
-    googleUrl: string; // Nueva prop para la URL de Google
+    googleUrl: string;
     onClose: () => void;
 }
 
@@ -28,7 +28,7 @@ const PopupSelector = ({ tipoPopup, phone, token, googleUrl, onClose }: PopupSel
         case 'PopGoogle':
             return <GoogleMessage 
                      close={onClose} 
-                     googleUrl={googleUrl} // Pasar la URL de Google
+                     googleUrl={googleUrl}
                    />;
             
         default:

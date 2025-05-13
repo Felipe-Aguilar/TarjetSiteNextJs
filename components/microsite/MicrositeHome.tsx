@@ -15,7 +15,7 @@ interface Props {
     userData: UserDataResponse & {
         MostrarPopup?: boolean;
         TipoPopup?: string;
-        ImagenPopup: string; // Nuevo campo para la URL de Google
+        SiteGoogle?: string; // Asegúrate de que la interfaz incluya este campo
     };
     tokenServer: string | undefined | null;
     uuidServer: string | undefined | null;
@@ -23,6 +23,9 @@ interface Props {
 
 const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     const [showPopup, setShowPopup] = useState<boolean>(false);
+
+    // Extraer SiteGoogle directamente de userData (ya viene de la API)
+    const siteGoogle = userData.SiteGoogle || '';
 
     useEffect(() => {
         if (userData.MostrarPopup) {
@@ -60,7 +63,7 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                             tipoPopup={userData.TipoPopup || 'PopWhats'}
                             phone={userData.Telefono1}
                             token={userData.TokenId}
-                            googleUrl={userData.ImagenPopup} // Pasar la URL de Google
+                            googleUrl={siteGoogle} // Usar el valor extraído de la API
                             onClose={() => setShowPopup(false)}
                         />
                     )}

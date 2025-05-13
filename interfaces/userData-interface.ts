@@ -1,3 +1,4 @@
+import Google from '@/components/login/Google';
 export interface UserDataResponse {
     UUID:             string;
     TokenId:          string;
@@ -45,6 +46,7 @@ export interface UserDataResponse {
     Mail:             string;
     Web:              string;
     IconoComents:     string;
+    Google:           string;
     Facebook:         string;
     Instagram:        string;
     Youtube:          string;
@@ -66,6 +68,7 @@ export interface UserDataResponse {
     Orden:            number;
     Serv:             Serv[];
     BotonesAdicionales: BotonesAdicionales[];
+    SiteGoogle?:    string;
 }
 
 export interface Serv {

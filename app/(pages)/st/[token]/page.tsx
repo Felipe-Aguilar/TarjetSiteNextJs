@@ -57,7 +57,8 @@ const getData = async (token: string) => {
         ...basicData,
         MostrarPopup: siteData.SDTSite?.MostrarPopup ?? false,
         TipoPopup: siteData.SDTSite?.TipoPopup || 'PopWhats',
-        ImagenPopup: siteData.SDTSite?.ImagenPopup || '' // URL de Google
+        ImagenPopup: siteData.SDTSite?.ImagenPopup || '',
+        SiteGoogle: siteData.SDTSite?.SiteGoogle || '' // Extraer SiteGoogle de la API
     };
 }
 

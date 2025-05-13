@@ -23,6 +23,9 @@ const SocialNetworks = ( {userData}: Props ) => {
 
     const [open, setOpen] = useState<boolean>(false);
 
+     const [google, setGoogle] = useState<string>(
+        (userData as any).SiteGoogle || userData.Google || ''
+    );
     const [facebook, setFacebook] = useState<string>(userData.Facebook);
     const [instagram, setInstagram] = useState<string>(userData.Instagram);
     const [tiktok, setTiktok] = useState<string>(userData.Tiktok);
@@ -30,12 +33,11 @@ const SocialNetworks = ( {userData}: Props ) => {
     const [youtube, setYoutube] = useState<string>(userData.Youtube);
     const [linkedin, setLinkedin] = useState<string>(userData.Linkedin);
     const [telegram, setTelegram] = useState<string>(userData.Telegram);
-    // const [google, setGoogle] = useState<string>(userData.google);
 
     const [openInfo, setOpenInfo] = useState<boolean>(false);
-
     const onSubmitData = async () => {
         const socialForm = {
+            "Google": google,
             "Facebook": facebook,
             "Instagram": instagram,
             "Tiktok": tiktok,
@@ -172,9 +174,9 @@ const SocialNetworks = ( {userData}: Props ) => {
                             <input 
                                 type="text" 
                                 placeholder="Url Google"
-                                // value={telegram}
-                                // onChange={(e)=>setTelegram(e.target.value.trim())}
-                                // onBlur={onSubmitData}
+                                value={google}
+                                onChange={(e)=>setGoogle(e.target.value.trim())}
+                                onBlur={onSubmitData}
                             />
                         </div>
 
