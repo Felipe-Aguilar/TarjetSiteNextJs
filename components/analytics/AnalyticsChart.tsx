@@ -9,28 +9,41 @@ type DataPoint = {
   users: number;
 };
 
-const AnalyticsChart = () => {
+type AnalyticsChartProps = {
+  token: string;
+};
+
+const AnalyticsChart = ({ token }: AnalyticsChartProps) => {
   const [data, setData] = useState<DataPoint[]>([]);
 
+  console.log(token)
+
   useEffect(() => {
-    fetch('/api/analytics')
-      .then(res => res.json())
-      .then(json => {
-        const rows = json.rows || [];
-        const parsed = rows.map((row: any) => ({
-          date: formatDate(row.dimensionValues[0].value), // "20240501" → "May 1"
+  fetch(`/api/analytics?token=${encodeURIComponent(token)}`)
+    .then(res => res.json())
+    .then(json => {
+      const rows = json.rows || [];
+      const parsed = rows
+        .map((row: any) => ({
+          date: row.dimensionValues[0].value, // Guardamos el formato original "20240501" para ordenar
+          formattedDate: formatDate(row.dimensionValues[0].value), // "20240501" → "05/01"
           users: parseInt(row.metricValues[0].value, 10),
-        }));
-        setData(parsed);
-      })
-      .catch(console.error);
-  }, []);
+        }))
+        // Ordenamos por fecha (la propiedad date en formato YYYYMMDD permite ordenación alfabética)
+        .sort((a: { date: string; }, b: { date: string; }) => a.date.localeCompare(b.date));
+      
+      setData(parsed);
+    })
+    .catch(console.error);
+}, []);
 
   const formatDate = (raw: string) => {
-    const year = raw.slice(0, 4);
-    const month = raw.slice(4, 6);
-    const day = raw.slice(6, 8);
-    return `${month}/${day}`;
+    const date = new Date(
+      parseInt(raw.slice(0, 4), 10), // año
+      parseInt(raw.slice(4, 6), 10) - 1, // mes (0-indexed)
+      parseInt(raw.slice(6, 8), 10) // día
+    );
+    return date.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' });
   };
 
   console.log('Data fetched:', data);
@@ -41,7 +54,7 @@ const AnalyticsChart = () => {
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
+          <XAxis dataKey="formattedDate" />
           <YAxis allowDecimals={false} />
           <Tooltip />
           <Line type="monotone" dataKey="users" stroke="#8884d8" strokeWidth={2} />

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import styles from './Popupswitchsocial.module.scss';
-import AnalyticsChart from '@/components/analytics/AnalyticsChart';
 
 interface PopupSwitchProps {
   uuid: string;
@@ -139,7 +138,6 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
         </div>
       )}
 
-      {/* <AnalyticsChart /> */}
     </div>
   );
 };

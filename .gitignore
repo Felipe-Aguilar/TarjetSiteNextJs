@@ -34,4 +34,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-service_account.jsonservice_account.json
+service_account.json
+tarjetsite-414216-19a4d1d9ccc2.json

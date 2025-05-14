@@ -7,6 +7,9 @@ import Link from 'next/link';
 import Card from '@/components/mytarjet/Card';
 import ButtonsShare from '@/components/mytarjet/ButtonsShare';
 import MyTarjetSearch from '@/components/mytarjet/MyTarjetSearch';
+import AnalyticsChart from '@/components/analytics/AnalyticsChart';
+import { useParams, useSearchParams } from 'next/navigation'; // Para componentes client-side
+// O para server components:
 
 
 export const metadata = {
@@ -14,8 +17,8 @@ export const metadata = {
     description: 'Mi tarjetero tarjet',
 };
 
-const MyTarjet = async () => {
-
+const MyTarjet = async ({ params }: { params: { token: string } }) => {
+    const urlToken = params.token;
     const session = await getServerSession();
 
     if (!session) {
@@ -102,12 +105,15 @@ const MyTarjet = async () => {
                             </div>
                         )}
 
+                        <AnalyticsChart token={urlToken} />
+
                         <div className={style.TarjetTitle}>
                             <h3>Tu tarjetero</h3>
                             <p>Actualmente tienes <span>{dataTarjets.length}</span> Tarjets</p>
                         </div>
 
                         <MyTarjetSearch uuId={data.UUID}/>
+
 
                     </div>
                 </div>
