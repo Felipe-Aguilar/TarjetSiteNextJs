@@ -7,8 +7,8 @@ import Link from 'next/link';
 import Card from '@/components/mytarjet/Card';
 import ButtonsShare from '@/components/mytarjet/ButtonsShare';
 import MyTarjetSearch from '@/components/mytarjet/MyTarjetSearch';
-import AnalyticsChart from '@/components/analytics/AnalyticsChart';
 import { useParams, useSearchParams } from 'next/navigation'; // Para componentes client-side
+import ToggleableAnalyticsChart from '@/components/analytics/ToggleableAnalyticsChart';
 // O para server components:
 
 
@@ -104,8 +104,8 @@ const MyTarjet = async ({ params }: { params: { token: string } }) => {
                                 <ButtonsShare token={data.TokenId}/>
                             </div>
                         )}
-
-                        <AnalyticsChart token={urlToken} />
+                        
+                        <ToggleableAnalyticsChart token={urlToken} />
 
                         <div className={style.TarjetTitle}>
                             <h3>Tu tarjetero</h3>
