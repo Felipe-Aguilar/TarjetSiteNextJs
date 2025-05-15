@@ -26,7 +26,6 @@ const MiPerfil = async () => {
     }
 
     const data = await userData(session.user!.name!);
-
     return ( 
         <div className="green">
             <div className="background">
@@ -65,7 +64,8 @@ const MiPerfil = async () => {
 
                         <hr/>
 
-                        <ButtonsPerfil token={data.TokenId}/>
+                        <ButtonsPerfil token={data.TokenId} uuid={data.UUID}/>
+                        
                     </div>
                 </div>
             </div>

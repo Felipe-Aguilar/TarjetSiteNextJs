@@ -1,8 +1,8 @@
 'use client';
 
-import { UserDataResponse } from '@/interfaces/userData-interface';
+import { Serv, UserDataResponse } from '@/interfaces/userData-interface';
 import { BsCardImage, BsPlusLg } from 'react-icons/bs';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import style from './services.module.scss';
@@ -45,36 +45,78 @@ interface SecondSerivce {
 }
 
 const EditServices = ({ userData } : Props) => {
-
+    // Estado para los servicios
+    const [services, setServices] = useState<Serv[]>(userData.Serv || []);
+    
     // *Primeros 4 (8) servicios
     const [firstServices, setFirstServices] = useState({
-        service1: userData.Serv ? userData.Serv[0].ServDescrip : '',
-        service2: userData.Serv ? userData.Serv[1].ServDescrip : '',
-        service3: userData.Serv ? userData.Serv[2].ServDescrip : '',
-        service4: userData.Serv ? userData.Serv[3].ServDescrip : '',
-        service5: userData.Serv ? userData.Serv[14].ServDescrip : '',
-        service6: userData.Serv ? userData.Serv[15].ServDescrip : '',
-        service7: userData.Serv ? userData.Serv[16].ServDescrip : '',
-        service8: userData.Serv ? userData.Serv[17].ServDescrip : '',
+        service1: '',
+        service2: '',
+        service3: '',
+        service4: '',
+        service5: '',
+        service6: '',
+        service7: '',
+        service8: '',
     });
+
+    // *Bloques de 4 (8) servicios
+    const [secondServices, setSecondServices] = useState<Record<string, SecondSerivce>>({});
+
+    // Cargar los servicios cuando el componente se monta o cambian los datos del usuario
+    useEffect(() => {
+        if (userData.Serv && userData.Serv.length > 0) {
+            // Actualizar firstServices
+            setFirstServices({
+                service1: userData.Serv[0]?.ServDescrip || '',
+                service2: userData.Serv[1]?.ServDescrip || '',
+                service3: userData.Serv[2]?.ServDescrip || '',
+                service4: userData.Serv[3]?.ServDescrip || '',
+                service5: userData.Serv[14]?.ServDescrip || '',
+                service6: userData.Serv[15]?.ServDescrip || '',
+                service7: userData.Serv[16]?.ServDescrip || '',
+                service8: userData.Serv[17]?.ServDescrip || '',
+            });
+
+            // Actualizar secondServices
+            const initialSecondServices = userData.Serv.slice(4, 14);
+            const initialSecond: Record<string, SecondSerivce> = {};
+            
+            initialSecondServices.forEach((service, index) => {
+                initialSecond[`service${index+9}`] = {
+                    ServNum: service.ServNum,
+                    ServDescrip: service.ServDescrip || '',
+                    ServSubTitulo: service.ServSubTitulo || '',
+                    ServImg: service.ServImg || '',
+                    ServIcono: service.ServIcono || '',
+                    ServSiteId: service.ServSiteId || 0
+                };
+            });
+
+            setSecondServices(initialSecond);
+        }
+    }, [userData.Serv]);
+
+    // *Abrir servicios de bloque
+    const initialOpenServices: ServiceState = {
+        service9: false,
+        service10: false,
+        service11: false,
+        service12: false,
+        service13: false,
+        service14: false,
+        service15: false,
+        service16: false,
+        service17: false,
+        service18: false,
+    } 
+
+    const [openServices, setOpenServices] = useState(initialOpenServices);
 
     const FirstInputChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
-
         setFirstServices({...firstServices, [name]: value});
     }
-
-    // *Bloques de 4 (8) servicios
-    const initialSecondServices : SecondSerivce[] = userData.Serv ? userData.Serv.slice(4, 14) : [];
-    const initialSecond: Record<string, SecondSerivce> = initialSecondServices.reduce(
-        (acc, service, index) => ({
-            ...acc,
-            [`service${index+9}`]: service
-        }),
-        {}
-    );
-
-    const [secondServices, setSecondServices] = useState(initialSecond);
 
     const SecondInputChange = (key: string, value: string) => {
         setSecondServices(prev => ({
@@ -96,24 +138,7 @@ const EditServices = ({ userData } : Props) => {
         }))
     }
 
-    // *Abrir servicios de bloque
-    const initialOpenServices: ServiceState = {
-        service9: false,
-        service10: false,
-        service11: false,
-        service12: false,
-        service13: false,
-        service14: false,
-        service15: false,
-        service16: false,
-        service17: false,
-        service18: false,
-    } 
-
-    const [openServices, setOpenServices] = useState(initialOpenServices);
-
     const OpenService = (serviceName: keyof ServiceState) => {
-
         setOpenServices(prev => ({
             ...prev, 
             [serviceName]: !prev[serviceName]
@@ -122,7 +147,6 @@ const EditServices = ({ userData } : Props) => {
 
     // *Subir Datos al formulario y guardar
     const SubmitData = async () => {
-
         const servicesForm = {
             "FirstServices": firstServices,
             "SecondServices": secondServices
@@ -148,7 +172,6 @@ const EditServices = ({ userData } : Props) => {
 
     // *Borrar contenido del bloque
     const clearInfo = (key: string) => {
-
         setSecondServices(prev => ({
             ...prev,
             [key]: {

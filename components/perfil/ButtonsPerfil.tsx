@@ -10,11 +10,13 @@ import Image from 'next/image';
 
 interface Props {
     token: string;
+    uuid: string;
 }
 
-const ButtonsPerfil = ( {token}:Props ) => {
+const ButtonsPerfil = ( {token, uuid}:Props ) => {
 
     const [open, setOpen] = useState<string>('');
+    console.log(token)
 
     const buttonsInfo = [
         {
