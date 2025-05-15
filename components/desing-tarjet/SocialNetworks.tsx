@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BsCaretDownFill, BsQuestionCircle } from "react-icons/bs";
 import { UserDataResponse } from "@/interfaces/userData-interface";
@@ -13,6 +13,12 @@ interface Props {
     userData: UserDataResponse;
 }
 
+interface SiteDataResponse {
+    SDTSite: {
+        SiteGoogle: string;
+    }
+}
+
 const animate = {
     initial: {opacity: 0, height: 0},
     animate: {opacity: 1, height: 'auto'},
@@ -20,12 +26,8 @@ const animate = {
 }
 
 const SocialNetworks = ( {userData}: Props ) => {
-
     const [open, setOpen] = useState<boolean>(false);
-
-     const [google, setGoogle] = useState<string>(
-        (userData as any).SiteGoogle || userData.Google || ''
-    );
+    const [google, setGoogle] = useState<string>((userData as any).SiteGoogle || userData.Google || '');
     const [facebook, setFacebook] = useState<string>(userData.Facebook);
     const [instagram, setInstagram] = useState<string>(userData.Instagram);
     const [tiktok, setTiktok] = useState<string>(userData.Tiktok);
@@ -33,8 +35,25 @@ const SocialNetworks = ( {userData}: Props ) => {
     const [youtube, setYoutube] = useState<string>(userData.Youtube);
     const [linkedin, setLinkedin] = useState<string>(userData.Linkedin);
     const [telegram, setTelegram] = useState<string>(userData.Telegram);
-
     const [openInfo, setOpenInfo] = useState<boolean>(false);
+
+    useEffect(() => {
+        const fetchSiteData = async () => {
+            try {
+                const response = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${userData.UUID}`);
+                const data: SiteDataResponse = await response.json();
+                
+                if (data.SDTSite.SiteGoogle) {
+                    setGoogle(data.SDTSite.SiteGoogle);
+                }
+            } catch (error) {
+                console.error("Error fetching site data:", error);
+            }
+        };
+
+        fetchSiteData();
+    }, [userData.UUID]);
+
     const onSubmitData = async () => {
         const socialForm = {
             "Google": google,
