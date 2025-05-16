@@ -61,7 +61,7 @@ export async function GET() {
         ],
         limit: 10
       }
-    });
+    } as any);
 
     // Filtrar y formatear la respuesta
     const filteredData = response.data.rows?.map(row => ({
