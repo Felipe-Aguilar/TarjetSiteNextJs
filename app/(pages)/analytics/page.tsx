@@ -3,7 +3,7 @@ import STAnalytics from '@/components/analytics/STAnalytics';
 import styles from './page.module.scss';
 
 async function getAnalyticsData() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_LOCAL || 'http://localhost:3000';
   const res = await fetch(`${baseUrl}/api/analytics/popular-st-pages`, {
     cache: 'no-store' // o revalidate: 3600 si prefieres ISR
   });
