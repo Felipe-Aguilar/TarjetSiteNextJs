@@ -22,7 +22,7 @@ export async function GET() {
     
     const date = new Date();
     const startDate = new Date(date);
-    startDate.setDate(date.getDate() - 30);
+    startDate.setDate(date.getDate() - 15);
 
     const formattedDateToday = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     const formattedStartDate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-${startDate.getDate().toString().padStart(2, '0')}`;
