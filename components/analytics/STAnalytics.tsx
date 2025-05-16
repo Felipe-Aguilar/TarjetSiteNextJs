@@ -13,7 +13,7 @@ export default function STAnalytics({ data }: { data: AnalyticsData[] }) {
 
   return (
     <div className={styles.chartContainer}>
-      <h2 className={styles.title}>Páginas /st/ más visitadas</h2>
+      <h2 className={styles.title}>10 Páginas /st/ más visitadas</h2>
       
       <div className={styles.chart}>
         {data.map((item, index) => (

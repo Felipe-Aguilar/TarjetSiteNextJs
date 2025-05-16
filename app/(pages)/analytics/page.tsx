@@ -18,7 +18,7 @@ export default async function AnalyticsPage() {
 
   return (
     <main className={styles.container}>
-      <h1 className={styles.header}>Analíticas de Páginas</h1>
+      <h1 className={styles.header}>Analíticas de Usuarios</h1>
       <STAnalytics data={data} />
     </main>
   );
