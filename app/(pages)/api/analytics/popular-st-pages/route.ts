@@ -2,8 +2,13 @@
 import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const perPage = 10;
+    const totalLimit = 20; // Límite máximo de resultados a obtener de GA
+
     const auth = new google.auth.GoogleAuth({
       credentials: {
         type: process.env.GOOGLE_TYPE,
@@ -41,7 +46,7 @@ export async function GET() {
               filter: {
                 fieldName: 'pagePath',
                 stringFilter: {
-                  value: '^/st/[A-Za-z0-9]+$', // Regex más estricta
+                  value: '^/st/[A-Za-z0-9]+$',
                   matchType: 'FULL_REGEXP',
                   caseSensitive: false
                 }
@@ -59,20 +64,31 @@ export async function GET() {
             desc: true
           }
         ],
-        limit: 10
+        limit: totalLimit
       }
     } as any);
 
-    // Filtrar y formatear la respuesta
-    const filteredData = response.data.rows?.map(row => ({
+    const allData = response.data.rows?.map(row => ({
       path: row.dimensionValues?.[0].value,
       views: row.metricValues?.[0].value,
       users: row.metricValues?.[1].value
     })) || [];
 
+    // Lógica de paginación
+    const startIndex = (page - 1) * perPage;
+    const endIndex = startIndex + perPage;
+    const paginatedData = allData.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(Math.min(allData.length, totalLimit) / perPage);
+
     return NextResponse.json({
       success: true,
-      data: filteredData,
+      data: paginatedData,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        perPage,
+        totalItems: Math.min(allData.length, totalLimit)
+      },
       metadata: {
         startDate: formattedStartDate,
         endDate: formattedDateToday,
