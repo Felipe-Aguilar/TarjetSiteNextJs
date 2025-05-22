@@ -16,7 +16,6 @@ interface Props {
 const ButtonsPerfil = ( {token, uuid}:Props ) => {
 
     const [open, setOpen] = useState<string>('');
-    console.log(token)
 
     const buttonsInfo = [
         {

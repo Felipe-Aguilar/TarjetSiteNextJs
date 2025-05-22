@@ -41,6 +41,7 @@ const ContactData = ( { userData }:Props ) => {
     const [qualification, setQualification] = useState(userData.PermitirCalif == 0 ? true : false);
     const [comments, setComments] = useState(userData.PermitirComments == 0 ? true : false);
 
+    
 
     // *Mostrar Mapa
     const [showMap, setShowMap] = useState<boolean>(userData.CodP ? true : false);
@@ -54,9 +55,19 @@ const ContactData = ( { userData }:Props ) => {
     // *Asignación de Municipio y Estado
     const [listColonies, setListColonies] = useState<ListColoniesInterface>();
 
+    // Estados para la segunda ubicación (opcional)
+    const [showSecondUbication, setShowSecondUbication] = useState(false);
+    const [avenue2, setAvenue2] = useState(userData.Calle2 || '');
+    const [number2, setNumber2] = useState(userData.NumExt2 || '');
+    const [postalCode2, setPostalCode2] = useState(userData.CodP2 || '');
+    const [state2, setState2] = useState(userData.Estado2 || '');
+    const [mun2, setMun2] = useState(userData.Municip2 || '');
+    const [colony2, setColony2] = useState(userData.Colonia2 || '');
+    const [showMap2, setShowMap2] = useState<boolean>(userData.CodP2 ? true : false);
+    const [listColonies2, setListColonies2] = useState<ListColoniesInterface>();
+
 
     const onSubmitData = async () => {
-
         const contactForm = {
             "Telefono1": whatsApp,
             "Telefono2": phone,
@@ -69,6 +80,13 @@ const ContactData = ( { userData }:Props ) => {
             "Colonia": colony,
             "Municip": mun,
             "Estado": state,
+            // Nueva ubicación
+            "Calle2": avenue2,
+            "NumExt2": number2,
+            "CodP2": postalCode2,
+            "Colonia2": colony2,
+            "Municip2": mun2,
+            "Estado2": state2,
             "PublicPriva": publicTarjet ? 0 : 1,
             "PermitirCalif": qualification ? 0 : 1,
             "PermitirComments": comments ? 0 : 1,
@@ -102,6 +120,29 @@ const ContactData = ( { userData }:Props ) => {
         onChangePostalCode(postalCode);
 
     }, [postalCode]);
+
+    useEffect(()=>{
+        const onChangePostalCode2 = async (postalCode2:string) => {
+            const code = postalCode2.replace(/\D/g, '');
+            setPostalCode2(code);
+
+            if (postalCode2.length == 5) {
+                const response = await fetch(`https://souvenir-site.com/WebTarjet/ApiCatalogos/ListaColonias?CPID=${postalCode2}`, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+
+                const data = await response.json();
+                setListColonies2(data);
+                setState2(data.ListColonias[0].CPEstado);
+                setMun2(data.ListColonias[0].CPMunicipio);
+            }
+        }
+
+        if (postalCode2) {
+            onChangePostalCode2(postalCode2);
+        }
+    }, [postalCode2]);
 
 
     return ( 
@@ -286,6 +327,92 @@ const ContactData = ( { userData }:Props ) => {
 
                         { showMap && (
                             <MapGoogle address={`${avenue} ${number}, ${postalCode}, ${mun}`}/>
+                        )}
+
+                        {/* Checkbox para mostrar segunda ubicación */}
+                        <div className="input-checkbox">
+                            <input 
+                                type="checkbox" 
+                                id="secondUbication"
+                                checked={showSecondUbication}
+                                onChange={()=>setShowSecondUbication(!showSecondUbication)}
+                            />
+                            <label htmlFor="secondUbication">Agregar segunda ubicación (opcional)</label>
+                        </div>
+
+                        {/* Segunda ubicación (condicional) */}
+                        {showSecondUbication && (
+                            <Fragment>
+                                <h4>Segunda Ubicación</h4>
+
+                                <input 
+                                    type="text" 
+                                    placeholder="Calle, privada, avenida"
+                                    value={avenue2}
+                                    onChange={(e)=>setAvenue2(e.target.value)}
+                                    onBlur={onSubmitData}
+                                />
+
+                                <div className="two">
+                                    <input 
+                                        type="text" 
+                                        maxLength={6} 
+                                        placeholder="Número"
+                                        value={number2}
+                                        onChange={(e)=>setNumber2(e.target.value.trim())}
+                                        onBlur={onSubmitData}
+                                    />
+
+                                    <input 
+                                        type="text" 
+                                        maxLength={5} 
+                                        placeholder="Código postal"
+                                        value={postalCode2}
+                                        onChange={(e)=>setPostalCode2(e.target.value.trim())}
+                                        onBlur={onSubmitData}
+                                    />
+                                </div>
+
+                                <input 
+                                    type="text" 
+                                    placeholder="Estado" 
+                                    readOnly
+                                    value={state2}
+                                />
+
+                                <input 
+                                    type="text" 
+                                    placeholder="Municipio"
+                                    readOnly
+                                    value={mun2}
+                                />
+
+                                <select 
+                                    style={{borderRadius: '8px'}}
+                                    value={colony2}
+                                    onChange={(e)=>setColony2(e.target.value)}
+                                    onBlur={onSubmitData}
+                                >
+                                    <option value="colonia" key="colonia2">Colonia*</option>
+                                    { listColonies2?.ListColonias.map((colony)=>(
+                                        <option value={colony.CPColonia} key={`${colony.CPColonia}-2`}>{colony.CPColonia}</option>
+                                    ))}
+                                </select>
+
+                                <div className="input-checkbox">
+                                    <input 
+                                        type="checkbox" 
+                                        id="showMap2"
+                                        checked={showMap2}
+                                        onChange={() => setShowMap2(!showMap2)}
+                                    />
+                                    <label htmlFor="showMap2">Ver segunda ubicación en el mapa</label>
+                                </div>
+
+                                { showMap2 && postalCode2 && (
+                                    <MapGoogle address={`${avenue2} ${number2}, ${postalCode2}, ${mun2}`}/>
+                                )}
+                            </Fragment>
                         )}
 
                         <div className="input-selected">

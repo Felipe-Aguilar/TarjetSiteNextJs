@@ -69,6 +69,14 @@ export interface UserDataResponse {
     Serv:             Serv[];
     BotonesAdicionales: BotonesAdicionales[];
     SiteGoogle?:    string;
+
+    Calle2?: string;
+    NumExt2?: string;
+    CodP2?: string;
+    Colonia2?: string;
+    Municip2?: string;
+    Estado2?: string;
+
 }
 
 export interface Serv {
