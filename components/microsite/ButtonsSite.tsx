@@ -128,9 +128,9 @@ END:VCARD`;
                 ) }
 
                 { userData.VerUbicacion === 1 && (
-                    <motion.a href={`https://www.google.com/maps?q=${userData.MapsGeoloc}`} target='_blank' {...animate} transition={{delay: 1.4}} className={style.Ubication}>
+                    <motion.a href={userData.MapsGeoloc === '' ? `https://www.google.com/maps?q=${userData.Calle}${''}${userData.NumExt},${userData.Colonia}` : `https://www.google.com/maps?q=${userData.MapsGeoloc}`} target='_blank' {...animate} transition={{delay: 1.4}} className={style.Ubication}>
                         {userData.TexoUbica && `${userData.TexoUbica} `}
-                        {userData.Colonia}
+                        {userData.Colonia === '' ? '' : `${userData.Colonia} `}
 
                         <span>
                             <Image 
