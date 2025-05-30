@@ -43,7 +43,7 @@ const ContactData = ( { userData }:Props ) => {
 
     
 
-    // *Mostrar Mapa
+    //Mostrar Mapa
     const [showMap, setShowMap] = useState<boolean>(userData.CodP ? true : false);
 
     const onChangeShowMap = () => {
@@ -52,7 +52,7 @@ const ContactData = ( { userData }:Props ) => {
         }
     }
 
-    // *Asignación de Municipio y Estado
+    //Asignación de Municipio y Estado
     const [listColonies, setListColonies] = useState<ListColoniesInterface>();
 
     // Estados para la segunda ubicación (opcional)
