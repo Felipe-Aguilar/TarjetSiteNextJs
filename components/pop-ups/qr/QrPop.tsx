@@ -11,7 +11,7 @@ interface Props {
 const animate = {
     initial: {scale: 0},
     animate: {scale: 1},
-    transition: {delay: 1}
+    transition: {delay: 0.2}
 }
 
 const QrPop = ({close} : Props) => {
@@ -21,7 +21,7 @@ const QrPop = ({close} : Props) => {
     return ( 
         <div className="pop">
             <motion.div className={`container`} {...animate}>
-                <h5>Comparte tu perfil tarjet mediante un Qr</h5>
+                <h5>Comparte el perfil tarjet mediante un QR</h5>
 
                 <QRCodeSVG 
                     value={`https://tarjet.site/st${pathname}`}
