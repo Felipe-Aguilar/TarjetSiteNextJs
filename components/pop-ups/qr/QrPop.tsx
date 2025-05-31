@@ -15,8 +15,8 @@ const animate = {
 }
 
 const QrPop = ({close} : Props) => {
-
-    const pathname = usePathname();
+    // Eliminamos usePathname y usamos la misma lógica que Social
+    const pathname = window.location.pathname; // o podrías recibir la URL como prop
 
     return ( 
         <div className="pop">
@@ -24,7 +24,7 @@ const QrPop = ({close} : Props) => {
                 <h5>Comparte el perfil tarjet mediante un QR</h5>
 
                 <QRCodeSVG 
-                    value={`https://tarjet.site/st${pathname}`}
+                    value={`https://tarjet.site/st${pathname.replace('/st', '')}`}
                     style={{display: 'block', margin: 'auto'}}
                     size={170}
                 />
