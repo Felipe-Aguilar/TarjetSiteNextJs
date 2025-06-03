@@ -128,20 +128,65 @@ END:VCARD`;
                 ) }
 
                 { userData.VerUbicacion === 1 && (
-                    <motion.a href={userData.MapsGeoloc === '' ? `https://www.google.com/maps?q=${userData.Calle}${''}${userData.NumExt},${userData.Colonia}` : `https://www.google.com/maps?q=${userData.MapsGeoloc}`} target='_blank' {...animate} transition={{delay: 1.4}} className={style.Ubication}>
-                        {userData.TexoUbica && `${userData.TexoUbica} `}
-                        {userData.Colonia === '' ? '' : `${userData.Colonia} `}
+                    <>
+                        {/* Primera ubicación (siempre que esté activa) */}
+                        <motion.a 
+                            href={userData.MapsGeoloc === '' ? 
+                                `https://www.google.com/maps?q=${userData.Calle}${userData.NumExt ? ' ' + userData.NumExt : ''},${userData.Colonia}` : 
+                                `https://www.google.com/maps?q=${userData.MapsGeoloc}`} 
+                            target='_blank' 
+                            {...animate} 
+                            transition={{delay: 1.4}} 
+                            className={style.Ubication}
+                        >
+                            {userData.TexoUbica && `${userData.TexoUbica} `}
+                            {userData.Colonia === '' ? '' : `${userData.Colonia} `}
 
-                        <span>
-                            <Image 
-                                src={'/images/icono-ubicacion.svg'}
-                                alt='icono de ubicación'
-                                width={150}
-                                height={150}
-                            />
-                        </span>
-                    </motion.a>
-                ) }
+                            <span>
+                                <Image 
+                                    src={'/images/icono-ubicacion.svg'}
+                                    alt='icono de ubicación'
+                                    width={150}
+                                    height={150}
+                                />
+                            </span>
+                        </motion.a>
+
+                        {/* Segunda ubicación (solo si existe DirCalle con contenido) */}
+                        {(() => {
+                            const dir2 = userData.ListDirecciones?.find(d => d.DirId === "2" && d.DirCalle?.trim());
+                            if (!dir2) return null;
+                            return (
+                                <motion.a 
+                                    href={`https://www.google.com/maps?q=${
+                                        dir2.DirCalle
+                                    }${
+                                        dir2.DirNumExt ? ' ' + dir2.DirNumExt : ''
+                                    },${
+                                        dir2.DirCol
+                                    }`} 
+                                    target='_blank' 
+                                    {...animate} 
+                                    transition={{delay: 1.5}} 
+                                    className={style.Ubication}
+                                    style={{marginTop: '10px'}}
+                                >
+                                    {userData.TexoUbica && `${userData.TexoUbica} `}
+                                    {dir2.DirCol === '' ? '' : `${dir2.DirCol} `}
+
+                                    <span>
+                                        <Image 
+                                            src={'/images/icono-ubicacion.svg'}
+                                            alt='icono de ubicación'
+                                            width={150}
+                                            height={150}
+                                        />
+                                    </span>
+                                </motion.a>
+                            );
+                        })()}
+                    </>
+                )}
                 
                 { userData.Mail && (
                     <motion.a href={`mailto: ${userData.Mail}`} {...animate} transition={{delay: 1.6}} className={style.Email}>
