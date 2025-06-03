@@ -88,3 +88,40 @@
         transform: translateX(-150%);
     }
 }
+
+.title {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    background: transparent;
+    border: none;
+    font-weight: 600;
+}
+
+.two {
+  display: flex;
+  gap: 10px;
+
+  input {
+    flex: 1;
+  }
+}
+
+.inputSelected {
+  align-items: center;
+  gap: 20px;
+
+  select {
+    border-radius: 8px;
+    width: 20%;
+  }
+
+  label {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+}

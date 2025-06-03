@@ -56,42 +56,81 @@ const ContactData = ( { userData }:Props ) => {
     const [listColonies, setListColonies] = useState<ListColoniesInterface>();
 
     // Estados para la segunda ubicación (opcional)
-    const [showSecondUbication, setShowSecondUbication] = useState(false);
-    const [avenue2, setAvenue2] = useState(userData.Calle2 || '');
-    const [number2, setNumber2] = useState(userData.NumExt2 || '');
-    const [postalCode2, setPostalCode2] = useState(userData.CodP2 || '');
-    const [state2, setState2] = useState(userData.Estado2 || '');
-    const [mun2, setMun2] = useState(userData.Municip2 || '');
-    const [colony2, setColony2] = useState(userData.Colonia2 || '');
-    const [showMap2, setShowMap2] = useState<boolean>(userData.CodP2 ? true : false);
+    const [showSecondUbication, setShowSecondUbication] = useState(
+        Boolean(userData.ListDirecciones?.find(d => d.DirId === "2")?.DirCalle)
+    );
+    const [avenue2, setAvenue2] = useState(
+        userData.ListDirecciones?.find(d => d.DirId === "2")?.DirCalle || ''
+    );
+    const [number2, setNumber2] = useState(
+        userData.ListDirecciones?.find(d => d.DirId === "2")?.DirNumExt || ''
+    );
+    const [postalCode2, setPostalCode2] = useState(
+        userData.ListDirecciones?.find(d => d.DirId === "2")?.DirCodP || ''
+    );
+    const [state2, setState2] = useState(
+        userData.ListDirecciones?.find(d => d.DirId === "2")?.DirEstado || ''
+    );
+    const [mun2, setMun2] = useState(
+        userData.ListDirecciones?.find(d => d.DirId === "2")?.DirMunicip || ''
+    );
+    const [colony2, setColony2] = useState(
+        userData.ListDirecciones?.find(d => d.DirId === "2")?.DirCol || ''
+    );
+
+    
+    const [showMap2, setShowMap2] = useState<boolean>(userData.CodP ? true : false);
     const [listColonies2, setListColonies2] = useState<ListColoniesInterface>();
 
+    
 
     const onSubmitData = async () => {
+        // Crear array de direcciones
+        const direcciones = [{
+            "DirId": "1",
+            "DirCalle": avenue,
+            "DirNumExt": number,
+            "DirCodP": postalCode,
+            "DirCol": colony,
+            "DirMunicip": mun,
+            "DirEstado": state,
+            "DirMapsGeoloc": ""
+        }];
+
+        // Agregar segunda dirección si existe
+        if (showSecondUbication) {
+            direcciones.push({
+                "DirId": "2",
+                "DirCalle": avenue2,
+                "DirNumExt": number2,
+                "DirCodP": postalCode2,
+                "DirCol": colony2,
+                "DirMunicip": mun2,
+                "DirEstado": state2,
+                "DirMapsGeoloc": ""
+            });
+        }
+
         const contactForm = {
             "Telefono1": whatsApp,
             "Telefono2": phone,
             "VerUbicacion": showUbication ? 1 : 0,
             "Mail": email,
             "Web": website,
+            // Mantener campos individuales para compatibilidad
             "Calle": avenue,
             "NumExt": number,
             "CodP": postalCode,
             "Colonia": colony,
             "Municip": mun,
             "Estado": state,
-            // Nueva ubicación
-            "Calle2": avenue2,
-            "NumExt2": number2,
-            "CodP2": postalCode2,
-            "Colonia2": colony2,
-            "Municip2": mun2,
-            "Estado2": state2,
             "PublicPriva": publicTarjet ? 0 : 1,
             "PermitirCalif": qualification ? 0 : 1,
             "PermitirComments": comments ? 0 : 1,
-            "RangoLocal": range
-        }
+            "RangoLocal": range,
+            // Enviar el array de direcciones
+            "ListDirecciones": direcciones
+        };
 
         await EditData({userData, contactForm});
     }
@@ -147,7 +186,7 @@ const ContactData = ( { userData }:Props ) => {
 
     return ( 
         <Fragment>
-            <button className="title" type="button" onClick={()=>setOpen(!open)}>
+            <button className={style.title} type="button" onClick={()=>setOpen(!open)}>
                 Datos de contacto
 
                 <motion.div animate={open ? {rotate: 180} : {rotate: 0}}>
@@ -266,7 +305,7 @@ const ContactData = ( { userData }:Props ) => {
                             onBlur={onSubmitData}
                         />
 
-                        <div className="two">
+                        <div className={style.two}>
                             <input 
                                 type="text" 
                                 maxLength={6} 
@@ -353,7 +392,7 @@ const ContactData = ( { userData }:Props ) => {
                                     onBlur={onSubmitData}
                                 />
 
-                                <div className="two">
+                                <div className={style.two}>
                                     <input 
                                         type="text" 
                                         maxLength={6} 
@@ -415,7 +454,7 @@ const ContactData = ( { userData }:Props ) => {
                             </Fragment>
                         )}
 
-                        <div className="input-selected">
+                        <div className={style.inputSelected}>
                             <select disabled={!userData.Premium} value={range} onChange={(e)=>setRange(e.target.value)} onBlur={onSubmitData}>
                                 <option value="3" key="3">3km</option>
                                 <option value="10" key="10">10km</option>

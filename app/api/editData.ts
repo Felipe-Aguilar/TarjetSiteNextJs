@@ -29,7 +29,17 @@ interface Props {
         "PublicPriva": number,
         "PermitirCalif": number,
         "PermitirComments": number,
-        "RangoLocal": string
+        "RangoLocal": string,
+        "ListDirecciones"?: Array<{
+            "DirId": string,
+            "DirCalle": string,
+            "DirNumExt": string,
+            "DirCodP": string,
+            "DirCol": string,
+            "DirMunicip": string,
+            "DirEstado": string,
+            "DirMapsGeoloc": string
+        }>
     },
     socialForm?: {
         "Facebook": string,
@@ -66,7 +76,6 @@ interface Props {
 }
 
 export default async function EditData ({ userData, dataForm, contactForm, socialForm, servicesForm }: Props) {
-
     const response = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizaUsu', {
         method: 'POST',
         mode: 'cors',
@@ -113,6 +122,17 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                     "ImgHeader": userData.ImgHeader,
                     "ImgTarFrente": userData.ImgTarFrente,
                     "RangoLocal": contactForm?.RangoLocal ?? userData.RangoLocal,
+                    // Array de direcciones
+                    "ListDirecciones": contactForm?.ListDirecciones ?? userData.ListDirecciones ?? [{
+                        "DirId": "1",
+                        "DirCalle": contactForm?.Calle ?? userData.Calle,
+                        "DirNumExt": contactForm?.NumExt ?? userData.NumExt,
+                        "DirCodP": contactForm?.CodP ?? userData.CodP,
+                        "DirCol": contactForm?.Colonia ?? userData.Colonia,
+                        "DirMunicip": contactForm?.Municip ?? userData.Municip,
+                        "DirEstado": contactForm?.Estado ?? userData.Estado,
+                        "DirMapsGeoloc": ""
+                    }],
                     "Serv": [
                         {
                             "ServNum": "1",

@@ -70,13 +70,18 @@ export interface UserDataResponse {
     BotonesAdicionales: BotonesAdicionales[];
     SiteGoogle?:    string;
 
-    Calle2?: string;
-    NumExt2?: string;
-    CodP2?: string;
-    Colonia2?: string;
-    Municip2?: string;
-    Estado2?: string;
+    ListDirecciones?: Direccion[];
+}
 
+export interface Direccion {
+    DirId: string;
+    DirCalle: string;
+    DirNumExt: string;
+    DirCodP: string;
+    DirCol: string;
+    DirMunicip: string;
+    DirEstado: string;
+    DirMapsGeoloc: string;
 }
 
 export interface Serv {
