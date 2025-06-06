@@ -30,6 +30,7 @@ interface Props {
         "PermitirCalif": number,
         "PermitirComments": number,
         "RangoLocal": string,
+        "MapsGeoloc": string,
         "ListDirecciones"?: Array<{
             "DirId": string,
             "DirCalle": string,
@@ -38,7 +39,7 @@ interface Props {
             "DirCol": string,
             "DirMunicip": string,
             "DirEstado": string,
-            // "DirMapsGeoloc": string
+            "DirMapsGeoloc": string
         }>
     },
     socialForm?: {
@@ -106,6 +107,7 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                     "CodP": contactForm?.CodP ?? userData.CodP,
                     "Colonia": contactForm?.Colonia ?? userData.Colonia,
                     "Municip": contactForm?.Municip ?? userData.Municip,
+                    "MapsGeoloc": contactForm?.MapsGeoloc ?? userData.MapsGeoloc,
                     "Estado": contactForm?.Estado ?? userData.Estado,
                     "PublicPriva": contactForm?.PublicPriva ?? userData.PublicPriva,
                     "PermitirCalif": contactForm?.PermitirCalif ?? userData.PermitirCalif,
@@ -131,7 +133,7 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                         "DirCol": contactForm?.Colonia ?? userData.Colonia,
                         "DirMunicip": contactForm?.Municip ?? userData.Municip,
                         "DirEstado": contactForm?.Estado ?? userData.Estado,
-                        "DirMapsGeoloc": ""
+                        "DirMapsGeoloc": contactForm?.MapsGeoloc ?? userData.MapsGeoloc
                     }],
                     "Serv": [
                         {

@@ -9,6 +9,7 @@ import MapGoogle from "./MapGoogle";
 import style from './contact.module.scss';
 import EditData from "@/app/api/editData";
 import Company from "./Company";
+import { Map } from '@vis.gl/react-google-maps';
 
 interface Props {
     userData: UserDataResponse;
@@ -36,6 +37,7 @@ const ContactData = ( { userData }:Props ) => {
     const [state, setState] = useState(userData.Estado);
     const [mun, setMun] = useState(userData.Municip);
     const [colony, setColony] = useState(userData.Colonia);
+    const [MapGeoloc, setMapGeoloc] = useState(userData.MapsGeoloc);
     const [range, setRange] = useState(userData.RangoLocal);
     const [publicTarjet, setPublicTarjet] = useState(userData.PublicPriva == 0 ? true : false);
     const [qualification, setQualification] = useState(userData.PermitirCalif == 0 ? true : false);
@@ -94,7 +96,7 @@ const ContactData = ( { userData }:Props ) => {
             "DirCol": colony,
             "DirMunicip": mun,
             "DirEstado": state,
-            // "DirMapsGeoloc": ""
+            "DirMapsGeoloc": MapGeoloc || "",
         }];
 
         // Agregar segunda dirección si existe
@@ -107,7 +109,7 @@ const ContactData = ( { userData }:Props ) => {
                 "DirCol": colony2,
                 "DirMunicip": mun2,
                 "DirEstado": state2,
-                // "DirMapsGeoloc": ""
+                "DirMapsGeoloc": ""
             });
         }
 
@@ -128,12 +130,17 @@ const ContactData = ( { userData }:Props ) => {
             "PermitirCalif": qualification ? 0 : 1,
             "PermitirComments": comments ? 0 : 1,
             "RangoLocal": range,
+            "MapsGeoloc": MapGeoloc || "",
             // Enviar el array de direcciones
             "ListDirecciones": direcciones
         };
 
         await EditData({userData, contactForm});
     }
+
+    useEffect(() => {
+  console.log('MapsGeoloc from userData:', userData.MapsGeoloc);
+}, [userData]);
 
     useEffect(()=>{
         const onChangePostalCode = async (postalCode:string) => {
