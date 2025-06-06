@@ -125,3 +125,29 @@
     margin: 0;
   }
 }
+
+    .Info2 {
+        position: relative;
+    }
+
+    .Info2::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 20px;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        display: none; /* Ocultar por defecto */
+        z-index: 1;
+        /* Estilos para el texto adicional */
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .Info2:hover::before {
+        display: block; /* Mostrar al hacer hover */
+        content: "Para ocultar la 2da ubicación, borra el campo de Calle"; /* Texto adicional al hacer hover */
+    }

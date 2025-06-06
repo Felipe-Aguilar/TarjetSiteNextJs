@@ -383,6 +383,7 @@ const ContactData = ( { userData }:Props ) => {
                         {showSecondUbication && (
                             <Fragment>
                                 <h4>Segunda Ubicación</h4>
+                                    <div className={style.Info2}>?</div>
 
                                 <input 
                                     type="text" 
