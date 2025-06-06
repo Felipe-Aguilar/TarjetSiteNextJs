@@ -94,7 +94,7 @@ const ContactData = ( { userData }:Props ) => {
             "DirCol": colony,
             "DirMunicip": mun,
             "DirEstado": state,
-            "DirMapsGeoloc": ""
+            // "DirMapsGeoloc": ""
         }];
 
         // Agregar segunda dirección si existe
@@ -107,7 +107,7 @@ const ContactData = ( { userData }:Props ) => {
                 "DirCol": colony2,
                 "DirMunicip": mun2,
                 "DirEstado": state2,
-                "DirMapsGeoloc": ""
+                // "DirMapsGeoloc": ""
             });
         }
 

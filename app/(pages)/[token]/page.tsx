@@ -20,6 +20,7 @@ export const metadata = {
 const MyTarjet = async ({ params }: { params: { token: string } }) => {
     const urlToken = params.token;
     const session = await getServerSession();
+    console.log(params)
 
     if (!session) {
         redirect('/login');

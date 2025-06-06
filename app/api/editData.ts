@@ -38,7 +38,7 @@ interface Props {
             "DirCol": string,
             "DirMunicip": string,
             "DirEstado": string,
-            "DirMapsGeoloc": string
+            // "DirMapsGeoloc": string
         }>
     },
     socialForm?: {
