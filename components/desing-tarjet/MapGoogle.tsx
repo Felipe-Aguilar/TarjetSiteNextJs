@@ -11,16 +11,23 @@ const MapGoogle = ({address} : Props) => {
     const [longitude, setLongitude] = useState<number>(0);
 
     useEffect(()=>{
-        const getAddress = async () => {
-            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyCPj4WhXm_VMY3W6MMQ2UwDOdTkrBAednk`);
+        try {
+            const getAddress = async () => {
+                const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyCPj4WhXm_VMY3W6MMQ2UwDOdTkrBAednk`);
+                if (!response.ok) {
+                    throw new Error("Error al cargar el mapa");
+                }
 
-            const data = await response.json();
+                const data = await response.json();
 
-            setLatitude(data.results[0].geometry.location.lat);
-            setLongitude(data.results[0].geometry.location.lng);
+                setLatitude(data.results[0].geometry.location.lat);
+                setLongitude(data.results[0].geometry.location.lng);
+            }
+
+            getAddress();
+        } catch (error) {
+            console.error("Error al obtener la dirección:", error);
         }
-
-        getAddress();
     });
 
     return ( 

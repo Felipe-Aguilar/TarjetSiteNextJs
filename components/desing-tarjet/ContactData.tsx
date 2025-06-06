@@ -44,7 +44,7 @@ const ContactData = ( { userData }:Props ) => {
     
 
     //Mostrar Mapa
-    const [showMap, setShowMap] = useState<boolean>(userData.CodP ? true : false);
+    const [showMap, setShowMap] = useState<boolean>(userData.CodP ? false : false);
 
     const onChangeShowMap = () => {
         if (postalCode) {
@@ -79,7 +79,7 @@ const ContactData = ( { userData }:Props ) => {
     );
 
     
-    const [showMap2, setShowMap2] = useState<boolean>(userData.CodP ? true : false);
+    const [showMap2, setShowMap2] = useState<boolean>(userData.CodP ? false : false);
     const [listColonies2, setListColonies2] = useState<ListColoniesInterface>();
 
     
