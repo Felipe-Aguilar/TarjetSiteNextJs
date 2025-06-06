@@ -80,6 +80,7 @@ END:VCARD`;
         }
     }
 
+
     return (
 
         <Fragment>
@@ -240,6 +241,28 @@ END:VCARD`;
                         </span>
                     </Link>
                 </motion.div>
+
+                { userData.Google &&(
+                    <motion.div {...animate} transition={{delay: 2}} style={{width: '95%'}}>
+                        <a
+                            href={userData.Google}
+                            target='_blank'
+                            className={style.Google}
+                            style={{width: '100%', cursor: 'pointer'}}
+                        >
+                            Deja tu reseña en Google
+        
+                            <span>
+                                <Image 
+                                    src={'/images/icono-redes.svg'}
+                                    alt='icono de redes sociales'
+                                    width={150}
+                                    height={150}
+                                />
+                            </span>
+                        </a>
+                    </motion.div>
+                )}
 
                 <motion.button {...animate} transition={{delay: 2.2}} className={style.Share} onClick={()=>setShareProfile(true)}>
                     Comparte mi tarjeta
