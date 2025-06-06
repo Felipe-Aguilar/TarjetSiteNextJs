@@ -26,11 +26,19 @@ const MiPerfil = async () => {
     }
 
     const data = await userData(session.user!.name!);
+
+    const fecha = new Date(data.RegistroFecha);
+    const fechaformatted = fecha.toLocaleDateString('es-MX', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+    
     return ( 
         <div className="green">
             <div className="background">
                 <div className="body">
-                    <div className={`contain ${style.Perfil}`}>
+                    <div className={` ${style.Perfil}`}>
                         <div className={style.HeaderUser}>
                             <div className={style.Image}>
                                 <Image 
@@ -60,7 +68,8 @@ const MiPerfil = async () => {
                             </Link>
                         </div>
 
-                        <p>Miembro desde: {data.RegistroFecha.toString()}</p>
+                        <p>Miembro desde: {fechaformatted}</p>
+                        
 
                         <hr/>
 
