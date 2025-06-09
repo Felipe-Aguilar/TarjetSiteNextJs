@@ -38,7 +38,7 @@ const MiPerfil = async () => {
         <div className="green">
             <div className="background">
                 <div className="body">
-                    <div className={` ${style.Perfil}`}>
+                    <div className={`contain ${style.Perfil}`}>
                         <div className={style.HeaderUser}>
                             <div className={style.Image}>
                                 <Image 
