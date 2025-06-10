@@ -33,7 +33,7 @@ const GoogleMessage = ({ close, googleUrl }: Props) => {
                     priority={false}
                     className={style.Image}
                 />
-                <h5>Visita mi sitio de Google</h5>
+                <h5>Opina en mis reseñas de Google</h5>
 
                 <a 
                     href={finalUrl} // Usar la URL corregida
