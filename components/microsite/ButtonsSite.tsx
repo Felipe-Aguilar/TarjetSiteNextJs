@@ -250,11 +250,11 @@ END:VCARD`;
                             className={style.Google}
                             style={{width: '100%', cursor: 'pointer'}}
                         >
-                            Deja tu reseña en Google
+                            Opiniones de clientes, deja tu reseña.
         
                             <span>
                                 <Image 
-                                    src={'/images/icono-redes.svg'}
+                                    src={'/images/boton-estrella.svg'}
                                     alt='icono de redes sociales'
                                     width={150}
                                     height={150}
