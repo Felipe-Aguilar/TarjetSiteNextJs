@@ -128,7 +128,7 @@ const FormCreateUser = ({uuid}: Props) => {
                     <input 
                         type="text" 
                         placeholder='Empresa o tú Nombre (15 caracteres)'
-                        maxLength={15}
+                        maxLength={30}
                         value={name}
                         onChange={(e)=>setName(e.target.value.trim())}
                     />
@@ -138,7 +138,7 @@ const FormCreateUser = ({uuid}: Props) => {
                     <input 
                         type="text" 
                         placeholder='Apellido Paterno (15 caracteres)'
-                        maxLength={15}
+                        maxLength={30}
                         value={paternal}
                         onChange={(e)=>setPaternal(e.target.value.trim())}
                     />
@@ -146,7 +146,7 @@ const FormCreateUser = ({uuid}: Props) => {
                     <input 
                         type="text" 
                         placeholder='Apellido Materno (15 caracteres)'
-                        maxLength={15}
+                        maxLength={30}
                         value={maternal}
                         onChange={(e)=>setMaternal(e.target.value.trim())}
                     />
@@ -155,14 +155,14 @@ const FormCreateUser = ({uuid}: Props) => {
                 <input 
                     type="text" 
                     placeholder='Correo' 
-                    maxLength={30}
+                    maxLength={45}
                     value={email}
                     onChange={(e)=>setEmail(e.target.value.trim())}
                 />
                 <input 
                     type="text" 
                     placeholder='Contraseña' 
-                    maxLength={30}
+                    maxLength={45}
                     value={password}
                     onChange={(e)=>setPassword(e.target.value.trim())}
                     onBlur={onBlurPassword}
