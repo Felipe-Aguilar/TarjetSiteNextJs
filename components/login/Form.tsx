@@ -13,42 +13,56 @@ const FormLogin = () => {
 
     // * Email
     const [email, setEmail] = useState<string>('');
+    const [emailError, setEmailError] = useState<string>('');
+
+    const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!email) {
+        return "El correo electrónico es requerido";
+    }
+    
+    if (!emailRegex.test(email)) {
+        return "Introduce una dirección de correo válida (ejemplo: usuario@dominio.com)";
+    }
+    
+    return "";
+    };
 
     const onBlurEmail = () => {
-        const errorMessage = 'Introduce una dirección de correo válida';
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailRegex.test(email)) {
-
-            const repeat = error.find(message => message === errorMessage);
-
-            if (repeat) return;
-
-            setError([...error, errorMessage]);
-        }else{
-            const updateError = error.filter(message => message != errorMessage);
-            setError(updateError);
-        }
-    }
+    setEmailError(validateEmail(email));
+    };
 
     // * Password
     const [password, setPassword] = useState<string>('');
+    const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
+
+    const validatePassword = (pass: string) => {
+    const errors: string[] = [];
+    
+    if (pass.length < 8) {
+        errors.push("La contraseña debe tener al menos 8 caracteres");
+    }
+    
+    if (!/[A-Za-z]/.test(pass)) {
+        errors.push("Debe incluir al menos una letra");
+    }
+    
+    if (!/\d/.test(pass)) {
+        errors.push("Debe incluir al menos un número");
+    }
+    
+    if (/[^A-Za-z\d]/.test(pass)) {
+        errors.push("Solo se permiten letras y números (sin caracteres especiales)");
+    }
+    
+    setPasswordErrors(errors);
+    return errors.length === 0;
+    };
 
     const onBlurPassword = () => {
-        const errorMessage = 'La contraseña debe tener al menos 8 caracteres, incluyendo letras y números.';
-        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-        if (!regex.test(password)) {
-            const repeat = error.find(message => message === errorMessage);
-
-            if (repeat) return;
-
-            setError([...error, errorMessage]);
-        }else{
-            const updateError = error.filter(message => message != errorMessage);
-            setError(updateError);
-        }
-    }
+    validatePassword(password);
+    };
 
     // * Submit formulario
     const [notSubmit, setNotSubmit] = useState<string>('');
@@ -132,6 +146,26 @@ const FormLogin = () => {
                         : <img src="/images/icono-ojo.svg" alt="icono" />}
                     </button>
                 </div>
+
+                {emailError && (
+                    <div className="input-error">
+                        <span className="error-icon">⚠</span>
+                        {emailError}
+                    </div>
+                )}
+
+                {passwordErrors.length > 0 && (
+                    <div className="password-errors">
+                        <h4>Requisitos de contraseña:</h4>
+                        <ul>
+                        {passwordErrors.map((error, index) => (
+                            <li key={index} className={password.length === 0 ? 'neutral' : 'error'}>
+                            {error}
+                            </li>
+                        ))}
+                        </ul>
+                    </div>
+                )}
 
                 <button className="link" style={{display: 'block'}}>
                     ¿Olvidaste tu contraseña?

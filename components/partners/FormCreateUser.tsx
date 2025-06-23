@@ -11,7 +11,6 @@ interface Props {
 }
 
 const FormCreateUser = ({uuid}: Props) => {
-
     const router = useRouter();
 
     const [prefixList, setPrefixList] = useState<ListPrefixInterface>();
@@ -25,7 +24,6 @@ const FormCreateUser = ({uuid}: Props) => {
             });
 
             const data = await response.json();
-
             setPrefixList(data);
         }
 
@@ -39,26 +37,60 @@ const FormCreateUser = ({uuid}: Props) => {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string[]>([]);
     const [success, setSuccess] = useState<boolean>(false);
+    const [emailError, setEmailError] = useState<string>('');
+
+    // Validar si el correo ya existe
+    const checkEmailExists = async (email: string) => {
+        try {
+            const response = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/EnviarCodigoOTP?Nombre=&Email=' + email, {
+                method: 'GET',
+                mode: 'cors'
+            });
+            
+            const data = await response.json();
+            
+            if (data.Mensaje && data.Mensaje.includes("ya se encuentra en nuestro sistema")) {
+                setEmailError(data.Mensaje);
+                return true;
+            }
+            return false;
+        } catch (err) {
+            console.error("Error al verificar correo:", err);
+            return false;
+        }
+    };
 
     // *Subir formulario 
     const SubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setEmailError('');
 
-        const errorMessage = 'Uno de los campos se encuentra vacío, por favor intente nuevamente';
-
+        // Validar campos vacíos
+        const emptyFieldMessage = 'Uno de los campos se encuentra vacío, por favor intente nuevamente';
         if (!name || !paternal || !email || !password) {
-            if (error.find(message => message === errorMessage)) {
-                return;
+            if (!error.find(message => message === emptyFieldMessage)) {
+                setError([...error, emptyFieldMessage]);
             }
-
-            setError([...error, errorMessage]);
-            return; 
-
-        }else{
-            const updateError = error.filter(message => message != errorMessage);
-            setError(updateError);
+            return;
+        } else {
+            setError(error.filter(message => message != emptyFieldMessage));
         }
 
+        // Validar si el correo existe
+        const emailExists = await checkEmailExists(email);
+        if (emailExists) return;
+
+        // Validar contraseña
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            const passwordMessage = 'La contraseña debe tener al menos 8 caracteres, incluyendo letras y números (sin caracteres especiales).';
+            if (!error.find(message => message === passwordMessage)) {
+                setError([...error, passwordMessage]);
+            }
+            return;
+        }
+
+        // Enviar formulario si todo está correcto
         const response = await fetch('https://souvenir-site.com/WebTarjet/APIPartner/CrearCuenta', {
             method: 'POST',
             mode: 'cors',
@@ -79,16 +111,16 @@ const FormCreateUser = ({uuid}: Props) => {
 
         const data = await response.json();
 
-        if (data.usuId) {
+        if (data.usuId && data.usuId !== "00000000-0000-0000-0000-000000000000") {
             setTimeout(()=>{
                 setSuccess(true);
-
                 setTimeout(()=>{
                     router.replace(`/perfil-partner/${uuid}`);
                 }, 3500)
             }, 1000)
+        } else if (data.Mensaje) {
+            setEmailError(data.Mensaje);
         }
-
     }
 
     // *Analisar contraseña
@@ -98,20 +130,21 @@ const FormCreateUser = ({uuid}: Props) => {
 
         if (!regex.test(password)) {
             const repeat = error.find(message => message === errorMessage);
-
             if (repeat) return;
-
             setError([...error, errorMessage]);
-        }else{
-            const updateError = error.filter(message => message != errorMessage);
-            setError(updateError);
+        } else {
+            setError(error.filter(message => message != errorMessage));
         }
+    }
+
+    // Validar email al perder foco
+    const onBlurEmail = async () => {
+        await checkEmailExists(email);
     }
 
     return ( 
         <Fragment>
             <form className={style.FormCreateUser} onSubmit={SubmitForm}>
-
                 <div className={style.PrefixContainer}>
                     <div>
                         <span>Prefijo</span>
@@ -158,9 +191,16 @@ const FormCreateUser = ({uuid}: Props) => {
                     maxLength={30}
                     value={email}
                     onChange={(e)=>setEmail(e.target.value.trim())}
+                    onBlur={onBlurEmail}
                 />
+                {emailError && (
+                    <div className='error'>
+                        <p>{emailError}</p>
+                    </div>
+                )}
+
                 <input 
-                    type="text" 
+                    type="password" 
                     placeholder='Contraseña' 
                     maxLength={30}
                     value={password}
@@ -168,22 +208,20 @@ const FormCreateUser = ({uuid}: Props) => {
                     onBlur={onBlurPassword}
                 />
 
-                { error && (
+                {error.length > 0 && (
                     <div className='error'>
                         {error.map((err)=>(
                             <p key={err}>{err}</p>
                         ))}
-                        {/* <p>{error}</p> */}
                     </div>
                 )}
 
                 <button className='btn' type='submit' style={{marginTop: '16px'}}>
                     Registrar usuario
                 </button>
-
             </form>
             
-            { success && <NewUserPartner /> }
+            {success && <NewUserPartner />}
         </Fragment>
     );
 }

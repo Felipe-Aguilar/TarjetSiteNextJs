@@ -1,26 +1,237 @@
-.OTP{
-    div{
+.OTP {
+    text-align: center;
+    
+    h5 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+
+    div {
         justify-content: center;
         margin-bottom: 1rem;
         gap: 10px;
 
-        input{
-            width: 40px!important;
-            height: 50px!important;
+        input {
+            width: 40px !important;
+            height: 50px !important;
             font-weight: 500;
             font-size: 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            
+            &:focus {
+                outline: none;
+                border-color: #4a90e2;
+                box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+            }
+        }
+    }
+
+    p {
+        margin: 1rem 0;
+        color: #666;
+        line-height: 1.5;
+        
+        span {
+            color: #4a90e2;
+            cursor: pointer;
+            font-weight: 500;
+            
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .error {
+        color: #e74c3c;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        margin-top: 1rem;
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        
+        &:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        &:not(:disabled):hover {
+            background-color: #357ab8;
+        }
+    }
+
+    .close {
+        margin-top: 1rem;
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        font-size: 0.8rem;
+        
+        &:hover {
+            text-decoration: underline;
         }
     }
 }
 
-.Success{
-    img{
+.Success {
+    text-align: center;
+    padding: 2rem;
+    
+    img {
         width: 55%;
         margin-top: -125px;
+        margin-bottom: 1rem;
 
         @media (width <= 700px) {
             width: 70%;
             margin-top: -120px;
+        }
+    }
+    
+    h5 {
+        font-size: 1.5rem;
+        color: #2ecc71;
+        margin-bottom: 0.5rem;
+    }
+    
+    p {
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.Loading {
+    text-align: center;
+    padding: 2rem;
+    
+    p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+}
+
+.Error {
+    text-align: center;
+    padding: 2rem;
+    
+    h5 {
+        font-size: 1.3rem;
+        color: #e74c3c;
+        margin-bottom: 1rem;
+    }
+    
+    p {
+        color: #666;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+    
+    .Buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            
+            &:hover {
+                background-color: #357ab8;
+            }
+            
+            &.secondary {
+                background-color: #f1f1f1;
+                color: #333;
+                
+                &:hover {
+                    background-color: #e1e1e1;
+                }
+            }
+        }
+    }
+
+    .password-errors {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  
+  h4 {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #495057;
+  }
+  
+  ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+  
+  li {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+    
+    &.error {
+      color: #dc3545;
+    }
+    
+    &.neutral {
+      color: #6c757d;
+    }
+    
+    &::marker {
+      font-size: 0.7em;
+    }
+  }
+}
+
+/* Para mostrar requisitos mientras se escribe */
+.password-requirements {
+  position: relative;
+  
+  &-list {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 10;
+    margin-top: 0.5rem;
+  }
+}
+}
+
+@media (max-width: 480px) {
+    .OTP {
+        div {
+            input {
+                width: 35px !important;
+                height: 45px !important;
+                font-size: 1rem;
+            }
         }
     }
 }
