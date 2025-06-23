@@ -171,57 +171,42 @@
         }
     }
 
-    .password-errors {
-  margin: 1rem 0;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 8px;
-  
-  h4 {
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: #495057;
-  }
-  
-  ul {
-    margin: 0;
-    padding-left: 1.2rem;
-  }
-  
-  li {
-    font-size: 0.85rem;
-    margin-bottom: 0.3rem;
-    
-    &.error {
-      color: #dc3545;
+    .passworderrors {
+        margin: 1rem 0;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        
+        h4 {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+        
+        li {
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+            
+            &.error {
+            color: #dc3545;
+            }
+            
+            &.neutral {
+            color: #6c757d;
+            }
+            
+            &::marker {
+            font-size: 0.7em;
+            }
+        }
     }
-    
-    &.neutral {
-      color: #6c757d;
-    }
-    
-    &::marker {
-      font-size: 0.7em;
-    }
-  }
-}
 
-/* Para mostrar requisitos mientras se escribe */
-.password-requirements {
-  position: relative;
-  
-  &-list {
-    position: absolute;
-    width: 100%;
-    background: white;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    z-index: 10;
-    margin-top: 0.5rem;
-  }
-}
+
 }
 
 @media (max-width: 480px) {

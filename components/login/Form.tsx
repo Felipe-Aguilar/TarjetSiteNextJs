@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import OtpCode from "../pop-ups/otp/OtpCode";
+import style from '../pop-ups/otp/otp.module.scss';
 
 const FormLogin = () => {
 
@@ -155,7 +156,7 @@ const FormLogin = () => {
                 )}
 
                 {passwordErrors.length > 0 && (
-                    <div className="password-errors">
+                    <div className={style.passworderrors}>
                         <h4>Requisitos de contraseña:</h4>
                         <ul>
                         {passwordErrors.map((error, index) => (
