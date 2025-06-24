@@ -22,4 +22,38 @@
             border-radius: 8px;
         }
     }
+
+    .PasswordContainer {
+        position: relative;
+        width: 100%;
+
+        input {
+            width: 100%;
+            padding-right: 40px; // Espacio para el botón
+        }
+
+        .TogglePassword {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            svg {
+                width: 20px;
+                height: 20px;
+                color: #666;
+            }
+
+            &:hover svg {
+                color: #333;
+            }
+        }
+    }
 }
