@@ -52,6 +52,9 @@ const FormCreateUser = ({uuid}: Props) => {
             
             if (data.Mensaje && data.Mensaje.includes("ya se encuentra en nuestro sistema")) {
                 setEmailError(data.Mensaje);
+                setTimeout(() => {
+                    setEmailError('');
+                }, 5000);
                 return true;
             }
             return false;
