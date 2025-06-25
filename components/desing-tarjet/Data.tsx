@@ -216,8 +216,8 @@ const Data = ({ userData }: Props) => {
 
         <input
           type='text'
-          placeholder='Nombre del negocio (30 caracteres)'
-          maxLength={30}
+          placeholder='Nombre del negocio (50 caracteres)'
+          maxLength={50}
           value={businessName}
           onChange={(e) => setBusinessName(e.target.value)}
           onBlur={submitData}
@@ -226,7 +226,7 @@ const Data = ({ userData }: Props) => {
         <input
           type='text'
           placeholder='Puesto en la Empresa / Negocio'
-          maxLength={30}
+          maxLength={60}
           value={workPosition}
           onChange={(e) => setWorkPosition(e.target.value)}
           onBlur={submitData}
