@@ -22,72 +22,71 @@ type Props = {
 
 const Search = ( {categories}:Props ) => {
 
-    const settings = {
-        dots: false,
-        arrows: true, 
-        infinite: true,
-        speed: 500,
-        slidesToShow: 7,
-        slidesToScroll: 7,
-        initialSlide: 0,
-        prevArrow: (
-            <div className='custom-arrow custom-prev-arrow'>
-                <BsChevronLeft />
-            </div>
-        ),
-        nextArrow: (
-            <div className='custom-arrow custom-arrow-next'> 
-                <BsChevronRight />
-            </div>
-        ),
-        responsive: [
-            {
-                breakpoint: 1700,
-                settings: {
-                    slidesToShow: 6,
-                    slidesToScroll: 6,
-                    initialSlide: 0,
-                    infinite: true,
-                    arrows: true 
-                }
-            },
-            {
-                breakpoint: 1250,
-                settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 5,
-                    initialSlide: 0,
-                    infinite: true,
-                    arrows:true
-                }
-            },
-            {
-                breakpoint: 1000,
-                settings: {
-                    initialSlide: 0,
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
-                    infinite: true,
-                    arrows:true,
-                }
-            },
-            {
-                breakpoint: 400,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    initialSlide: 0,
-                    infinite: true,
-                    arrows:true
-                }
-    }
-        ]
-    };
+const settings = {
+    dots: false,
+    arrows: true, 
+    infinite: true,
+    speed: 500,
+    slidesToShow: 7,
+    slidesToScroll: 7,
+    initialSlide: 0,
+    prevArrow: (
+      <div className='custom-arrow custom-prev-arrow'>
+        <BsChevronLeft />
+      </div>
+    ),
+    nextArrow: (
+      <div className='custom-arrow custom-arrow-next'> 
+        <BsChevronRight />
+      </div>
+    ),
+    responsive: [
+      {
+          breakpoint: 1700,
+          settings: {
+            slidesToShow: 6,
+            slidesToScroll: 6,
+            initialSlide: 0,
+            infinite: true,
+            arrows: true 
+          }
+      },
+      {
+        breakpoint: 1250,
+        settings: {
+            slidesToShow: 5,
+            slidesToScroll: 5,
+            initialSlide: 0,
+            infinite: true,
+            arrows:true
+          }
+      },
+      {
+        breakpoint: 1000,
+        settings: {
+            initialSlide: 0,
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            infinite: true,
+            arrows:true,
+          }
+      },
+      {
+      breakpoint: 400,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        initialSlide: 0,
+        infinite: true,
+        arrows:true
+        } 
+        }
+    ]};
 
     const animation = {
-    initial: {scale: 0},
-    animate: {scale: 1},
-    exti: {scale: 0}
+        initial: {scale: 0},
+        animate: {scale: 1},
+        exti: {scale: 0}
     }
 
     // *Pregunta la posición 
