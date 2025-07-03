@@ -1,7 +1,7 @@
 'use client';
 
 import { Serv, UserDataResponse } from '@/interfaces/userData-interface';
-import { BsCardImage, BsPlusLg } from 'react-icons/bs';
+import { BsCardImage, BsPlusLg, BsPlayCircle } from 'react-icons/bs';
 import { Fragment, useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -10,6 +10,7 @@ import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import EditData from '@/app/api/editData';
 import UploadImage from '../pop-ups/upload-image/UploadImage';
+import UploadVideo from '../pop-ups/upload-video/UploadVideo';
 import Image from 'next/image';
 
 interface Props {
@@ -82,16 +83,27 @@ const EditServices = ({ userData } : Props) => {
             const initialSecondServices = userData.Serv.slice(4, 14);
             const initialSecond: Record<string, SecondSerivce> = {};
             
-            initialSecondServices.forEach((service, index) => {
-                initialSecond[`service${index+9}`] = {
-                    ServNum: service.ServNum,
-                    ServDescrip: service.ServDescrip || '',
-                    ServSubTitulo: service.ServSubTitulo || '',
-                    ServImg: service.ServImg || '',
-                    ServIcono: service.ServIcono || '',
-                    ServSiteId: service.ServSiteId || 0
+            // Crear 10 bloques (service9 a service18)
+            for (let i = 0; i < 10; i++) {
+                const serviceKey = `service${i + 9}`;
+                const serviceData = initialSecondServices[i] || {
+                    ServNum: (i + 5).toString(),
+                    ServDescrip: '',
+                    ServSubTitulo: '',
+                    ServImg: '',
+                    ServIcono: '',
+                    ServSiteId: i === 9 ? 3 : 2 // service18 es especial (video)
                 };
-            });
+                
+                initialSecond[serviceKey] = {
+                    ServNum: serviceData.ServNum,
+                    ServDescrip: serviceData.ServDescrip || '',
+                    ServSubTitulo: serviceData.ServSubTitulo || '',
+                    ServImg: serviceData.ServImg || '',
+                    ServIcono: serviceData.ServIcono || '',
+                    ServSiteId: serviceData.ServSiteId || (i === 9 ? 3 : 2)
+                };
+            }
 
             setSecondServices(initialSecond);
         }
@@ -155,8 +167,9 @@ const EditServices = ({ userData } : Props) => {
         await EditData({userData, servicesForm});
     }
 
-    // *Subir imagen
+    // *Subir imagen/video
     const [openUpload, setOpenUpload] = useState<boolean>(false);
+    const [openVideoUpload, setOpenVideoUpload] = useState<boolean>(false);
     const [imageType, setImageType] = useState<string>('');
     const [serviceNumber, setServiceNumber] = useState<string>('');
 
@@ -170,6 +183,13 @@ const EditServices = ({ userData } : Props) => {
         setOpenUpload(true);
     }
 
+    const onUploadVideo = async (serviceNumber?:string) => {
+        if (serviceNumber) {
+            setServiceNumber(serviceNumber);
+        }
+        setOpenVideoUpload(true);
+    }
+
     // *Borrar contenido del bloque
     const clearInfo = (key: string) => {
         setSecondServices(prev => ({
@@ -181,6 +201,16 @@ const EditServices = ({ userData } : Props) => {
                 ServImg: ''
             }
         }))
+    }
+
+    // Función para determinar si es un video
+    const isVideoService = (key: string) => {
+        return key === 'service13';
+    }
+
+    // Función para obtener el texto del botón
+    const getButtonText = (key: string, index: number) => {
+        return key === 'service13' ? 'Subir un video corto (Max 1 min)' : `Bloque de servicio No. ${index + 1}`;
     }
 
     return ( 
@@ -218,6 +248,15 @@ const EditServices = ({ userData } : Props) => {
                 <UploadImage token={userData.TokenId} imageType={imageType} close={()=>setOpenUpload(false)} serviceNumber={serviceNumber}/>
             )}
 
+            { openVideoUpload && (
+                <UploadVideo 
+                    token={userData.TokenId} 
+                    close={() => setOpenVideoUpload(false)} 
+                    serviceNumber={serviceNumber}
+                    userData={userData}
+                />
+            )}
+
             <h3>Listado de servicios</h3>
             <p>
                 Te sugerimos uses enunciados en forma de lista que describan tus actividades o principales servicios.
@@ -246,10 +285,10 @@ const EditServices = ({ userData } : Props) => {
                         <Fragment key={key}>
                             <button 
                                 type='button' 
-                                onClick={()=>OpenService(key as keyof ServiceState)}
+                                onClick={() => OpenService(key as keyof ServiceState)}
                                 disabled={(index >= 4 && !userData.Premium) ? true : false}
                             >
-                                Bloque de servicio No. {index+1}
+                                {getButtonText(key, index)}
                                 <span><BsPlusLg /></span>
                             </button>
 
@@ -258,13 +297,33 @@ const EditServices = ({ userData } : Props) => {
                                     <motion.div className={style.ServiceContainer} {...animate}>
                                         <input 
                                             type="text" 
-                                            placeholder='Título de imagen'
+                                            placeholder={isVideoService(key) ? 'Título del video' : 'Título de imagen'}
                                             value={service.ServSubTitulo}
                                             onChange={(e)=>SecondInputChange(key, e.target.value)}
                                             onBlur={SubmitData}
                                         />
-                                        { service.ServImg 
-                                            ? (
+                                        
+                                        {/* Renderizado condicional para video o imagen */}
+                                        { isVideoService(key) ? (
+                                            // Bloque para video
+                                            service.ServImg ? (
+                                                <div className={style.VideoContainer}>
+                                                    <video 
+                                                        controls 
+                                                        className={style.VideoService}
+                                                        src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?timestamp=${Date.now()}`}
+                                                    >
+                                                        Tu navegador no soporta el elemento video.
+                                                    </video>
+                                                </div>
+                                            ) : (
+                                                <div className={style.UploadVideo}>
+                                                    <BsPlayCircle />
+                                                </div>
+                                            )
+                                        ) : (
+                                            // Bloque para imagen
+                                            service.ServImg ? (
                                                 <Image 
                                                     src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?timestamp=${Date.now()}`}
                                                     alt='Imagen de servicio personalizado'
@@ -274,15 +333,27 @@ const EditServices = ({ userData } : Props) => {
                                                     priority={false}
                                                     unoptimized
                                                 />
+                                            ) : (
+                                                <div className={style.UploadImage}>
+                                                    <BsCardImage/>
+                                                </div>
                                             )
-                                            : (<div className={style.UploadImage}><BsCardImage/></div>)
-                                        }
-                                        <button type='button' className={`btn ${style.UploadButton}`} onClick={()=>onUploadImage('SERV', (index + 5).toString())}>
-                                            Subir imagen
+                                        )}
+                                        
+                                        <button 
+                                            type='button' 
+                                            className={`btn ${style.UploadButton}`} 
+                                            onClick={() => isVideoService(key) ? 
+                                                onUploadVideo((index + 5).toString()) : 
+                                                onUploadImage('SERV', (index + 5).toString())
+                                            }
+                                        >
+                                            {isVideoService(key) ? 'Subir video' : 'Subir imagen'}
                                         </button>
+                                        
                                         <div className={style.TextAreaContent}>
                                             <textarea 
-                                                placeholder='Descripción de la foto (hasta 300 caracteres)' 
+                                                placeholder={isVideoService(key) ? 'Descripción del video (hasta 300 caracteres)' : 'Descripción de la foto (hasta 300 caracteres)'} 
                                                 maxLength={300}
                                                 value={service.ServDescrip}
                                                 onChange={(e)=>SecondTextAreaChange(key, DOMPurify.sanitize(e.target.value, {ALLOWED_TAGS: []}))}

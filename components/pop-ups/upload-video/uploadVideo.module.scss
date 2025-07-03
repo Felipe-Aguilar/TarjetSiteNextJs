@@ -1,0 +1,219 @@
+// uploadVideo.module.scss
+.UploadVideoOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.UploadVideoModal {
+    background: white;
+    border-radius: 8px;
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.UploadVideoHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    
+    h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #333;
+    }
+}
+
+.CloseButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    
+    &:hover {
+        color: #333;
+    }
+}
+
+.UploadVideoContent {
+    padding: 20px;
+}
+
+.UploadVideoArea {
+    margin-bottom: 20px;
+}
+
+.HiddenInput {
+    display: none;
+}
+
+.UploadLabel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        border-color: #007bff;
+        background-color: #f8f9fa;
+    }
+    
+    svg {
+        font-size: 3rem;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+    
+    span {
+        font-size: 1.1rem;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    
+    small {
+        color: #666;
+        font-size: 0.9rem;
+    }
+}
+
+.FileInfo {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    
+    p {
+        margin: 5px 0;
+        font-size: 0.9rem;
+        color: #555;
+    }
+}
+
+.ErrorMessage {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    border: 1px solid #f5c6cb;
+}
+
+.ProgressBar {
+    position: relative;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    height: 20px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    
+    span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.8rem;
+        color: #333;
+        z-index: 1;
+    }
+}
+
+.ProgressFill {
+    height: 100%;
+    background-color: #007bff;
+    transition: width 0.3s ease;
+}
+
+.UploadVideoActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.CancelButton {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background: white;
+    color: #666;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover:not(:disabled) {
+        background-color: #f8f9fa;
+        color: #333;
+    }
+    
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.UploadButton {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+    &:hover:not(:disabled) {
+        background-color: #0056b3;
+    }
+    
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+// Estilos adicionales para el componente principal
+.VideoContainer {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.VideoService {
+    width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.UploadVideo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    margin-bottom: 15px;
+    
+    svg {
+        font-size: 4rem;
+        color: #007bff;
+    }
+}
