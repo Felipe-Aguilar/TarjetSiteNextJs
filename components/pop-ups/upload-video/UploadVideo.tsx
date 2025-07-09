@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { BsX, BsCloudUpload, BsCheckCircle } from 'react-icons/bs';
 import { motion } from 'framer-motion';
-import style from "./UploadVideo.module.scss";
+import styles from './UploadVideo.module.scss';
 import EditData from '@/app/api/editData';
 import { UserDataResponse } from '@/interfaces/userData-interface';
 
@@ -171,27 +171,27 @@ const UploadVideo = ({ token, close, serviceNumber, userData }: Props) => {
     };
 
     return (
-        <div className={style.UploadVideoOverlay}>
-            <div className={style.UploadVideoModal}>
+        <div className={styles.UploadVideoOverlay}>
+            <div className={styles.UploadVideoModal}>
                 {!uploadSuccess ? (
-                    <motion.div className={style.UploadVideoContent} {...animate}>
-                        <div className={style.UploadVideoHeader}>
+                    <motion.div className={styles.UploadVideoContent} {...animate}>
+                        <div className={styles.UploadVideoHeader}>
                             <h3>Subir Video</h3>
-                            <button onClick={close} className={style.CloseButton}>
+                            <button onClick={close} className={styles.CloseButton}>
                                 <BsX />
                             </button>
                         </div>
 
-                        <div className={style.UploadVideoArea}>
+                        <div className={styles.UploadVideoArea}>
                             <input
                                 type="file"
                                 accept="video/*"
                                 onChange={handleFileSelect}
                                 id="video-upload"
-                                className={style.HiddenInput}
+                                className={styles.HiddenInput}
                                 disabled={isUploading}
                             />
-                            <label htmlFor="video-upload" className={style.UploadLabel}>
+                            <label htmlFor="video-upload" className={styles.UploadLabel}>
                                 <BsCloudUpload />
                                 <span>Selecciona un video</span>
                                 <small>Máximo 1 minuto y 50MB</small>
@@ -199,14 +199,14 @@ const UploadVideo = ({ token, close, serviceNumber, userData }: Props) => {
                         </div>
 
                         {selectedFile && (
-                            <div className={style.VideoPreview}>
+                            <div className={styles.VideoPreview}>
                                 <video
                                     ref={videoRef}
                                     controls
                                     src={URL.createObjectURL(selectedFile)}
-                                    className={style.VideoPlayer}
+                                    className={styles.VideoPlayer}
                                 />
-                                <div className={style.FileInfo}>
+                                <div className={styles.FileInfo}>
                                     <p><strong>Archivo:</strong> {selectedFile.name}</p>
                                     <p><strong>Tamaño:</strong> {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB</p>
                                 </div>
@@ -214,22 +214,22 @@ const UploadVideo = ({ token, close, serviceNumber, userData }: Props) => {
                         )}
 
                         {error && (
-                            <div className={style.ErrorMessage}>
+                            <div className={styles.ErrorMessage}>
                                 {error}
                             </div>
                         )}
 
-                        <div className={style.UploadVideoActions}>
+                        <div className={styles.UploadVideoActions}>
                             <button 
                                 onClick={close} 
-                                className={style.CancelButton}
+                                className={styles.CancelButton}
                                 disabled={isUploading}
                             >
                                 Cancelar
                             </button>
                             <button 
                                 onClick={handleUpload} 
-                                className={style.UploadButton}
+                                className={styles.UploadButton}
                                 disabled={!selectedFile || isUploading}
                             >
                                 {isUploading ? 'Subiendo...' : 'Subir Video'}
@@ -237,7 +237,7 @@ const UploadVideo = ({ token, close, serviceNumber, userData }: Props) => {
                         </div>
                     </motion.div>
                 ) : (
-                    <motion.div className={style.SuccessMessage} {...animate}>
+                    <motion.div className={styles.SuccessMessage} {...animate}>
                         <h5>El video se subió correctamente</h5>
                         <BsCheckCircle />
                         <p>La página se recargará automáticamente...</p>
