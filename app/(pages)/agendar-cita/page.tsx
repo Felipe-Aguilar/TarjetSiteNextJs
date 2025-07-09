@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { getServerSession } from "next-auth";
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import styles from './page.module.scss';
