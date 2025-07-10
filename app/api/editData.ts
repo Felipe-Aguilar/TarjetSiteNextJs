@@ -112,6 +112,7 @@ export default async function EditData ({ userData, dataForm, contactForm, socia
                     "PublicPriva": contactForm?.PublicPriva ?? userData.PublicPriva,
                     "PermitirCalif": contactForm?.PermitirCalif ?? userData.PermitirCalif,
                     "PermitirComments": contactForm?.PermitirComments ?? userData.PermitirComments,
+                    "Premium": userData.Premium,
                     "Facebook": socialForm?.Facebook ?? userData.Facebook,
                     "Google": socialForm?.Google ?? userData.Google,
                     "Instagram": socialForm?.Instagram ?? userData.Instagram,

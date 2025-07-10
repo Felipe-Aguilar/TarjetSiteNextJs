@@ -10,6 +10,7 @@ import ButtonsSite from './ButtonsSite';
 import ServicesSite from './ServicesSite';
 import SocialNetworsSite from './SocialNetworksSite';
 import PopupSelector from '../pop-ups/PopupSelector';
+import Image from 'next/image';
 
 interface Props {
     userData: UserDataResponse & {
@@ -23,6 +24,7 @@ interface Props {
 
 const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     const [showPopup, setShowPopup] = useState<boolean>(false);
+    const [showStickyImage, setShowStickyImage] = useState<boolean>(true);
 
     // Extraer SiteGoogle directamente de userData (ya viene de la API)
     const siteGoogle = userData.SiteGoogle || '';
@@ -33,7 +35,7 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                 setShowPopup(true);
             }, 3500);
         }
-    }, [userData.MostrarPopup]);
+    }, [userData.MostrarPopup]);    
 
     return ( 
         <div className="greenWhite">
@@ -66,6 +68,61 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                             googleUrl={siteGoogle} // Usar el valor extraído de la API
                             onClose={() => setShowPopup(false)}
                         />
+                    )}
+
+                    {/* Imagen sticky con botón de cerrar */}
+                    {((userData.AppP.toLowerCase()) == "castro" || (userData.AppM.toLowerCase()) == "castro") && showStickyImage && (
+                        <div style={{
+                            position: 'fixed',
+                            bottom: '20px',
+                            right: '20px',
+                            zIndex: 1000,
+                            width: '200px',
+                            height: 'auto',
+                            borderRadius: '8px',
+                            overflow: 'hidden',
+                            boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+                        }}>
+                            <div style={{
+                                position: 'relative',
+                                width: '100%',
+                                height: '100%'
+                            }}>
+                                <Image 
+                                    src="/images/AsistVirTarjet_Demo_1.jpg" 
+                                    alt="Demo" 
+                                    width={200}
+                                    height={300}
+                                    style={{
+                                        objectFit: 'cover',
+                                        width: '100%',
+                                        height: 'auto'
+                                    }}
+                                />
+                                <button 
+                                    onClick={() => setShowStickyImage(false)}
+                                    style={{
+                                        position: 'absolute',
+                                        top: '10px',
+                                        right: '10px',
+                                        background: 'rgba(0,0,0,0.5)',
+                                        color: 'white',
+                                        border: 'none',
+                                        borderRadius: '50%',
+                                        width: '30px',
+                                        height: '30px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        cursor: 'pointer',
+                                        fontSize: '16px',
+                                        fontWeight: 'bold'
+                                    }}
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        </div>
                     )}
                 </Fragment>
             </div>
