@@ -52,6 +52,7 @@ const getData = async (token: string) => {
     const siteResponse = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${userId.usuId}`);
     const siteData = await siteResponse.json();
     
+    
     // Combinar los datos con valores por defecto
     return {
         ...basicData,
@@ -60,6 +61,7 @@ const getData = async (token: string) => {
         ImagenPopup: siteData.SDTSite?.ImagenPopup || '',
         SiteGoogle: siteData.SDTSite?.SiteGoogle || '' // Extraer SiteGoogle de la API
     };
+
 }
 
 const SitePage = async ({params} : Props) => {

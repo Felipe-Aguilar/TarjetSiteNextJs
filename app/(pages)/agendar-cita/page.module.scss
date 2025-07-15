@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.title {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+}
+
+.form {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #34495e;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+
+    &:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+  }
+}
+
+.submitButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Poppins', sans-serif;
+
+  &:hover {
+    background-color: #2980b9;
+  }
+}
+
+.appointmentsList {
+  h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+}
+
+.noAppointments {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.appointmentItem {
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  .appointmentInfo {
+    margin-bottom: 1rem;
+
+    h3 {
+      margin: 0 0 0.5rem 0;
+      color: #2c3e50;
+    }
+
+    p {
+      margin: 0.25rem 0;
+      color: #34495e;
+    }
+  }
+
+  .confirmationStatus {
+    margin-top: 0.5rem;
+    font-weight: 600;
+
+    .confirmed {
+      color: #27ae60;
+    }
+
+    .notConfirmed {
+      color: #e74c3c;
+    }
+  }
+
+  .appointmentActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+.confirmButton {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  font-family: 'Poppins', sans-serif;
+
+  &:hover {
+    background-color: #219653;
+  }
+}
+
+.unconfirmButton {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  font-family: 'Poppins', sans-serif;
+
+  &:hover {
+    background-color: #e67e22;
+  }
+}
+
+.calendarButton {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+
+  &:hover {
+    background-color: #3367d6;
+  }
+}
+
+.editButton {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  font-family: 'Poppins', sans-serif;
+
+  &:hover {
+    background-color: #e67e22;
+  }
+}
+
+.deleteButton {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+
+  &:hover {
+    background-color: #c0392b;
+  }
+}
+
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3498db;
+  font-family: 'Poppins', sans-serif;
+}
+
+.userInfo {
+  background-color: #f0f8ff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border: 1px solid #d0e3ff;
+  font-size: 1.1rem;
+  
+  strong {
+    color: #2c3e50;
+    font-weight: 600;
+  }
+}
