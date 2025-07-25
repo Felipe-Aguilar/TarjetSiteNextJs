@@ -301,10 +301,15 @@
 
             a,button{
                 padding: 15px;
-                border-radius: 20px;
+                border-radius: 21px;
                 background: #e8ecf1;
                 width: fit-content;
-                border: transparent;
+                border: 1px #c4c8cc solid;
+
+                @media (width <= 700px) {
+                        background: #dfe8f3;
+                        border: transparent;
+                    }
 
                 svg{
                     font-size: 2.5rem;
@@ -356,6 +361,11 @@
                     top: 17px;
                 }
             }
+
+            .Spotify{
+                color: #1DB954;
+            }
+
             .Twitter{
                 color:  #1DA1F2;
             }
@@ -367,6 +377,9 @@
             }
             .Telegram{
                 color:  #0088cc;
+            }
+            .Whatsapp{
+                color:  #25D366;
             }
 
         }

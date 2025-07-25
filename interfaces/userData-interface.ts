@@ -69,8 +69,14 @@ export interface UserDataResponse {
     Serv:             Serv[];
     BotonesAdicionales: BotonesAdicionales[];
     SiteGoogle?:    string;
-
+    ListRedesSociales?: RedSocial[];
     ListDirecciones?: Direccion[];
+}
+
+export interface RedSocial {
+    RedSocialId: string;  // Ejemplo: "INSTA", "GOOG", etc.
+    RedSocialDesc: string; // Ejemplo: "Instagram", "Google", etc.
+    RedSocialUrl: string; // URL de la red social
 }
 
 export interface Direccion {

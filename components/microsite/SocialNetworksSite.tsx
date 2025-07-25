@@ -1,6 +1,6 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
 import style from './site.module.scss';
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTelegramPlane, FaTiktok, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaSpotify, FaTelegramPlane, FaTiktok, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 import { FaXTwitter  } from "react-icons/fa6";
 import { Fragment } from 'react';
 import Image from 'next/image';
@@ -11,6 +11,22 @@ interface Props {
 }
 
 const SocialNetworsSite = ({userData, tokenServer} :Props) => {
+    // Función para obtener la URL de una red social por su ID
+    const getSocialUrl = (socialId: string) => {
+        return userData.ListRedesSociales?.find(red => red.RedSocialId === socialId)?.RedSocialUrl || '';
+    };
+
+    // URLs de las redes sociales
+    const instagramUrl = getSocialUrl('INSTA') || userData.Instagram || '';
+    const facebookUrl = getSocialUrl('FACEB') || userData.Facebook || ''; 
+    const tiktokUrl = getSocialUrl('TIKTO') || userData.Tiktok || '';
+    const twitterUrl = getSocialUrl('TWIT') || userData.Twitter || '';
+    const youtubeUrl = getSocialUrl('YOUT') || userData.Youtube || '';
+    const linkedinUrl = getSocialUrl('LINK') || userData.Linkedin || '';
+    const telegramUrl = getSocialUrl('TELE') || userData.Telegram || '';
+    const spotifyUrl = getSocialUrl('SPOT');
+    const whatsappUrl = getSocialUrl('WHAT');
+
     return ( 
         <div className={style.Social} id='SocialSection'>
             { userData && (
@@ -18,42 +34,59 @@ const SocialNetworsSite = ({userData, tokenServer} :Props) => {
                     <h4>Mis redes sociales</h4>
 
                     <div className={style.SocialButtons}>
-                        <a href={userData.Facebook} className={`${style.Facebook} ${!userData.Facebook ? style.Disabled : ''}`}>
+                        {/* Facebook */}
+                        <a href={facebookUrl} className={`${style.Facebook} ${!facebookUrl ? style.Disabled : ''}`} target="_blank" rel="noopener noreferrer">
                             <FaFacebookF />
                         </a>
-
-                        <a href={userData.Instagram} className={`${style.Instagram} ${!userData.Instagram ? style.Disabled : ''}`}>
+                        
+                        <a href={instagramUrl} className={`${style.Instagram} ${!instagramUrl ? style.Disabled : ''}`} target="_blank" rel="noopener noreferrer">
                             <FaInstagram />
                         </a>
 
-                        <a href={userData.Tiktok} className={`${style.Tiktok} ${!userData.Tiktok ? style.Disabled : ''}`}>
+                        {/* Tiktok */}
+                        <a href={tiktokUrl} className={`${style.Tiktok} ${!tiktokUrl ? style.Disabled : ''}`} target="_blank" rel="noopener noreferrer">
                             <FaTiktok />
                             <FaTiktok className={style.Blue}/>
                             <FaTiktok className={style.Red}/>
                         </a>
 
-                        <a href={userData.Twitter} className={`${style.Twitter} ${!userData.Twitter ? style.Disabled : ''}`}>
+                        {/* Twitter/X */}
+                        <a href={twitterUrl} className={`${style.Twitter} ${!twitterUrl ? style.Disabled : ''}`} target="_blank" rel="noopener noreferrer">
                             <FaXTwitter />
                         </a>
 
-                        <a href={userData.Youtube} className={`${style.Youtube} ${!userData.Youtube ? style.Disabled : ''}`}>
+                        {/* Youtube */}
+                        <a href={youtubeUrl} className={`${style.Youtube} ${!youtubeUrl ? style.Disabled : ''}`} target="_blank" rel="noopener noreferrer">
                             <FaYoutube />
                         </a>
 
-                        <a href={userData.Linkedin} className={`${style.Linkedin} ${!userData.Linkedin ? style.Disabled : ''}`}>
+                        {/* Linkedin */}
+                        <a href={linkedinUrl} className={`${style.Linkedin} ${!linkedinUrl ? style.Disabled : ''}`} target="_blank" rel="noopener noreferrer">
                             <FaLinkedinIn />
                         </a>
 
-                        <a href={userData.Telegram} className={`${style.Telegram} ${!userData.Telegram ? style.Disabled : ''}`}>
+                        {/* Telegram */}
+                        <a href={telegramUrl} className={`${style.Telegram} ${!telegramUrl ? style.Disabled : ''}`} target="_blank" rel="noopener noreferrer">
                             <FaTelegramPlane />
                         </a>
+
+                        {/* Spotify */}
+                        <a href={spotifyUrl} className={`${style.Spotify} ${!spotifyUrl ? style.Disabled : ''}`} target="_blank" rel="noopener noreferrer">
+                            <FaSpotify />
+                        </a>
+
+                        {/* Whatsapp */}
+                        <a href={whatsappUrl} className={`${style.Whatsapp} ${!whatsappUrl ? style.Disabled : ''}`} target="_blank" rel="noopener noreferrer">
+                            <FaWhatsapp />
+                        </a>
                     </div>
+
                     <hr/>
                     <div className={style.Username}>
                         <h5>Gracias por visitar mi Tarjeta</h5>
                         <p>Usuario: {userData.Alias}</p>
                     </div>
-
+                    
                     { (!tokenServer && !userData.Premium) && (
                         <Fragment>
                             <div className={style.Info}>
