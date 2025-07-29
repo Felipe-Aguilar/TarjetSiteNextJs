@@ -120,14 +120,14 @@ const SocialNetworks = ({ userData }: Props) => {
     const onSubmitData = async () => {
         // Reconstruir el arreglo con los valores actuales (incluyendo vacíos)
         const updatedSocialNetworks = [
-            { RedSocialId: 'INSTA', RedSocialDesc: 'Instagram', RedSocialUrl: instagram ?? '' },
-            { RedSocialId: 'GOOG', RedSocialDesc: 'Google', RedSocialUrl: google ?? '' },
-            { RedSocialId: 'FACE', RedSocialDesc: 'Facebook', RedSocialUrl: facebook ?? '' },
-            { RedSocialId: 'TIKT', RedSocialDesc: 'TikTok', RedSocialUrl: tiktok ?? '' },
-            { RedSocialId: 'TWIT', RedSocialDesc: 'Twitter', RedSocialUrl: twitter ?? '' },
-            { RedSocialId: 'YOUT', RedSocialDesc: 'YouTube', RedSocialUrl: youtube ?? '' },
-            { RedSocialId: 'LINK', RedSocialDesc: 'LinkedIn', RedSocialUrl: linkedin ?? '' },
-            { RedSocialId: 'TELE', RedSocialDesc: 'Telegram', RedSocialUrl: telegram ?? '' },
+            { RedSocialId: 'INSTA', RedSocialDesc: 'Instagram', RedSocialUrl: instagram ?? ' ' },
+            { RedSocialId: 'GOOG', RedSocialDesc: 'Google', RedSocialUrl: google ?? ' ' },
+            { RedSocialId: 'FACEB', RedSocialDesc: 'Facebook', RedSocialUrl: facebook ?? ' ' },
+            { RedSocialId: 'TIKT', RedSocialDesc: 'TikTok', RedSocialUrl: tiktok ?? ' ' },
+            { RedSocialId: 'TWIT', RedSocialDesc: 'Twitter', RedSocialUrl: twitter ?? ' ' },
+            { RedSocialId: 'YOUT', RedSocialDesc: 'YouTube', RedSocialUrl: youtube ?? ' ' },
+            { RedSocialId: 'LINK', RedSocialDesc: 'LinkedIn', RedSocialUrl: linkedin ?? ' ' },
+            { RedSocialId: 'TELE', RedSocialDesc: 'Telegram', RedSocialUrl: telegram ?? ' ' },
             { RedSocialId: 'SPOT', RedSocialDesc: 'Spotify', RedSocialUrl: spotify ?? '' },
             { RedSocialId: 'WAPP', RedSocialDesc: 'WhatsApp Group', RedSocialUrl: whatsappGroup ?? '' },
         ].filter(net => net.RedSocialUrl);
