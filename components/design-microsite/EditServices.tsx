@@ -43,13 +43,12 @@ interface SecondSerivce {
     ServImg: string;
     ServIcono: string;
     ServSiteId: number;
+    isVideo?: boolean;
 }
 
 const EditServices = ({ userData } : Props) => {
-    // Estado para los servicios
     const [services, setServices] = useState<Serv[]>(userData.Serv || []);
     
-    // *Primeros 4 (8) servicios
     const [firstServices, setFirstServices] = useState({
         service1: '',
         service2: '',
@@ -61,13 +60,10 @@ const EditServices = ({ userData } : Props) => {
         service8: '',
     });
 
-    // *Bloques de 4 (8) servicios
     const [secondServices, setSecondServices] = useState<Record<string, SecondSerivce>>({});
 
-    // Cargar los servicios cuando el componente se monta o cambian los datos del usuario
     useEffect(() => {
         if (userData.Serv && userData.Serv.length > 0) {
-            // Actualizar firstServices
             setFirstServices({
                 service1: userData.Serv[0]?.ServDescrip || '',
                 service2: userData.Serv[1]?.ServDescrip || '',
@@ -79,11 +75,9 @@ const EditServices = ({ userData } : Props) => {
                 service8: userData.Serv[17]?.ServDescrip || '',
             });
 
-            // Actualizar secondServices
             const initialSecondServices = userData.Serv.slice(4, 14);
             const initialSecond: Record<string, SecondSerivce> = {};
             
-            // Crear 10 bloques (service9 a service18)
             for (let i = 0; i < 10; i++) {
                 const serviceKey = `service${i + 9}`;
                 const serviceData = initialSecondServices[i] || {
@@ -92,7 +86,7 @@ const EditServices = ({ userData } : Props) => {
                     ServSubTitulo: '',
                     ServImg: '',
                     ServIcono: '',
-                    ServSiteId: i === 9 ? 3 : 2 // service18 es especial (video)
+                    ServSiteId: i === 5 ? 3 : 2
                 };
                 
                 initialSecond[serviceKey] = {
@@ -101,7 +95,8 @@ const EditServices = ({ userData } : Props) => {
                     ServSubTitulo: serviceData.ServSubTitulo || '',
                     ServImg: serviceData.ServImg || '',
                     ServIcono: serviceData.ServIcono || '',
-                    ServSiteId: serviceData.ServSiteId || (i === 9 ? 3 : 2)
+                    ServSiteId: serviceData.ServSiteId || (i === 5 ? 3 : 2),
+                    isVideo: serviceData.ServSiteId === 3
                 };
             }
 
@@ -109,7 +104,6 @@ const EditServices = ({ userData } : Props) => {
         }
     }, [userData.Serv]);
 
-    // *Abrir servicios de bloque
     const initialOpenServices: ServiceState = {
         service9: false,
         service10: false,
@@ -157,7 +151,6 @@ const EditServices = ({ userData } : Props) => {
         }));
     }
 
-    // *Subir Datos al formulario y guardar
     const SubmitData = async () => {
         const servicesForm = {
             "FirstServices": firstServices,
@@ -167,7 +160,6 @@ const EditServices = ({ userData } : Props) => {
         await EditData({userData, servicesForm});
     }
 
-    // *Subir imagen/video
     const [openUpload, setOpenUpload] = useState<boolean>(false);
     const [openVideoUpload, setOpenVideoUpload] = useState<boolean>(false);
     const [imageType, setImageType] = useState<string>('');
@@ -190,7 +182,6 @@ const EditServices = ({ userData } : Props) => {
         setOpenVideoUpload(true);
     }
 
-    // *Borrar contenido del bloque
     const clearInfo = (key: string) => {
         setSecondServices(prev => ({
             ...prev,
@@ -203,14 +194,24 @@ const EditServices = ({ userData } : Props) => {
         }))
     }
 
-    // Función para determinar si es un video
     const isVideoService = (key: string) => {
-        return key === 'service13';
+        return secondServices[key]?.isVideo || false;
     }
 
-    // Función para obtener el texto del botón
+    const toggleContentType = (key: string) => {
+        setSecondServices(prev => ({
+            ...prev,
+            [key]: {
+                ...prev[key],
+                ServSiteId: prev[key].ServSiteId === 2 ? 3 : 2,
+                isVideo: !prev[key].isVideo,
+                ServImg: ''
+            }
+        }));
+    };
+
     const getButtonText = (key: string, index: number) => {
-        return key === 'service13' ? 'Subir un video corto (Max 1 min)' : `Bloque de servicio No. ${index + 1}`;
+        return key === 'service14' ? 'Bloque de video/imagen' : `Bloque de servicio No. ${index + 1}`;
     }
 
     return ( 
@@ -295,6 +296,29 @@ const EditServices = ({ userData } : Props) => {
                             <AnimatePresence>
                                 { openServices[key as keyof ServiceState] && (
                                     <motion.div className={style.ServiceContainer} {...animate}>
+                                        {key === 'service14' && (
+                                            <div className={style.ContentTypeSelector}>
+                                                <button
+                                                    type="button"
+                                                    className={`${style.ContentTypeButton} ${!isVideoService(key) ? style.Active : ''}`}
+                                                    onClick={() => {
+                                                        if (isVideoService(key)) toggleContentType(key);
+                                                    }}
+                                                >
+                                                    Imagen
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className={`${style.ContentTypeButton} ${isVideoService(key) ? style.Active : ''}`}
+                                                    onClick={() => {
+                                                        if (!isVideoService(key)) toggleContentType(key);
+                                                    }}
+                                                >
+                                                    Video
+                                                </button>
+                                            </div>
+                                        )}
+                                        
                                         <input 
                                             type="text" 
                                             placeholder={isVideoService(key) ? 'Título del video' : 'Título de imagen'}
@@ -303,9 +327,7 @@ const EditServices = ({ userData } : Props) => {
                                             onBlur={SubmitData}
                                         />
                                         
-                                        {/* Renderizado condicional para video o imagen */}
                                         { isVideoService(key) ? (
-                                            // Bloque para video
                                             service.ServImg ? (
                                                 <div className={style.VideoContainer}>
                                                     <video 
@@ -322,7 +344,6 @@ const EditServices = ({ userData } : Props) => {
                                                 </div>
                                             )
                                         ) : (
-                                            // Bloque para imagen
                                             service.ServImg ? (
                                                 <Image 
                                                     src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?timestamp=${Date.now()}`}

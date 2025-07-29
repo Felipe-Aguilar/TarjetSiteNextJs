@@ -76,6 +76,7 @@ interface Props {
                 ServImg: string;
                 ServIcono: string;
                 ServSiteId: number;
+                isVideo?: boolean;
             };
         };
     };
@@ -256,11 +257,11 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         },
                         {
                             "ServNum": "14",
-                            "ServDescrip": servicesForm ? servicesForm.SecondServices.service18.ServDescrip : userData.Serv ? userData.Serv![13].ServDescrip : '',
-                            "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service18.ServSubTitulo : userData.Serv ? userData.Serv![13].ServSubTitulo : '',
-                            "ServImg": servicesForm ? servicesForm.SecondServices.service18.ServImg : userData.Serv ? userData.Serv![13].ServImg : '',
+                            "ServDescrip": servicesForm ? servicesForm.SecondServices.service14.ServDescrip : userData.Serv ? userData.Serv![9].ServDescrip : '',
+                            "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service14.ServSubTitulo : userData.Serv ? userData.Serv![9].ServSubTitulo : '',
+                            "ServImg": servicesForm ? servicesForm.SecondServices.service14.ServImg : userData.Serv ? userData.Serv![9].ServImg : '',
                             "ServIcono": "",
-                            "ServSiteId": 3
+                            "ServSiteId": servicesForm ? servicesForm.SecondServices.service14.ServSiteId : userData.Serv ? userData.Serv![9].ServSiteId : 2
                         },
                         {
                             "ServNum": "15",
