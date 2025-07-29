@@ -123,13 +123,13 @@ const SocialNetworks = ({ userData }: Props) => {
             { RedSocialId: 'INSTA', RedSocialDesc: 'Instagram', RedSocialUrl: instagram ?? ' ' },
             { RedSocialId: 'GOOG', RedSocialDesc: 'Google', RedSocialUrl: google ?? ' ' },
             { RedSocialId: 'FACEB', RedSocialDesc: 'Facebook', RedSocialUrl: facebook ?? ' ' },
-            { RedSocialId: 'TIKT', RedSocialDesc: 'TikTok', RedSocialUrl: tiktok ?? ' ' },
+            { RedSocialId: 'TIKTO', RedSocialDesc: 'TikTok', RedSocialUrl: tiktok ?? ' ' },
             { RedSocialId: 'TWIT', RedSocialDesc: 'Twitter', RedSocialUrl: twitter ?? ' ' },
             { RedSocialId: 'YOUT', RedSocialDesc: 'YouTube', RedSocialUrl: youtube ?? ' ' },
             { RedSocialId: 'LINK', RedSocialDesc: 'LinkedIn', RedSocialUrl: linkedin ?? ' ' },
             { RedSocialId: 'TELE', RedSocialDesc: 'Telegram', RedSocialUrl: telegram ?? ' ' },
             { RedSocialId: 'SPOT', RedSocialDesc: 'Spotify', RedSocialUrl: spotify ?? '' },
-            { RedSocialId: 'WAPP', RedSocialDesc: 'WhatsApp Group', RedSocialUrl: whatsappGroup ?? '' },
+            { RedSocialId: 'WHAT', RedSocialDesc: 'WhatsApp Group', RedSocialUrl: whatsappGroup ?? '' },
         ].filter(net => net.RedSocialUrl);
 
         // Preparar el objeto para enviar
