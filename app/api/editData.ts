@@ -51,6 +51,11 @@ interface Props {
         "Telegram": string,
         "Linkedin": string,
         "Google": string,
+        "ListRedesSociales"?: Array<{
+            RedSocialId: string;
+            RedSocialDesc: string;
+            RedSocialUrl: string;
+        }>
     },
     servicesForm?: {
         "FirstServices": {
@@ -76,66 +81,74 @@ interface Props {
     };
 }
 
-export default async function EditData ({ userData, dataForm, contactForm, socialForm, servicesForm }: Props) {
+export default async function EditData({ userData, dataForm, contactForm, socialForm, servicesForm }: Props) {
+    console.log("userData recibido en EditData:", userData); // <--- AGREGAR ESTO
+    console.log("socialForm recibido en EditData:", socialForm); // <--- AGREGAR ESTO
+    let listRedesSociales = socialForm?.ListRedesSociales || [];
+    console.log("listRedesSociales final antes de enviar:", listRedesSociales); // <--- AGREGAR ESTO
+
     const response = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizaUsu', {
         method: 'POST',
         mode: 'cors',
         body: JSON.stringify({
             "usuId": userData.UUID,
-                "ListUsuario": {
-                    "UUID": userData.UUID,
-                    "TokenId": userData.TokenId,
-                    "EmpleadoId": userData.EmpleadoId,
-                    "Alias": dataForm?.Alias ?? userData.Alias,
-                    "Nom": dataForm?.Nom ?? userData.Nom,
-                    "AppP": dataForm?.AppP ?? userData.AppP,
-                    "AppM": dataForm?.AppM ?? userData.AppM,
-                    "Cargo": dataForm?.Cargo ?? userData.Cargo,
-                    "Titulo": dataForm?.Titulo ?? userData.Titulo,
-                    "Lev1Id": dataForm?.Lev1Id ?? userData.Lev1Id,
-                    "Lev2Id": dataForm?.Lev2Id ?? userData.Lev2Id,
-                    "Lev3Id": dataForm?.Lev3Id ?? userData.Lev3Id,
-                    "NomNegocio": dataForm?.NomNegocio ?? userData.NomNegocio,
-                    "ImgFoto": userData.ImgFoto,
-                    "Telefono1": contactForm?.Telefono1 ?? userData.Telefono1,
-                    "Telefono2": contactForm?.Telefono2 ?? userData.Telefono2,
-                    "VerUbicacion": contactForm?.VerUbicacion ?? userData.VerUbicacion,
-                    "Mail": contactForm?.Mail ?? userData.Mail,
-                    "Web": contactForm?.Web ?? userData.Web,
-                    "Calle": contactForm?.Calle ?? userData.Calle,
-                    "NumExt": contactForm?.NumExt ?? userData.NumExt,
-                    "CodP": contactForm?.CodP ?? userData.CodP,
-                    "Colonia": contactForm?.Colonia ?? userData.Colonia,
-                    "Municip": contactForm?.Municip ?? userData.Municip,
-                    "MapsGeoloc": contactForm?.MapsGeoloc ?? userData.MapsGeoloc,
-                    "Estado": contactForm?.Estado ?? userData.Estado,
-                    "PublicPriva": contactForm?.PublicPriva ?? userData.PublicPriva,
-                    "PermitirCalif": contactForm?.PermitirCalif ?? userData.PermitirCalif,
-                    "PermitirComments": contactForm?.PermitirComments ?? userData.PermitirComments,
-                    "Premium": userData.Premium,
-                    "Facebook": socialForm?.Facebook ?? userData.Facebook,
-                    "Google": socialForm?.Google ?? userData.Google,
-                    "Instagram": socialForm?.Instagram ?? userData.Instagram,
-                    "Linkedin": socialForm?.Linkedin ?? userData.Linkedin,
-                    "Tiktok": socialForm?.Tiktok ?? userData.Tiktok,
-                    "Twitter": socialForm?.Twitter ?? userData.Twitter,
-                    "Youtube": socialForm?.Youtube ?? userData.Youtube,
-                    "Telegram": socialForm?.Telegram ?? userData.Telegram,
-                    "RegistroTarjet": true,
-                    "ImgHeader": userData.ImgHeader,
-                    "ImgTarFrente": userData.ImgTarFrente,
-                    "RangoLocal": contactForm?.RangoLocal ?? userData.RangoLocal,
-                    // Array de direcciones
-                    "ListDirecciones": contactForm?.ListDirecciones ?? userData.ListDirecciones ?? [{
-                        "DirId": "1",
-                        "DirCalle": contactForm?.Calle ?? userData.Calle,
-                        "DirNumExt": contactForm?.NumExt ?? userData.NumExt,
-                        "DirCodP": contactForm?.CodP ?? userData.CodP,
-                        "DirCol": contactForm?.Colonia ?? userData.Colonia,
-                        "DirMunicip": contactForm?.Municip ?? userData.Municip,
-                        "DirEstado": contactForm?.Estado ?? userData.Estado,
-                        "DirMapsGeoloc": contactForm?.MapsGeoloc ?? userData.MapsGeoloc
-                    }],
+            "ListUsuario": {
+                "UUID": userData.UUID,
+                "TokenId": userData.TokenId,
+                "EmpleadoId": userData.EmpleadoId,
+                "Alias": dataForm?.Alias ?? userData.Alias,
+                "Nom": dataForm?.Nom ?? userData.Nom,
+                "AppP": dataForm?.AppP ?? userData.AppP,
+                "AppM": dataForm?.AppM ?? userData.AppM,
+                "Cargo": dataForm?.Cargo ?? userData.Cargo,
+                "Titulo": dataForm?.Titulo ?? userData.Titulo,
+                "Lev1Id": dataForm?.Lev1Id ?? userData.Lev1Id,
+                "Lev2Id": dataForm?.Lev2Id ?? userData.Lev2Id,
+                "Lev3Id": dataForm?.Lev3Id ?? userData.Lev3Id,
+                "NomNegocio": dataForm?.NomNegocio ?? userData.NomNegocio,
+                "ImgFoto": userData.ImgFoto,
+                "Telefono1": contactForm?.Telefono1 ?? userData.Telefono1,
+                "Telefono2": contactForm?.Telefono2 ?? userData.Telefono2,
+                "VerUbicacion": contactForm?.VerUbicacion ?? userData.VerUbicacion,
+                "Mail": contactForm?.Mail ?? userData.Mail,
+                "Web": contactForm?.Web ?? userData.Web,
+                "Calle": contactForm?.Calle ?? userData.Calle,
+                "NumExt": contactForm?.NumExt ?? userData.NumExt,
+                "CodP": contactForm?.CodP ?? userData.CodP,
+                "Colonia": contactForm?.Colonia ?? userData.Colonia,
+                "Municip": contactForm?.Municip ?? userData.Municip,
+                "MapsGeoloc": contactForm?.MapsGeoloc ?? userData.MapsGeoloc,
+                "Estado": contactForm?.Estado ?? userData.Estado,
+                "PublicPriva": contactForm?.PublicPriva ?? userData.PublicPriva,
+                "PermitirCalif": contactForm?.PermitirCalif ?? userData.PermitirCalif,
+                "PermitirComments": contactForm?.PermitirComments ?? userData.PermitirComments,
+                "Premium": userData.Premium,
+                // Mantener propiedades individuales para compatibilidad
+                "Facebook": socialForm?.Facebook ?? userData.Facebook,
+                "Google": socialForm?.Google ?? userData.Google,
+                "Instagram": socialForm?.Instagram ?? userData.Instagram,
+                "Linkedin": socialForm?.Linkedin ?? userData.Linkedin,
+                "Tiktok": socialForm?.Tiktok ?? userData.Tiktok,
+                "Twitter": socialForm?.Twitter ?? userData.Twitter,
+                "Youtube": socialForm?.Youtube ?? userData.Youtube,
+                "Telegram": socialForm?.Telegram ?? userData.Telegram,
+                // Incluir el nuevo formato de redes sociales
+                "ListRedesSociales": listRedesSociales,
+                "RegistroTarjet": true,
+                "ImgHeader": userData.ImgHeader,
+                "ImgTarFrente": userData.ImgTarFrente,
+                "RangoLocal": contactForm?.RangoLocal ?? userData.RangoLocal,
+                // Array de direcciones
+                "ListDirecciones": contactForm?.ListDirecciones ?? userData.ListDirecciones ?? [{
+                    "DirId": "1",
+                    "DirCalle": contactForm?.Calle ?? userData.Calle,
+                    "DirNumExt": contactForm?.NumExt ?? userData.NumExt,
+                    "DirCodP": contactForm?.CodP ?? userData.CodP,
+                    "DirCol": contactForm?.Colonia ?? userData.Colonia,
+                    "DirMunicip": contactForm?.Municip ?? userData.Municip,
+                    "DirEstado": contactForm?.Estado ?? userData.Estado,
+                    "DirMapsGeoloc": contactForm?.MapsGeoloc ?? userData.MapsGeoloc
+                }],
                     "Serv": [
                         {
                             "ServNum": "1",

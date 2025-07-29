@@ -17,15 +17,15 @@ const SocialNetworsSite = ({userData, tokenServer} :Props) => {
     };
 
     // URLs de las redes sociales
-    const instagramUrl = getSocialUrl('INSTA') || userData.Instagram || '';
-    const facebookUrl = getSocialUrl('FACEB') || userData.Facebook || ''; 
-    const tiktokUrl = getSocialUrl('TIKTO') || userData.Tiktok || '';
-    const twitterUrl = getSocialUrl('TWIT') || userData.Twitter || '';
-    const youtubeUrl = getSocialUrl('YOUT') || userData.Youtube || '';
-    const linkedinUrl = getSocialUrl('LINK') || userData.Linkedin || '';
-    const telegramUrl = getSocialUrl('TELE') || userData.Telegram || '';
-    const spotifyUrl = getSocialUrl('SPOT');
-    const whatsappUrl = getSocialUrl('WHAT');
+    const instagramUrl = getSocialUrl('INSTA').trim()   || '';
+    const facebookUrl = getSocialUrl('FACEB').trim()  || ''; 
+    const tiktokUrl = getSocialUrl('TIKTO').trim()  || '';
+    const twitterUrl = getSocialUrl('TWIT').trim()  || '';
+    const youtubeUrl = getSocialUrl('YOUT').trim()  || '';
+    const linkedinUrl = getSocialUrl('LINK').trim()  || '';
+    const telegramUrl = getSocialUrl('TELE').trim()  || '';
+    const spotifyUrl = getSocialUrl('SPOT').trim() || '';
+    const whatsappUrl = getSocialUrl('WHAT').trim() ;
 
     return ( 
         <div className={style.Social} id='SocialSection'>
