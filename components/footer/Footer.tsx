@@ -2,7 +2,6 @@
 import { BsFacebook, BsInstagram } from 'react-icons/bs';
 import style from './footer.module.scss';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'; // Importa usePathname
 
 const navLinks = [
     {path: '/aviso-de-privacidad', name: 'Aviso de privacidad'},
@@ -11,8 +10,7 @@ const navLinks = [
 ]
 
 const Footer = () => {
-    const pathname = usePathname();
-    const showTarjetero = pathname?.includes('/st/');
+   
     
     return ( 
         <footer className={style.Footer}>            
@@ -32,10 +30,8 @@ const Footer = () => {
             </div>
 
             <nav>
-                {/* Botón "Mi tarjetero" condicional */}
-                {showTarjetero && (
-                    <Link href="/login" key="tarjetero">Mi tarjetero</Link>
-                )}
+                <Link href="/login" key="tarjetero">Mi tarjetero</Link>
+
                 {navLinks.map((link)=>(
                     <Link href={link.path} key={link.path}>
                         {link.name}
