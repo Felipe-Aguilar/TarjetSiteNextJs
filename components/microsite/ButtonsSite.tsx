@@ -80,9 +80,10 @@ END:VCARD`;
         }
     }
 
+    // Get the first address from ListDirecciones with id "1"
+    const primaryAddress = userData.ListDirecciones?.find(d => d.DirId === "1");
 
     return (
-
         <Fragment>
             <div className={style.Buttons}>
                 <motion.button {...animate} {...animate} transition={{delay: 1}} onClick={()=>SaveContact()}>
@@ -130,30 +131,57 @@ END:VCARD`;
 
                 { userData.VerUbicacion === 1 && (
                     <>
-                        {/* Primera ubicación (siempre que esté activa) */}
-                        <motion.a 
-                            href={userData.MapsGeoloc === '' ? 
-                                `https://www.google.com/maps?q=${userData.Calle}${userData.NumExt ? ' ' + userData.NumExt : ''},${userData.Colonia}` : 
-                                `https://www.google.com/maps?q=${userData.MapsGeoloc}`} 
-                            target='_blank' 
-                            {...animate} 
-                            transition={{delay: 1.4}} 
-                            className={style.Ubication}
-                        >
-                            {userData.TexoUbica && `${userData.TexoUbica} `}
-                            {userData.Colonia === '' ? '' : `${userData.Colonia} `}
+                        {primaryAddress ? (
+                            <motion.a 
+                                href={`https://www.google.com/maps?q=${
+                                    primaryAddress.DirCalle
+                                }${
+                                    primaryAddress.DirNumExt ? ' ' + primaryAddress.DirNumExt : ''
+                                },${
+                                    primaryAddress.DirCol
+                                }`} 
+                                target='_blank' 
+                                {...animate} 
+                                transition={{delay: 1.4}} 
+                                className={style.Ubication}
+                            >
+                                {userData.TexoUbica && `${userData.TexoUbica} `}
+                                {primaryAddress.DirCol === '' ? '' : `${primaryAddress.DirCol} `}
 
-                            <span>
-                                <Image 
-                                    src={'/images/icono-ubicacion.svg'}
-                                    alt='icono de ubicación'
-                                    width={150}
-                                    height={150}
-                                />
-                            </span>
-                        </motion.a>
+                                <span>
+                                    <Image 
+                                        src={'/images/icono-ubicacion.svg'}
+                                        alt='icono de ubicación'
+                                        width={150}
+                                        height={150}
+                                    />
+                                </span>
+                            </motion.a>
+                        ) : (
+                            <motion.a 
+                                href={userData.MapsGeoloc === '' ? 
+                                    `https://www.google.com/maps?q=${userData.Calle}${userData.NumExt ? ' ' + userData.NumExt : ''},${userData.Colonia}` : 
+                                    `https://www.google.com/maps?q=${userData.MapsGeoloc}`} 
+                                target='_blank' 
+                                {...animate} 
+                                transition={{delay: 1.4}} 
+                                className={style.Ubication}
+                            >
+                                {userData.TexoUbica && `${userData.TexoUbica} `}
+                                {userData.Colonia === '' ? '' : `${userData.Colonia} `}
 
-                        {/* Segunda ubicación (solo si existe DirCalle con contenido) */}
+                                <span>
+                                    <Image 
+                                        src={'/images/icono-ubicacion.svg'}
+                                        alt='icono de ubicación'
+                                        width={150}
+                                        height={150}
+                                    />
+                                </span>
+                            </motion.a>
+                        )}
+
+                        {/* Secondary location (only if exists DirCalle with content) */}
                         {(() => {
                             const dir2 = userData.ListDirecciones?.find(d => d.DirId === "2" && d.DirCalle?.trim());
                             if (!dir2) return null;
@@ -278,67 +306,59 @@ END:VCARD`;
                 </motion.button>
 
                 {userData.BotonesAdicionales && userData.BotonesAdicionales.length > 0 && (
-  userData.BotonesAdicionales.map((boton, index) => (
-    <motion.a
-      key={index}
-      href={boton.ButtonUrl}
-      target='_blank'
-      {...animate}
-      transition={{ delay: 1.8 }}
-      className={style.Web}
-      style={{
-        backgroundColor: boton.ButtonColor1,
-        height: '50px', // Altura del botón
-        display: 'flex', // Alinear elementos en el mismo nivel
-       // justifyContent: 'space-between', // Separar texto e icono
-       alignItems: 'left', // Centrar verticalmente
-        padding: '0 0px', // Añadir espacio interno
-        //justifyItems: 'left',
-        //width: '100%', // Ancho total
-        borderRadius: '8px', // Bordes redondeados
-        transition: 'background-color 0.3s ease', // Transición suave al pasar el mouse
-      }}
-      
-    >
-      <span style={{
-        flexGrow: 1,
-        marginLeft: '20px', // Separación del lado izquierdo
-        textAlign: 'left', // Alineado a la izquierda
-        color: boton.ButtonColorTxt, // Texto en color blanco
-        maxWidth: '100%',
-        background: 'transparent',
-        justifyContent: 'left'
+                    userData.BotonesAdicionales.map((boton, index) => (
+                        <motion.a
+                            key={index}
+                            href={boton.ButtonUrl}
+                            target='_blank'
+                            {...animate}
+                            transition={{ delay: 1.8 }}
+                            className={style.Web}
+                            style={{
+                                backgroundColor: boton.ButtonColor1,
+                                height: '50px',
+                                display: 'flex',
+                                alignItems: 'left',
+                                padding: '0 0px',
+                                borderRadius: '8px',
+                                transition: 'background-color 0.3s ease',
+                            }}
+                        >
+                            <span style={{
+                                flexGrow: 1,
+                                marginLeft: '20px',
+                                textAlign: 'left',
+                                color: boton.ButtonColorTxt,
+                                maxWidth: '100%',
+                                background: 'transparent',
+                                justifyContent: 'left'
+                            }}>
+                                {boton.ButtonTexto}
+                            </span>
 
-      }}>
-        {boton.ButtonTexto}
-      </span>
-
-      {/* Contenedor del icono con color de fondo y tamaño fijo */}
-      <div
-        style={{
-          width: '55px',
-          height: '100%',
-          backgroundColor: boton.ButtonColor2,
-          borderRadius: '0px 10px 10px 0px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = boton.ButtonColor1} // Cambia el color al pasar el mouse
-onMouseLeave={(e) => e.currentTarget.style.backgroundColor = boton.ButtonColor2} // Vuelve al color original
-      >
-        <Image 
-          src={boton.ButtonIcono}
-          alt={`Icono de ${boton.ButtonNom}`}
-          width={36}
-          height={36} // Tamaño de 36x36 para el icono
-        />
-      </div>
-    </motion.a>
-  ))
-)}
-
+                            <div
+                                style={{
+                                    width: '55px',
+                                    height: '100%',
+                                    backgroundColor: boton.ButtonColor2,
+                                    borderRadius: '0px 10px 10px 0px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = boton.ButtonColor1}
+                                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = boton.ButtonColor2}
+                            >
+                                <Image 
+                                    src={boton.ButtonIcono}
+                                    alt={`Icono de ${boton.ButtonNom}`}
+                                    width={36}
+                                    height={36}
+                                />
+                            </div>
+                        </motion.a>
+                    ))
+                )}
 
                 { tokenServer && (
                     <motion.button 
@@ -366,7 +386,6 @@ onMouseLeave={(e) => e.currentTarget.style.backgroundColor = boton.ButtonColor2}
             { shareProfile && <Social token={userData.TokenId} close={()=>setShareProfile(false)}/> }
             { success && <SaveSuccessfully /> }
         </Fragment>
-
     );
 }
 
