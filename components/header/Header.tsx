@@ -48,10 +48,13 @@ const Header = () => {
             const data = await response.json();
     
             setData(data);
+            console.log(data);
         }else{
             setData(undefined);
         }
     }
+
+    if (data?.premium) return null;
 
     return ( 
         <header 
