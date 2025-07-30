@@ -1,6 +1,8 @@
+'use client';
 import { BsFacebook, BsInstagram } from 'react-icons/bs';
 import style from './footer.module.scss';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation'; // Importa usePathname
 
 const navLinks = [
     {path: '/aviso-de-privacidad', name: 'Aviso de privacidad'},
@@ -9,8 +11,12 @@ const navLinks = [
 ]
 
 const Footer = () => {
+    const pathname = usePathname();
+    const showTarjetero = pathname?.includes('/st/');
+    
     return ( 
-        <footer className={style.Footer}>
+        <footer className={style.Footer}>            
+
             <img 
                 src="/images/logo-gris.svg" 
                 alt="Logotipo tarjet - tu tarjeta de presentación virtual" 
@@ -26,7 +32,11 @@ const Footer = () => {
             </div>
 
             <nav>
-                { navLinks.map((link)=>(
+                {/* Botón "Mi tarjetero" condicional */}
+                {showTarjetero && (
+                    <Link href="/login" key="tarjetero">Mi tarjetero</Link>
+                )}
+                {navLinks.map((link)=>(
                     <Link href={link.path} key={link.path}>
                         {link.name}
                     </Link>
