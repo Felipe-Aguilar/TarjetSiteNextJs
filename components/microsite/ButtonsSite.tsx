@@ -25,10 +25,8 @@ const animate = {
 
 const ButtonsSite = ({userData, tokenServer, uuidServer} :Props) => {
 
-    
     // *Guardar contacto
     const SaveContact = async () => {
-
         const nameUser = `${userData.Nom} ${userData.AppP} ${userData.AppM}`;
 
         const content = `BEGIN:VCARD
@@ -49,7 +47,6 @@ END:VCARD`;
     // *Compartir perfil
     const [shareProfile, setShareProfile] = useState<boolean>(false);
 
-    
     // *Guardar en tarjetero
     const [success, setSuccess] = useState<boolean>(false);
     const router = useRouter();
@@ -67,7 +64,6 @@ END:VCARD`;
         const data = await response.json();
 
         if (data.Messages) {
-
             setTimeout(()=>{
                 setSuccess(true);
                 
@@ -76,12 +72,27 @@ END:VCARD`;
                     setSuccess(false);
                 },3500);
             }, 1000)
-
         }
     }
 
-    // Get the first address from ListDirecciones with id "1"
+    // Get addresses
     const primaryAddress = userData.ListDirecciones?.find(d => d.DirId === "1");
+    const secondaryAddress = userData.ListDirecciones?.find(d => d.DirId === "2" && d.DirCalle?.trim());
+
+    // Helper function to get maps URL
+    const getMapsUrl = (address: {
+        DirMapsGeoloc?: string;
+        DirCalle?: string;
+        DirNumExt?: string;
+        DirCol?: string;
+    }) => {
+        if (address.DirMapsGeoloc && address.DirMapsGeoloc.trim() !== '') {
+            return `https://www.google.com/maps?q=${address.DirMapsGeoloc}`;
+        }
+        return `https://www.google.com/maps?q=${address.DirCalle || ''}${
+            address.DirNumExt ? ' ' + address.DirNumExt : ''
+        },${address.DirCol || ''}`;
+    };
 
     return (
         <Fragment>
@@ -131,15 +142,10 @@ END:VCARD`;
 
                 { userData.VerUbicacion === 1 && (
                     <>
+                        {/* Primary location */}
                         {primaryAddress ? (
                             <motion.a 
-                                href={`https://www.google.com/maps?q=${
-                                    primaryAddress.DirCalle
-                                }${
-                                    primaryAddress.DirNumExt ? ' ' + primaryAddress.DirNumExt : ''
-                                },${
-                                    primaryAddress.DirCol
-                                }`} 
+                                href={getMapsUrl(primaryAddress)}
                                 target='_blank' 
                                 {...animate} 
                                 transition={{delay: 1.4}} 
@@ -181,42 +187,33 @@ END:VCARD`;
                             </motion.a>
                         )}
 
-                        {/* Secondary location (only if exists DirCalle with content) */}
-                        {(() => {
-                            const dir2 = userData.ListDirecciones?.find(d => d.DirId === "2" && d.DirCalle?.trim());
-                            if (!dir2) return null;
-                            return (
-                                <motion.a 
-                                    href={`https://www.google.com/maps?q=${
-                                        dir2.DirCalle
-                                    }${
-                                        dir2.DirNumExt ? ' ' + dir2.DirNumExt : ''
-                                    },${
-                                        dir2.DirCol
-                                    }`} 
-                                    target='_blank' 
-                                    {...animate} 
-                                    transition={{delay: 1.5}} 
-                                    className={style.Ubication}
-                                    style={{marginTop: '10px'}}
-                                >
-                                    {userData.TexoUbica && `${userData.TexoUbica} `}
-                                    {dir2.DirCol === '' ? '' : `${dir2.DirCol} `}
+                        {/* Secondary location */}
+                        {secondaryAddress && (
+                            <motion.a 
+                                href={getMapsUrl(secondaryAddress)}
+                                target='_blank' 
+                                {...animate} 
+                                transition={{delay: 1.5}} 
+                                className={style.Ubication}
+                                style={{marginTop: '10px'}}
+                            >
+                                {userData.TexoUbica && `${userData.TexoUbica} `}
+                                {secondaryAddress.DirCol === '' ? '' : `${secondaryAddress.DirCol} `}
 
-                                    <span>
-                                        <Image 
-                                            src={'/images/icono-ubicacion.svg'}
-                                            alt='icono de ubicación'
-                                            width={150}
-                                            height={150}
-                                        />
-                                    </span>
-                                </motion.a>
-                            );
-                        })()}
+                                <span>
+                                    <Image 
+                                        src={'/images/icono-ubicacion.svg'}
+                                        alt='icono de ubicación'
+                                        width={150}
+                                        height={150}
+                                    />
+                                </span>
+                            </motion.a>
+                        )}
                     </>
                 )}
                 
+                {/* Rest of the component remains the same */}
                 { userData.Mail && (
                     <motion.a href={`mailto: ${userData.Mail}`} {...animate} transition={{delay: 1.6}} className={style.Email}>
                         Envíame un correo
