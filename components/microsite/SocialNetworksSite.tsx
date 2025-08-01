@@ -1,5 +1,8 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
-import style from './site.module.scss';
+
+import defaultStyle from './site.module.scss';
+import winterStyle from '../themes/winter.module.scss'
+import darkStyle from '../themes/dark.module.scss';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaSpotify, FaTelegramPlane, FaTiktok, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 import { FaXTwitter  } from "react-icons/fa6";
 import { Fragment } from 'react';
@@ -8,9 +11,10 @@ import Link from 'next/link';
 interface Props {
     userData: UserDataResponse;
     tokenServer: string | undefined | null;
+    tema: string;
 }
 
-const SocialNetworsSite = ({userData, tokenServer} :Props) => {
+const SocialNetworsSite = ({userData, tokenServer, tema} :Props) => {
     // Función para obtener la URL de una red social por su ID
     const getSocialUrl = (socialId: string) => {
         return userData.ListRedesSociales?.find(red => red.RedSocialId === socialId)?.RedSocialUrl || '';
@@ -26,6 +30,19 @@ const SocialNetworsSite = ({userData, tokenServer} :Props) => {
     const telegramUrl = getSocialUrl('TELE').trim()  || '';
     const spotifyUrl = getSocialUrl('SPOT').trim() || '';
     const whatsappUrl = getSocialUrl('WHAT').trim() ;
+
+    // Determinar qué tema usar
+    const getThemeStyle = () => {
+        switch(tema) {
+            case 'invierno':
+                return winterStyle;
+            case 'oscuro':
+                return darkStyle;
+            default:
+                return defaultStyle;
+        }
+    };
+    const style = getThemeStyle();
 
     return ( 
         <div className={style.Social} id='SocialSection'>
@@ -87,7 +104,7 @@ const SocialNetworsSite = ({userData, tokenServer} :Props) => {
                         <p>Usuario: {userData.Alias}</p>
                     </div>
                     
-                    { (!tokenServer && !userData.Premium) && (
+                    { (!tokenServer) && (
                         <Fragment>
                             <div className={style.Info}>
                                 <Image 

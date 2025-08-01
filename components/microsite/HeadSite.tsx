@@ -1,11 +1,15 @@
 import { motion } from "framer-motion";
 import { UserDataResponse } from "@/interfaces/userData-interface";
 
-import style from './site.module.scss';
+import defaultStyle from './site.module.scss';
+import winterStyle from '../themes/winter.module.scss'
+import darkStyle from '../themes/dark.module.scss';
+
 import Image from "next/image";
 
 interface Props {
     userData: UserDataResponse;
+    tema: string;
 }
 
 const animateCard = {
@@ -13,8 +17,21 @@ const animateCard = {
     transition: {ease: "linear", delay: 2, duration: 0.3,repeat: Infinity, repeatDelay: 2}
 }
 
-const HeadSite = ({userData} : Props) => {
+const HeadSite = ({userData, tema} : Props) => {
 
+    // Determinar qué tema usar
+    const getThemeStyle = () => {
+        switch(tema) {
+            case 'invierno':
+                return winterStyle;
+            case 'oscuro':
+                return darkStyle;
+            default:
+                return defaultStyle;
+        }
+    };
+    const style = getThemeStyle();
+    
     return ( 
         <div className={style.Head}>
             <motion.div {...animateCard}>

@@ -3,12 +3,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import { WorkersResponse } from '@/interfaces/workers/workers-interface';
 import { BsEjectFill } from "react-icons/bs";
 
-import style from './site.module.scss';
+import defaultStyle from './site.module.scss';
+import winterStyle from '../themes/winter.module.scss'
+import darkStyle from '../themes/dark.module.scss';
+
 import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
     uuid: string;
+    tema: string;
 }
 
 const animate = {
@@ -17,11 +21,24 @@ const animate = {
     exit: {height: 0}
 }
 
-const Workers = ({uuid} : Props) => {
+const Workers = ({uuid, tema} : Props) => {
 
     const [workers, setWorkers] = useState<WorkersResponse []>();
     const [openUser, setOpenUser] = useState<string>('');
     const [open, setOpen] = useState<boolean>(false);
+
+    // Determinar qué tema usar
+    const getThemeStyle = () => {
+        switch(tema) {
+            case 'invierno':
+                return winterStyle;
+            case 'oscuro':
+                return darkStyle;
+            default:
+                return defaultStyle;
+        }
+    };
+    const style = getThemeStyle();
 
     useEffect(()=>{
 

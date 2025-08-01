@@ -1,0 +1,450 @@
+.Site {
+  // Estilos generales
+  .background {
+      background: linear-gradient(to bottom, #e6f7ff 0%, #ffffff 100%);
+    }
+
+  // Head
+  .Head {
+    margin-top: 50px;
+    position: relative;
+
+    @media (width <= 700px) {
+      margin-top: 0px;
+    }
+
+    .Card {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      background-color: #f0f9ff;
+      box-shadow: 0 4px 12px rgba(0, 119, 182, 0.1);
+
+      @media (width <= 700px) {
+        width: 95%;
+        display: block;
+        margin: auto;
+      }
+    }
+    .Perfil {
+      width: 25%;
+      height: auto;
+      border-radius: 100%;
+      border: 4px solid #b3e0ff;
+      position: absolute;
+      top: -60px;
+      left: 40px;
+
+      @media (width <= 700px) {
+        top: -25px;
+      }
+    }
+  }
+
+  // Buttons
+  .Buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > * + * {
+      margin-top: 20px;
+    }
+
+    button, a {
+      width: 95%;
+      background: #e6f2ff !important;
+      border: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      padding-left: 20px;
+      font-size: 1rem;
+      color: #003366;
+      box-shadow: 0 2px 4px rgba(0, 75, 133, 0.1);
+
+      &:disabled {
+        cursor: not-allowed;
+        
+        span {
+          background: gray !important;
+        }
+      }
+
+      span {
+        background: #0077b6 !important;
+        border-radius: 0 10px 10px 0;
+        width: 17%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          width: 60px;
+          height: 50px;
+        }
+
+        svg {
+          height: 50px;
+          color: #fff;
+          font-size: 1.9rem;
+        }
+      }
+    }
+    
+    .WhatsApp {
+      background: #e6f7f0 !important;
+      span { background: #2d8c6e !important; }
+    }
+    .Ubication {
+      background: #fff4e6 !important;
+      span { 
+        background: #e67e22 !important; 
+        img {
+          height: 50px;
+          width: 37px;
+        }
+      }
+    }
+    .Email {
+      background: #ebf3ff !important;
+      span { background: #1a6fd9 !important; }
+    }
+    .Web {
+      @media (width <= 700px) {
+        font-size: .9rem;
+      }
+      @media (width <= 400px) {
+        font-size: .8rem;   
+      }
+
+      span {
+        max-width: 15%;
+        img {
+          width: 50px;
+        }
+      }
+    }
+    .Social {
+      span { background: #9b034f !important; }
+    }
+    .Google {
+      span { background: #e3d000 !important; }
+    }
+    .Share {
+      span { background: #5060c6 !important; }
+    }
+    .Save {
+      span { background: #4c5187 !important; }
+    }
+  }
+
+  // Services
+  .Services {
+    h2, h3 {
+      text-align: center;
+      font-family: "IvyModeRegular"!important;
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: #005b8c;
+    }
+    .Icon {
+      display: block;
+      margin: auto;
+      margin-bottom: 20px;
+    }
+    ul {
+      padding: 0 50px;
+
+      > * + * {
+        margin-top: 8px;
+
+        @media (width <= 700px) {
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .Workers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      > * + * {
+        margin-top: 60px;
+      }
+
+      .Worker {
+        background: #d4edff !important;
+        width: 80%;
+        border-radius: 8px;
+        
+        .Header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px;
+          position: relative;
+          cursor: pointer;
+
+          .Image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            right: 10px;
+
+            img {
+              margin-bottom: 5px;
+              border-radius: 100%;
+              width: 60px;
+              height: 60px;
+              border: 2px solid #55555553;
+            }
+            svg {
+              font-size: 1.5rem;
+              font-size: 1.7rem;
+              color: #11B377;
+              rotate: (180deg);
+            }
+          }
+        }
+
+        .Header2 {
+          justify-content: end;
+          
+          .Image {
+            position: absolute;
+            left: 10px;
+            right: inherit;
+          }
+        }
+
+        .Contain {
+          padding: 20px;
+          background: #fff;
+          border-radius: 0 0 8px 8px;
+
+          img {
+            width: 80%;
+            height: auto;
+            display: flex;
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+          }
+        }
+
+        .Contain2 {
+          a {
+            display: flex;
+            justify-content: end;
+          }
+        }
+      }
+    }
+
+    .ServiceContainer {
+      text-align: center;
+
+      h3 {
+        font-weight: 400;
+        text-transform: capitalize;
+      }
+      img {
+        width: 80%;
+        height: auto;
+        display: block;
+        margin: auto;
+        margin-bottom: 20px;
+        border-radius: 8px;
+
+        @media (width <= 700px) {
+          width: 90%;
+        }
+      }
+    }
+  }
+
+  // Social
+  .Social {
+    h4 {
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .SocialButtons {
+      display: grid;
+      grid-template-columns: 25% 25% 25% 25%;
+      place-items: center;
+      row-gap: 20px;
+
+      a, button {
+        padding: 15px;
+        border-radius: 21px;
+        background: #e8ecf1;
+        width: fit-content;
+        border: 1px #c4c8cc solid;
+
+        @media (width <= 700px) {
+          background: #dfe8f3;
+          border: transparent;
+        }
+
+        svg {
+          font-size: 2.5rem;
+
+          @media (width <= 700px) {
+            font-size: 2rem;
+          }
+        }
+      }
+
+      .Disabled {
+        cursor: none;
+        pointer-events: none;
+
+        .Blue {
+          display: none;
+        }
+        svg {
+          color: #cfd6d5!important;
+        }
+      }
+
+      .Facebook {
+        color: #0056b3;
+      }
+      .Instagram {
+        color: #E4405F;
+      }
+      .Tiktok {
+        position: relative;
+        
+        .Blue, .Red {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
+
+        .Blue {
+          color:  #00f2ea42;
+          top: 12px;
+          left: 12px;
+        }
+        .Red {
+          color:  #ff005147;
+          left: 17px;
+          top: 17px;
+        }
+      }
+
+      .Spotify {
+        color: #1DB954;
+      }
+      .Twitter {
+        color:  #1DA1F2;
+      }
+      .Youtube {
+        color:  #FF0000;
+      }
+      .Linkedin {
+        color:  #0A66C2;
+      }
+      .Telegram {
+        color:  #0088cc;
+      }
+      .Whatsapp {
+        color:  #25D366;
+      }
+    }
+
+    .Username {
+      text-align: center;
+
+      h5 {
+        color: #055b7d;
+        font-family: "IvyModeRegular"!important;
+        font-size: 1.25rem;
+      }
+      p {
+        text-transform: uppercase;
+      }
+      .user {
+        text-transform: lowercase;
+        font-size: 1.1rem;
+      }
+    }
+    .Info {
+      background: #e6f2ff;
+      border-radius: 30px;
+      padding: 40px 20px;
+      text-align: center;
+
+      @media (width <= 700px) {
+        width: 95%;
+        display: block;
+        margin: auto;
+      }
+
+      img {
+        display: block;
+        margin: auto;
+        margin-bottom: 20px;
+        width: 25%;
+        height: auto;
+      }
+
+      h6 {
+        font-size: 1.15rem;
+        font-weight: 400;
+        color: #212529;
+
+        span {
+          font-weight: 600;
+          color: #005b8c;
+          font-size: 1.2rem;
+        }
+      }
+      a {
+        background: #0077b6;
+        border-radius: 8px;
+        padding: 10px 20px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: block;
+        width: 80%;
+        margin: auto;
+        margin-bottom: 20px;
+
+        span {
+          font-weight: 400;
+        }
+      }
+      .Card {
+        width: 50%;
+      }
+      .Orange {
+        background: #ff6b0f;
+      }
+      .Violet {
+        background: #5f6e9f;
+        margin-bottom: 0;
+      }
+    }
+    .LinkFooter {
+      text-align: center;
+      display: block;
+      width: 50%;
+      margin: auto;
+      margin-top: 20px;
+      text-decoration: underline;
+      color: #038950;
+    }
+  }
+}

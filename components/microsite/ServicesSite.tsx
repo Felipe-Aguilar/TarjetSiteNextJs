@@ -1,16 +1,34 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
 import { Fragment } from 'react';
 
-import style from './site.module.scss';
+import defaultStyle from './site.module.scss';
+import winterStyle from '../themes/winter.module.scss'
+import darkStyle from '../themes/dark.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import Workers from './Workers';
 
 interface Props {
     userData: UserDataResponse;
+    tema: string;
 }
 
-const ServicesSite = ({userData} : Props) => {
+    
+
+const ServicesSite = ({userData, tema} : Props) => {
+
+    // Determinar qué tema usar
+    const getThemeStyle = () => {
+        switch(tema) {
+            case 'invierno':
+                return winterStyle;
+            case 'oscuro':
+                return darkStyle;
+            default:
+                return defaultStyle;
+        }
+    };
+    const style = getThemeStyle();
 
     return ( 
         <div className={style.Services}>
@@ -53,7 +71,7 @@ const ServicesSite = ({userData} : Props) => {
 
                             <h3 style={{textAlign: 'left', marginBottom: '1.5rem'}}>Colaboradores</h3>
 
-                            <Workers uuid={userData.UUID}/>
+                            <Workers uuid={userData.UUID} tema={tema}/>
                         </Fragment>
                     )}
 

@@ -4,7 +4,10 @@
 import { Fragment, useEffect, useState } from 'react';
 import { UserDataResponse } from '@/interfaces/userData-interface';
 
-import style from './site.module.scss';
+import defaultStyle from './site.module.scss';
+import winterStyle from '../themes/winter.module.scss'
+import darkStyle from '../themes/dark.module.scss';
+
 import HeadSite from './HeadSite';
 import ButtonsSite from './ButtonsSite';
 import ServicesSite from './ServicesSite';
@@ -16,7 +19,8 @@ interface Props {
     userData: UserDataResponse & {
         MostrarPopup?: boolean;
         TipoPopup?: string;
-        SiteGoogle?: string; // Asegúrate de que la interfaz incluya este campo
+        SiteGoogle?: string;
+        Tema?: string; // Nuevo campo para el tema
     };
     tokenServer: string | undefined | null;
     uuidServer: string | undefined | null;
@@ -25,9 +29,22 @@ interface Props {
 const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const [showStickyImage, setShowStickyImage] = useState<boolean>(true);
+    let tema = '';
+    // Determinar qué tema usar
+    const getThemeStyle = () => {
+        switch(tema) {
+            case 'invierno':
+                return winterStyle;
+            case 'oscuro':
+                return darkStyle;
+            default:
+                return defaultStyle;
+        }
+    };
 
-    // Extraer SiteGoogle directamente de userData (ya viene de la API)
+    const style = getThemeStyle();
     const siteGoogle = userData.SiteGoogle || '';
+    
 
     useEffect(() => {
         if (userData.MostrarPopup) {
@@ -38,24 +55,26 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     }, [userData.MostrarPopup]);    
 
     return ( 
-        <div className="greenWhite">
+        <div className={tema.length > 1 ? style.Site : 'greenWhite'}>
             <div className="background">
                 <Fragment>
                     <div className={`body ${style.Site}`}>
                         <div className="contain">
-                            <HeadSite userData={userData} />
+                            <HeadSite userData={userData} tema={tema} />
 
                             <ButtonsSite 
                                 userData={userData} 
                                 tokenServer={tokenServer} 
                                 uuidServer={uuidServer}
+                                tema={tema}
                             />
 
-                            <ServicesSite userData={userData} />
+                            <ServicesSite userData={userData} tema={tema}/>
 
                             <SocialNetworsSite 
                                 userData={userData} 
                                 tokenServer={tokenServer}
+                                tema={tema}
                             />
                         </div>
                     </div>

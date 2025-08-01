@@ -5,7 +5,9 @@ import { BsWhatsapp } from 'react-icons/bs';
 import { Link } from 'react-scroll';
 import { useRouter } from 'next/navigation';
 
-import style from './site.module.scss';
+import defaultStyle from './site.module.scss';
+import winterStyle from '../themes/winter.module.scss'
+import darkStyle from '../themes/dark.module.scss';
 import Image from 'next/image';
 import FileSaver from 'file-saver';
 import Social from '../pop-ups/social/Social';
@@ -15,6 +17,7 @@ interface Props {
     userData: UserDataResponse;
     tokenServer: string | null | undefined;
     uuidServer: string | null | undefined;
+    tema: string;
 }
 
 const animate = {
@@ -23,7 +26,7 @@ const animate = {
     viewport: { once:true }
 }
 
-const ButtonsSite = ({userData, tokenServer, uuidServer} :Props) => {
+const ButtonsSite = ({userData, tokenServer, uuidServer, tema} :Props) => {
 
     // *Guardar contacto
     const SaveContact = async () => {
@@ -93,6 +96,19 @@ END:VCARD`;
             address.DirNumExt ? ' ' + address.DirNumExt : ''
         },${address.DirCol || ''}`;
     };
+
+        // Determinar qué tema usar
+        const getThemeStyle = () => {
+            switch(tema) {
+                case 'invierno':
+                    return winterStyle;
+                case 'oscuro':
+                    return darkStyle;
+                default:
+                    return defaultStyle;
+            }
+        };
+        const style = getThemeStyle();
 
     return (
         <Fragment>
