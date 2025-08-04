@@ -29,7 +29,7 @@ interface Props {
 const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const [showStickyImage, setShowStickyImage] = useState<boolean>(true);
-    let tema = '';
+    const tema = userData.Tema || ''; // Usar el tema del usuario o un valor por defecto
     // Determinar qué tema usar
     const getThemeStyle = () => {
         switch(tema) {

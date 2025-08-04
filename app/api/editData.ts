@@ -13,6 +13,7 @@ interface Props {
         "Lev2Id": string,
         "Lev3Id": string,
         "NomNegocio": string,
+        "Tema": string;
     },
     contactForm?: {
         "Telefono1": string,
@@ -133,8 +134,8 @@ export default async function EditData({ userData, dataForm, contactForm, social
                 "Twitter": socialForm?.Twitter ?? userData.Twitter,
                 "Youtube": socialForm?.Youtube ?? userData.Youtube,
                 "Telegram": socialForm?.Telegram ?? userData.Telegram,
-                // Incluir el nuevo formato de redes sociales
                 "ListRedesSociales": listRedesSociales,
+                "Tema": dataForm?.Tema ?? userData.Tema ?? '',
                 "RegistroTarjet": true,
                 "ImgHeader": userData.ImgHeader,
                 "ImgTarFrente": userData.ImgTarFrente,

@@ -16,7 +16,7 @@ import UploadImage from '../pop-ups/upload-image/UploadImage';
 import EditData from '@/app/api/editData';
 
 interface Props {
-  userData: UserDataResponse;
+  userData: UserDataResponse;  
 }
 
 interface SegmentLevel {
@@ -47,7 +47,7 @@ const Data = ({ userData }: Props) => {
     Nivel2Id: userData.Lev2Id,
     Nivel3Id: userData.Lev3Id
   });
-  
+  const [theme, setTheme] = useState(userData.Tema || ''); // Estado para el tema
 
   const [error, setError] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
@@ -81,6 +81,7 @@ const Data = ({ userData }: Props) => {
       Lev2Id: segment.Nivel2Id,
       Lev3Id: segment.Nivel3Id,
       NomNegocio: businessName,
+      Tema: theme,
     };
 
     await EditData({ userData, dataForm });
@@ -281,12 +282,21 @@ const Data = ({ userData }: Props) => {
             }}
             />
         </div>
-        
-
         <Link href='/contacto'>Si no aparece tu área, solicítala aquí, con tu apoyo nos ayudas a aprender.</Link>
-
         <input type='text' disabled placeholder='Categoría*' value={segment?.Nivel1Desc || ''} />
         <input type='text' disabled placeholder='Categoría*' value={segment?.Nivel2Desc || ''} />
+
+        <div className={style.ThemeSelector}>
+          <label>Tema de la tarjeta:</label>
+          <select 
+            value={theme} 
+            onChange={(e) => setTheme(e.target.value)}
+            onBlur={submitData}
+          >
+            <option value="">Default</option>
+            <option value="oscuro">Oscuro</option>
+          </select>
+        </div>
 
         <ContactData userData={userData} />
         <SocialNetworks userData={userData} />

@@ -71,6 +71,7 @@ export interface UserDataResponse {
     SiteGoogle?:    string;
     ListRedesSociales?: RedSocial[];
     ListDirecciones?: Direccion[];
+    Tema: string;
 }
 
 export interface RedSocial {
