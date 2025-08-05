@@ -39,6 +39,7 @@ export default function RootLayout({
       <html lang="es">
         <head>
           {/* 👇 Meta tags específicos para Apple Wallet */}
+          <meta name="apple-itunes-app" content="" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         </head>

@@ -1,6 +1,6 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
 import { motion } from 'framer-motion';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { BsWhatsapp } from 'react-icons/bs';
 import { Link } from 'react-scroll';
 import { useRouter } from 'next/navigation';
@@ -111,7 +111,13 @@ END:VCARD`;
         const style = getThemeStyle();
 
         const urlSitio = 'https://tarjet.site/st/' + btoa(userData.TokenId);
-        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        
+        const [isIOS, setIsIOS] = useState(false);
+
+        useEffect(() => {
+            // 👇 Solo se ejecuta en el cliente
+            setIsIOS(/iPhone|iPad|iPod/i.test(navigator.userAgent));
+        }, []);
 
     return (
         <Fragment>
