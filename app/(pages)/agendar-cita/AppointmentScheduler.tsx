@@ -180,28 +180,49 @@ export default function AppointmentScheduler() {
   };
 
   const addToAppleCalendar = (appointment: Appointment) => {
-    // Formatear la fecha y hora
-    const [year, month, day] = appointment.date.split('-');
-    const [hours, minutes] = appointment.time.split(':');
-    
-    const startDate = new Date(
-      parseInt(year),
-      parseInt(month) - 1,
-      parseInt(day),
-      parseInt(hours),
-      parseInt(minutes)
-    );
-    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // +1 hora
-    
-    // Crear URL webcal
-    const webcalUrl = `webcal://p04-calendarws.icloud.com/ca/event?` +
-      `title=${encodeURIComponent(appointment.name)}&` +
-      `st=${startDate.toISOString()}&` +
-      `et=${endDate.toISOString()}&` +
-      `notes=${encodeURIComponent(appointment.description || 'Cita agendada')}`;
-    
-    window.location.href = webcalUrl;
+  // Formatear la fecha y hora para el calendario de Apple
+  const [year, month, day] = appointment.date.split('-');
+  const [hours, minutes] = appointment.time.split(':');
+  
+  // Crear fecha de inicio (asumimos 1 hora de duración)
+  const startDate = new Date(
+    parseInt(year),
+    parseInt(month) - 1,
+    parseInt(day),
+    parseInt(hours),
+    parseInt(minutes)
+  );
+  const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // +1 hora
+  
+  // Formatear fechas para el formato de Apple Calendar
+  const formatDate = (date: Date) => {
+    return date.toISOString().replace(/-|:|\.\d+/g, '');
   };
+  
+  // Crear el archivo .ics
+  const icsContent = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'BEGIN:VEVENT',
+    `DTSTART:${formatDate(startDate)}`,
+    `DTEND:${formatDate(endDate)}`,
+    `SUMMARY:${appointment.name}`,
+    `DESCRIPTION:${appointment.description || 'Cita agendada'}`,
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\n');
+  
+  // Crear blob y descargar
+  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', `cita-${appointment.date}.ics`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
   // Filtrar citas solo del usuario actual
   const userAppointments = appointments.filter(
