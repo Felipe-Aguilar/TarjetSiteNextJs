@@ -8,7 +8,7 @@ import styles from './page.module.scss';
 type Appointment = {
   id: string;
   userId: string;
-  name: string;
+  title: string;
   date: string;
   time: string;
   description: string;
@@ -33,7 +33,7 @@ export default function AppointmentScheduler() {
   const { data: session, status } = useSession();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [formData, setFormData] = useState<Omit<Appointment, 'id' | 'confirmed' | 'userId'>>({
-    name: '',
+    title: '',
     date: '',
     time: '',
     description: '',
@@ -85,7 +85,7 @@ export default function AppointmentScheduler() {
       return;
     }
 
-    if (!formData.name || !formData.date || !formData.time) {
+    if (!formData.title || !formData.date || !formData.time) {
       alert('Por favor completa los campos requeridos');
       return;
     }
@@ -116,7 +116,7 @@ export default function AppointmentScheduler() {
 
     // Limpiar formulario
     setFormData({
-      name: '',
+      title: '',
       date: '',
       time: '',
       description: '',
@@ -168,7 +168,7 @@ export default function AppointmentScheduler() {
     
     // Crear la URL de Google Calendar
     const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-      appointment.name
+      appointment.title
     )}&dates=${formatDate(startDate)}/${formatDate(
       endDate
     )}&details=${encodeURIComponent(
@@ -206,7 +206,7 @@ export default function AppointmentScheduler() {
     'BEGIN:VEVENT',
     `DTSTART:${formatDate(startDate)}`,
     `DTEND:${formatDate(endDate)}`,
-    `SUMMARY:${appointment.name}`,
+    `SUMMARY:${appointment.title}`,
     `DESCRIPTION:${appointment.description || 'Cita agendada'}`,
     'END:VEVENT',
     'END:VCALENDAR'
@@ -253,12 +253,12 @@ export default function AppointmentScheduler() {
       
         <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formGroup}>
-            <label htmlFor="name">Nombre:</label>
+            <label htmlFor="title">Titulo de la Cita:</label>
             <input
                 type="text"
-                id="name"
-                name="name"
-                value={formData.name}
+                id="title"
+                name="title"
+                value={formData.title}
                 onChange={handleInputChange}
                 required
             />
@@ -314,7 +314,7 @@ export default function AppointmentScheduler() {
                 {userAppointments.map(app => (
                 <li key={app.id} className={styles.appointmentItem}>
                     <div className={styles.appointmentInfo}>
-                        <h3>{app.name}</h3>
+                        <h3>{app.title}</h3>
                         <p><strong>Fecha:</strong> {app.date} a las {app.time}</p>
                         {app.description && <p>{app.description}</p>}
                         <div className={styles.confirmationStatus}>
