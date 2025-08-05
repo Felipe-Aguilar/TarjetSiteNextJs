@@ -110,6 +110,8 @@ END:VCARD`;
         };
         const style = getThemeStyle();
 
+        console.log('tarjet.site/st/' + btoa(userData.TokenId));
+
     return (
         <Fragment>
             <div className={style.Buttons}>
