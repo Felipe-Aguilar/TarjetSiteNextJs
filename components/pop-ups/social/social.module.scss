@@ -1,27 +1,76 @@
-.Social{
+.Social {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 20px;
     padding: 20px 0;
+    position: relative;
 
-    a{
+    a {
         background: #e8ecf1;
-        padding: 10px 15px;
+        padding: 12px;
         border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        transition: transform 0.2s ease;
         
-        svg{
-            font-size: 3.2rem;
+        &:hover {
+            transform: translateY(-3px);
+            
+            .tooltip {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+        
+        svg {
+            font-size: 3rem;
         }
     }
 
-
-    .Facebook{
-        color: #1877F2;
+    .QrIcon {
+        color: #333;
     }
-    .WhatsApp{
+    
+    .WhatsApp {
         color: #128c7e;
     }
-    .Telegram{
+    
+    .Telegram {
         color: #0088cc;
     }
+
+    .tooltip {
+        position: absolute;
+        bottom: -25px;
+        background: #333;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.2s;
+        white-space: nowrap;
+    }
+}
+
+.copyNotification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
 }
