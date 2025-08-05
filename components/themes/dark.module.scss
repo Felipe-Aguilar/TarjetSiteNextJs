@@ -630,4 +630,21 @@
       }
     }
   }
+
+  .WalletButton {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        &:hover {
+            background-color: #333;
+        }
+    }
 }

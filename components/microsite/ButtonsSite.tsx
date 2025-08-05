@@ -110,10 +110,105 @@ END:VCARD`;
         };
         const style = getThemeStyle();
 
+        const [isAndroid, setIsAndroid] = useState(false);
+        const [isIOS, setIsIOS] = useState(false);
+        const [googleWalletUrl, setGoogleWalletUrl] = useState('');
+        const [loadingWallet, setLoadingWallet] = useState(false);
+        const [walletError, setWalletError] = useState('');
+
         const urlSitio = 'https://tarjet.site/st/' + btoa(userData.TokenId);
         
-        const [isIOS, setIsIOS] = useState(false);
+        const generateGoogleWalletUrl = async () => {
+            console.log('🚀 Iniciando generateGoogleWalletUrl...');
+            setLoadingWallet(true);
+            setWalletError('');
+            
+            try {
+                console.log('📡 Llamando a la API con datos:', {
+                    userData: userData.Nom,
+                    urlSitio: urlSitio
+                });
 
+                const response = await fetch('/api/google-wallet/create-pass', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userData: userData,
+                        urlSitio: urlSitio
+                    })
+                });
+
+                console.log('📡 Respuesta de la API:', response.status, response.statusText);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('📥 Datos recibidos:', data);
+
+                if (data.walletUrl) {
+                    setGoogleWalletUrl(data.walletUrl);
+                    console.log('✅ URL de Google Wallet guardada:', data.walletUrl);
+                    return data.walletUrl;
+                } else {
+                    throw new Error('No se recibió walletUrl en la respuesta');
+                }
+
+            } catch (error) {
+                console.error('❌ Error generando URL de Google Wallet:', error);
+                setWalletError((error instanceof Error ? error.message : String(error)));
+                return null;
+            } finally {
+                setLoadingWallet(false);
+                console.log('🏁 generateGoogleWalletUrl terminado');
+            }
+        };
+          
+
+        useEffect(() => {
+            console.log('🔄 useEffect ejecutándose...');
+            
+            const userAgent = navigator.userAgent.toLowerCase();
+            console.log('🖥️ User Agent:', userAgent);
+            
+            const androidDetected = /android/.test(userAgent);
+            const iosDetected = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            
+            console.log('📱 Detección de dispositivos:', {
+                android: androidDetected,
+                ios: iosDetected
+            });
+            
+            setIsAndroid(androidDetected);
+            setIsIOS(iosDetected);
+
+            // Generar URL de Google Wallet si es Android
+            if (androidDetected) {
+                console.log('📱 Android detectado, generando URL automáticamente...');
+                generateGoogleWalletUrl();
+            }
+        }, [userData.UUID]); 
+
+        const handleGoogleWalletClick = async (e: { preventDefault: () => void; }) => {
+        console.log('👆 Clic en botón de Google Wallet');
+        console.log('🔍 Estado actual:', {
+            googleWalletUrl,
+            loadingWallet,
+            isAndroid
+        });
+
+        if (!googleWalletUrl && !loadingWallet) {
+            console.log('⚠️ No hay URL, generando...');
+            e.preventDefault();
+            await generateGoogleWalletUrl();
+        } else if (googleWalletUrl) {
+            console.log('✅ Abriendo Google Wallet con URL:', googleWalletUrl);
+        }
+    };
+        
         useEffect(() => {
             // 👇 Solo se ejecuta en el cliente
             setIsIOS(/iPhone|iPad|iPod/i.test(navigator.userAgent));
@@ -403,7 +498,61 @@ END:VCARD`;
                     </motion.button>
                 ) }
 
-                {isIOS && (
+                {/* {(isAndroid || googleWalletUrl) && ( */}
+                    <motion.a
+                        href={googleWalletUrl || '#'}
+                        target={googleWalletUrl ? "_blank" : "_self"}
+                        rel="noopener noreferrer"
+                        className={`${style.GoogleWallet} ${!googleWalletUrl && !loadingWallet ? style.disabled : ''}`}
+                        {...animate}
+                        transition={{ delay: 2.4 }}
+                        onClick={handleGoogleWalletClick}
+                    >
+                        {loadingWallet ? 'Generando...' : 'Guardar en Google Wallet'}
+                        <span>
+                            {loadingWallet ? (
+                                <div className={style.spinner}></div>
+                            ) : (
+                                <Image 
+                                    src={'/images/google-wallet-icon.svg'}
+                                    alt='Guardar en Google Wallet'
+                                    width={150}
+                                    height={150}
+                                />
+                            )}
+                        </span>
+                    </motion.a>
+                
+
+                {/* 🔧 MOSTRAR ERRORES EN DESARROLLO */}
+                {walletError && process.env.NODE_ENV === 'development' && (
+                    <div style={{
+                        background: '#ffebee',
+                        color: '#c62828',
+                        padding: '10px',
+                        borderRadius: '5px',
+                        fontSize: '12px',
+                        marginTop: '10px'
+                    }}>
+                        Error: {walletError}
+                        <button 
+                            onClick={generateGoogleWalletUrl}
+                            style={{
+                                marginLeft: '10px',
+                                padding: '5px 10px',
+                                background: '#1976d2',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '3px',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            Reintentar
+                        </button>
+                    </div>
+                )}
+
+                {/* {isIOS && (
                     <motion.a
                         href={urlSitio}
                         className={style.WalletButton}
@@ -411,7 +560,7 @@ END:VCARD`;
                     >
                         Agregar a Apple Wallet
                     </motion.a>
-                )}
+                )} */}
 
             </div>
 
