@@ -111,6 +111,7 @@ END:VCARD`;
         const style = getThemeStyle();
 
         const urlSitio = 'https://tarjet.site/st/' + btoa(userData.TokenId);
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     return (
         <Fragment>
@@ -396,24 +397,15 @@ END:VCARD`;
                     </motion.button>
                 ) }
 
-                      <motion.a
-        href={urlSitio}
-        target="_blank"
-        rel="noopener noreferrer"
-        {...animate}
-        transition={{ delay: 2.6 }}
-        className={style.WalletButton} // Asegúrate de definir este estilo en tu CSS
-      >
-        Agregar a Apple Wallet
-        <span>
-          <Image 
-            src="/images/icono-wallet.svg" // Usa un icono de Wallet
-            alt="Icono de Apple Wallet"
-            width={150}
-            height={150}
-          />
-        </span>
-      </motion.a>
+                {isIOS && (
+                    <motion.a
+                        href={urlSitio}
+                        className={style.WalletButton}
+                        {...animate}
+                    >
+                        Agregar a Apple Wallet
+                    </motion.a>
+                )}
 
             </div>
 
