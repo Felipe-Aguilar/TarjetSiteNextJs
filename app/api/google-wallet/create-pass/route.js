@@ -1,6 +1,6 @@
 // pages/api/oogle-wallet/create-pass.js o app/api/google-wallet/create-pass/route.js
 
-import GoogleWalletService from "../../../../../google-wallet-service";
+import GoogleWalletService from "../../../../google-wallet-service";
 
 // Credenciales del service account (mejor usar variables de entorno)
 const serviceAccountKey = {
