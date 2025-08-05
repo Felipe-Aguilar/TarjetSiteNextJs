@@ -179,6 +179,30 @@ export default function AppointmentScheduler() {
     window.open(googleCalendarUrl, '_blank');
   };
 
+  const addToAppleCalendar = (appointment: Appointment) => {
+    // Formatear la fecha y hora
+    const [year, month, day] = appointment.date.split('-');
+    const [hours, minutes] = appointment.time.split(':');
+    
+    const startDate = new Date(
+      parseInt(year),
+      parseInt(month) - 1,
+      parseInt(day),
+      parseInt(hours),
+      parseInt(minutes)
+    );
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // +1 hora
+    
+    // Crear URL webcal
+    const webcalUrl = `webcal://p04-calendarws.icloud.com/ca/event?` +
+      `title=${encodeURIComponent(appointment.name)}&` +
+      `st=${startDate.toISOString()}&` +
+      `et=${endDate.toISOString()}&` +
+      `notes=${encodeURIComponent(appointment.description || 'Cita agendada')}`;
+    
+    window.location.href = webcalUrl;
+  };
+
   // Filtrar citas solo del usuario actual
   const userAppointments = appointments.filter(
     app => app.userId === (session?.user?.name || '')
@@ -288,13 +312,22 @@ export default function AppointmentScheduler() {
                         </button>
                         
                         {app.confirmed && (
+                          <>
                             <button
-                            onClick={() => addToGoogleCalendar(app)}
-                            className={styles.calendarButton}
+                              onClick={() => addToGoogleCalendar(app)}
+                              className={styles.calendarButton}
                             >
-                            Agregar a Google Calendar
+                              Agregar a Google Calendar
                             </button>
-                        )}                    
+                            <button
+                              onClick={() => addToAppleCalendar(app)}
+                              className={styles.calendarButton}
+                            >
+                              Agregar a Apple Calendar
+                            </button>
+                          </>
+                        )}                        
+                                            
                         <button 
                             onClick={() => handleEdit(app.id)}
                             className={styles.editButton}
