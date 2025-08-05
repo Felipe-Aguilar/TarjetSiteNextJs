@@ -116,7 +116,8 @@ END:VCARD`;
         const [loadingWallet, setLoadingWallet] = useState(false);
         const [walletError, setWalletError] = useState('');
 
-        const urlSitio = 'https://tarjet.site/st/' + btoa(userData.TokenId);
+        const urlComplemento =btoa(userData.TokenId);
+        const urlSitio = 'https://tarjet.site/st/' + urlComplemento;
         
         const generateGoogleWalletUrl = async () => {
             console.log('🚀 Iniciando generateGoogleWalletUrl...');
@@ -498,7 +499,7 @@ END:VCARD`;
                     </motion.button>
                 ) }
 
-                {/* {(isAndroid || googleWalletUrl) && ( */}
+                {/* {(isAndroid || googleWalletUrl) && ( 
                     <motion.a
                         href={googleWalletUrl || '#'}
                         target={googleWalletUrl ? "_blank" : "_self"}
@@ -522,10 +523,10 @@ END:VCARD`;
                             )}
                         </span>
                     </motion.a>
-                
+                )} */}
 
                 {/* 🔧 MOSTRAR ERRORES EN DESARROLLO */}
-                {walletError && process.env.NODE_ENV === 'development' && (
+                {/* {walletError && process.env.NODE_ENV === 'development' && (
                     <div style={{
                         background: '#ffebee',
                         color: '#c62828',
@@ -550,7 +551,7 @@ END:VCARD`;
                             Reintentar
                         </button>
                     </div>
-                )}
+                )} */}
 
                 {/* {isIOS && (
                     <motion.a

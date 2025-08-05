@@ -1,16 +1,19 @@
-// google-wallet-service.js
+//google-wallet-service.js
 import { google } from 'googleapis';
 import jwt from 'jsonwebtoken';
 
-class GoogleWalletService {
+export default class GoogleWalletService {
   constructor(serviceAccountKey) {
     this.serviceAccountKey = serviceAccountKey;
-    this.issuerId = '3388000000022946473'; // Se obtiene de Google Cloud Console
+    this.issuerId = process.env.GOOGLE_WALLET_ISSUER_ID || '3388000000022946473';
     this.classId = `${this.issuerId}.tarjet_card_class`;
+    console.log('🏗️ GoogleWalletService inicializado con Issuer ID:', this.issuerId);
   }
 
   // 1. Crear la clase del pass (solo una vez)
   async createPassClass() {
+    console.log('📋 Intentando crear/verificar clase:', this.classId);
+    
     const auth = new google.auth.GoogleAuth({
       credentials: this.serviceAccountKey,
       scopes: ['https://www.googleapis.com/auth/wallet_object.issuer']
@@ -70,28 +73,33 @@ class GoogleWalletService {
       const response = await walletobjects.genericclass.insert({
         requestBody: genericClass
       });
-      console.log('Clase creada:', response.data);
+      console.log('✅ Clase creada exitosamente:', response.data.id);
       return response.data;
     } catch (error) {
       if (error.response?.status === 409) {
-        console.log('La clase ya existe');
+        console.log('ℹ️ La clase ya existe, continuando...');
         return null;
       }
+      console.error('❌ Error creando clase:', error.response?.data || error.message);
       throw error;
     }
   }
 
   // 2. Crear el objeto pass individual
   createPassObject(userData, urlSitio) {
-    const objectId = `${this.issuerId}.${userData.UUID}`;
+    // Elimina guiones y convierte a minúsculas para consistencia
+    const cleanUUID = userData.UUID.replace(/-/g, '').toLowerCase();
+    const objectId = `${this.issuerId}.${cleanUUID}`;
     
+    console.log('🎫 Creando pass object con ID:', objectId);
+  
     return {
       id: objectId,
       classId: this.classId,
       state: 'ACTIVE',
       heroImage: {
         sourceUri: {
-          uri: 'images/login-ilustracion.png'
+          uri: `https://tarjet.site/images/login-ilustracion.png` // Imagen que necesitas crear
         },
         contentDescription: {
           defaultValue: {
@@ -109,7 +117,7 @@ class GoogleWalletService {
         {
           id: 'company',
           header: 'Empresa',
-          body: userData.Empresa || 'Tarjet'
+          body: userData.Empresa || userData.Activid || 'Tarjet'
         },
         {
           id: 'website',
@@ -130,7 +138,10 @@ class GoogleWalletService {
         {
           mainImage: {
             sourceUri: {
-              uri: userData.Foto || 'https://your-domain.com/images/default-avatar.png'
+              // 🔧 Usar foto real del usuario o imagen por defecto
+              uri: userData.ImgFoto && userData.ImgFoto.startsWith('http') 
+                ? userData.ImgFoto
+                : `https://www.tarjet.site/images/perfil-temporal.webp`
             },
             contentDescription: {
               defaultValue: {
@@ -152,29 +163,52 @@ class GoogleWalletService {
 
   // 3. Generar el JWT para Google Wallet
   generateWalletJWT(passObject) {
+    console.log('🔐 Generando JWT para pass:', passObject.id);
+    
+    const now = Math.floor(Date.now() / 1000);
     const payload = {
       iss: this.serviceAccountKey.client_email,
       aud: 'google',
       typ: 'savetowallet',
-      iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + (60 * 60), // 1 hora
+      iat: now,
+      exp: now + (60 * 60), // 1 hora de validez
       payload: {
         genericObjects: [passObject]
       }
     };
 
-    return jwt.sign(payload, this.serviceAccountKey.private_key, {
-      algorithm: 'RS256'
+    console.log('📝 Payload del JWT:', {
+      iss: payload.iss,
+      exp: new Date(payload.exp * 1000).toISOString(),
+      objectId: passObject.id
     });
+
+    try {
+      const token = jwt.sign(payload, this.serviceAccountKey.private_key, {
+        algorithm: 'RS256'
+      });
+      console.log('✅ JWT generado exitosamente, longitud:', token.length);
+      return token;
+    } catch (error) {
+      console.error('❌ Error generando JWT:', error);
+      throw error;
+    }
   }
 
   // 4. Crear la URL completa para guardar en Google Wallet
-  createSaveToWalletUrl(userData, urlSitio) {
-    const passObject = this.createPassObject(userData, urlSitio);
-    const jwtToken = this.generateWalletJWT(passObject);
+  async createSaveToWalletUrl(userData, urlSitio) {
+    console.log('🎯 Creando URL completa para:', userData.Nom);
     
-    return `https://pay.google.com/gp/v/save/${jwtToken}`;
+    try {
+      const passObject = this.createPassObject(userData, urlSitio);
+      const jwtToken = await this.generateWalletJWT(passObject); // Añadir await
+      const finalUrl = `https://pay.google.com/gp/v/save/${jwtToken}`;
+      
+      console.log('🔗 URL final generada, longitud JWT:', jwtToken.length);
+      return finalUrl;
+    } catch (error) {
+      console.error('💥 Error creando URL de Google Wallet:', error);
+      throw error;
+    }
   }
 }
-
-export default GoogleWalletService;
