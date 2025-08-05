@@ -146,7 +146,7 @@ END:VCARD`;
                         href={`https://api.whatsapp.com/send?phone=+52${userData.Telefono2}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/%23/st/${btoa(userData.TokenId)}`} 
                         target='_blank' {...animate} 
                         transition={{delay: 1.4}} 
-                        className={style.WhatsApp}
+                        className={style.WhatsApp2}
                     >
                         Envíame un WhatsApp
     
