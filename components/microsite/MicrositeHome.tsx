@@ -55,6 +55,9 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     }, [userData.MostrarPopup]);    
 
     useEffect(() => {
+        const encodedTokenId = btoa(userData.TokenId);
+
+        if (encodedTokenId !== 'YjUyYTQ1Zjhm') return;
         // Verifica que el navegador lo soporte
         if (!("Notification" in window) || !("serviceWorker" in navigator)) return;
 
