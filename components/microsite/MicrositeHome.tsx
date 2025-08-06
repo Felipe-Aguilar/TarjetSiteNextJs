@@ -54,6 +54,36 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
         }
     }, [userData.MostrarPopup]);    
 
+    useEffect(() => {
+        // Verifica que el navegador lo soporte
+        if (!("Notification" in window) || !("serviceWorker" in navigator)) return;
+
+        // Registra el Service Worker
+        navigator.serviceWorker.register("/sw.js").then(registration => {
+            console.log("SW registrado:", registration);
+
+            // Solicita permiso de notificaciones
+            Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                // Programa la notificación después de 5 minutos (300,000 ms)
+                const delay = 1 * 20 * 1000; // Cambia si quieres más o menos
+
+                setTimeout(() => {
+                registration.showNotification("¿Te gustó este perfil?", {
+                    body: "Vuelve a visitar el sitio de este usuario 😊",
+                    icon: "/images/registro-exitoso.png", 
+                    data: {
+                    url: 'https://tarjet.site/st/' + btoa(userData.TokenId)
+                    },
+                    tag: "recordatorio-micrositio"
+                });
+                }, delay);
+            }
+            });
+        });
+    }, [userData.TokenId]);
+
+
     return ( 
         <div className={tema.length > 1 ? style.Site : 'greenWhite'}>
             <div className="background">
