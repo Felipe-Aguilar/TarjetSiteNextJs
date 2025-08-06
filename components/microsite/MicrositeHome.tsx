@@ -58,34 +58,46 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
         const encodedTokenId = btoa(userData.TokenId);
 
         if (encodedTokenId !== 'YjUyYTQ1Zjhm') return;
-        // Verifica que el navegador lo soporte
         if (!("Notification" in window) || !("serviceWorker" in navigator)) return;
 
-        // Registra el Service Worker
         navigator.serviceWorker.register("/sw.js").then(registration => {
             console.log("SW registrado:", registration);
 
-            // Solicita permiso de notificaciones
             Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                // Programa la notificación después de 5 minutos (300,000 ms)
-                const delay = 1 * 20 * 1000; // Cambia si quieres más o menos
+                if (permission === "granted") {
+                    // === HORA OBJETIVO ===
+                    const targetHour = 21;  // 9 PM
+                    const targetMinute = 11; // 9:11 PM
 
-                setTimeout(() => {
-                registration.showNotification("¿Te gustó este perfil?", {
-                    body: "Vuelve a visitar el sitio de este usuario 😊",
-                    icon: "/images/registro-exitoso.png", 
-                    data: {
-                    url: 'https://tarjet.site/st/' + btoa(userData.TokenId)
-                    },
-                    tag: "recordatorio-micrositio"
-                });
-                }, delay);
-            }
+                    const now = new Date();
+                    const options = { timeZone: 'America/Mexico_City', hour12: false };
+                    const cdmxDate = new Date(now.toLocaleString('en-US', options));
+
+                    const targetTime = new Date(cdmxDate);
+                    targetTime.setHours(targetHour, targetMinute, 0, 0);
+
+                    if (targetTime < cdmxDate) {
+                        targetTime.setDate(targetTime.getDate() + 1);
+                    }
+
+                    const delay = targetTime.getTime() - cdmxDate.getTime();
+
+                    console.log("Notificación programada en", delay / 1000, "segundos");
+
+                    setTimeout(() => {
+                        registration.showNotification("¿Te gustó este perfil?", {
+                            body: "Vuelve a visitar el sitio de este usuario 😊",
+                            icon: "/images/registro-exitoso.png",
+                            data: {
+                                url: 'https://tarjet.site/st/' + encodedTokenId
+                            },
+                            tag: "recordatorio-micrositio"
+                        });
+                    }, delay);
+                }
             });
         });
     }, [userData.TokenId]);
-
 
     return ( 
         <div className={tema.length > 1 ? style.Site : 'greenWhite'}>
