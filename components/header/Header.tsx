@@ -24,6 +24,7 @@ const socialLinks = [
 const Header = () => {
 
     const [data, setData] = useState<UserTokenResponse>();
+    const [tipo, setTipo] = useState<string>();
     const pathname = usePathname();
 
     useEffect(()=>{
@@ -32,28 +33,38 @@ const Header = () => {
     
     
     const GetDataGeneral = async () => {
-        const segments = pathname.split('/');
+        try {
+            const segments = pathname.split('/');
 
-        const id = segments[2];
+            const id = segments[2];
 
-        if (segments.length == 3) {
-            const response = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaUsuXToken`,{
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify({
-                    "Token": atob(id)
-                })
-            });
-        
-            const data = await response.json();
-    
-            setData(data);
-        }else{
+            if (segments.length == 3) {
+                const response = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaUsuXToken`,{
+                    method: 'POST',
+                    mode: 'cors',
+                    body: JSON.stringify({
+                        "Token": atob(id)
+                    })
+                });            
+                const data = await response.json();              
+                setData(data);
+
+                const response1 = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/Usuario/${data.usuId}`);
+                const data1 = await response1.json();              
+                setTipo(data1.Tipo);
+
+            } else {
+                setData(undefined);
+            }
+        } catch (error) {
+            console.error('Error en GetDataGeneral:', error);
             setData(undefined);
+            setTipo(undefined);
         }
     }
 
-    if (data?.premium) return null;
+    const verificarTipo = (tipo !== undefined && tipo !== '' && tipo.toLowerCase() !== 'ind');
+    if (data?.premium && verificarTipo) return null;
 
     return ( 
         <header 
@@ -116,3 +127,7 @@ export default Header;
 function getData(arg0: string) {
     throw new Error('Function not implemented.');
 }
+function toLowerCase(arg0: string) {
+    throw new Error('Function not implemented.');
+}
+
