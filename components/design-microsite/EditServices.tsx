@@ -10,7 +10,7 @@ import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import EditData from '@/app/api/editData';
 import UploadImage from '../pop-ups/upload-image/UploadImage';
-import UploadVideo from '../pop-ups/upload-video/UploadVideo';
+// import UploadVideo from '../pop-ups/upload-video/UploadVideo'; // Comentado temporalmente
 import Image from 'next/image';
 
 interface Props {
@@ -86,7 +86,7 @@ const EditServices = ({ userData } : Props) => {
                     ServSubTitulo: '',
                     ServImg: '',
                     ServIcono: '',
-                    ServSiteId: i === 5 ? 3 : 2
+                    ServSiteId: 2 // Forzamos a que siempre sea imagen por ahora
                 };
                 
                 initialSecond[serviceKey] = {
@@ -95,8 +95,8 @@ const EditServices = ({ userData } : Props) => {
                     ServSubTitulo: serviceData.ServSubTitulo || '',
                     ServImg: serviceData.ServImg || '',
                     ServIcono: serviceData.ServIcono || '',
-                    ServSiteId: serviceData.ServSiteId || (i === 5 ? 3 : 2),
-                    isVideo: serviceData.ServSiteId === 3
+                    ServSiteId: 2, // Siempre imagen por ahora
+                    isVideo: false // Deshabilitado temporalmente
                 };
             }
 
@@ -161,7 +161,7 @@ const EditServices = ({ userData } : Props) => {
     }
 
     const [openUpload, setOpenUpload] = useState<boolean>(false);
-    const [openVideoUpload, setOpenVideoUpload] = useState<boolean>(false);
+    // const [openVideoUpload, setOpenVideoUpload] = useState<boolean>(false); // Comentado temporalmente
     const [imageType, setImageType] = useState<string>('');
     const [serviceNumber, setServiceNumber] = useState<string>('');
 
@@ -175,12 +175,15 @@ const EditServices = ({ userData } : Props) => {
         setOpenUpload(true);
     }
 
+    /*
+    // Comentado para implementación posterior
     const onUploadVideo = async (serviceNumber?:string) => {
         if (serviceNumber) {
             setServiceNumber(serviceNumber);
         }
         setOpenVideoUpload(true);
     }
+    */
 
     const clearInfo = (key: string) => {
         setSecondServices(prev => ({
@@ -194,6 +197,8 @@ const EditServices = ({ userData } : Props) => {
         }))
     }
 
+    /*
+    // Comentado para implementación posterior
     const isVideoService = (key: string) => {
         return secondServices[key]?.isVideo || false;
     }
@@ -209,9 +214,10 @@ const EditServices = ({ userData } : Props) => {
             }
         }));
     };
+    */
 
     const getButtonText = (key: string, index: number) => {
-        return key === 'service14' ? 'Bloque de video/imagen' : `Bloque de servicio No. ${index + 1}`;
+        return key === 'service19' ? 'Bloque de video/imagen' : `Bloque de servicio No. ${index + 1}`;
     }
 
     return ( 
@@ -249,6 +255,8 @@ const EditServices = ({ userData } : Props) => {
                 <UploadImage token={userData.TokenId} imageType={imageType} close={()=>setOpenUpload(false)} serviceNumber={serviceNumber}/>
             )}
 
+            {/*
+            // Comentado para implementación posterior
             { openVideoUpload && (
                 <UploadVideo 
                     token={userData.TokenId} 
@@ -257,6 +265,7 @@ const EditServices = ({ userData } : Props) => {
                     userData={userData}
                 />
             )}
+            */}
 
             <h3>Listado de servicios</h3>
             <p>
@@ -296,6 +305,8 @@ const EditServices = ({ userData } : Props) => {
                             <AnimatePresence>
                                 { openServices[key as keyof ServiceState] && (
                                     <motion.div className={style.ServiceContainer} {...animate}>
+                                        {/*
+                                        // Comentado para implementación posterior
                                         {key === 'service14' && (
                                             <div className={style.ContentTypeSelector}>
                                                 <button
@@ -318,15 +329,18 @@ const EditServices = ({ userData } : Props) => {
                                                 </button>
                                             </div>
                                         )}
+                                        */}
                                         
                                         <input 
                                             type="text" 
-                                            placeholder={isVideoService(key) ? 'Título del video' : 'Título de imagen'}
+                                            placeholder='Título de imagen'
                                             value={service.ServSubTitulo}
                                             onChange={(e)=>SecondInputChange(key, e.target.value)}
                                             onBlur={SubmitData}
                                         />
                                         
+                                        {/*
+                                        // Comentado para implementación posterior
                                         { isVideoService(key) ? (
                                             service.ServImg ? (
                                                 <div className={style.VideoContainer}>
@@ -344,6 +358,7 @@ const EditServices = ({ userData } : Props) => {
                                                 </div>
                                             )
                                         ) : (
+                                        */}
                                             service.ServImg ? (
                                                 <Image 
                                                     src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?timestamp=${Date.now()}`}
@@ -359,22 +374,19 @@ const EditServices = ({ userData } : Props) => {
                                                     <BsCardImage/>
                                                 </div>
                                             )
-                                        )}
+                                        {/* )} */}
                                         
                                         <button 
                                             type='button' 
                                             className={`btn ${style.UploadButton}`} 
-                                            onClick={() => isVideoService(key) ? 
-                                                onUploadVideo((index + 5).toString()) : 
-                                                onUploadImage('SERV', (index + 5).toString())
-                                            }
+                                            onClick={() => onUploadImage('SERV', (index + 5).toString())}
                                         >
-                                            {isVideoService(key) ? 'Subir video' : 'Subir imagen'}
+                                            Subir imagen
                                         </button>
                                         
                                         <div className={style.TextAreaContent}>
                                             <textarea 
-                                                placeholder={isVideoService(key) ? 'Descripción del video (hasta 300 caracteres)' : 'Descripción de la foto (hasta 300 caracteres)'} 
+                                                placeholder='Descripción de la foto (hasta 300 caracteres)' 
                                                 maxLength={300}
                                                 value={service.ServDescrip}
                                                 onChange={(e)=>SecondTextAreaChange(key, DOMPurify.sanitize(e.target.value, {ALLOWED_TAGS: []}))}

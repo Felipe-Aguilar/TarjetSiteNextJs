@@ -262,7 +262,8 @@ export default async function EditData({ userData, dataForm, contactForm, social
                             "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service14.ServSubTitulo : userData.Serv ? userData.Serv![9].ServSubTitulo : '',
                             "ServImg": servicesForm ? servicesForm.SecondServices.service14.ServImg : userData.Serv ? userData.Serv![9].ServImg : '',
                             "ServIcono": "",
-                            "ServSiteId": servicesForm ? servicesForm.SecondServices.service14.ServSiteId : userData.Serv ? userData.Serv![9].ServSiteId : 2
+                            // "ServSiteId": servicesForm ? servicesForm.SecondServices.service14.ServSiteId : userData.Serv ? userData.Serv![9].ServSiteId : 2
+                            "ServSiteId": 2
                         },
                         {
                             "ServNum": "15",
