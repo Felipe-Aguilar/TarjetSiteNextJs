@@ -66,8 +66,8 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
             Notification.requestPermission().then(permission => {
                 if (permission === "granted") {
                     // === HORA OBJETIVO ===
-                    const targetHour = 21;  // 9 PM
-                    const targetMinute = 11; // 9:11 PM
+                    const targetHour = 12;  // 12 PM
+                    const targetMinute = 15; // 12:15 PM
 
                     const now = new Date();
                     const options = { timeZone: 'America/Mexico_City', hour12: false };
