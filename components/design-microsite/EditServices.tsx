@@ -359,7 +359,7 @@ const EditServices = ({ userData } : Props) => {
                                             )
                                         ) : (
                                         */}
-                                            service.ServImg ? (
+                                            {service.ServImg ? (
                                                 <Image 
                                                     src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?timestamp=${Date.now()}`}
                                                     alt='Imagen de servicio personalizado'
@@ -369,12 +369,12 @@ const EditServices = ({ userData } : Props) => {
                                                     priority={false}
                                                     unoptimized
                                                 />
-                                            ) : (
-                                                <div className={style.UploadImage}>
-                                                    <BsCardImage/>
-                                                </div>
-                                            )
-                                        {/* )} */}
+                                                ) : (
+                                                    <div className={style.UploadImage}>
+                                                        <BsCardImage/>
+                                                    </div>
+                                                )
+                                            }   
                                         
                                         <button 
                                             type='button' 
