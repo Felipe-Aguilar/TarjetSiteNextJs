@@ -151,7 +151,7 @@
       }
 
       &:disabled {
-        opacity: 0.5;
+        opacity: 0.5 !important;
         transform: none !important;
         box-shadow: none !important;
       }
@@ -441,7 +441,7 @@
       }
 
       .Disabled {
-        opacity: 0.4;
+        opacity: 0.4 !important;
 
         .Blue {
           display: none;

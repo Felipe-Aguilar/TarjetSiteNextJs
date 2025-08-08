@@ -295,6 +295,7 @@ const Data = ({ userData }: Props) => {
           >
             <option value="">Default</option>
             <option value="oscuro">Oscuro</option>
+            <option value="invierno">Invierno</option>
           </select>
         </div>
 
