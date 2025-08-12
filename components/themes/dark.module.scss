@@ -18,7 +18,7 @@
 
   // Head
   .Head {
-    margin-top: 50px;
+    margin-top: 20px;
     position: relative;
 
     @media (width <= 700px) {
@@ -53,36 +53,7 @@
         width: 95%;
       }
     }
-
-    .Perfil {
-      width: 25%;
-      height: auto;
-      border-radius: 100%;
-      border: 3px solid #00f2ea;
-      position: absolute;
-      top: -60px;
-      left: 40px;
-      box-shadow: 0 0 15px rgba(0, 242, 234, 0.5);
-      transition: all 0.3s ease;
-
-      &:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 25px rgba(0, 242, 234, 0.8);
-      }
-
-      @media (width <= 700px) {
-        top: -25px;
-        border-width: 2px;
-      }
-    }
-
-    .PremiumPerfil {
-      top: -85px; /* Mueve el perfil más arriba */
-
-      @media (width <= 700px) {
-          top: -60px; /* Ajuste para móvil */
-      }
-    }
+    
   }
 
   // Buttons
@@ -229,24 +200,58 @@
 
   // Services
   .Services {
-    h2, h3 {
-      text-align: center;
-      font-weight: 600;
-      font-size: 1.5rem;
-      margin-bottom: 30px;
-      position: relative;
+    position: relative;  // Necesario para posicionamiento absoluto interno
+    padding-top: 30px;   // Espacio para evitar que el perfil tape contenido
 
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80px;
-        height: 3px;
-        background: linear-gradient(90deg, #00f2ea, #ff00cc);
-        border-radius: 3px;
-      }
+    h2, h3 {
+        text-align: center;      
+        font-weight: 600;
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #00f2ea, #ff00cc);
+            border-radius: 3px;
+        }
+    }
+
+    .Perfil {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 3px solid #00f2ea;
+        box-shadow: 0 0 15px rgba(0, 242, 234, 0.5);
+        transition: all 0.3s ease;
+        display: block;  // Asegura que la imagen sea un bloque
+        margin: 0 auto 25px auto; // Centrado horizontal con margen inferior
+        cursor: pointer; // Cambia el cursor al pasar sobre la imagen
+
+        &:hover {
+            transform: scale(1.05); 
+            box-shadow: 0 0 25px rgba(0, 242, 234, 0.8);
+        }
+
+        @media (width <= 700px) {
+            width: 120px;
+            height: 120px;
+            border-width: 2px;
+            margin-bottom: 15px; // Menor espacio en móviles
+        }
+    }
+
+    hr {
+      margin: 30px 0;  // Espaciado más equilibrado
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #00f2ea, transparent);
     }
 
     .Icon {

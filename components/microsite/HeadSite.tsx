@@ -45,19 +45,7 @@ const HeadSite = ({userData, tema} : Props) => {
                     unoptimized
                 />
             </motion.div>
-
-            <Image 
-                src={`${userData.ImgFoto 
-                    ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}?timestamp=${Date.now()}` 
-                    : '/images/perfil-temporal.webp'
-                }`}
-                alt='Imagen de perfil'
-                width={500}
-                height={500}
-                quality={80}
-                className={`${style.Perfil} ${userData.Premium ? style.PremiumPerfil : ''}`} // Clase condicional
-                unoptimized
-            />
+            
         </div>
     );
 }

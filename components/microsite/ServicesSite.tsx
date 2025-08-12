@@ -29,6 +29,7 @@ const ServicesSite = ({userData, tema} : Props) => {
         }
     };
     const style = getThemeStyle();
+   
 
     return ( 
         <div className={style.Services}>
@@ -45,18 +46,23 @@ const ServicesSite = ({userData, tema} : Props) => {
                             unoptimized
                             style={{width: '100%', height: 'auto', marginBottom: '20px'}}
                         />
-                    )} 
-
-        
-                    <h2>{userData.Lev3Desc}</h2>
+                    )}
 
                     <Image 
-                        src={'/images/icono-servicios.svg'}
-                        alt='icono'
-                        width={90}
-                        height={90}
-                        className={style.Icon}
-                    />
+                        src={`${userData.ImgFoto 
+                            ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}?timestamp=${Date.now()}` 
+                            : '/images/perfil-temporal.webp'
+                        }`}
+                        alt='Imagen de perfil'
+                        width={500}
+                        height={500}
+                        quality={80}
+                        className={style.Perfil} 
+                        unoptimized
+                    /> 
+        
+                    <h2>{userData.Lev3Desc}</h2>
+                    
                     <ul>
                         { userData.Serv?.map((service)=>(
                             (service.ServSiteId === 1 && service.ServDescrip) && (

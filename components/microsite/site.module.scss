@@ -1,6 +1,6 @@
 .Site{
     .Head{
-        margin-top: 50px;
+        margin-top: 20px;
         position: relative;
 
         @media (width <= 700px) {
@@ -17,28 +17,7 @@
                 display: block;
                 margin: auto;
             }
-        }
-        .Perfil{
-            width: 25%;
-            height: auto;
-            border-radius: 100%;
-            border: 4px solid #fff;
-            position: absolute;
-            top: -60px;
-            left: 40px;
-
-            @media (width <= 700px) {
-                top: -25px;
-            }
-        }
-
-        .PremiumPerfil {
-            top: -85px; /* Mueve el perfil más arriba */
-
-            @media (width <= 700px) {
-                top: -60px; /* Ajuste para móvil */
-            }
-        }
+        }        
     }
 
     .Buttons{
@@ -170,12 +149,49 @@
     }
 
     .Services{
+        position: relative;  // Necesario para posicionamiento absoluto interno
+        padding-top: 30px;
+
         h2,h3{
             text-align: center;
             font-family: "IvyModeRegular"!important;
             font-weight: 600;
             font-size: 1.25rem;
         }
+
+        .Perfil {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            display: block;
+            margin: 0 auto 25px auto;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            background: #fff; // Fondo blanco para consistencia
+
+            &:hover {
+                transform: scale(1.05);
+                box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+                border-color: #f0f0f0;
+            }
+
+            @media (width <= 700px) {
+                width: 130px;
+                height: 130px;
+                margin: 0 auto 20px auto;
+                border-width: 3px;
+            }
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: #7b8d83;
+            margin: 40px 10%;
+        }
+
         .Icon{
             display: block;
             margin: auto;

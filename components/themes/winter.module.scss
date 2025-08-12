@@ -43,7 +43,7 @@
 
   // Head con efecto de cristal helado
   .Head {
-    margin-top: 60px;
+    margin-top: 20px;
     position: relative;
 
     @media (width <= 700px) {
@@ -83,40 +83,7 @@
       @media (width <= 700px) {
         width: 95%;
       }
-    }
-
-    .Perfil {
-      width: 25%;
-      height: auto;
-      border-radius: 100%;
-      border: 4px solid #b3e0ff;
-      position: absolute;
-      top: -70px;
-      left: 40px;
-      box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3),
-                  inset 0 0 15px rgba(255, 255, 255, 0.5);
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.4);
-      z-index: 1;
-
-      &:hover {
-        transform: scale(1.05) rotate(5deg);
-        box-shadow: 0 8px 25px rgba(0, 119, 182, 0.4),
-                    inset 0 0 20px rgba(255, 255, 255, 0.7);
-      }
-
-      @media (width <= 700px) {
-        top: -35px;
-        border-width: 3px;
-      }
-    }
-
-    .PremiumPerfil {
-      top: -85px; /* Mueve el perfil más arriba */
-
-      @media (width <= 700px) {
-          top: -60px; /* Ajuste para móvil */
-      }
-    }
+    }    
   }
 
   // Botones con efecto de hielo
@@ -248,134 +215,171 @@
     
   }
 
-  // Services con efecto de escarcha
   .Services {
+    position: relative;  // Necesario para posicionamiento absoluto interno
+    padding-top: 30px; 
+    background: linear-gradient(to bottom, transparent 95%, rgba(179, 224, 255, 0.1) 100%);
+    
     h2, h3 {
-      text-align: center;
-      font-weight: 600;
-      font-size: 1.5rem;
-      position: relative;
-      margin-bottom: 35px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.5rem;
+        position: relative;
+        margin-bottom: 35px;
+        color: #003049; // Texto más oscuro para mejor contraste
 
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -12px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80px;
-        height: 3px;
-        background: linear-gradient(90deg, #b3e0ff, #0077b6);
-        border-radius: 3px;
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #b3e0ff, #0077b6, #b3e0ff);
+            border-radius: 3px;
+            box-shadow: 0 0 8px rgba(179, 224, 255, 0.5);
+        }
+    }
+
+    .Perfil {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid #b3e0ff;
+      display: block;
+      margin: 0 auto 25px auto;
+      box-shadow: 0 5px 20px rgba(0, 119, 182, 0.3),
+                  inset 0 0 20px rgba(255, 255, 255, 0.7),
+                  0 0 30px rgba(179, 224, 255, 0.4); // Efecto "halo de hielo"
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+      cursor: pointer; 
+      background: white;
+
+      &:hover {
+          transform: scale(1.05); 
+          box-shadow: 0 8px 30px rgba(0, 119, 182, 0.5),
+                      inset 0 0 25px rgba(255, 255, 255, 0.9),
+                      0 0 40px rgba(179, 224, 255, 0.6);
+          filter: brightness(1.05);
+      }
+
+      @media (width <= 700px) {
+        width: 120px;
+        height: 120px;
+        border-width: 2px;
+        margin-bottom: 15px; // Menor espacio en móviles
       }
     }
 
     .Icon {
-      filter: drop-shadow(0 0 8px rgba(0, 119, 182, 0.2));
-      display: block;
-      margin: auto;
-      height: 60px;
-      margin-bottom: 30px;
+        filter: drop-shadow(0 0 10px rgba(0, 119, 182, 0.3));
+        display: block;
+        margin: 0 auto 30px;
+        height: 60px;
+        opacity: 0.9;
     }
-    ul {
-      padding: 0 50px;
 
-      > * + * {
-        margin-top: 8px;
+    ul {
+        padding: 0 50px;
+        list-style-type: none;
+
+        li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            color: #003049;
+
+            &::before {
+                content: '❄️';
+                position: absolute;
+                left: 0;
+                top: 1px;
+                font-size: 0.8em;
+            }
+        }
 
         @media (width <= 700px) {
-          margin-top: 10px;
+            padding: 0 25px;
         }
-      }
     }
 
     .Workers {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
 
-      > * + * {
-        margin-top: 60px;
-      }
-      .Worker {
-        background: rgba(212, 237, 255, 0.9) !important;
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(179, 224, 255, 0.7);
-        box-shadow: 0 8px 25px rgba(0, 119, 182, 0.1);
-        transition: all 0.4s ease;
+        .Worker {
+            background: rgba(212, 237, 255, 0.95) !important;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(179, 224, 255, 0.8);
+            box-shadow: 0 8px 30px rgba(0, 119, 182, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s ease;
 
-        &:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 15px 35px rgba(0, 119, 182, 0.2);
-        }
-
-        .Header {
-          svg {
-            color: #0077b6 !important;
-            filter: drop-shadow(0 0 5px rgba(0, 119, 182, 0.3));
-          }
-
-          .Image {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: absolute;
-            right: 10px;
-
-            img {
-              margin-bottom: 5px;
-              border-radius: 100%;
-              width: 60px;
-              height: 60px;
-              border: 2px solid #55555553;
+            &:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 15px 40px rgba(0, 119, 182, 0.25);
+                border-color: rgba(0, 119, 182, 0.5);
             }
-            svg {
-              font-size: 1.5rem;
-              font-size: 1.7rem;
-              color: #11B377;
-              rotate: (180deg);
-            }
-          }
-        }
 
-        .Contain {
-          background: rgba(255, 255, 255, 0.8);
-          img {
-            width: 80%;
-            height: auto;
-            display: flex;
-            border-radius: 8px;
-            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-          }
+            .Header {
+                svg {
+                    color: #0077b6 !important;
+                    filter: drop-shadow(0 0 8px rgba(0, 119, 182, 0.4));
+                }
+
+                .Image {
+                    img {
+                        border: 2px solid rgba(0, 119, 182, 0.3);
+                        box-shadow: 0 0 10px rgba(179, 224, 255, 0.5);
+                    }
+                }
+            }
+
+            .Contain {
+                background: rgba(255, 255, 255, 0.85);
+            }
         }
-                .Contain2 {
-          a {
-            display: flex;
-            justify-content: end;
-          }
-        }
-      }
     }
 
     .ServiceContainer {
-      text-align: center;
+        text-align: center;
+        margin-bottom: 40px;
 
-      h3 {
-        font-weight: 400;
-        text-transform: capitalize;
-      }
-      img {
-        width: 80%;
-        height: auto;
-        display: block;
-        margin: auto;
-        margin-bottom: 20px;
-        border-radius: 8px;
-
-        @media (width <= 700px) {
-          width: 90%;
+        h3 {
+            font-weight: 500;
+            color: #003049;
+            margin-bottom: 25px;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
         }
-      }
+
+        img {
+            width: 85%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 119, 182, 0.15);
+            border: 1px solid rgba(179, 224, 255, 0.5);
+            transition: transform 0.3s ease;
+
+            &:hover {
+                transform: scale(1.01);
+            }
+
+            @media (width <= 700px) {
+                width: 95%;
+            }
+        }
+    }
+
+    hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(to right, transparent, rgba(0, 119, 182, 0.3), transparent);
+        margin: 40px 0;
     }
   }
 
