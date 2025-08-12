@@ -28,8 +28,8 @@ const ServicesSite = ({userData, tema} : Props) => {
                 return defaultStyle;
         }
     };
+
     const style = getThemeStyle();
-   
 
     return ( 
         <div className={style.Services}>
