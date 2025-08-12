@@ -48,18 +48,20 @@ const ServicesSite = ({userData, tema} : Props) => {
                         />
                     )}
 
-                    <Image 
-                        src={`${userData.ImgFoto 
-                            ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}?timestamp=${Date.now()}` 
-                            : '/images/perfil-temporal.webp'
-                        }`}
-                        alt='Imagen de perfil'
-                        width={500}
-                        height={500}
-                        quality={80}
-                        className={style.Perfil} 
-                        unoptimized
-                    /> 
+                    {userData.Premium && (
+                        <Image 
+                            src={`${userData.ImgFoto 
+                                ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}?timestamp=${Date.now()}` 
+                                : '/images/perfil-temporal.webp'
+                            }`}
+                            alt='Imagen de perfil'
+                            width={500}
+                            height={500}
+                            quality={80}
+                            className={style.Perfil} 
+                            unoptimized
+                        /> 
+                    )}                    
         
                     <h2>{userData.Lev3Desc}</h2>
                     

@@ -33,7 +33,7 @@ const HeadSite = ({userData, tema} : Props) => {
     const style = getThemeStyle();
     
     return ( 
-        <div className={style.Head}>
+        <div className={style.Head} style={userData.Premium ? { marginTop: '20px' } : { marginTop: '50px' }}>
             <motion.div {...animateCard}>
                 <Image 
                     src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}?timestamp=${Date.now()}`}
@@ -45,6 +45,21 @@ const HeadSite = ({userData, tema} : Props) => {
                     unoptimized
                 />
             </motion.div>
+
+            {!userData.Premium && (
+                <Image 
+                    src={`${userData.ImgFoto 
+                        ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}?timestamp=${Date.now()}` 
+                        : '/images/perfil-temporal.webp'
+                    }`}
+                    alt='Imagen de perfil'
+                    width={500}
+                    height={500}
+                    quality={80}
+                    className={style.Perfil}                    
+                    unoptimized
+                />
+            )}
             
         </div>
     );

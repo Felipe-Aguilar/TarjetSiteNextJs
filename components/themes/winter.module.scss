@@ -43,7 +43,6 @@
 
   // Head con efecto de cristal helado
   .Head {
-    margin-top: 20px;
     position: relative;
 
     @media (width <= 700px) {
@@ -84,6 +83,20 @@
         width: 95%;
       }
     }    
+
+    .Perfil {
+      width: 25%;
+      height: auto;
+      border-radius: 100%;
+      border: 4px solid #b3e0ff;
+      position: absolute;
+      top: -60px;
+      left: 40px;
+
+      @media (width <= 700px) {
+        top: -25px;
+      }
+    }
   }
 
   // Botones con efecto de hielo

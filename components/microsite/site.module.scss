@@ -1,6 +1,5 @@
 .Site{
     .Head{
-        margin-top: 20px;
         position: relative;
 
         @media (width <= 700px) {
@@ -17,7 +16,21 @@
                 display: block;
                 margin: auto;
             }
-        }        
+        }
+        
+        .Perfil{
+            width: 27%;
+            height: auto;
+            border-radius: 100%;
+            border: 4px solid #fff;
+            position: absolute;
+            top: -60px;
+            left: 40px;
+
+            @media (width <= 700px) {
+                top: -25px;
+            }
+        }
     }
 
     .Buttons{
