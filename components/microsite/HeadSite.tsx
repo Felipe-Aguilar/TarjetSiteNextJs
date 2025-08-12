@@ -55,7 +55,7 @@ const HeadSite = ({userData, tema} : Props) => {
                 width={500}
                 height={500}
                 quality={80}
-                className={style.Perfil}
+                className={`${style.Perfil} ${userData.Premium ? style.PremiumPerfil : ''}`} // Clase condicional
                 unoptimized
             />
         </div>

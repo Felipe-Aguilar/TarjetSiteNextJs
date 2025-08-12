@@ -104,7 +104,7 @@ const SocialNetworsSite = ({userData, tokenServer, tema} :Props) => {
                         <p>Usuario: {userData.Alias}</p>
                     </div>
                     
-                    { (!tokenServer) && (
+                    { !tokenServer && userData.Tipo !== 'EMP' && userData.Tipo !== 'COL' && (
                         <Fragment>
                             <div className={style.Info}>
                                 <Image 

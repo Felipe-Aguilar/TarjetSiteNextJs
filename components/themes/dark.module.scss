@@ -75,6 +75,14 @@
         border-width: 2px;
       }
     }
+
+    .PremiumPerfil {
+      top: -85px; /* Mueve el perfil más arriba */
+
+      @media (width <= 700px) {
+          top: -60px; /* Ajuste para móvil */
+      }
+    }
   }
 
   // Buttons
