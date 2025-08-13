@@ -185,16 +185,28 @@ const EditServices = ({ userData } : Props) => {
     }
     */
 
-    const clearInfo = (key: string) => {
-        setSecondServices(prev => ({
-            ...prev,
+    const clearInfo = async (key: string) => {
+        // Actualiza el estado local
+        const updatedServices = {
+            ...secondServices,
             [key]: {
-                ...prev[key],
+                ...secondServices[key],
                 ServSubTitulo: '',
                 ServDescrip: '',
                 ServImg: ''
             }
-        }))
+        };
+        
+        setSecondServices(updatedServices);
+        
+        // Prepara y envía los datos inmediatamente
+        await EditData({
+            userData,
+            servicesForm: {
+                FirstServices: firstServices,
+                SecondServices: updatedServices
+            }
+        });
     }
 
     /*

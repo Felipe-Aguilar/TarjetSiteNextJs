@@ -365,28 +365,30 @@ END:VCARD`;
                     </motion.a>
                 ) }
 
-                <motion.div {...animate} transition={{delay: 2}} style={{width: '95%'}}>
-                    <Link
-                        to="SocialSection"
-                        spy={true}
-                        smooth={true}
-                        offset={-70}
-                        duration={500}
-                        className={style.Social}
-                        style={{width: '100%', cursor: 'pointer'}}
-                    >
-                        Mis redes sociales
-    
-                        <span>
-                            <Image 
-                                src={'/images/icono-redes.svg'}
-                                alt='icono de redes sociales'
-                                width={150}
-                                height={150}
-                            />
-                        </span>
-                    </Link>
-                </motion.div>
+                {(userData.ListRedesSociales && userData.ListRedesSociales.length !== 0) && (
+                    <motion.div {...animate} transition={{delay: 2}} style={{width: '95%'}}>
+                        <Link
+                            to="SocialSection"
+                            spy={true}
+                            smooth={true}
+                            offset={-70}
+                            duration={500}
+                            className={style.Social}
+                            style={{width: '100%', cursor: 'pointer'}}
+                        >
+                            Mis redes sociales
+        
+                            <span>
+                                <Image 
+                                    src={'/images/icono-redes.svg'}
+                                    alt='icono de redes sociales'
+                                    width={150}
+                                    height={150}
+                                />
+                            </span>
+                        </Link>
+                    </motion.div>
+                )}
 
                 { userData.Google &&(
                     <motion.div {...animate} transition={{delay: 2}} style={{width: '95%'}}>
