@@ -22,7 +22,6 @@ const animate = {
 }
 
 const ContactData = ( { userData }:Props ) => {
-
     const [open, setOpen] = useState<boolean>(false);
     const [company, setCompany] = useState<boolean>(userData.Tipo === 'COL' ? true : false);
 
@@ -31,22 +30,33 @@ const ContactData = ( { userData }:Props ) => {
     const [showUbication, setShowUbication] = useState(userData.VerUbicacion == 0 ? false : true);
     const [email, setEmail] = useState(userData.Mail);
     const [website, setWebsite] = useState(userData.Web);
-    const [avenue, setAvenue] = useState(userData.Calle);
-    const [number, setNumber] = useState(userData.NumExt);
-    const [postalCode, setPostalCode] = useState(userData.CodP);
-    const [state, setState] = useState(userData.Estado);
-    const [mun, setMun] = useState(userData.Municip);
-    const [colony, setColony] = useState(userData.Colonia);
-    const [MapGeoloc, setMapGeoloc] = useState(userData.MapsGeoloc);
+
+    // Obtener la primera dirección del array o usar los campos individuales como fallback
+    const firstAddress = userData.ListDirecciones?.find(d => d.DirId === "1") || {
+        DirCalle: userData.Calle,
+        DirNumExt: userData.NumExt,
+        DirCodP: userData.CodP,
+        DirCol: userData.Colonia,
+        DirMunicip: userData.Municip,
+        DirEstado: userData.Estado,
+        DirMapsGeoloc: userData.MapsGeoloc
+    };
+
+    const [avenue, setAvenue] = useState(firstAddress.DirCalle);
+    const [number, setNumber] = useState(firstAddress.DirNumExt);
+    const [postalCode, setPostalCode] = useState(firstAddress.DirCodP);
+    const [state, setState] = useState(firstAddress.DirEstado);
+    const [mun, setMun] = useState(firstAddress.DirMunicip);
+    const [colony, setColony] = useState(firstAddress.DirCol);
+    const [MapGeoloc, setMapGeoloc] = useState(firstAddress.DirMapsGeoloc);
+
     const [range, setRange] = useState(userData.RangoLocal);
     const [publicTarjet, setPublicTarjet] = useState(userData.PublicPriva == 0 ? true : false);
     const [qualification, setQualification] = useState(userData.PermitirCalif == 0 ? true : false);
     const [comments, setComments] = useState(userData.PermitirComments == 0 ? true : false);
-
     
-
     //Mostrar Mapa
-    const [showMap, setShowMap] = useState<boolean>(userData.CodP ? false : false);
+    const [showMap, setShowMap] = useState<boolean>(false);
 
     const onChangeShowMap = () => {
         if (postalCode) {
@@ -120,6 +130,13 @@ const ContactData = ( { userData }:Props ) => {
             "Mail": email,
             "Web": website,
             // Mantener campos individuales para compatibilidad
+            "DirCalle": avenue,
+            "DirNumExt": number,
+            "DirCodP": postalCode,
+            "DirCol": colony,
+            "DirMunicip": mun,
+            "DirEstado": state,
+            // Agregar los campos requeridos por el tipo
             "Calle": avenue,
             "NumExt": number,
             "CodP": postalCode,
@@ -139,7 +156,7 @@ const ContactData = ( { userData }:Props ) => {
     }
 
     useEffect(() => {
-  console.log('MapsGeoloc from userData:', userData.MapsGeoloc);
+    console.log('MapsGeoloc from userData:', userData.ListDirecciones?.find(d => d.DirId === "1")?.DirMapsGeoloc);
 }, [userData]);
 
     useEffect(()=>{
@@ -390,7 +407,6 @@ const ContactData = ( { userData }:Props ) => {
                         {showSecondUbication && (
                             <Fragment>
                                 <h4>Segunda Ubicación</h4>
-                                    <div className={style.Info2}>?</div>
 
                                 <input 
                                     type="text" 

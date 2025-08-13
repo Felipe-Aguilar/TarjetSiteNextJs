@@ -114,13 +114,6 @@ export default async function EditData({ userData, dataForm, contactForm, social
                 "VerUbicacion": contactForm?.VerUbicacion ?? userData.VerUbicacion,
                 "Mail": contactForm?.Mail ?? userData.Mail,
                 "Web": contactForm?.Web ?? userData.Web,
-                "Calle": contactForm?.Calle ?? userData.Calle,
-                "NumExt": contactForm?.NumExt ?? userData.NumExt,
-                "CodP": contactForm?.CodP ?? userData.CodP,
-                "Colonia": contactForm?.Colonia ?? userData.Colonia,
-                "Municip": contactForm?.Municip ?? userData.Municip,
-                "MapsGeoloc": contactForm?.MapsGeoloc ?? userData.MapsGeoloc,
-                "Estado": contactForm?.Estado ?? userData.Estado,
                 "PublicPriva": contactForm?.PublicPriva ?? userData.PublicPriva,
                 "PermitirCalif": contactForm?.PermitirCalif ?? userData.PermitirCalif,
                 "PermitirComments": contactForm?.PermitirComments ?? userData.PermitirComments,
@@ -258,11 +251,11 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         },
                         {
                             "ServNum": "14",
-                            "ServDescrip": servicesForm ? servicesForm.SecondServices.service14.ServDescrip : userData.Serv ? userData.Serv![9].ServDescrip : '',
-                            "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service14.ServSubTitulo : userData.Serv ? userData.Serv![9].ServSubTitulo : '',
-                            "ServImg": servicesForm ? servicesForm.SecondServices.service14.ServImg : userData.Serv ? userData.Serv![9].ServImg : '',
+                            "ServDescrip": servicesForm ? servicesForm.SecondServices.service14.ServDescrip : userData.Serv ? userData.Serv![13].ServDescrip : '',
+                            "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service14.ServSubTitulo : userData.Serv ? userData.Serv![13].ServSubTitulo : '',
+                            "ServImg": servicesForm ? servicesForm.SecondServices.service14.ServImg : userData.Serv ? userData.Serv![13].ServImg : '',
                             "ServIcono": "",
-                            // "ServSiteId": servicesForm ? servicesForm.SecondServices.service14.ServSiteId : userData.Serv ? userData.Serv![9].ServSiteId : 2
+                            // "ServSiteId": servicesForm ? servicesForm.SecondServices.service14.ServSiteId : userData.Serv ? userData.Serv![13].ServSiteId : 2
                             "ServSiteId": 2
                         },
                         {
