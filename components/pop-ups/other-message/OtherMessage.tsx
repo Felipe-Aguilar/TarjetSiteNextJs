@@ -5,6 +5,7 @@ import Image from "next/image";
 interface Props {
     close: ()=>void;
     url: string;
+    message?: string;
 }
 
 const animate = {
@@ -13,7 +14,7 @@ const animate = {
     transition: {delay: 0.2}
 }
 
-const OtherMessage = ({ close, url }: Props) => {
+const OtherMessage = ({ close, url, message }: Props) => {
     return ( 
         <div className="pop">
             <motion.div className="container" {...animate}>
@@ -25,7 +26,7 @@ const OtherMessage = ({ close, url }: Props) => {
                     priority={false}
                     className={style.Image}
                 />
-                <h5>Visita mi sitio web</h5>
+                <h5>{message}</h5>
 
                 <a 
                     href={url.startsWith('http') ? url : `https://${url}`}

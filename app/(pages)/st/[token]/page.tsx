@@ -61,6 +61,7 @@ const getData = async (token: string) => {
         ImagenPopup: siteData.SDTSite?.ImagenPopup || '',
         SiteGoogle: siteData.SDTSite?.SiteGoogle || '',
         customUrl: siteData.SDTSite?.URLPopup || '',
+        message: siteData.SDTSite?.SiteTextoUbica || 'Visita mi sitio web'
     };
 
 }

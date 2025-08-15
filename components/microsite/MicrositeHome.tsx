@@ -14,6 +14,7 @@ import ServicesSite from './ServicesSite';
 import SocialNetworsSite from './SocialNetworksSite';
 import PopupSelector from '../pop-ups/PopupSelector';
 import Image from 'next/image';
+import userData from '@/app/api/userData';
 
 interface Props {
     userData: UserDataResponse & {
@@ -21,6 +22,7 @@ interface Props {
         TipoPopup?: string;
         SiteGoogle?: string;
         customUrl?: string;
+        message?: string;
         Tema?: string; // Nuevo campo para el tema
     };
     tokenServer: string | undefined | null;
@@ -49,6 +51,7 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     const googleUrl = googleSocial ? googleSocial.RedSocialUrl : '';
 
     const customUrl = userData.customUrl;    
+    const message = userData.message;
 
     useEffect(() => {
         if (userData.MostrarPopup) {
@@ -129,12 +132,13 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                     </div>
 
                     {showPopup && (
-                        <PopupSelector 
+                        <PopupSelector
                             tipoPopup={userData.TipoPopup || 'PopWhats'}
                             phone={userData.Telefono1}
                             token={userData.TokenId}
                             googleUrl={googleUrl}
                             customUrl={customUrl}
+                            message={message}
                             onClose={() => setShowPopup(false)}
                         />
                     )}
