@@ -43,7 +43,9 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     };
 
     const style = getThemeStyle();
-    const siteGoogle = userData.SiteGoogle || '';
+
+    const googleSocial = userData.ListRedesSociales?.find(item => item.RedSocialId === "GOOG");
+    const googleUrl = googleSocial ? googleSocial.RedSocialUrl : '';
     
 
     useEffect(() => {
@@ -129,7 +131,7 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                             tipoPopup={userData.TipoPopup || 'PopWhats'}
                             phone={userData.Telefono1}
                             token={userData.TokenId}
-                            googleUrl={siteGoogle} // Usar el valor extraído de la API
+                            googleUrl={googleUrl} // Usar el valor extraído de la API
                             onClose={() => setShowPopup(false)}
                         />
                     )}

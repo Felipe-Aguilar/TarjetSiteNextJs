@@ -82,6 +82,7 @@ export interface RedSocial {
 
 export interface Direccion {
     DirId: string;
+    DirTextoUbica: string;
     DirCalle: string;
     DirNumExt: string;
     DirCodP: string;

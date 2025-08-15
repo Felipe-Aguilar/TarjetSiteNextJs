@@ -33,6 +33,7 @@ const ContactData = ( { userData }:Props ) => {
 
     // Obtener la primera dirección del array o usar los campos individuales como fallback
     const firstAddress = userData.ListDirecciones?.find(d => d.DirId === "1") || {
+        DirTextoUbica: userData.TexoUbica || '',
         DirCalle: userData.Calle,
         DirNumExt: userData.NumExt,
         DirCodP: userData.CodP,
@@ -90,16 +91,20 @@ const ContactData = ( { userData }:Props ) => {
         userData.ListDirecciones?.find(d => d.DirId === "2")?.DirCol || ''
     );
 
+    // En la sección de estados, junto con los demás estados de dirección
+    const [locationText, setLocationText] = useState(firstAddress.DirTextoUbica || '');
+    const [locationText2, setLocationText2] = useState(
+        userData.ListDirecciones?.find(d => d.DirId === "2")?.DirTextoUbica || ''
+    );
     
     const [showMap2, setShowMap2] = useState<boolean>(userData.CodP ? false : false);
     const [listColonies2, setListColonies2] = useState<ListColoniesInterface>();
-
-    
 
     const onSubmitData = async () => {
         // Crear array de direcciones
         const direcciones = [{
             "DirId": "1",
+            "DirTextoUbica": locationText, 
             "DirCalle": avenue,
             "DirNumExt": number,
             "DirCodP": postalCode,
@@ -113,6 +118,7 @@ const ContactData = ( { userData }:Props ) => {
         if (showSecondUbication) {
             direcciones.push({
                 "DirId": "2",
+                "DirTextoUbica": locationText2,
                 "DirCalle": avenue2,
                 "DirNumExt": number2,
                 "DirCodP": postalCode2,
@@ -130,6 +136,7 @@ const ContactData = ( { userData }:Props ) => {
             "Mail": email,
             "Web": website,
             // Mantener campos individuales para compatibilidad
+            
             "DirCalle": avenue,
             "DirNumExt": number,
             "DirCodP": postalCode,
@@ -377,6 +384,14 @@ const ContactData = ( { userData }:Props ) => {
                             ))}
                         </select>
 
+                        <input 
+                            type="text" 
+                            placeholder="Texto a Mostrar (opcional)"
+                            value={locationText}
+                            onChange={(e)=>setLocationText(e.target.value)}
+                            onBlur={onSubmitData}
+                        />
+
                         <div className="input-checkbox">
                             <input 
                                 type="checkbox" 
@@ -461,6 +476,14 @@ const ContactData = ( { userData }:Props ) => {
                                         <option value={colony.CPColonia} key={`${colony.CPColonia}-2`}>{colony.CPColonia}</option>
                                     ))}
                                 </select>
+
+                                <input 
+                                    type="text" 
+                                    placeholder="Texto a Mostrar (opcional)" 
+                                    value={locationText2}
+                                    onChange={(e)=>setLocationText2(e.target.value)}
+                                    onBlur={onSubmitData}
+                                />
 
                                 <div className="input-checkbox">
                                     <input 

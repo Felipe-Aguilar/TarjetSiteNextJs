@@ -1,6 +1,6 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
 import { motion } from 'framer-motion';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, use, useEffect, useState } from 'react';
 import { BsWhatsapp } from 'react-icons/bs';
 import { Link } from 'react-scroll';
 import { useRouter } from 'next/navigation';
@@ -215,6 +215,11 @@ END:VCARD`;
             setIsIOS(/iPhone|iPad|iPod/i.test(navigator.userAgent));
         }, []);
 
+    const googleSocial = userData.ListRedesSociales?.find(item => item.RedSocialId === "GOOG");
+    const googleUrl = googleSocial ? googleSocial.RedSocialUrl : '';
+
+    console.log(userData);
+
     return (
         <Fragment>
             <div className={style.Buttons}>
@@ -264,7 +269,7 @@ END:VCARD`;
                 { userData.VerUbicacion === 1 && (
                     <>
                         {/* Primary location */}
-                        {primaryAddress ? (
+                        {primaryAddress && (
                             <motion.a 
                                 href={getMapsUrl(primaryAddress)}
                                 target='_blank' 
@@ -272,30 +277,8 @@ END:VCARD`;
                                 transition={{delay: 1.4}} 
                                 className={style.Ubication}
                             >
-                                {userData.TexoUbica && `${userData.TexoUbica} `}
-                                {primaryAddress.DirCol === '' ? '' : `${primaryAddress.DirCol} `}
-
-                                <span>
-                                    <Image 
-                                        src={'/images/icono-ubicacion.svg'}
-                                        alt='icono de ubicación'
-                                        width={150}
-                                        height={150}
-                                    />
-                                </span>
-                            </motion.a>
-                        ) : (
-                            <motion.a 
-                                href={userData.MapsGeoloc === '' ? 
-                                    `https://www.google.com/maps?q=${userData.Calle}${userData.NumExt ? ' ' + userData.NumExt : ''},${userData.Colonia}` : 
-                                    `https://www.google.com/maps?q=${userData.MapsGeoloc}`} 
-                                target='_blank' 
-                                {...animate} 
-                                transition={{delay: 1.4}} 
-                                className={style.Ubication}
-                            >
-                                {userData.TexoUbica && `${userData.TexoUbica} `}
-                                {userData.Colonia === '' ? '' : `${userData.Colonia} `}
+                                {primaryAddress.DirTextoUbica ? primaryAddress.DirTextoUbica : 
+                                (primaryAddress.DirCol ? primaryAddress.DirCol : '')}
 
                                 <span>
                                     <Image 
@@ -318,8 +301,9 @@ END:VCARD`;
                                 className={style.Ubication}
                                 style={{marginTop: '10px'}}
                             >
-                                {userData.TexoUbica && `${userData.TexoUbica} `}
-                                {secondaryAddress.DirCol === '' ? '' : `${secondaryAddress.DirCol} `}
+
+                                {secondaryAddress.DirTextoUbica ? secondaryAddress.DirTextoUbica : 
+                                (secondaryAddress.DirCol ? secondaryAddress.DirCol : '')}
 
                                 <span>
                                     <Image 
@@ -390,10 +374,10 @@ END:VCARD`;
                     </motion.div>
                 )}
 
-                { userData.Google &&(
+                { googleUrl !== '' &&(
                     <motion.div {...animate} transition={{delay: 2}} style={{width: '95%'}}>
                         <a
-                            href={userData.Google}
+                            href={googleUrl}
                             target='_blank'
                             className={style.Google}
                             style={{width: '100%', cursor: 'pointer'}}
