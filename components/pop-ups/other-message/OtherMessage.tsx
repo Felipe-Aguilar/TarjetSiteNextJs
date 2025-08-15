@@ -25,7 +25,7 @@ const OtherMessage = ({ close, url }: Props) => {
                     priority={false}
                     className={style.Image}
                 />
-                <h5>Serás redirigido a un enlace externo</h5>
+                <h5>Visita mi sitio web</h5>
 
                 <a 
                     href={url.startsWith('http') ? url : `https://${url}`}
