@@ -59,7 +59,8 @@ const getData = async (token: string) => {
         MostrarPopup: siteData.SDTSite?.MostrarPopup ?? false,
         TipoPopup: siteData.SDTSite?.TipoPopup || 'PopWhats',
         ImagenPopup: siteData.SDTSite?.ImagenPopup || '',
-        SiteGoogle: siteData.SDTSite?.SiteGoogle || '' // Extraer SiteGoogle de la API
+        SiteGoogle: siteData.SDTSite?.SiteGoogle || '',
+        customUrl: siteData.SDTSite?.URLPopup || '',
     };
 
 }

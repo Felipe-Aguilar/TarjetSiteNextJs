@@ -218,7 +218,6 @@ END:VCARD`;
     const googleSocial = userData.ListRedesSociales?.find(item => item.RedSocialId === "GOOG");
     const googleUrl = googleSocial ? googleSocial.RedSocialUrl : '';
 
-    console.log(userData);
 
     return (
         <Fragment>

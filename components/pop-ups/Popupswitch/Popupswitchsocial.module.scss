@@ -130,3 +130,67 @@ input:checked ~ .toggleLabel {
 .parrafo {
   margin-bottom: 1px;
 }
+
+.customUrlContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background-color: #e8f5e9;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.urlInput {
+  padding: 0.75rem;
+  border: 1px solid #b0bec5;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #4fc3f7;
+    box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+  }
+}
+
+.saveButton {
+  padding: 0.8rem 2.5rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #3d8b40;
+  }
+
+  &:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+    font-weight: 500;
+  }
+}
+
+.urlWarning {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #e53935;
+  font-style: italic;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -5,11 +5,12 @@ interface PopupSwitchProps {
   uuid: string;
 }
 
-type PopupType = 'PopGoogle' | 'PopWhats';
+type PopupType = 'PopGoogle' | 'PopWhats' | 'PopOtro';
 
 const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupType, setPopupType] = useState<PopupType>('PopWhats');
+  const [customUrl, setCustomUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Obtener estado actual del popup y tipo
@@ -27,10 +28,12 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
 
       const mostrar = data?.SDTSite?.MostrarPopup ?? false;
       const tipo = data?.SDTSite?.TipoPopup ?? 'PopWhats';
+      const url = data?.SDTSite?.URLPopup ?? '';
       
-      console.log('Estado del popup:', { mostrar, tipo });
+      console.log('Estado del popup:', { mostrar, tipo, url });
       setShowPopup(mostrar);
       setPopupType(tipo as PopupType);
+      setCustomUrl(url || '');
     } catch (error) {
       console.error('Error al obtener el estado del popup:', error);
     }
@@ -60,17 +63,28 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
   };
 
   // Actualizar tipo de popup
-  const updatePopupType = async (type: PopupType) => {
+  const updatePopupType = async (type: PopupType, url: string = '') => {
     setLoading(true);
     try {
       const timestamp = new Date().getTime();
-      const response = await fetch(
-        `https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizarPopupSite?Usutarjetid=${uuid}&Tipopopup=${type}&_=${timestamp}`
-      );
+      let apiUrl = `https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizarPopupSite?Usutarjetid=${uuid}&Tipopopup=${type}`;
+      
+      if (type === 'PopOtro' && url) {
+        apiUrl += `&URLpopup=${encodeURIComponent(url)}`;
+      }
+      
+      apiUrl += `&_=${timestamp}`;
+
+      const response = await fetch(apiUrl);
 
       if (!response.ok) throw new Error('Error al actualizar el tipo de popup');
 
       setPopupType(type);
+      if (type === 'PopOtro') {
+        setCustomUrl(url);
+      } else {
+        setCustomUrl('');
+      }
     } catch (error) {
       console.error('Error al actualizar tipo de popup:', error);
     } finally {
@@ -88,7 +102,23 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
   };
 
   const handlePopupTypeChange = (type: PopupType) => {
-    updatePopupType(type);
+    // Cambiar el tipo inmediatamente en el estado local
+    setPopupType(type);
+    
+    // Solo actualizar el backend si no es PopOtro o si es PopOtro con URL existente
+    if (type !== 'PopOtro' || (type === 'PopOtro' && customUrl)) {
+      updatePopupType(type, type === 'PopOtro' ? customUrl : '');
+    }
+  };
+
+  const handleCustomUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomUrl(e.target.value);
+  };
+
+  const handleSaveCustomUrl = () => {
+    if (popupType === 'PopOtro' && customUrl) {
+      updatePopupType('PopOtro', customUrl);
+    }
   };
 
   return (
@@ -135,9 +165,39 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
           >
             Google
           </button>
+
+          <button
+            className={`${styles.popupTypeButton} ${popupType === 'PopOtro' ? styles.active : ''}`}
+            onClick={() => handlePopupTypeChange('PopOtro')}
+            type="button"
+            disabled={loading}
+          >
+            Otro
+          </button>
         </div>
       )}
 
+      {showPopup && popupType === 'PopOtro' && (
+        <div className={styles.customUrlContainer}>
+          <input
+            type="text"
+            value={customUrl}
+            onChange={handleCustomUrlChange}
+            placeholder="Ingresa la URL para el Pop Up"
+            className={styles.urlInput}
+          />
+          <button
+            onClick={handleSaveCustomUrl}
+            disabled={loading || !customUrl}
+            className={styles.saveButton}
+          >
+            Guardar URL
+          </button>
+          {!customUrl && (
+            <p className={styles.urlWarning}>Por favor ingresa una URL válida</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };

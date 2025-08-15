@@ -20,6 +20,7 @@ interface Props {
         MostrarPopup?: boolean;
         TipoPopup?: string;
         SiteGoogle?: string;
+        customUrl?: string;
         Tema?: string; // Nuevo campo para el tema
     };
     tokenServer: string | undefined | null;
@@ -46,7 +47,8 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
 
     const googleSocial = userData.ListRedesSociales?.find(item => item.RedSocialId === "GOOG");
     const googleUrl = googleSocial ? googleSocial.RedSocialUrl : '';
-    
+
+    const customUrl = userData.customUrl;    
 
     useEffect(() => {
         if (userData.MostrarPopup) {
@@ -131,7 +133,8 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                             tipoPopup={userData.TipoPopup || 'PopWhats'}
                             phone={userData.Telefono1}
                             token={userData.TokenId}
-                            googleUrl={googleUrl} // Usar el valor extraído de la API
+                            googleUrl={googleUrl}
+                            customUrl={customUrl}
                             onClose={() => setShowPopup(false)}
                         />
                     )}
