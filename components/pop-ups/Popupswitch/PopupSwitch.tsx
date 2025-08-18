@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import styles from './Popupswitchsocial.module.scss';
+import EditData from '@/app/api/editData';
+import { UserDataResponse } from '@/interfaces/userData-interface';
 
 interface PopupSwitchProps {
-  uuid: string;
+  userData: UserDataResponse; // Usamos la interfaz UserDataResponse que ya tienes definida
 }
 
 type PopupType = 'PopGoogle' | 'PopWhats' | 'PopOtro';
 
-const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
+const PopupSwitch = ({ userData }: PopupSwitchProps) => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupType, setPopupType] = useState<PopupType>('PopWhats');
   const [customUrl, setCustomUrl] = useState('');
+  const [popupMessage, setPopupMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Obtener estado actual del popup y tipo
@@ -18,42 +21,33 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
     try {
       const timestamp = new Date().getTime();
       const response = await fetch(
-        `https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${uuid}&_=${timestamp}`
+        `https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${userData.UUID}&_=${timestamp}`
       );
 
       if (!response.ok) throw new Error('Error al consultar el sitio');
 
       const data = await response.json();
-      console.log('Respuesta completa:', data);
-
-      const mostrar = data?.SDTSite?.MostrarPopup ?? false;
-      const tipo = data?.SDTSite?.TipoPopup ?? 'PopWhats';
-      const url = data?.SDTSite?.URLPopup ?? '';
       
-      console.log('Estado del popup:', { mostrar, tipo, url });
-      setShowPopup(mostrar);
-      setPopupType(tipo as PopupType);
-      setCustomUrl(url || '');
+      setShowPopup(data?.SDTSite?.MostrarPopup ?? false);
+      setPopupType((data?.SDTSite?.TipoPopup ?? 'PopWhats') as PopupType);
+      setCustomUrl(data?.SDTSite?.URLPopup ?? '');
+      setPopupMessage(data?.SDTSite?.SiteTextoUbica ?? '');
     } catch (error) {
       console.error('Error al obtener el estado del popup:', error);
     }
   };
 
-  // Actualizar estado del popup
+  // Actualizar estado del popup (mostrar/ocultar)
   const updatePopupStatus = async (mostrar: boolean) => {
-    console.log('Intentando actualizar popup a:', mostrar);
     setLoading(true);
-  
     try {
       const timestamp = new Date().getTime();
       const response = await fetch(
-        `https://souvenir-site.com/WebTarjet/APIUsuDtos/MostrarPopupSite?Usutarjetid=${uuid}&Activo=${mostrar}&_=${timestamp}`
+        `https://souvenir-site.com/WebTarjet/APIUsuDtos/MostrarPopupSite?Usutarjetid=${userData.UUID}&Activo=${mostrar}&_=${timestamp}`
       );
-  
-      console.log('Respuesta al actualizar popup:', response);
-  
+
       if (!response.ok) throw new Error('Error al actualizar el estado del popup');
-  
+
       setShowPopup(mostrar);
     } catch (error) {
       console.error('Error al actualizar popup:', error);
@@ -62,12 +56,12 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
     }
   };
 
-  // Actualizar tipo de popup
+  // Actualizar tipo de popup y URL
   const updatePopupType = async (type: PopupType, url: string = '') => {
     setLoading(true);
     try {
       const timestamp = new Date().getTime();
-      let apiUrl = `https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizarPopupSite?Usutarjetid=${uuid}&Tipopopup=${type}`;
+      let apiUrl = `https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizarPopupSite?Usutarjetid=${userData.UUID}&Tipopopup=${type}`;
       
       if (type === 'PopOtro' && url) {
         apiUrl += `&URLpopup=${encodeURIComponent(url)}`;
@@ -76,15 +70,10 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
       apiUrl += `&_=${timestamp}`;
 
       const response = await fetch(apiUrl);
-
       if (!response.ok) throw new Error('Error al actualizar el tipo de popup');
 
       setPopupType(type);
-      if (type === 'PopOtro') {
-        setCustomUrl(url);
-      } else {
-        setCustomUrl('');
-      }
+      setCustomUrl(type === 'PopOtro' ? url : '');
     } catch (error) {
       console.error('Error al actualizar tipo de popup:', error);
     } finally {
@@ -92,48 +81,62 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
     }
   };
 
-  // Obtener el estado inicial
+  // Guardar el mensaje del popup usando EditData
+  const savePopupMessage = async () => {
+    if (!popupMessage) return;
+    
+    setLoading(true);
+    try {
+      await EditData({
+        userData,
+        popupForm: {
+          TexoUbica: popupMessage
+        }
+      });
+    } catch (error) {
+      console.error('Error al guardar el mensaje del popup:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Guardar toda la configuración del popup
+  const handleSavePopup = async () => {
+    setLoading(true);
+    try {
+      // Primero actualizamos el tipo y URL (si es necesario)
+      if (popupType === 'PopOtro') {
+        await updatePopupType(popupType, customUrl);
+      }
+      
+      // Luego guardamos el mensaje
+      if (popupMessage) {
+        await savePopupMessage();
+      }
+    } catch (error) {
+      console.error('Error al guardar la configuración del popup:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchPopupStatus();
-  }, [uuid]);
-
-  const handleSetPopup = (status: boolean) => {
-    updatePopupStatus(status);
-  };
-
-  const handlePopupTypeChange = (type: PopupType) => {
-    // Cambiar el tipo inmediatamente en el estado local
-    setPopupType(type);
-    
-    // Solo actualizar el backend si no es PopOtro o si es PopOtro con URL existente
-    if (type !== 'PopOtro' || (type === 'PopOtro' && customUrl)) {
-      updatePopupType(type, type === 'PopOtro' ? customUrl : '');
-    }
-  };
-
-  const handleCustomUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCustomUrl(e.target.value);
-  };
-
-  const handleSaveCustomUrl = () => {
-    if (popupType === 'PopOtro' && customUrl) {
-      updatePopupType('PopOtro', customUrl);
-    }
-  };
+  }, [userData.UUID]);
 
   return (
     <div className={styles.container}>
       <div className={styles.toggleContainer}>
         <button
           className={styles.popupTypeButton}
-          onClick={() => handleSetPopup(true)}
+          onClick={() => updatePopupStatus(true)}
           disabled={loading}
         >
           Mostrar Pop-Up
         </button>
         <button
           className={styles.popupTypeButton}
-          onClick={() => handleSetPopup(false)}
+          onClick={() => updatePopupStatus(false)}
           disabled={loading}
         >
           Ocultar Pop-Up
@@ -145,36 +148,32 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
       </div>
 
       {showPopup && (
-        <p className={styles.parrafo}>Seleccionar tipo de Pop-Up:</p>
-      )}
-      {showPopup && (
-        <div className={styles.popupTypeSelector}> 
-          <button
-            className={`${styles.popupTypeButton} ${popupType === 'PopWhats' ? styles.active : ''}`}
-            onClick={() => handlePopupTypeChange('PopWhats')}
-            type="button"
-            disabled={loading}
-          >
-            WhatsApp
-          </button>
-          <button
-            className={`${styles.popupTypeButton} ${popupType === 'PopGoogle' ? styles.active : ''}`}
-            onClick={() => handlePopupTypeChange('PopGoogle')}
-            type="button"
-            disabled={loading}
-          >
-            Google
-          </button>
-
-          <button
-            className={`${styles.popupTypeButton} ${popupType === 'PopOtro' ? styles.active : ''}`}
-            onClick={() => handlePopupTypeChange('PopOtro')}
-            type="button"
-            disabled={loading}
-          >
-            Otro
-          </button>
-        </div>
+        <>
+          <p className={styles.parrafo}>Seleccionar tipo de Pop-Up:</p>
+          <div className={styles.popupTypeSelector}>
+            <button
+              className={`${styles.popupTypeButton} ${popupType === 'PopWhats' ? styles.active : ''}`}
+              onClick={() => updatePopupType('PopWhats')}
+              disabled={loading}
+            >
+              WhatsApp
+            </button>
+            <button
+              className={`${styles.popupTypeButton} ${popupType === 'PopGoogle' ? styles.active : ''}`}
+              onClick={() => updatePopupType('PopGoogle')}
+              disabled={loading}
+            >
+              Google
+            </button>
+            <button
+              className={`${styles.popupTypeButton} ${popupType === 'PopOtro' ? styles.active : ''}`}
+              onClick={() => updatePopupType('PopOtro')}
+              disabled={loading}
+            >
+              Otro
+            </button>
+          </div>
+        </>
       )}
 
       {showPopup && popupType === 'PopOtro' && (
@@ -182,19 +181,26 @@ const PopupSwitch = ({ uuid }: PopupSwitchProps) => {
           <input
             type="text"
             value={customUrl}
-            onChange={handleCustomUrlChange}
+            onChange={(e) => setCustomUrl(e.target.value)}
             placeholder="Ingresa la URL para el Pop Up"
             className={styles.urlInput}
           />
+          <input
+            type="text"
+            value={popupMessage}
+            onChange={(e) => setPopupMessage(e.target.value)}
+            placeholder="Ingresa el mensaje para el Pop Up"
+            className={styles.urlInput}
+          />
           <button
-            onClick={handleSaveCustomUrl}
-            disabled={loading || !customUrl}
+            onClick={handleSavePopup}
+            disabled={loading || (!customUrl && !popupMessage)}
             className={styles.saveButton}
           >
-            Guardar URL
+            Guardar Mensaje
           </button>
-          {!customUrl && (
-            <p className={styles.urlWarning}>Por favor ingresa una URL válida</p>
+          {!customUrl && !popupMessage && (
+            <p className={styles.urlWarning}>Por favor ingresa una URL o un mensaje válido</p>
           )}
         </div>
       )}

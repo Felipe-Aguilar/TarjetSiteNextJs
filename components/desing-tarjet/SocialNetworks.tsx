@@ -294,7 +294,7 @@ const SocialNetworks = ({ userData }: Props) => {
                             />
                         </div>
 
-                        <PopupSwitch uuid={userData.UUID} />
+                        <PopupSwitch userData={userData} />
                     </motion.div>
                 )}
             </AnimatePresence>

@@ -80,14 +80,15 @@ interface Props {
                 isVideo?: boolean;
             };
         };
+    },
+    popupForm?: {
+        TexoUbica?: string;
     };
 }
 
-export default async function EditData({ userData, dataForm, contactForm, socialForm, servicesForm }: Props) {
-    console.log("userData recibido en EditData:", userData); // <--- AGREGAR ESTO
-    console.log("socialForm recibido en EditData:", socialForm); // <--- AGREGAR ESTO
+export default async function EditData({ userData, dataForm, contactForm, socialForm, servicesForm, popupForm }: Props) {
+
     let listRedesSociales = socialForm?.ListRedesSociales || [];
-    console.log("listRedesSociales final antes de enviar:", listRedesSociales); // <--- AGREGAR ESTO
 
     const response = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizaUsu', {
         method: 'POST',
@@ -109,6 +110,7 @@ export default async function EditData({ userData, dataForm, contactForm, social
                 "Lev3Id": dataForm?.Lev3Id ?? userData.Lev3Id,
                 "NomNegocio": dataForm?.NomNegocio ?? userData.NomNegocio,
                 "ImgFoto": userData.ImgFoto,
+                "TexoUbica": popupForm?.TexoUbica ?? userData.TexoUbica ?? '',
                 "Telefono1": contactForm?.Telefono1 ?? userData.Telefono1,
                 "Telefono2": contactForm?.Telefono2 ?? userData.Telefono2,
                 "VerUbicacion": contactForm?.VerUbicacion ?? userData.VerUbicacion,
