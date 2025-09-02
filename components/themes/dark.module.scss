@@ -564,7 +564,6 @@
       .Youtube:hover { color: #FF0000 !important; }
     }
     .Info {
-
         background: rgba(30, 30, 30, 0.7);
         backdrop-filter: blur(10px);
         text-align: center;
@@ -611,7 +610,8 @@
         // transition: all 0.2s ease;
         // letter-spacing: 0.5px;
 
-        background: linear-gradient(90deg, #00f2ea, #ff00cc);
+        background: #00beb8 ;
+        border-radius: 25px;
         font-weight: 700;
         font-size: 1rem;
         display: block;
@@ -623,7 +623,7 @@
         letter-spacing: 0.5px;
 
         &:hover {
-          background: linear-gradient(90deg, #ff00cc, #00f2ea);
+          background: #018c87;
         }
 
         span {

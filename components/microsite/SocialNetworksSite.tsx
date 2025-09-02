@@ -119,7 +119,7 @@ const SocialNetworsSite = ({userData, tokenServer, tema} :Props) => {
                                     Te agradó esta tarjeta digital <br/>
                                     <span>Tú también puedes tener la tuya</span>
                                 </h6>
-                                <Link href="/login">
+                                <Link href="/st/ZWQ1MDhmYjgw">
                                     Solicita gratuitamente tu tarjeta digital Tarjet
                                 </Link>
                                 <h6>
@@ -134,7 +134,7 @@ const SocialNetworsSite = ({userData, tokenServer, tema} :Props) => {
                                     priority={false}
                                     className={style.Card}
                                 />
-                                <a href="" className={style.Orange}>
+                                <a href="/st/ZWQ1MDhmYjgw" className={style.Orange}>
                                     Compra tu tarjeta física Tarjet con NFC <br/>
                                     <span>Es personalizada</span>
                                 </a>
