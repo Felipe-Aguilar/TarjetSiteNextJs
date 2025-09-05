@@ -141,7 +141,7 @@ export default class GoogleWalletService {
               // 🔧 Usar foto real del usuario o imagen por defecto
               uri: userData.ImgFoto && userData.ImgFoto.startsWith('http') 
                 ? userData.ImgFoto
-                : `https://www.tarjet.site/images/perfil-temporal.webp`
+                : `https://tarjet.site/images/perfil-temporal.webp`
             },
             contentDescription: {
               defaultValue: {
@@ -162,38 +162,38 @@ export default class GoogleWalletService {
   }
 
   // 3. Generar el JWT para Google Wallet
-  generateWalletJWT(passObject) {
-    console.log('🔐 Generando JWT para pass:', passObject.id);
-    
-    const now = Math.floor(Date.now() / 1000);
-    const payload = {
-      iss: this.serviceAccountKey.client_email,
-      aud: 'google',
-      typ: 'savetowallet',
-      iat: now,
-      exp: now + (60 * 60), // 1 hora de validez
-      payload: {
-        genericObjects: [passObject]
-      }
-    };
-
-    console.log('📝 Payload del JWT:', {
-      iss: payload.iss,
-      exp: new Date(payload.exp * 1000).toISOString(),
-      objectId: passObject.id
-    });
-
-    try {
-      const token = jwt.sign(payload, this.serviceAccountKey.private_key, {
-        algorithm: 'RS256'
-      });
-      console.log('✅ JWT generado exitosamente, longitud:', token.length);
-      return token;
-    } catch (error) {
-      console.error('❌ Error generando JWT:', error);
-      throw error;
+generateWalletJWT(passObject) {
+  console.log('🔐 Generando JWT para:', passObject.id);
+  
+  const now = Math.floor(Date.now() / 1000);
+  const payload = {
+    iss: this.serviceAccountKey.client_email,
+    aud: 'google',
+    typ: 'savetowallet',
+    iat: now,
+    exp: now + (60 * 60),
+    payload: {
+      genericObjects: [passObject]
     }
+  };
+
+  console.log('📝 Payload del JWT:', JSON.stringify(payload, null, 2));
+  
+  try {
+    const token = jwt.sign(payload, this.serviceAccountKey.private_key, {
+      algorithm: 'RS256'
+    });
+    
+    console.log('✅ JWT generado exitosamente');
+    console.log('📏 Longitud del token:', token.length);
+    console.log('🔍 Primeros 50 caracteres:', token.substring(0, 50) + '...');
+    
+    return token;
+  } catch (error) {
+    console.error('❌ Error generando JWT:', error);
+    throw error;
   }
+}
 
   // 4. Crear la URL completa para guardar en Google Wallet
   async createSaveToWalletUrl(userData, urlSitio) {
@@ -201,10 +201,13 @@ export default class GoogleWalletService {
     
     try {
       const passObject = this.createPassObject(userData, urlSitio);
-      const jwtToken = await this.generateWalletJWT(passObject); // Añadir await
+      const jwtToken = this.generateWalletJWT(passObject); // Quita el await aquí
+      
+      console.log('✅ JWT generado:', jwtToken.substring(0, 50) + '...');
+      
       const finalUrl = `https://pay.google.com/gp/v/save/${jwtToken}`;
       
-      console.log('🔗 URL final generada, longitud JWT:', jwtToken.length);
+      console.log('🔗 URL final generada');
       return finalUrl;
     } catch (error) {
       console.error('💥 Error creando URL de Google Wallet:', error);

@@ -1,5 +1,4 @@
-// scripts/validate-credentials.js
-// Crear este archivo para validar las credenciales
+//validate-credentials.js
 
 import dotenv from 'dotenv';
 import { google } from 'googleapis';

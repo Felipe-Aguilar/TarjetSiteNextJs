@@ -194,21 +194,30 @@ END:VCARD`;
         }, [userData.UUID]); 
 
         const handleGoogleWalletClick = async (e: { preventDefault: () => void; }) => {
-        console.log('👆 Clic en botón de Google Wallet');
-        console.log('🔍 Estado actual:', {
-            googleWalletUrl,
-            loadingWallet,
-            isAndroid
-        });
-
-        if (!googleWalletUrl && !loadingWallet) {
-            console.log('⚠️ No hay URL, generando...');
             e.preventDefault();
-            await generateGoogleWalletUrl();
-        } else if (googleWalletUrl) {
-            console.log('✅ Abriendo Google Wallet con URL:', googleWalletUrl);
-        }
-    };
+            console.log('👆 Clic en botón de Google Wallet');
+            
+            if (loadingWallet) return;
+            
+            setLoadingWallet(true);
+            setWalletError('');
+            
+            try {
+                const url = await generateGoogleWalletUrl();
+                
+                if (url) {
+                console.log('🌐 Abriendo Google Wallet:', url);
+                window.open(url, '_blank');
+                } else {
+                setWalletError('No se pudo generar la URL de Google Wallet');
+                }
+            } catch (error) {
+                console.error('❌ Error al abrir Google Wallet:', error);
+                setWalletError(error instanceof Error ? error.message : String(error));
+            } finally {
+                setLoadingWallet(false);
+            }
+        };
         
         useEffect(() => {
             // 👇 Solo se ejecuta en el cliente
@@ -484,31 +493,31 @@ END:VCARD`;
                     </motion.button>
                 ) }
 
-                {/* {(isAndroid || googleWalletUrl) && ( 
-                    <motion.a
-                        href={googleWalletUrl || '#'}
-                        target={googleWalletUrl ? "_blank" : "_self"}
-                        rel="noopener noreferrer"
-                        className={`${style.GoogleWallet} ${!googleWalletUrl && !loadingWallet ? style.disabled : ''}`}
-                        {...animate}
-                        transition={{ delay: 2.4 }}
-                        onClick={handleGoogleWalletClick}
-                    >
-                        {loadingWallet ? 'Generando...' : 'Guardar en Google Wallet'}
-                        <span>
-                            {loadingWallet ? (
-                                <div className={style.spinner}></div>
-                            ) : (
-                                <Image 
-                                    src={'/images/google-wallet-icon.svg'}
-                                    alt='Guardar en Google Wallet'
-                                    width={150}
-                                    height={150}
-                                />
-                            )}
-                        </span>
-                    </motion.a>
-                )} */}
+                
+                {/* <motion.a
+                    href={googleWalletUrl || '#'}
+                    target={googleWalletUrl ? "_blank" : "_self"}
+                    rel="noopener noreferrer"
+                    className={`${style.GoogleWallet} ${!googleWalletUrl && !loadingWallet ? style.disabled : ''}`}
+                    {...animate}
+                    transition={{ delay: 2.4 }}
+                    onClick={handleGoogleWalletClick}
+                >
+                    {loadingWallet ? 'Generando...' : 'Guardar en Google Wallet'}
+                    <span>
+                        {loadingWallet ? (
+                            <div className={style.spinner}></div>
+                        ) : (
+                            <Image 
+                                src={'/images/google-wallet-icon.svg'}
+                                alt='Guardar en Google Wallet'
+                                width={150}
+                                height={150}
+                            />
+                        )}
+                    </span>
+                </motion.a> */}
+                
 
                 {/* 🔧 MOSTRAR ERRORES EN DESARROLLO */}
                 {/* {walletError && process.env.NODE_ENV === 'development' && (
