@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
       property: 'properties/442421362',
       requestBody: {
         dimensions: [
-            { name: 'country' }
+            { name: 'region' }
         ],
         metrics: [{ name: 'activeUsers' }],
         dimensionFilter: {
@@ -52,12 +52,22 @@ export async function GET(request: NextRequest) {
             },
           },
         },
+        
+        orderBys: [
+          {
+            metric: {
+              metricName: 'activeUsers'
+            },
+            desc: true
+          }
+        ],
+        limit: 15, // Limitar a las 15 regiones principales
         dateRanges: [
             {
                 startDate: formattedStartDate,
                 endDate: formattedDateToday,
             },
-        ],
+        ]
       },
     });
 

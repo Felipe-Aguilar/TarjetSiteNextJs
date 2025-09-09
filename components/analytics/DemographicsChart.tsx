@@ -4,82 +4,58 @@ import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import styles from './DemographicsChart.module.scss';
 
-type CountryDataPoint = {
-  country: string;
-  countryCode: string;
+type RegionDataPoint = {
+  region: string;
   users: number;
   percentage: number;
 };
 
-type CountriesChartProps = {
+type DemographicsChartProps = {
   token: string;
 };
 
-// Mapeo de códigos de país a nombres completos en español
-const COUNTRY_NAMES: Record<string, string> = {
-  'United States': 'Estados Unidos',
-  'Mexico': 'México',
-  'Spain': 'España',
-  'Argentina': 'Argentina',
-  'Colombia': 'Colombia',
-  'Chile': 'Chile',
-  'Peru': 'Perú',
-  'Venezuela': 'Venezuela',
-  'Ecuador': 'Ecuador',
-  'Guatemala': 'Guatemala',
-  'Cuba': 'Cuba',
-  'Dominican Republic': 'República Dominicana',
-  'Honduras': 'Honduras',
-  'Paraguay': 'Paraguay',
-  'El Salvador': 'El Salvador',
-  'Costa Rica': 'Costa Rica',
-  'Panama': 'Panamá',
-  'Bolivia': 'Bolivia',
-  'Uruguay': 'Uruguay',
-  'Nicaragua': 'Nicaragua',
-  'France': 'Francia',
-  'Germany': 'Alemania',
-  'Italy': 'Italia',
-  'United Kingdom': 'Reino Unido',
-  'Portugal': 'Portugal',
-  'China': 'China',
-  'Japan': 'Japón',
-  'India': 'India',
-  'Brazil': 'Brasil',
-  'Russia': 'Rusia',
-  'Canada': 'Canada',
-  'Australia': 'Australia',
+// Mapeo de regiones/estados de México (inglés a español)
+const MEXICO_REGION_NAMES: Record<string, string> = {
+  'Aguascalientes': 'Aguascalientes',
+  'Baja California': 'Baja California',
+  'Baja California Sur': 'Baja California Sur',
+  'Campeche': 'Campeche',
+  'Chiapas': 'Chiapas',
+  'Chihuahua': 'Chihuahua',
+  'Coahuila': 'Coahuila',
+  'Colima': 'Colima',
+  'Mexico City': 'Ciudad de México',
+  'Durango': 'Durango',
+  'Guanajuato': 'Guanajuato',
+  'Guerrero': 'Guerrero',
+  'Hidalgo': 'Hidalgo',
+  'Jalisco': 'Jalisco',
+  'State of Mexico': 'Estado de México',
+  'Michoacán': 'Michoacán',
+  'Morelos': 'Morelos',
+  'Nayarit': 'Nayarit',
+  'Nuevo León': 'Nuevo León',
+  'Oaxaca': 'Oaxaca',
+  'Puebla': 'Puebla',
+  'Querétaro': 'Querétaro',
+  'Quintana Roo': 'Quintana Roo',
+  'San Luis Potosí': 'San Luis Potosí',
+  'Sinaloa': 'Sinaloa',
+  'Sonora': 'Sonora',
+  'Tabasco': 'Tabasco',
+  'Tamaulipas': 'Tamaulipas',
+  'Tlaxcala': 'Tlaxcala',
+  'Veracruz': 'Veracruz',
+  'Yucatán': 'Yucatán',
+  'Zacatecas': 'Zacatecas',
   'unknown': 'No especificado'
-};
-
-// Mapeo de nombres de países a códigos de bandera
-const COUNTRY_FLAGS: Record<string, string> = {
-  'United States': '🇺🇸',
-  'Mexico': '🇲🇽',
-  'Spain': '🇪🇸',
-  'Argentina': '🇦🇷',
-  'Colombia': '🇨🇴',
-  'Chile': '🇨🇱',
-  'Peru': '🇵🇪',
-  'France': '🇫🇷',
-  'Germany': '🇩🇪',
-  'Italy': '🇮🇹',
-  'United Kingdom': '🇬🇧',
-  'China': '🇨🇳',
-  'Japan': '🇯🇵',
-  'India': '🇮🇳',
-  'Brazil': '🇧🇷',
-  'Russia': '🇷🇺',
-  'Canada': '🇨🇦',
-  'Australia': '🇦🇺',
-  'unknown': '🌐'
 };
 
 // Colores para las barras
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#FF6B6B', '#48DBFB', '#1DD1A1', '#F368E0'];
 
-const DemographicsChart = ({ token }: CountriesChartProps) => {
-  const [data, setData] = useState<CountryDataPoint[]>([]);
+const DemographicsChart = ({ token }: DemographicsChartProps) => {
+  const [data, setData] = useState<RegionDataPoint[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -87,7 +63,7 @@ const DemographicsChart = ({ token }: CountriesChartProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Fetching demographic data for token:', token);
+        console.log('Fetching region data for token:', token);
         const response = await fetch(`/api/analytics-demographics?token=${encodeURIComponent(token)}`);
         
         if (!response.ok) {
@@ -111,14 +87,13 @@ const DemographicsChart = ({ token }: CountriesChartProps) => {
         setTotalUsers(total);
         console.log('Total users:', total);
         
-        // Procesar datos de países
+        // Procesar datos de regiones
         const formattedData = rows.map((row: any, index: number) => {
-          const countryName = row.dimensionValues[0]?.value || 'unknown';
+          const regionName = row.dimensionValues[0]?.value || 'unknown';
           const users = parseInt(row.metricValues[0]?.value || '0', 10);
           
           return {
-            country: COUNTRY_NAMES[countryName] || countryName,
-            countryCode: countryName,
+            region: MEXICO_REGION_NAMES[regionName] || regionName,
             users,
             percentage: total > 0 ? (users / total) * 100 : 0
           };
@@ -137,17 +112,13 @@ const DemographicsChart = ({ token }: CountriesChartProps) => {
     fetchData();
   }, [token]);
 
-  const getCountryFlag = (countryCode: string) => {
-    return COUNTRY_FLAGS[countryCode] || '🌐';
-  };
-
-  if (isLoading) return <div className={styles.loading}>Cargando datos por país...</div>;
+  if (isLoading) return <div className={styles.loading}>Cargando datos por región...</div>;
   if (error) return <div className={styles.error}>Error: {error}</div>;
-  if (data.length === 0) return <div className={styles.empty}>No hay datos por país disponibles</div>;
+  if (data.length === 0) return <div className={styles.empty}>No hay datos por región disponibles</div>;
 
   return (
     <div className={styles.chartContainer}>
-      <h2 className={styles.title}>Distribución de Usuarios por País los últimos 5 días</h2>
+      <h2 className={styles.title}>Distribución de Usuarios por Región</h2>
       <p className={styles.subtitle}>Total de usuarios: {totalUsers.toLocaleString()}</p>
       
       <div className={styles.chartWrapper}>
@@ -155,7 +126,7 @@ const DemographicsChart = ({ token }: CountriesChartProps) => {
           <BarChart
             data={data}
             layout="vertical"
-            margin={{ top: 20, right: 30, left: 100, bottom: 5 }}
+            margin={{ top: 20, right: 30, left: 150, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
             <XAxis 
@@ -165,17 +136,13 @@ const DemographicsChart = ({ token }: CountriesChartProps) => {
             />
             <YAxis 
               type="category" 
-              dataKey="country"
+              dataKey="region"
               tick={{ fontSize: '0.85rem' }}
-              width={95}
-              tickFormatter={(value) => {
-                const countryCode = data.find(d => d.country === value)?.countryCode || '';
-                return `${getCountryFlag(countryCode)} ${value}`;
-              }}
+              width={140}
             />
             <Tooltip 
               formatter={(value: number) => [`${value.toLocaleString()} usuarios`, 'Cantidad']}
-              labelFormatter={(label) => `País: ${label}`}
+              labelFormatter={(label) => `Región: ${label}`}
               contentStyle={{
                 fontSize: '0.875rem',
                 borderRadius: '0.5rem',
@@ -197,12 +164,12 @@ const DemographicsChart = ({ token }: CountriesChartProps) => {
 
       {/* Tabla de datos detallados */}
       <div className={styles.tableSection}>
-        <h3 className={styles.subtitle}>Detalles por País</h3>
+        <h3 className={styles.subtitle}>Detalles por Región</h3>
         <div className={styles.tableContainer}>
           <table className={styles.demographicsTable}>
             <thead>
               <tr>
-                <th>País</th>
+                <th>Región</th>
                 <th>Usuarios</th>
                 <th>Porcentaje</th>
               </tr>
@@ -210,10 +177,7 @@ const DemographicsChart = ({ token }: CountriesChartProps) => {
             <tbody>
               {data.map((item, index) => (
                 <tr key={index}>
-                  <td>
-                    <span className={styles.flag}>{getCountryFlag(item.countryCode)}</span>
-                    {item.country}
-                  </td>
+                  <td>{item.region}</td>
                   <td>{item.users.toLocaleString()}</td>
                   <td>{item.percentage.toFixed(1)}%</td>
                 </tr>
