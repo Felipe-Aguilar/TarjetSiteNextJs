@@ -491,9 +491,8 @@ END:VCARD`;
                             />
                         </span>
                     </motion.button>
-                ) }
+                )}
 
-                
                 {/* <motion.a
                     href={googleWalletUrl || '#'}
                     target={googleWalletUrl ? "_blank" : "_self"}
@@ -516,11 +515,10 @@ END:VCARD`;
                             />
                         )}
                     </span>
-                </motion.a> */}
-                
+                </motion.a>  */}
 
                 {/* 🔧 MOSTRAR ERRORES EN DESARROLLO */}
-                {/* {walletError && process.env.NODE_ENV === 'development' && (
+                {/* {walletError && (
                     <div style={{
                         background: '#ffebee',
                         color: '#c62828',
@@ -545,7 +543,7 @@ END:VCARD`;
                             Reintentar
                         </button>
                     </div>
-                )} */}
+                )}  */}
 
                 {/* {isIOS && (
                     <motion.a

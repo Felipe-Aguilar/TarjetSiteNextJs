@@ -167,11 +167,12 @@ generateWalletJWT(passObject) {
   
   const now = Math.floor(Date.now() / 1000);
   const payload = {
-    iss: this.serviceAccountKey.client_email,
+    iss: this.issuerId,  // Cambiado: usar issuerId en lugar de client_email
     aud: 'google',
     typ: 'savetowallet',
     iat: now,
     exp: now + (60 * 60),
+    origins: ['https://tarjet.site'],  // Añadido: origins
     payload: {
       genericObjects: [passObject]
     }
