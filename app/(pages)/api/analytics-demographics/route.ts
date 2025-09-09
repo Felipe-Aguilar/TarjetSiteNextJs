@@ -52,7 +52,6 @@ export async function GET(request: NextRequest) {
             },
           },
         },
-        
         orderBys: [
           {
             metric: {
@@ -61,7 +60,7 @@ export async function GET(request: NextRequest) {
             desc: true
           }
         ],
-        limit: 15, // Limitar a las 15 regiones principales
+        limit: '15', // Limitar a las 15 regiones principales (debe ser string)
         dateRanges: [
             {
                 startDate: formattedStartDate,
