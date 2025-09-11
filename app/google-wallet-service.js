@@ -94,71 +94,23 @@ export default class GoogleWalletService {
     console.log('🎫 Creando pass object con ID:', objectId);
   
     return {
-      id: objectId,
-      classId: this.classId,
-      state: 'ACTIVE',
-      heroImage: {
-        sourceUri: {
-          uri: `https://tarjet.site/images/login-ilustracion.png` // Imagen que necesitas crear
-        },
-        contentDescription: {
-          defaultValue: {
-            language: 'es',
-            value: 'Tarjet Digital Card'
-          }
-        }
-      },
-      textModulesData: [
-        {
-          id: 'name',
-          header: 'Nombre',
-          body: `${userData.Nom} ${userData.AppP} ${userData.AppM}`
-        },
-        {
-          id: 'company',
-          header: 'Empresa',
-          body: userData.Empresa || userData.Activid || 'Tarjet'
-        },
-        {
-          id: 'website',
-          header: 'Sitio Web',
-          body: urlSitio
-        }
-      ],
-      linksModuleData: {
-        uris: [
-          {
-            uri: urlSitio,
-            description: 'Ver Tarjet Digital',
-            id: 'tarjet_link'
-          }
-        ]
-      },
-      imageModulesData: [
-        {
-          mainImage: {
-            sourceUri: {
-              // 🔧 Usar foto real del usuario o imagen por defecto
-              uri: userData.ImgFoto && userData.ImgFoto.startsWith('http') 
-                ? userData.ImgFoto
-                : `https://tarjet.site/images/perfil-temporal.webp`
-            },
-            contentDescription: {
-              defaultValue: {
-                language: 'es',
-                value: 'Foto de perfil'
-              }
-            }
-          },
-          id: 'profile_image'
-        }
-      ],
-      barcode: {
-        type: 'QR_CODE',
-        value: urlSitio,
-        alternateText: 'Escanea para ver la tarjeta'
-      }
-    };
+  id: objectId,
+  classId: this.classId,
+  state: 'ACTIVE',
+  // ✅ Mantenemos solo textModulesData y barcode (mínimo requerido)
+  textModulesData: [
+    {
+      id: 'name',
+      header: 'Nombre',
+      body: `${userData.Nom} ${userData.AppP} ${userData.AppM}`
+    }
+  ],
+  barcode: {
+    type: 'QR_CODE',
+    value: urlSitio,
+    alternateText: 'Escanea para ver la tarjeta'
+  }
+};
   }
 
   // 3. Generar el JWT para Google Wallet

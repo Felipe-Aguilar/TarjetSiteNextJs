@@ -126,7 +126,7 @@ const DemographicsChart = ({ token }: DemographicsChartProps) => {
           <BarChart
             data={data}
             layout="vertical"
-            margin={{ top: 20, right: 30, left: 150, bottom: 5 }}
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }} // Reducido el margen izquierdo
           >
             <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
             <XAxis 
@@ -138,7 +138,7 @@ const DemographicsChart = ({ token }: DemographicsChartProps) => {
               type="category" 
               dataKey="region"
               tick={{ fontSize: '0.85rem' }}
-              width={140}
+              width={100} // Reducido el ancho del YAxis
             />
             <Tooltip 
               formatter={(value: number) => [`${value.toLocaleString()} usuarios`, 'Cantidad']}
