@@ -38,8 +38,9 @@ const MyTarjet = async ({ params }: { params: { token: string } }) => {
     });
 
     const responseTarjets = await response.json();
-
     const dataTarjets = await responseTarjets.SDTTarjetsG;
+
+    
 
     return ( 
         <div className="greenWhite">

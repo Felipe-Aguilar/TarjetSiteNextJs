@@ -33,7 +33,7 @@ const HeadSite = ({userData, tema} : Props) => {
     const style = getThemeStyle();
     
     return ( 
-        <div className={style.Head} style={userData.Premium ? { marginTop: '20px' } : { marginTop: '50px' }}>
+        <div className={style.Head} style={userData.Premium ? { marginTop: '0px'} : { marginTop: '40px' }}>
             <motion.div {...animateCard}>
                 <Image 
                     src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/UsuTarjets/${userData.ImgTarFrente}?timestamp=${Date.now()}`}

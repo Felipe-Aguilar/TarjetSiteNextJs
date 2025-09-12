@@ -44,7 +44,6 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                 return defaultStyle;
         }
     };
-
     const style = getThemeStyle();
 
     const googleSocial = userData.ListRedesSociales?.find(item => item.RedSocialId === "GOOG");
@@ -110,7 +109,10 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
         <div className={tema.length > 1 ? style.Site : 'greenWhite'}>
             <div className="background">
                 <Fragment>
-                    <div className={`body ${style.Site}`}>
+                    <div
+                        className={`body ${style.Site}`}
+                        style={userData.Premium ? { padding: '7px 0 40px 0' } : { padding: '40px 0' }}
+                    >
                         <div className="contain">
                             <HeadSite userData={userData} tema={tema} />
 
