@@ -111,7 +111,7 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                 <Fragment>
                     <div
                         className={`body ${style.Site}`}
-                        style={userData.Premium ? { padding: '7px 0 40px 5px' } : { padding: '40px 0' }}
+                        style={userData.Premium ? { padding: '7px 0 40px 5px' } : { padding: '45px 0' }}
                     >
                         <div className="contain">
                             <HeadSite userData={userData} tema={tema} />
