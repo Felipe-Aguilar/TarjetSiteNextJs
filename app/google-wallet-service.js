@@ -1,4 +1,4 @@
-//google-wallet-service.js
+// app/google-wallet-service.js
 import { google } from 'googleapis';
 import jwt from 'jsonwebtoken';
 
@@ -66,6 +66,32 @@ export default class GoogleWalletService {
             }
           ]
         }
+      },
+      // Campos adicionales requeridos por Google
+      reviewStatus: "UNDER_REVIEW",
+      hexBackgroundColor: "#4285f4",
+      logo: {
+        sourceUri: {
+          uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg"
+        },
+        contentDescription: {
+          defaultValue: {
+            language: "es",
+            value: "Logo de Google"
+          }
+        }
+      },
+      cardTitle: {
+        defaultValue: {
+          language: "es",
+          value: "Tarjet Digital"
+        }
+      },
+      header: {
+        defaultValue: {
+          language: "es",
+          value: "Tarjet Digital Card"
+        }
       }
     };
 
@@ -77,8 +103,18 @@ export default class GoogleWalletService {
       return response.data;
     } catch (error) {
       if (error.response?.status === 409) {
-        console.log('ℹ️ La clase ya existe, continuando...');
-        return null;
+        console.log('ℹ️ La clase ya existe, actualizando...');
+        try {
+          const updateResponse = await walletobjects.genericclass.update({
+            resourceId: this.classId,
+            requestBody: genericClass
+          });
+          console.log('✅ Clase actualizada exitosamente');
+          return updateResponse.data;
+        } catch (updateError) {
+          console.error('❌ Error actualizando clase:', updateError.response?.data || updateError.message);
+          return null;
+        }
       }
       console.error('❌ Error creando clase:', error.response?.data || error.message);
       throw error;
@@ -87,77 +123,202 @@ export default class GoogleWalletService {
 
   // 2. Crear el objeto pass individual
   createPassObject(userData, urlSitio) {
-    // Elimina guiones y convierte a minúsculas para consistencia
     const cleanUUID = userData.UUID.replace(/-/g, '').toLowerCase();
     const objectId = `${this.issuerId}.${cleanUUID}`;
     
     console.log('🎫 Creando pass object con ID:', objectId);
   
     return {
-  id: objectId,
-  classId: this.classId,
-  state: 'ACTIVE',
-  // ✅ Mantenemos solo textModulesData y barcode (mínimo requerido)
-  textModulesData: [
-    {
-      id: 'name',
-      header: 'Nombre',
-      body: `${userData.Nom} ${userData.AppP} ${userData.AppM}`
-    }
-  ],
-  barcode: {
-    type: 'QR_CODE',
-    value: urlSitio,
-    alternateText: 'Escanea para ver la tarjeta'
-  }
-};
+      id: objectId,
+      classId: this.classId,
+      state: 'ACTIVE',
+      // Logo debe estar tanto en la clase como en el objeto según el ejemplo de Google
+      logo: {
+        sourceUri: {
+          uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg"
+        },
+        contentDescription: {
+          defaultValue: {
+            language: "es",
+            value: "Logo de Google"
+          }
+        }
+      },
+      cardTitle: {
+        defaultValue: {
+          language: "es",
+          value: "Tarjet Digital"
+        }
+      },
+      header: {
+        defaultValue: {
+          language: "es",
+          value: `${userData.Nom} ${userData.AppP} ${userData.AppM}`
+        }
+      },
+      textModulesData: [
+        {
+          id: 'name',
+          header: 'Nombre',
+          body: `${userData.Nom} ${userData.AppP} ${userData.AppM}`
+        },
+        {
+          id: 'company',
+          header: 'Empresa',
+          body: userData.Empresa || userData.Activid || 'Tarjet'
+        },
+        {
+          id: 'website',
+          header: 'Sitio Web',
+          body: urlSitio
+        }
+      ],
+      barcode: {
+        type: 'QR_CODE',
+        value: urlSitio,
+        alternateText: 'Escanea para ver la tarjeta'
+      },
+      hexBackgroundColor: "#4285f4",
+      // Hero image de ejemplo de Google
+      heroImage: {
+        sourceUri: {
+          uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/google-io-hero-demo-only.png"
+        },
+        contentDescription: {
+          defaultValue: {
+            language: "es",
+            value: "Imagen principal de Tarjet"
+          }
+        }
+      }
+    };
   }
 
-  // 3. Generar el JWT para Google Wallet
-generateWalletJWT(passObject) {
-  console.log('🔐 Generando JWT para:', passObject.id);
-  
-  const now = Math.floor(Date.now() / 1000);
-  const payload = {
-    iss: this.issuerId,  // Cambiado: usar issuerId en lugar de client_email
-    aud: 'google',
-    typ: 'savetowallet',
-    iat: now,
-    exp: now + (60 * 60),
-    origins: ['https://tarjet.site'],  // Añadido: origins
-    payload: {
-      genericObjects: [passObject]
-    }
-  };
+  // 3. Generar el JWT para Google Wallet (modificado según el ejemplo de Google)
+  generateWalletJWT(passObject) {
+    console.log('🔐 Generando JWT para:', passObject.id);
+    
+    const now = Math.floor(Date.now() / 1000);
+    
+    // Según el ejemplo de Google, debemos incluir tanto genericObjects como genericClasses
+    const payload = {
+      iss: this.issuerId,
+      aud: 'google',
+      typ: 'savetowallet',
+      iat: now,
+      exp: now + (60 * 60),
+      origins: ['https://tarjet.site'],
+      payload: {
+        genericObjects: [passObject],
+        genericClasses: [
+          {
+            id: this.classId,
+            classTemplateInfo: {
+              cardTemplateOverride: {
+                cardRowTemplateInfos: [
+                  {
+                    twoItems: {
+                      startItem: {
+                        firstValue: {
+                          fields: [
+                            {
+                              fieldPath: "object.textModulesData['name']"
+                            }
+                          ]
+                        }
+                      },
+                      endItem: {
+                        firstValue: {
+                          fields: [
+                            {
+                              fieldPath: "object.textModulesData['company']"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    oneItem: {
+                      item: {
+                        firstValue: {
+                          fields: [
+                            {
+                              fieldPath: "object.textModulesData['website']"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            // Incluir la misma metadata de clase que creamos via API
+            reviewStatus: "UNDER_REVIEW",
+            hexBackgroundColor: "#4285f4",
+            logo: {
+              sourceUri: {
+                uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg"
+              },
+              contentDescription: {
+                defaultValue: {
+                  language: "es",
+                  value: "Logo de Google"
+                }
+              }
+            },
+            cardTitle: {
+              defaultValue: {
+                language: "es",
+                value: "Tarjet Digital"
+              }
+            },
+            header: {
+              defaultValue: {
+                language: "es",
+                value: "Tarjet Digital Card"
+              }
+            }
+          }
+        ]
+      }
+    };
 
-  console.log('📝 Payload del JWT:', JSON.stringify(payload, null, 2));
-  
-  try {
-    const token = jwt.sign(payload, this.serviceAccountKey.private_key, {
-      algorithm: 'RS256'
-    });
+    console.log('📝 Payload del JWT:', JSON.stringify(payload, null, 2));
     
-    console.log('✅ JWT generado exitosamente');
-    console.log('📏 Longitud del token:', token.length);
-    console.log('🔍 Primeros 50 caracteres:', token.substring(0, 50) + '...');
-    
-    return token;
-  } catch (error) {
-    console.error('❌ Error generando JWT:', error);
-    throw error;
+    try {
+      const token = jwt.sign(payload, this.serviceAccountKey.private_key, {
+        algorithm: 'RS256'
+      });
+      
+      console.log('✅ JWT generado exitosamente');
+      console.log('📏 Longitud del token:', token.length);
+      
+      return token;
+    } catch (error) {
+      console.error('❌ Error generando JWT:', error);
+      throw error;
+    }
   }
-}
 
   // 4. Crear la URL completa para guardar en Google Wallet
   async createSaveToWalletUrl(userData, urlSitio) {
     console.log('🎯 Creando URL completa para:', userData.Nom);
     
     try {
+      // Primero asegurarnos de que la clase existe
+      await this.createPassClass();
+      
+      // Crear el objeto pass
       const passObject = this.createPassObject(userData, urlSitio);
-      const jwtToken = this.generateWalletJWT(passObject); // Quita el await aquí
+      
+      // Generar el JWT
+      const jwtToken = this.generateWalletJWT(passObject);
       
       console.log('✅ JWT generado:', jwtToken.substring(0, 50) + '...');
       
+      // Crear la URL final
       const finalUrl = `https://pay.google.com/gp/v/save/${jwtToken}`;
       
       console.log('🔗 URL final generada');
