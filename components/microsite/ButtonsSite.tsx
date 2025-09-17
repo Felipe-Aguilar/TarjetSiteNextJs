@@ -493,7 +493,7 @@ END:VCARD`;
                     </motion.button>
                 )}
 
-                {/* <motion.a
+                <motion.a
                     href={googleWalletUrl || '#'}
                     target={googleWalletUrl ? "_blank" : "_self"}
                     rel="noopener noreferrer"
@@ -515,7 +515,7 @@ END:VCARD`;
                             />
                         )}
                     </span>
-                </motion.a>   */}
+                </motion.a> 
 
                 {/* 🔧 MOSTRAR ERRORES EN DESARROLLO */}
                 {/* {walletError && (

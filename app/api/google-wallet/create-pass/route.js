@@ -1,4 +1,3 @@
-//app/api/google-wallet/create-pass/route.js
 import GoogleWalletService from "../../../google-wallet-service.js";
 
 export async function POST(request) {
@@ -12,12 +11,7 @@ export async function POST(request) {
       }, { status: 400 });
     }
 
-    console.log('📋 Datos recibidos:', {
-      usuario: userData.Nom,
-      urlSitio: urlSitio
-    });
-
-    const walletService = new GoogleWalletService({
+    const serviceAccountKey = {
       type: "service_account",
       project_id: process.env.GOOGLE_CLOUD_PROJECT_ID,
       private_key_id: process.env.GOOGLE_WALLET_PRIVATE_KEY_ID,
@@ -28,27 +22,29 @@ export async function POST(request) {
       token_uri: "https://oauth2.googleapis.com/token",
       auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
       client_x509_cert_url: process.env.GOOGLE_WALLET_CLIENT_CERT_URL
-    });
+    };
 
-    console.log('🏗️ Creando clase de pass...');
-    await walletService.createPassClass();
-    
+    console.log('📧 Usando cuenta de servicio:', serviceAccountKey.client_email);
+
+    const walletService = new GoogleWalletService(serviceAccountKey);
+
     console.log('🔗 Generando URL de Wallet...');
     const walletUrl = await walletService.createSaveToWalletUrl(userData, urlSitio);
     
     console.log('✅ URL generada exitosamente');
-    return Response.json({ walletUrl });
-    
-  } catch (error) {
-    console.error('❌ Error en API Google Wallet:', {
-      message: error.message,
-      stack: error.stack,
-      response: error.response?.data
+    return Response.json({ 
+      success: true,
+      walletUrl,
+      message: 'URL de Google Wallet generada correctamente'
     });
     
+  } catch (error) {
+    console.error('❌ Error en API Google Wallet:', error.message);
+    
     return Response.json({ 
-      error: 'Error interno del servidor',
-      details: process.env.NODE_ENV === 'development' ? error.message : 'Contacta al administrador'
+      success: false,
+      error: error.message || 'Error interno del servidor',
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     }, { status: 500 });
   }
 }

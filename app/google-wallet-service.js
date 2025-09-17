@@ -1,6 +1,7 @@
-// app/google-wallet-service.js
+// google-wallet-service.js
 import { google } from 'googleapis';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 export default class GoogleWalletService {
   constructor(serviceAccountKey) {
@@ -8,6 +9,13 @@ export default class GoogleWalletService {
     this.issuerId = process.env.GOOGLE_WALLET_ISSUER_ID || '3388000000022946473';
     this.classId = `${this.issuerId}.tarjet_card_class`;
     console.log('🏗️ GoogleWalletService inicializado con Issuer ID:', this.issuerId);
+  }
+
+  // Generar un ID único que cambie cuando los datos cambien
+  generateUniqueObjectId(userData, urlSitio) {
+    const dataToHash = `${userData.UUID}-${userData.Nom}-${userData.AppP}-${userData.AppM}-${urlSitio}`;
+    const hash = crypto.createHash('md5').update(dataToHash).digest('hex');
+    return `${this.issuerId}.${hash}`;
   }
 
   // 1. Crear la clase del pass (solo una vez)
@@ -67,24 +75,22 @@ export default class GoogleWalletService {
           ]
         }
       },
-      // Campos adicionales requeridos por Google
-      reviewStatus: "UNDER_REVIEW",
       hexBackgroundColor: "#4285f4",
       logo: {
         sourceUri: {
-          uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg"
+          uri: "https://tarjetshop.com/wp-content/uploads/2023/07/logo.webp"
         },
         contentDescription: {
           defaultValue: {
             language: "es",
-            value: "Logo de Google"
+            value: "Google Wallet"
           }
         }
       },
       cardTitle: {
         defaultValue: {
           language: "es",
-          value: "Tarjet Digital"
+          value: "Tarjet Presentación Digital"
         }
       },
       header: {
@@ -121,33 +127,33 @@ export default class GoogleWalletService {
     }
   }
 
-  // 2. Crear el objeto pass individual
+  // 2. Crear el objeto pass individual con versionado
   createPassObject(userData, urlSitio) {
-    const cleanUUID = userData.UUID.replace(/-/g, '').toLowerCase();
-    const objectId = `${this.issuerId}.${cleanUUID}`;
+    // Usar ID único basado en el contenido para forzar actualizaciones
+    const objectId = this.generateUniqueObjectId(userData, urlSitio);
     
-    console.log('🎫 Creando pass object con ID:', objectId);
+    console.log('🎫 Creando pass object con ID único:', objectId);
   
     return {
       id: objectId,
       classId: this.classId,
       state: 'ACTIVE',
-      // Logo debe estar tanto en la clase como en el objeto según el ejemplo de Google
+      // Logo normal de Google
       logo: {
         sourceUri: {
-          uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg"
+          uri: "https://tarjetshop.com/wp-content/uploads/2023/07/logo.webp"
         },
         contentDescription: {
           defaultValue: {
             language: "es",
-            value: "Logo de Google"
+            value: "Google Wallet"
           }
         }
       },
       cardTitle: {
         defaultValue: {
           language: "es",
-          value: "Tarjet Digital"
+          value: "Tarjet Presentación Digital"
         }
       },
       header: {
@@ -171,121 +177,66 @@ export default class GoogleWalletService {
           id: 'website',
           header: 'Sitio Web',
           body: urlSitio
+        },
+        {
+          id: 'description',
+          header: 'Descripción',
+          body: 'Tarjeta digital creada con Tarjet - https://tarjet.site'
+        },
+        {
+          id: 'timestamp',
+          header: 'Actualizado',
+          body: new Date().toLocaleString('es-MX', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })
         }
       ],
+      linksModuleData: {
+        uris: [
+          {
+            uri: urlSitio,
+            description: 'Ver Tarjet Digital',
+            id: 'tarjet_link'
+          },
+          {
+            uri: 'https://tarjet.site',
+            description: 'Visitar Tarjet',
+            id: 'tarjet_website'
+          }
+        ]
+      },
       barcode: {
         type: 'QR_CODE',
         value: urlSitio,
-        alternateText: 'Escanea para ver la tarjeta'
+        alternateText: 'Escanea para ver la tarjeta digital'
       },
-      hexBackgroundColor: "#4285f4",
-      // Hero image de ejemplo de Google
-      heroImage: {
-        sourceUri: {
-          uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/google-io-hero-demo-only.png"
-        },
-        contentDescription: {
-          defaultValue: {
-            language: "es",
-            value: "Imagen principal de Tarjet"
-          }
-        }
-      }
+      hexBackgroundColor: "#4285f4"
     };
   }
 
-  // 3. Generar el JWT para Google Wallet (modificado según el ejemplo de Google)
+  // 3. Generar el JWT para Google Wallet
   generateWalletJWT(passObject) {
     console.log('🔐 Generando JWT para:', passObject.id);
     
     const now = Math.floor(Date.now() / 1000);
     
-    // Según el ejemplo de Google, debemos incluir tanto genericObjects como genericClasses
     const payload = {
-      iss: this.issuerId,
+      iss: this.serviceAccountKey.client_email,
       aud: 'google',
       typ: 'savetowallet',
       iat: now,
-      exp: now + (60 * 60),
+      exp: now + (60 * 60), // 1 hora de validez
       origins: ['https://tarjet.site'],
       payload: {
-        genericObjects: [passObject],
-        genericClasses: [
-          {
-            id: this.classId,
-            classTemplateInfo: {
-              cardTemplateOverride: {
-                cardRowTemplateInfos: [
-                  {
-                    twoItems: {
-                      startItem: {
-                        firstValue: {
-                          fields: [
-                            {
-                              fieldPath: "object.textModulesData['name']"
-                            }
-                          ]
-                        }
-                      },
-                      endItem: {
-                        firstValue: {
-                          fields: [
-                            {
-                              fieldPath: "object.textModulesData['company']"
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  },
-                  {
-                    oneItem: {
-                      item: {
-                        firstValue: {
-                          fields: [
-                            {
-                              fieldPath: "object.textModulesData['website']"
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            },
-            // Incluir la misma metadata de clase que creamos via API
-            reviewStatus: "UNDER_REVIEW",
-            hexBackgroundColor: "#4285f4",
-            logo: {
-              sourceUri: {
-                uri: "https://storage.googleapis.com/wallet-lab-tools-codelab-artifacts-public/pass_google_logo.jpg"
-              },
-              contentDescription: {
-                defaultValue: {
-                  language: "es",
-                  value: "Logo de Google"
-                }
-              }
-            },
-            cardTitle: {
-              defaultValue: {
-                language: "es",
-                value: "Tarjet Digital"
-              }
-            },
-            header: {
-              defaultValue: {
-                language: "es",
-                value: "Tarjet Digital Card"
-              }
-            }
-          }
-        ]
+        genericObjects: [passObject]
       }
     };
 
-    console.log('📝 Payload del JWT:', JSON.stringify(payload, null, 2));
+    console.log('📝 Payload del JWT con ID único:', passObject.id);
     
     try {
       const token = jwt.sign(payload, this.serviceAccountKey.private_key, {
@@ -310,22 +261,63 @@ export default class GoogleWalletService {
       // Primero asegurarnos de que la clase existe
       await this.createPassClass();
       
-      // Crear el objeto pass
+      // Crear el objeto pass con ID único
       const passObject = this.createPassObject(userData, urlSitio);
       
       // Generar el JWT
       const jwtToken = this.generateWalletJWT(passObject);
       
-      console.log('✅ JWT generado:', jwtToken.substring(0, 50) + '...');
+      console.log('✅ JWT generado con ID único:', passObject.id);
       
-      // Crear la URL final
+      // Crear la URL final con timestamp para evitar caching
+      const timestamp = Date.now();
       const finalUrl = `https://pay.google.com/gp/v/save/${jwtToken}`;
       
-      console.log('🔗 URL final generada');
+      console.log('🔗 URL final generada con prevención de cache');
       return finalUrl;
     } catch (error) {
       console.error('💥 Error creando URL de Google Wallet:', error);
       throw error;
+    }
+  }
+
+  // 5. Método adicional: forzar actualización de pass existente
+  async updateExistingPass(userData, urlSitio) {
+    console.log('🔄 Forzando actualización de pass existente...');
+    
+    try {
+      const auth = new google.auth.GoogleAuth({
+        credentials: this.serviceAccountKey,
+        scopes: ['https://www.googleapis.com/auth/wallet_object.issuer']
+      });
+
+      const walletobjects = google.walletobjects({
+        version: 'v1',
+        auth: auth
+      });
+
+      // Primero obtener el ID antiguo (basado solo en UUID)
+      const oldObjectId = `${this.issuerId}.${userData.UUID.replace(/-/g, '').toLowerCase()}`;
+      
+      // Intentar eliminar el pass antiguo
+      try {
+        await walletobjects.genericobject.delete({
+          resourceId: oldObjectId
+        });
+        console.log('✅ Pass antiguo eliminado:', oldObjectId);
+      } catch (deleteError) {
+        if (deleteError.response?.status !== 404) {
+          console.log('ℹ️ Pass antiguo no encontrado o ya eliminado');
+        }
+      }
+
+      // Crear nuevo pass con ID único
+      return await this.createSaveToWalletUrl(userData, urlSitio);
+      
+    } catch (error) {
+      console.error('❌ Error forzando actualización:', error);
+      // Fallback: crear nuevo pass normalmente
+      return await this.createSaveToWalletUrl(userData, urlSitio);
     }
   }
 }
