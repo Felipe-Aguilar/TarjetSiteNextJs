@@ -493,29 +493,31 @@ END:VCARD`;
                     </motion.button>
                 )}
 
-                {/* <motion.a
-                    href={googleWalletUrl || '#'}
-                    target={googleWalletUrl ? "_blank" : "_self"}
-                    rel="noopener noreferrer"
-                    className={`${style.GoogleWallet} ${!googleWalletUrl && !loadingWallet ? style.disabled : ''}`}
-                    {...animate}
-                    transition={{ delay: 2.4 }}
-                    onClick={handleGoogleWalletClick}
-                >
-                    {loadingWallet ? 'Generando...' : 'Guardar en Google Wallet'}
-                    <span>
-                        {loadingWallet ? (
-                            <div className={style.spinner}></div>
-                        ) : (
-                            <Image 
-                                src={'/images/google-wallet-icon.svg'}
-                                alt='Guardar en Google Wallet'
-                                width={150}
-                                height={150}
-                            />
-                        )}
-                    </span>
-                </motion.a> */}
+                {((userData.AppP.toLowerCase()) == "ruelas") && (
+                    <motion.a
+                        href={googleWalletUrl || '#'}
+                        target={googleWalletUrl ? "_blank" : "_self"}
+                        rel="noopener noreferrer"
+                        className={`${style.GoogleWallet} ${!googleWalletUrl && !loadingWallet ? style.disabled : ''}`}
+                        {...animate}
+                        transition={{ delay: 2.4 }}
+                        onClick={handleGoogleWalletClick}
+                    >
+                        {loadingWallet ? 'Generando...' : 'Guardar en Google Wallet'}
+                        <span>
+                            {loadingWallet ? (
+                                <div className={style.spinner}></div>
+                            ) : (
+                                <Image 
+                                    src={'/images/google-wallet-icon.svg'}
+                                    alt='Guardar en Google Wallet'
+                                    width={150}
+                                    height={150}
+                                />
+                            )}
+                        </span>
+                    </motion.a>
+                )} 
 
                 {/* 🔧 MOSTRAR ERRORES EN DESARROLLO */}
                 {/* {walletError && (
