@@ -61,7 +61,7 @@ const SocialNetworks = ({ userData }: Props) => {
                 switch(net.RedSocialId) {
                     case 'INSTA': setInstagram(net.RedSocialUrl); break;
                     case 'GOOG': setGoogle(net.RedSocialUrl); break;
-                    case 'FACE': setFacebook(net.RedSocialUrl); break;
+                    case 'FACEB': setFacebook(net.RedSocialUrl); break;
                     case 'TIKT': setTiktok(net.RedSocialUrl); break;
                     case 'TWIT': setTwitter(net.RedSocialUrl); break;
                     case 'YOUT': setYoutube(net.RedSocialUrl); break;
@@ -76,7 +76,7 @@ const SocialNetworks = ({ userData }: Props) => {
             const defaultNetworks = [
                 { RedSocialId: 'INSTA', RedSocialDesc: 'Instagram', RedSocialUrl: userData.Instagram || '' },
                 { RedSocialId: 'GOOG', RedSocialDesc: 'Google', RedSocialUrl: (userData as any).SiteGoogle || userData.Google || '' },
-                { RedSocialId: 'FACE', RedSocialDesc: 'Facebook', RedSocialUrl: userData.Facebook || '' },
+                { RedSocialId: 'FACEB', RedSocialDesc: 'FaceBook', RedSocialUrl: userData.Facebook || '' },
                 { RedSocialId: 'TIKT', RedSocialDesc: 'TikTok', RedSocialUrl: userData.Tiktok || '' },
                 { RedSocialId: 'TWIT', RedSocialDesc: 'Twitter', RedSocialUrl: userData.Twitter || '' },
                 { RedSocialId: 'YOUT', RedSocialDesc: 'YouTube', RedSocialUrl: userData.Youtube || '' },
@@ -90,7 +90,7 @@ const SocialNetworks = ({ userData }: Props) => {
             
             // Actualizar estados individuales desde el default
             setGoogle(defaultNetworks.find(n => n.RedSocialId === 'GOOG')?.RedSocialUrl || '');
-            setFacebook(defaultNetworks.find(n => n.RedSocialId === 'FACE')?.RedSocialUrl || '');
+            setFacebook(defaultNetworks.find(n => n.RedSocialId === 'FACEB')?.RedSocialUrl || '');
             setInstagram(defaultNetworks.find(n => n.RedSocialId === 'INSTA')?.RedSocialUrl || '');
             setTiktok(defaultNetworks.find(n => n.RedSocialId === 'TIKT')?.RedSocialUrl || '');
             setTwitter(defaultNetworks.find(n => n.RedSocialId === 'TWIT')?.RedSocialUrl || '');
@@ -122,7 +122,7 @@ const SocialNetworks = ({ userData }: Props) => {
         const updatedSocialNetworks = [
             { RedSocialId: 'INSTA', RedSocialDesc: 'Instagram', RedSocialUrl: instagram ?? ' ' },
             { RedSocialId: 'GOOG', RedSocialDesc: 'Google', RedSocialUrl: google ?? ' ' },
-            { RedSocialId: 'FACEB', RedSocialDesc: 'Facebook', RedSocialUrl: facebook ?? ' ' },
+            { RedSocialId: 'FACEB', RedSocialDesc: 'FaceBook', RedSocialUrl: facebook ?? ' ' },
             { RedSocialId: 'TIKTO', RedSocialDesc: 'TikTok', RedSocialUrl: tiktok ?? ' ' },
             { RedSocialId: 'TWIT', RedSocialDesc: 'Twitter', RedSocialUrl: twitter ?? ' ' },
             { RedSocialId: 'YOUT', RedSocialDesc: 'YouTube', RedSocialUrl: youtube ?? ' ' },
