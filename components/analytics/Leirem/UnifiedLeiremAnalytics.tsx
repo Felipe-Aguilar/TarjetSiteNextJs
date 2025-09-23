@@ -82,7 +82,7 @@ export default function UnifiedLeiremAnalytics({
       {currentView === 'pages' ? (
         <div className={styles.chartContainer}>
           <h2 className={styles.title}>
-            Perfiles Leirem más visitados en los últimos 15 días
+            Perfiles Leirem más visitados en los últimos 30 días
             <span className={styles.pageInfo}>
               Página {pagination.currentPage} de {pagination.totalPages}
             </span>
