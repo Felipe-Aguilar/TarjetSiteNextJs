@@ -75,7 +75,7 @@ export default function UnifiedLeiremAnalytics({
           onClick={() => setCurrentView('demographics')}
           disabled={!selectedToken}
         >
-          <FaRegMap /> Demográfico por Región
+          <FaRegMap /> Visitas por Región
         </button>
       </div>
 
