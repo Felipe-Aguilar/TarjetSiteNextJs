@@ -1,4 +1,4 @@
-// components/LeiremAnalytics.tsx
+// components/Leirem/LeiremAnalytics.tsx
 'use client';
 
 import styles from './LeiremAnalytics.module.scss';
@@ -18,7 +18,7 @@ interface Pagination {
   totalItems: number;
 }
 
-export default function LeiramAnalytics({ initialData, initialPagination }: { 
+export default function LeiremAnalytics({ initialData, initialPagination }: { 
   initialData: AnalyticsData[],
   initialPagination: Pagination
 }) {
@@ -32,7 +32,7 @@ export default function LeiramAnalytics({ initialData, initialPagination }: {
   const fetchPage = async (page: number) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/analytics/leiram-pages?page=${page}`);
+      const res = await fetch(`/api/analytics/leirem-pages?page=${page}`);
       const { data, pagination } = await res.json();
       setData(data);
       setPagination(pagination);
@@ -46,7 +46,7 @@ export default function LeiramAnalytics({ initialData, initialPagination }: {
   return (
     <div className={styles.chartContainer}>
       <h2 className={styles.title}>
-        Rutas Leiram más visitadas en los últimos 15 días
+        Perfiles Leirem más visitados en los últimos 15 días
         <span className={styles.pageInfo}>
           Página {pagination.currentPage} de {pagination.totalPages}
         </span>
