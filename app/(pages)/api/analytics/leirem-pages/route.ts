@@ -27,10 +27,10 @@ export async function GET(request: Request) {
       auth: await auth.getClient() as any,
     });
 
-    // Configurar fechas (últimos 30 días)
+    // Configurar fechas (últimos 60 días)
     const date = new Date();
     const startDate = new Date(date);
-    startDate.setDate(date.getDate() - 30);
+    startDate.setDate(date.getDate() - 60);
 
     const formattedDateToday = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     const formattedStartDate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-${startDate.getDate().toString().padStart(2, '0')}`;
