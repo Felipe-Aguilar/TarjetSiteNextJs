@@ -61,14 +61,14 @@ const SocialNetworks = ({ userData }: Props) => {
                 switch(net.RedSocialId) {
                     case 'INSTA': setInstagram(net.RedSocialUrl); break;
                     case 'GOOG': setGoogle(net.RedSocialUrl); break;
-                    case 'FACE': setFacebook(net.RedSocialUrl); break;
-                    case 'TIKT': setTiktok(net.RedSocialUrl); break;
+                    case 'FACEB': setFacebook(net.RedSocialUrl); break;
+                    case 'TIKTO': setTiktok(net.RedSocialUrl); break;
                     case 'TWIT': setTwitter(net.RedSocialUrl); break;
                     case 'YOUT': setYoutube(net.RedSocialUrl); break;
                     case 'LINK': setLinkedin(net.RedSocialUrl); break;
                     case 'TELE': setTelegram(net.RedSocialUrl); break;
                     case 'SPOT': setSpotify(net.RedSocialUrl); break;
-                    case 'WAPP': setWhatsappGroup(net.RedSocialUrl); break;
+                    case 'WHAT': setWhatsappGroup(net.RedSocialUrl); break;
                 }
             });
         } else {
@@ -76,23 +76,23 @@ const SocialNetworks = ({ userData }: Props) => {
             const defaultNetworks = [
                 { RedSocialId: 'INSTA', RedSocialDesc: 'Instagram', RedSocialUrl: userData.Instagram || '' },
                 { RedSocialId: 'GOOG', RedSocialDesc: 'Google', RedSocialUrl: (userData as any).SiteGoogle || userData.Google || '' },
-                { RedSocialId: 'FACE', RedSocialDesc: 'Facebook', RedSocialUrl: userData.Facebook || '' },
-                { RedSocialId: 'TIKT', RedSocialDesc: 'TikTok', RedSocialUrl: userData.Tiktok || '' },
+                { RedSocialId: 'FACEB', RedSocialDesc: 'FaceBook', RedSocialUrl: userData.Facebook || '' },
+                { RedSocialId: 'TIKTO', RedSocialDesc: 'Tiktok', RedSocialUrl: userData.Tiktok || '' },
                 { RedSocialId: 'TWIT', RedSocialDesc: 'Twitter', RedSocialUrl: userData.Twitter || '' },
                 { RedSocialId: 'YOUT', RedSocialDesc: 'YouTube', RedSocialUrl: userData.Youtube || '' },
-                { RedSocialId: 'LINK', RedSocialDesc: 'LinkedIn', RedSocialUrl: userData.Linkedin || '' },
+                { RedSocialId: 'LINK', RedSocialDesc: 'Linkedin', RedSocialUrl: userData.Linkedin || '' },
                 { RedSocialId: 'TELE', RedSocialDesc: 'Telegram', RedSocialUrl: userData.Telegram || '' },
                 { RedSocialId: 'SPOT', RedSocialDesc: 'Spotify', RedSocialUrl: '' },
-                { RedSocialId: 'WAPP', RedSocialDesc: 'WhatsApp Group', RedSocialUrl: '' },
+                { RedSocialId: 'WHAT', RedSocialDesc: 'Whatsapp', RedSocialUrl: '' },
             ];
             
             setSocialNetworks(defaultNetworks);
             
             // Actualizar estados individuales desde el default
             setGoogle(defaultNetworks.find(n => n.RedSocialId === 'GOOG')?.RedSocialUrl || '');
-            setFacebook(defaultNetworks.find(n => n.RedSocialId === 'FACE')?.RedSocialUrl || '');
+            setFacebook(defaultNetworks.find(n => n.RedSocialId === 'FACEB')?.RedSocialUrl || '');
             setInstagram(defaultNetworks.find(n => n.RedSocialId === 'INSTA')?.RedSocialUrl || '');
-            setTiktok(defaultNetworks.find(n => n.RedSocialId === 'TIKT')?.RedSocialUrl || '');
+            setTiktok(defaultNetworks.find(n => n.RedSocialId === 'TIKTO')?.RedSocialUrl || '');
             setTwitter(defaultNetworks.find(n => n.RedSocialId === 'TWIT')?.RedSocialUrl || '');
             setYoutube(defaultNetworks.find(n => n.RedSocialId === 'YOUT')?.RedSocialUrl || '');
             setLinkedin(defaultNetworks.find(n => n.RedSocialId === 'LINK')?.RedSocialUrl || '');
@@ -120,17 +120,17 @@ const SocialNetworks = ({ userData }: Props) => {
     const onSubmitData = async () => {
         // Reconstruir el arreglo con los valores actuales (incluyendo vacíos)
         const updatedSocialNetworks = [
-            { RedSocialId: 'INSTA', RedSocialDesc: 'Instagram', RedSocialUrl: instagram ?? ' ' },
-            { RedSocialId: 'GOOG', RedSocialDesc: 'Google', RedSocialUrl: google ?? ' ' },
-            { RedSocialId: 'FACEB', RedSocialDesc: 'Facebook', RedSocialUrl: facebook ?? ' ' },
-            { RedSocialId: 'TIKTO', RedSocialDesc: 'TikTok', RedSocialUrl: tiktok ?? ' ' },
-            { RedSocialId: 'TWIT', RedSocialDesc: 'Twitter', RedSocialUrl: twitter ?? ' ' },
-            { RedSocialId: 'YOUT', RedSocialDesc: 'YouTube', RedSocialUrl: youtube ?? ' ' },
-            { RedSocialId: 'LINK', RedSocialDesc: 'LinkedIn', RedSocialUrl: linkedin ?? ' ' },
-            { RedSocialId: 'TELE', RedSocialDesc: 'Telegram', RedSocialUrl: telegram ?? ' ' },
+            { RedSocialId: 'INSTA', RedSocialDesc: 'Instagram', RedSocialUrl: instagram ?? '' },
+            { RedSocialId: 'GOOG', RedSocialDesc: 'Google', RedSocialUrl: google ?? '' },
+            { RedSocialId: 'FACEB', RedSocialDesc: 'FaceBook', RedSocialUrl: facebook ?? '' },
+            { RedSocialId: 'TIKTO', RedSocialDesc: 'Tiktok', RedSocialUrl: tiktok ?? '' },
+            { RedSocialId: 'TWIT', RedSocialDesc: 'Twitter', RedSocialUrl: twitter ?? '' },
+            { RedSocialId: 'YOUT', RedSocialDesc: 'YouTube', RedSocialUrl: youtube ?? '' },
+            { RedSocialId: 'LINK', RedSocialDesc: 'Linkedin', RedSocialUrl: linkedin ?? '' },
+            { RedSocialId: 'TELE', RedSocialDesc: 'Telegram', RedSocialUrl: telegram ?? '' },
             { RedSocialId: 'SPOT', RedSocialDesc: 'Spotify', RedSocialUrl: spotify ?? '' },
-            { RedSocialId: 'WHAT', RedSocialDesc: 'WhatsApp Group', RedSocialUrl: whatsappGroup ?? '' },
-        ].filter(net => net.RedSocialUrl);
+            { RedSocialId: 'WHAT', RedSocialDesc: 'Whatsapp', RedSocialUrl: whatsappGroup ?? '' },
+        ];
 
         // Preparar el objeto para enviar
         const socialForm = {
@@ -142,16 +142,13 @@ const SocialNetworks = ({ userData }: Props) => {
             "Youtube": youtube,
             "Telegram": telegram,
             "Linkedin": linkedin,
-            "ListRedesSociales": updatedSocialNetworks // Envía todas las redes, incluso vacías
+            "ListRedesSociales": updatedSocialNetworks // Envía todas las redes, incluyendo vacías
         };
+        
         console.log("socialForm enviado a EditData:", socialForm);
         try {
-            // Enviar datos al backend
             await EditData({ userData, socialForm });
-            
-            // Actualizar el estado local solo después de confirmar el envío
             setSocialNetworks(updatedSocialNetworks);
-            
             console.log("Redes sociales actualizadas correctamente");
         } catch (error) {
             console.error("Error al actualizar redes sociales:", error);
