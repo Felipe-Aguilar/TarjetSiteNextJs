@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
     const date = new Date();
     const startDate = new Date(date);
-    startDate.setDate(date.getDate() - 6); // Restamos 6 días a la fecha actual
+    startDate.setDate(date.getDate() - 60); // Restamos 60 días a la fecha actual
 
     const formattedDateToday = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     const formattedStartDate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-${startDate.getDate().toString().padStart(2, '0')}`;
