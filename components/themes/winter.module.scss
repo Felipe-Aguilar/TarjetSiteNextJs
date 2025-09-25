@@ -361,6 +361,13 @@
 
         .ServiceTitleContainer h3 {
           color: #003049;
+          margin-bottom: 25px;
+
+          h3 {
+            font-size: 1.6rem;
+            text-align: center;
+            font-weight: 600;
+          }
 
           &::after {
             background: #0077b6;
@@ -368,6 +375,9 @@
         }
 
         .ServiceImageWrapper {
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
           box-shadow: 0 8px 24px rgba(0, 119, 182, 0.15);
           border: 1px solid rgba(179, 224, 255, 0.5);
 
@@ -377,6 +387,20 @@
               rgba(0, 118, 182, 0.26));
 
           }
+        }
+
+        .ServiceVideoWrapper {
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+          position: relative;
+        
+        }
+
+        .ServiceVideo {
+          width: 100%;
+          height: auto;
+          border-radius: 14px;
         }
 
         hr {

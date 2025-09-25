@@ -476,7 +476,7 @@
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 
         &:hover .ServiceImage {
-          transform: scale(1.05);
+          transform: scale(1.15);
         }
 
         &:hover .ImageOverlay {
@@ -497,10 +497,7 @@
         align-items: center;
         justify-content: center;
         opacity: 0;
-        transition: opacity 0.4s ease;
-        backdrop-filter: blur(2px);
-
-        
+        transition: opacity 0.4s ease;        
       }
 
       .ServiceVideoWrapper {
@@ -508,17 +505,7 @@
         overflow: hidden;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         position: relative;
-
-        &::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: 16px;
-          border: 2px solid transparent;
-          background: linear-gradient(135deg, #3498db, #2ecc71) border-box;
-          mask: linear-gradient(white 0 0) padding-box, linear-gradient(white 0 0);
-          mask-composite: exclude;
-        }
+        
       }
 
       .ServiceVideo {

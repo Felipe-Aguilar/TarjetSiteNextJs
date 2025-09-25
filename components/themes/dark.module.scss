@@ -337,13 +337,10 @@
     }
 
     .ServiceContainer {
-      background: rgba(26, 26, 26, 0.9);
+      background: rgba(18 , 18, 18, 0.8);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        inset 0 0 20px rgba(0, 242, 234, 0.05);
-
+      border: 1px solid rgb(18, 18, 18);
+      
       &::before {
         background: linear-gradient(90deg, transparent, #00f2ea, transparent);
       }
@@ -354,17 +351,38 @@
           0 0 30px rgba(0, 242, 234, 0.2);
       }
 
-      .ServiceTitleContainer h3 {
-        color: #ffffff;
-        text-shadow: 0 0 8px rgba(0, 242, 234, 0.3);
+      .ServiceTitleContainer {
+        margin-bottom: 25px;
 
-        &::after {
-          background: #ff00cc;
-          box-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+        h3 {
+          font-size: 1.6rem;
+          text-align: center;
+          font-weight: 600;
+          color: #dce7f3;
+          text-shadow: 0 0 8px rgba(0, 242, 234, 0.3);
+
+          margin-bottom: 8px;
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: #ff00cc;
+            box-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+            border-radius: 1px;
+          }
         }
       }
 
       .ServiceImageWrapper {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(0, 242, 234, 0.3);
 
@@ -372,9 +390,27 @@
           background: linear-gradient(135deg, 
             rgba(0, 242, 234, 0.221), 
             rgba(255, 0, 204, 0.289));
-
-          
         }
+      }
+
+      .ServiceImage {
+        width: 100%;
+        height: auto;
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      
+      .ServiceVideoWrapper {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        position: relative;
+       
+      }
+
+      .ServiceVideo {
+        width: 100%;
+        height: auto;
+        border-radius: 14px;
       }
 
       .ServiceDescriptionContainer p {
