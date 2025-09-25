@@ -1,3 +1,4 @@
+//winter.module.scss
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 
@@ -229,171 +230,161 @@
   }
 
   .Services {
-    position: relative;  // Necesario para posicionamiento absoluto interno
-    padding-top: 30px; 
-    background: linear-gradient(to bottom, transparent 95%, rgba(179, 224, 255, 0.1) 100%);
-    
-    h2, h3 {
-        text-align: center;
-        font-weight: 600;
-        font-size: 1.5rem;
-        position: relative;
-        margin-bottom: 35px;
-        color: #003049; // Texto más oscuro para mejor contraste
+      // Animaciones específicas de invierno
+      @keyframes snowGlitter {
+        0%, 100% { opacity: 0.7; transform: translateY(0) rotate(0deg); }
+        50% { opacity: 1; transform: translateY(-2px) rotate(180deg); }
+      }
+
+      @keyframes iceShimmer {
+        0% { background-position: -100% 0; }
+        100% { background-position: 200% 0; }
+      }
+
+      // Override para tema invernal
+      .TitleContainer h2 {
+        color: #003366;
+        text-shadow: 0 2px 8px rgba(0, 119, 182, 0.3);
+
+        &::before {
+          background: linear-gradient(90deg, #b3e0ff, #0077b6, #b3e0ff);
+          box-shadow: 0 0 8px rgba(179, 224, 255, 0.5);
+        }
 
         &::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, #b3e0ff, #0077b6, #b3e0ff);
-            border-radius: 3px;
-            box-shadow: 0 0 8px rgba(179, 224, 255, 0.5);
+          background: rgba(179, 224, 255, 0.6);
         }
+      }
+
+      .WorkersSection h3 {
+        color: #003049;
+        text-shadow: 0 1px 4px rgba(0, 119, 182, 0.2);
+
+        &::before {
+          background: linear-gradient(90deg, #b3e0ff, #0077b6);
+        }
+      }
+
+     // Imagen de header mejorada
+    .HeaderImageContainer {
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(89, 83, 83, 0.1);
+
+      &:hover .HeaderImage {
+        transform: scale(1.05);
+      }
+    }
+
+    .HeaderImage {
+      width: 100%;
+      height: auto;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border-radius: 16px;
+    }
+
+    // Contenedor de perfil mejorado
+    .ProfileContainer {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
     }
 
     .Perfil {
-      width: 150px;
-      height: 150px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
-      border: 4px solid #b3e0ff;
-      display: block;
-      margin: 0 auto 25px auto;
-      box-shadow: 0 5px 20px rgba(0, 119, 182, 0.3),
-                  inset 0 0 20px rgba(255, 255, 255, 0.7),
-                  0 0 30px rgba(179, 224, 255, 0.4); // Efecto "halo de hielo"
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.4);
-      cursor: pointer; 
-      background: white;
+      position: relative;
 
-      &:hover {
-          transform: scale(1.05); 
-          box-shadow: 0 8px 30px rgba(0, 119, 182, 0.5),
-                      inset 0 0 25px rgba(255, 255, 255, 0.9),
-                      0 0 40px rgba(179, 224, 255, 0.6);
+        border: 4px solid #b3e0ff;
+        box-shadow: 
+          0 8px 32px rgba(0, 119, 182, 0.2),
+          inset 0 0 20px rgba(255, 255, 255, 0.7),
+          0 0 30px rgba(179, 224, 255, 0.4);
+
+        &::after {
+          background: linear-gradient(135deg, 
+            rgba(179, 224, 255, 0.3), 
+            rgba(255, 255, 255, 0.5), 
+            rgba(179, 224, 255, 0.3));
+        }
+
+        &:hover {
+          box-shadow: 
+            0 16px 48px rgba(0, 119, 182, 0.3),
+            inset 0 0 25px rgba(255, 255, 255, 0.9),
+            0 0 40px rgba(179, 224, 255, 0.6);
           filter: brightness(1.05);
+        }
       }
 
-      @media (width <= 700px) {
-        width: 120px;
-        height: 120px;
-        border-width: 2px;
-        margin-bottom: 15px; // Menor espacio en móviles
+      .ServicesListContainer ul li {
+        background: rgba(240, 249, 255, 0.9);
+        border-left-color: #0077b6;
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(179, 224, 255, 0.3);
+
+        &::before {
+          background: rgba(179, 224, 255, 0.15);
+        }
+
+        &::after {
+          content: '❄️';
+          position: absolute;
+          right: 15px;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 1rem;
+          animation: snowGlitter 3s ease-in-out infinite;
+        }
+      }
+
+      .ServiceContainer {
+        background: rgba(240, 249, 255, 0.8);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(179, 224, 255, 0.5);
+        box-shadow: 
+          0 8px 32px rgba(0, 119, 182, 0.1),
+          inset 0 0 20px rgba(255, 255, 255, 0.3);
+
+        &::before {
+          background: linear-gradient(90deg, transparent, #b3e0ff, transparent);
+        }
+
+        &:hover {
+          box-shadow: 
+            0 16px 48px rgba(0, 119, 182, 0.2),
+            inset 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .ServiceTitleContainer h3 {
+          color: #003049;
+
+          &::after {
+            background: #0077b6;
+          }
+        }
+
+        .ServiceImageWrapper {
+          box-shadow: 0 8px 24px rgba(0, 119, 182, 0.15);
+          border: 1px solid rgba(179, 224, 255, 0.5);
+
+          .ImageOverlay {
+            background: linear-gradient(135deg, 
+              rgba(179, 225, 255, 0.238), 
+              rgba(0, 118, 182, 0.26));
+
+          }
+        }
+
+        hr {
+          background: linear-gradient(90deg, transparent, rgba(0, 119, 182, 0.3), transparent);
+        }
       }
     }
 
-    .Icon {
-        filter: drop-shadow(0 0 10px rgba(0, 119, 182, 0.3));
-        display: block;
-        margin: 0 auto 30px;
-        height: 60px;
-        opacity: 0.9;
-    }
-
-    ul {
-        padding: 0 50px;
-        list-style-type: none;
-
-        li {
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 12px;
-            color: #003049;
-
-            &::before {
-                content: '❄️';
-                position: absolute;
-                left: 0;
-                top: 1px;
-                font-size: 0.8em;
-            }
-        }
-
-        @media (width <= 700px) {
-            padding: 0 25px;
-        }
-    }
-
-    .Workers {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 40px;
-
-        .Worker {
-            background: rgba(212, 237, 255, 0.95) !important;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(179, 224, 255, 0.8);
-            box-shadow: 0 8px 30px rgba(0, 119, 182, 0.15);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-
-            &:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 15px 40px rgba(0, 119, 182, 0.25);
-                border-color: rgba(0, 119, 182, 0.5);
-            }
-
-            .Header {
-                svg {
-                    color: #0077b6 !important;
-                    filter: drop-shadow(0 0 8px rgba(0, 119, 182, 0.4));
-                }
-
-                .Image {
-                    img {
-                        border: 2px solid rgba(0, 119, 182, 0.3);
-                        box-shadow: 0 0 10px rgba(179, 224, 255, 0.5);
-                    }
-                }
-            }
-
-            .Contain {
-                background: rgba(255, 255, 255, 0.85);
-            }
-        }
-    }
-
-    .ServiceContainer {
-        text-align: center;
-        margin-bottom: 40px;
-
-        h3 {
-            font-weight: 500;
-            color: #003049;
-            margin-bottom: 25px;
-            letter-spacing: 0.5px;
-        }
-
-        img {
-            width: 85%;
-            max-width: 800px;
-            border-radius: 10px;
-            box-shadow: 0 8px 25px rgba(0, 119, 182, 0.15);
-            border: 1px solid rgba(179, 224, 255, 0.5);
-            transition: transform 0.3s ease;
-
-            &:hover {
-                transform: scale(1.01);
-            }
-
-            @media (width <= 700px) {
-                width: 95%;
-            }
-        }
-    }
-
-    hr {
-        border: none;
-        height: 1px;
-        background: linear-gradient(to right, transparent, rgba(0, 119, 182, 0.3), transparent);
-        margin: 40px 0;
-    }
-  }
 
   // Social con efecto de cristales de hielo
   .Social {

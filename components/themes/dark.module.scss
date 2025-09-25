@@ -225,165 +225,164 @@
 
   // Services
   .Services {
-    position: relative;  // Necesario para posicionamiento absoluto interno
-    padding-top: 30px;   // Espacio para evitar que el perfil tape contenido
+    // Animaciones específicas de tema oscuro
+    @keyframes neonPulse {
+      0%, 100% { box-shadow: 0 0 10px rgba(0, 242, 234, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(0, 242, 234, 0.6); }
+    }
 
-    h2, h3 {
-        text-align: center;      
-        font-weight: 600;
-        font-size: 1.5rem;
-        margin-bottom: 30px;
-        position: relative;
+    @keyframes cyberpunkGlow {
+      0% { text-shadow: 0 0 10px rgba(255, 0, 204, 0.5); }
+      50% { text-shadow: 0 0 20px rgba(0, 242, 234, 0.8); }
+      100% { text-shadow: 0 0 10px rgba(255, 0, 204, 0.5); }
+    }
 
-        &::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, #00f2ea, #ff00cc);
-            border-radius: 3px;
-        }
+    // Override para tema oscuro
+    .TitleContainer h2 {
+      color: #ffffff;
+      animation: cyberpunkGlow 4s ease-in-out infinite;
+
+      &::before {
+        background: linear-gradient(90deg, #00f2ea, #ff00cc);
+        box-shadow: 0 0 15px rgba(0, 242, 234, 0.5);
+      }
+
+      &::after {
+        background: rgba(255, 0, 204, 0.6);
+      }
+    }
+
+    .WorkersSection h3 {
+      color: #e0e0e0;
+      text-shadow: 0 0 10px rgba(0, 242, 234, 0.3);
+
+      &::before {
+        background: linear-gradient(90deg, #00f2ea, #ff00cc);
+      }
+    }
+
+    // Imagen de header mejorada
+    .HeaderImageContainer {
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(89, 83, 83, 0.1);
+
+      &:hover .HeaderImage {
+        transform: scale(1.05);
+      }
+    }
+
+    .HeaderImage {
+      width: 100%;
+      height: auto;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border-radius: 16px;
+    }
+
+    // Contenedor de perfil mejorado
+    .ProfileContainer {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
     }
 
     .Perfil {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        border: 3px solid #00f2ea;
-        box-shadow: 0 0 15px rgba(0, 242, 234, 0.5);
-        transition: all 0.3s ease;
-        display: block;  // Asegura que la imagen sea un bloque
-        margin: 0 auto 25px auto; // Centrado horizontal con margen inferior
-        cursor: pointer; // Cambia el cursor al pasar sobre la imagen
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 3px solid #00f2ea;
+      box-shadow: 
+        0 0 15px rgba(0, 242, 234, 0.5),
+        0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: neonPulse 3s ease-in-out infinite;
 
-        &:hover {
-            transform: scale(1.05); 
-            box-shadow: 0 0 25px rgba(0, 242, 234, 0.8);
-        }
+      &::after {
+        background: linear-gradient(135deg, 
+          rgba(0, 242, 234, 0.2), 
+          rgba(255, 0, 204, 0.2), 
+          rgba(0, 242, 234, 0.2));
+      }
 
-        @media (width <= 700px) {
-            width: 120px;
-            height: 120px;
-            border-width: 2px;
-            margin-bottom: 15px; // Menor espacio en móviles
-        }
-    }
-
-    hr {
-      margin: 30px 0;  // Espaciado más equilibrado
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #00f2ea, transparent);
-    }
-
-    .Icon {
-      filter: drop-shadow(0 0 15px rgb(228, 250, 249));
-      display: block;
-      margin: auto;
-      margin-bottom: 30px;
-      color: white
-    }
-    ul {
-      padding: 0 50px;
-
-      > * + * {
-        margin-top: 8px;
-
-        @media (width <= 700px) {
-          margin-top: 10px;
-        }
+      &:hover {
+        transform: scale(1.08) translateY(-4px);
+        box-shadow: 
+          0 0 25px rgba(0, 242, 234, 0.8),
+          0 16px 48px rgba(0, 0, 0, 0.4);
       }
     }
 
-    .Workers {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .ServicesListContainer ul li {
+      background: rgba(37, 37, 37, 0.9);
+      border-left-color: #00f2ea;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #e0e0e0;
 
-      > * + * {
-        margin-top: 60px;
+      &::before {
+        background: rgba(0, 242, 234, 0.1);
       }
-        .Worker {
-        background: rgba(26, 42, 26, 0.7) !important;
-        backdrop-filter: blur(10px);
-        border-radius: 16px;
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
 
-        &:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .Header {
-            svg {
-            color: #00f2ea !important;
-            filter: drop-shadow(0 0 5px rgba(0, 242, 234, 0.5));
-            }
-
-            .Image {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: absolute;
-            right: 10px;
-
-            img {
-              margin-bottom: 5px;
-              border-radius: 100%;
-              width: 60px;
-              height: 60px;
-              border: 2px solid #55555553;
-            }
-            svg {
-              font-size: 1.5rem;
-              font-size: 1.7rem;
-              color: #11B377;
-              rotate: (180deg);
-            }
-          }
-        }
-
-        .Contain {
-            background: rgba(37, 37, 37, 0.7);
-
-            img {
-            width: 80%;
-            height: auto;
-            display: flex;
-            border-radius: 8px;
-            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-          }
-        }
-
-        .Contain2 {
-          a {
-            display: flex;
-            justify-content: end;
-          }
-        }
-        }
+      &::after {
+        content: '⚡';
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        color: #00f2ea;
+        animation: neonPulse 2s ease-in-out infinite;
+      }
     }
 
     .ServiceContainer {
-      text-align: center;
+      background: rgba(26, 26, 26, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(0, 242, 234, 0.05);
 
-      h3 {
-        font-weight: 400;
+      &::before {
+        background: linear-gradient(90deg, transparent, #00f2ea, transparent);
       }
-      img {
-        width: 80%;
-        height: auto;
-        display: block;
-        margin: auto;
-        margin-bottom: 20px;
-        border-radius: 8px;
 
-        @media (width <= 700px) {
-          width: 90%;
+      &:hover {
+        box-shadow: 
+          0 16px 48px rgba(0, 0, 0, 0.4),
+          0 0 30px rgba(0, 242, 234, 0.2);
+      }
+
+      .ServiceTitleContainer h3 {
+        color: #ffffff;
+        text-shadow: 0 0 8px rgba(0, 242, 234, 0.3);
+
+        &::after {
+          background: #ff00cc;
+          box-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
         }
+      }
+
+      .ServiceImageWrapper {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 242, 234, 0.3);
+
+        .ImageOverlay {
+          background: linear-gradient(135deg, 
+            rgba(0, 242, 234, 0.221), 
+            rgba(255, 0, 204, 0.289));
+
+          
+        }
+      }
+
+      .ServiceDescriptionContainer p {
+        color: #b0b0b0;
+      }
+
+      hr {
+        background: linear-gradient(90deg, transparent, rgba(0, 242, 234, 0.3), transparent);
       }
     }
   }

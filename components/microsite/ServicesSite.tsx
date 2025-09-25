@@ -1,5 +1,5 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
-import { Fragment } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 
 import defaultStyle from './site.module.scss';
 import winterStyle from '../themes/winter.module.scss'
@@ -13,9 +13,36 @@ interface Props {
     tema: string;
 }
 
-    
-
 const ServicesSite = ({userData, tema} : Props) => {
+    const observerRef = useRef<IntersectionObserver | null>(null);
+
+    useEffect(() => {
+        // Crear observer para animaciones de scroll
+        observerRef.current = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-reveal');
+                        observerRef.current?.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            }
+        );
+
+        // Observar elementos con clase 'reveal-on-scroll'
+        const elementsToObserve = document.querySelectorAll('.reveal-on-scroll');
+        elementsToObserve.forEach(el => {
+            observerRef.current?.observe(el);
+        });
+
+        return () => {
+            observerRef.current?.disconnect();
+        };
+    }, [userData]);
 
     // Determinar qué tema usar
     const getThemeStyle = () => {
@@ -38,82 +65,117 @@ const ServicesSite = ({userData, tema} : Props) => {
                     <hr/>
 
                     { userData.ImgHeader && (
-                        <Image 
-                            src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/usuHeaders/${userData.ImgHeader}?timestamp=${Date.now()}`}
-                            alt='imagen de encabezado de servicios'
-                            width={400}
-                            height={800}
-                            unoptimized
-                            style={{width: '100%', height: 'auto', marginBottom: '20px'}}
-                        />
+                        <div className={`${style.HeaderImageContainer} reveal-on-scroll`}>
+                            <Image 
+                                src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/usuHeaders/${userData.ImgHeader}?timestamp=${Date.now()}`}
+                                alt='imagen de encabezado de servicios'
+                                width={400}
+                                height={800}
+                                unoptimized
+                                className={style.HeaderImage}
+                            />
+                        </div>
                     )}
 
                     {userData.Premium && (
-                        <Image 
-                            src={`${userData.ImgFoto 
-                                ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}?timestamp=${Date.now()}` 
-                                : '/images/perfil-temporal.webp'
-                            }`}
-                            alt='Imagen de perfil'
-                            width={500}
-                            height={500}
-                            quality={80}
-                            className={style.Perfil} 
-                            unoptimized
-                        /> 
+                        <div className={`${style.ProfileContainer} reveal-on-scroll`}>
+                            <Image 
+                                src={`${userData.ImgFoto 
+                                    ? `https://souvenir-site.com/WebTarjet/PublicTempStorage/ImgPerf/${userData.ImgFoto}?timestamp=${Date.now()}` 
+                                    : '/images/perfil-temporal.webp'
+                                }`}
+                                alt='Imagen de perfil'
+                                width={500}
+                                height={500}
+                                quality={80}
+                                className={style.Perfil} 
+                                unoptimized
+                            />
+                        </div> 
                     )}                    
         
-                    <h2>{userData.Lev3Desc}</h2>
+                    <div className={`${style.TitleContainer} reveal-on-scroll`}>
+                        <h2>{userData.Lev3Desc}</h2>
+                    </div>
                     
-                    <ul>
-                        { userData.Serv?.map((service)=>(
-                            (service.ServSiteId === 1 && service.ServDescrip) && (
-                                <li key={service.ServNum}>{service.ServDescrip}</li>
-                            )
-                        ))}
-                    </ul>
+                    <div className={`${style.ServicesListContainer} reveal-on-scroll`}>
+                        <ul>
+                            { userData.Serv?.map((service, index)=>(
+                                (service.ServSiteId === 1 && service.ServDescrip) && (
+                                    <li key={service.ServNum} style={{animationDelay: `${index * 0.1}s`}}>
+                                        {service.ServDescrip}
+                                    </li>
+                                )
+                            ))}
+                        </ul>
+                    </div>
 
                     {userData.Tipo === 'EMP' && (
                         <Fragment>
                             <hr/>
 
-                            <h3 style={{textAlign: 'left', marginBottom: '1.5rem'}}>Colaboradores</h3>
-
-                            <Workers uuid={userData.UUID} tema={tema}/>
+                            <div className={`${style.WorkersSection} reveal-on-scroll`}>
+                                <h3>Colaboradores</h3>
+                                <Workers uuid={userData.UUID} tema={tema}/>
+                            </div>
                         </Fragment>
                     )}
 
                     <hr/>
 
-                    { userData.Serv?.map((service)=>(
-                        (service.ServSiteId === 2 || service.ServSiteId === 3) && (service.ServSubTitulo || service.ServImg) && (
-                            <div key={service.ServNum} className={style.ServiceContainer}>
-                                {service.ServSubTitulo && (
-                                    <h3>{service.ServSubTitulo}</h3>
-                                )}
-                                { (service.ServImg && service.ServSiteId === 2) && (
-                                    <Image 
-                                        src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?timestamp=${Date.now()}`}
-                                        alt='Imagen de servicio'
-                                        width={800}
-                                        height={800}
-                                        priority={false}
-                                        unoptimized
-                                    />
-                                ) }
-                                { (service.ServImg && service.ServSiteId === 3) && (
-                                    <video width="1000" height="720" autoPlay controls preload="auto" style={{width: '100%', height: 'auto'}}>
-                                        <source src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}`} type="video/mp4" />
-                                        Tu navegador no soporta etiquetas de video.
-                                    </video>
-                                ) }
-                                {service.ServDescrip && (
-                                    <p>{service.ServDescrip}</p>
-                                )}
-                                <hr/>
-                            </div>
-                        )
-                    ))}
+                    <div className={style.ServicesGrid}>
+                        { userData.Serv?.map((service, index)=>(
+                            (service.ServSiteId === 2 || service.ServSiteId === 3) && (service.ServSubTitulo || service.ServImg) && (
+                                <div key={service.ServNum} className={`${style.ServiceContainer} reveal-on-scroll`} style={{animationDelay: `${index * 0.2}s`}}>
+                                    {service.ServSubTitulo && (
+                                        <div className={style.ServiceTitleContainer}>
+                                            <h3>{service.ServSubTitulo}</h3>
+                                        </div>
+                                    )}
+                                    
+                                    <div className={style.ServiceMediaContainer}>
+                                        { (service.ServImg && service.ServSiteId === 2) && (
+                                            <div className={style.ServiceImageWrapper}>
+                                                <Image 
+                                                    src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}?timestamp=${Date.now()}`}
+                                                    alt='Imagen de servicio'
+                                                    width={800}
+                                                    height={800}
+                                                    priority={false}
+                                                    unoptimized
+                                                    className={style.ServiceImage}
+                                                />
+                                                <div className={style.ImageOverlay}></div>
+                                            </div>
+                                        ) }
+                                        
+                                        { (service.ServImg && service.ServSiteId === 3) && (
+                                            <div className={style.ServiceVideoWrapper}>
+                                                <video 
+                                                    width="1000" 
+                                                    height="720" 
+                                                    autoPlay 
+                                                    controls 
+                                                    preload="auto" 
+                                                    className={style.ServiceVideo}
+                                                >
+                                                    <source src={`https://souvenir-site.com/WebTarjet/PublicTempStorage/ServiciosImg/${service.ServImg}`} type="video/mp4" />
+                                                    Tu navegador no soporta etiquetas de video.
+                                                </video>
+                                            </div>
+                                        ) }
+                                    </div>
+                                    
+                                    {service.ServDescrip && (
+                                        <div className={style.ServiceDescriptionContainer}>
+                                            <p>{service.ServDescrip}</p>
+                                        </div>
+                                    )}
+                                    <hr/>
+                                </div>
+                            )
+                        ))}
+                    </div>
                 </Fragment>
             )}
         </div>
