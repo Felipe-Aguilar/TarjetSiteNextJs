@@ -241,6 +241,7 @@
     .TitleContainer h2 {
       color: #ffffff;
       animation: cyberpunkGlow 4s ease-in-out infinite;
+      text-align: center;
 
       &::before {
         background: linear-gradient(90deg, #00f2ea, #ff00cc);
@@ -314,26 +315,18 @@
     }
 
     .ServicesListContainer ul li {
-      background: rgba(37, 37, 37, 0.9);
+      background: rgba(18, 18, 18, 0.9);
       border-left-color: #00f2ea;
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #e0e0e0;
+      border: 1px solid rgba(18, 18, 18, 0.9);
+      color: #faf3f3;
+      padding-left: 2rem;
+      list-style: none;
 
       &::before {
         background: rgba(0, 242, 234, 0.1);
       }
 
-      &::after {
-        content: '⚡';
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 1rem;
-        color: #00f2ea;
-        animation: neonPulse 2s ease-in-out infinite;
-      }
     }
 
     .ServiceContainer {
