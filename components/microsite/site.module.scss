@@ -224,6 +224,7 @@
         transform: scale(1.05);
       }
     }
+    
 
     .HeaderImage {
       width: 100%;
@@ -326,6 +327,7 @@
 
     // Trabajadores section mejorada
     .WorkersSection {
+      position: relative;
       text-align: center;
       margin-bottom: 40px;
 
@@ -349,7 +351,383 @@
           border-radius: 2px;
         }
       }
+
+      // Título de la sección
+      .SectionTitle {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 40px;
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 4px;
+          background: linear-gradient(90deg, #3498db, #2ecc71);
+          border-radius: 2px;
+        }
+      }
+
+      // Contenedor principal de trabajadores
+      .Worker {
+        margin-bottom: 20px;
+        border-radius: 20px;
+        overflow: visible;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        background: #ffffff;
+        position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        }
+
+        // Header del trabajador - más intuitivo
+        .Header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 25px 30px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+          border-radius: 20px;
+          
+          &.open::after {
+            transform: translateY(-50%) rotate(180deg);
+            color: #e74c3c;
+          }
+
+          &:hover {
+            background: linear-gradient(135deg, #b7d9f1 0%, #f8f9fa 100%);
+            
+            &::after {
+              color: #e74c3c;
+            }
+          }
+
+          .WorkerInfo {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            
+            .Image {
+              position: relative;
+              width: 80px;
+              height: 80px;
+              border-radius: 50%;
+              border: 3px solid #fff;
+              box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+              transition: all 0.4s ease;
+              background: #fff;
+              overflow: hidden;
+              flex-shrink: 0;
+
+              img {
+                border-radius: 50%;
+                object-fit: cover;
+                transition: transform 0.4s ease;
+              }
+
+              &:hover {
+                transform: scale(1.05);
+                border-color: #3498db;
+
+                img {
+                  transform: scale(1.1);
+                }
+              }
+            }
+
+            .TextInfo {
+              text-align: left;
+              flex: 1;
+              
+              .Name {
+                font-size: 1.4rem;
+                font-weight: 600;
+                color: #2c3e50;
+                margin-bottom: 5px;
+                display: block;
+              }
+              
+              .Position {
+                font-size: 1.1rem;
+                color: #7f8c8d;
+                font-weight: 500;
+                display: block;
+                position: relative;
+                padding-left: 15px;
+                
+                &::before {
+                  content: '•';
+                  position: absolute;
+                  left: 0;
+                  color: #3498db;
+                }
+              }
+            }
+          }
+
+          // Indicador de acción
+          .ActionHint {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #3498db;
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            
+            svg {
+              font-size: 1rem;
+              transition: transform 0.3s ease;
+            }
+          }
+
+          &:hover .ActionHint {
+            opacity: 1;
+            color: #e74c3c;
+            
+            svg {
+              transform: translateX(3px);
+            }
+          }
+
+          // Variante Header2
+          &.Header2 {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffffff 100%);
+
+            &:hover {
+              background: linear-gradient(135deg, #ffe0b2 0%, #fff3e0 100%);
+            }
+
+            .WorkerInfo .TextInfo .Position::before {
+              color: #e74c3c;
+            }
+          }
+        }
+
+        // Contenedor de tarjeta expandida - arreglado el recorte
+        .Contain {
+          padding: 30px;
+          background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+          border-top: 1px solid rgba(0, 0, 0, 0.05);
+          position: relative;
+          overflow: visible;
+          border-radius: 0 0 20px 20px;
+          
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #3498db, transparent);
+          }
+
+          .CardContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            
+            .CardHint {
+              color: #7f8c8d;
+              font-size: 0.9rem;
+              font-style: italic;
+              margin-bottom: 10px;
+            }
+
+            .CardLink {
+              display: inline-block;
+              border-radius: 16px;
+              overflow: hidden;
+              box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+              transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+              position: relative;
+              max-width: 100%;
+              
+              &::before {
+                content: '👆 Click para ver ir al perfil';
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background: rgba(0, 0, 0, 0.7);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                z-index: 2;
+              }
+
+              &:hover {
+                transform: scale(1.02);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+
+                &::before {
+                  opacity: 1;
+                }
+
+                img {
+                  transform: scale(1.05);
+                }
+              }
+
+              img {
+                transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                border-radius: 14px;
+                max-width: 100%;
+                height: auto;
+                display: block;
+              }
+            }
+          }
+
+          // Variante Contain2
+          &.Contain2 {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+
+            &::before {
+              background: linear-gradient(90deg, transparent, #e74c3c, transparent);
+            }
+          }
+        }
+
+        // Estados de expansión
+        &.expanded {
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+          margin-bottom: 30px;
+          
+          .Header {
+            border-radius: 20px 20px 0 0;
+          }
+        }
+
+        // Animaciones para elementos individuales
+        &:nth-child(odd) {
+          animation: fadeInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        &:nth-child(even) {
+          animation: fadeInRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+      }
+
+      // Estados vacíos
+      &:empty {
+        &::before {
+          content: 'No hay colaboradores disponibles';
+          display: block;
+          text-align: center;
+          color: #95a5a6;
+          font-style: italic;
+          padding: 60px 20px;
+          background: #f8f9fa;
+          border-radius: 16px;
+          border: 2px dashed #bdc3c7;
+          margin: 20px 0;
+        }
+      }
+
+      // Responsive
+      @media (width <= 700px) {
+        margin: 30px 0;
+
+        .SectionTitle {
+          font-size: 1.6rem;
+          margin-bottom: 30px;
+        }
+
+        .Worker {
+          margin-bottom: 15px;
+          border-radius: 16px;
+
+          .Header {
+            padding: 20px;
+            
+            .WorkerInfo {
+              flex-direction: column;
+              gap: 15px;
+              text-align: center;
+              
+              .TextInfo {
+                text-align: center;
+                
+                .Name {
+                  font-size: 1.2rem;
+                }
+                
+                .Position {
+                  font-size: 1rem;
+                  padding-left: 0;
+                  
+                  &::before {
+                    display: none;
+                  }
+                }
+              }
+              
+              .Image {
+                width: 70px;
+                height: 70px;
+              }
+            }
+
+            .ActionHint {
+              display: none; // Ocultar en móvil para ahorrar espacio
+            }
+
+            &::after {
+              right: 20px;
+            }
+          }
+
+          .Contain {
+            padding: 20px;
+            
+            .CardContainer .CardLink {
+              width: 100%;
+              max-width: 300px;
+            }
+          }
+        }
+      }
+
+      @media (width <= 480px) {
+        .Worker {
+          .Header {
+            .WorkerInfo {
+              .Image {
+                width: 60px;
+                height: 60px;
+              }
+              
+              .TextInfo {
+                .Name {
+                  font-size: 1.1rem;
+                }
+              }
+            }
+          }
+        }
+      }
     }
+
 
     // Lista de servicios mejorada
     .ServicesListContainer {
