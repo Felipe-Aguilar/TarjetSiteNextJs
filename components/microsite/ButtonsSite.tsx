@@ -118,6 +118,21 @@ END:VCARD`;
 
         const urlComplemento =btoa(userData.TokenId);
         const urlSitio = 'https://tarjet.site/st/' + urlComplemento;
+
+        // Helper para formatear número internacional o local
+        const formatPhoneNumber = (numTel: string) => {
+        if (!numTel) return '';
+        
+        const clean = numTel.trim();
+        
+        // Si ya empieza con + o 00, lo dejamos igual
+        if (clean.startsWith('+')) return clean;
+        if (clean.startsWith('00')) return `+${clean.slice(2)}`;
+        
+        // Por defecto, asumimos México (+52)
+        return `+52${clean}`;
+        };
+
         
         const generateGoogleWalletUrl = async () => {
             console.log('🚀 Iniciando generateGoogleWalletUrl...');
@@ -246,7 +261,7 @@ END:VCARD`;
     
                 { userData.Telefono1 && (
                     <motion.a 
-                        href={`https://api.whatsapp.com/send?phone=+52${userData.Telefono1}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/%23/st/${btoa(userData.TokenId)}`} 
+                        href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(userData.Telefono1)}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/%23/st/${btoa(userData.TokenId)}`}
                         target='_blank' {...animate} 
                         transition={{delay: 1.2}} 
                         className={style.WhatsApp}
@@ -261,7 +276,7 @@ END:VCARD`;
 
                 { userData.Telefono2 && (
                     <motion.a 
-                        href={`https://api.whatsapp.com/send?phone=+52${userData.Telefono2}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/%23/st/${btoa(userData.TokenId)}`} 
+                        href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(userData.Telefono1)}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/%23/st/${btoa(userData.TokenId)}`} 
                         target='_blank' {...animate} 
                         transition={{delay: 1.4}} 
                         className={style.WhatsApp2}
