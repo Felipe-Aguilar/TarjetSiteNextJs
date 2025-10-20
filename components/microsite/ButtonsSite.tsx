@@ -261,7 +261,7 @@ END:VCARD`;
     
                 { userData.Telefono1 && (
                     <motion.a 
-                        href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(userData.Telefono1)}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/%23/st/${btoa(userData.TokenId)}`}
+                        href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(userData.Telefono1)}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/st/${btoa(userData.TokenId)}`}
                         target='_blank' {...animate} 
                         transition={{delay: 1.2}} 
                         className={style.WhatsApp}
@@ -276,7 +276,7 @@ END:VCARD`;
 
                 { userData.Telefono2 && (
                     <motion.a 
-                        href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(userData.Telefono2)}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/%23/st/${btoa(userData.TokenId)}`} 
+                        href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(userData.Telefono2)}&text=¡Hola!%20👋🏻%20te%20contacto%20desde%20tu%20Tarjet.%0A%0Ahttps://tarjet.site/st/${btoa(userData.TokenId)}`} 
                         target='_blank' {...animate} 
                         transition={{delay: 1.4}} 
                         className={style.WhatsApp2}
