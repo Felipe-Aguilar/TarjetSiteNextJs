@@ -236,7 +236,7 @@ const ContactData = ( { userData }:Props ) => {
                             <input 
                                 type="text" 
                                 placeholder="Teléfono WhatsApp"
-                                maxLength={10}
+                                maxLength={15}
                                 value={whatsApp}
                                 onChange={(e)=>setWhatsApp(e.target.value.trim())}
                                 onBlur={onSubmitData}
@@ -251,7 +251,7 @@ const ContactData = ( { userData }:Props ) => {
                             <input 
                                 type="text" 
                                 placeholder="Teléfono fijo ó de contacto"
-                                maxLength={10}
+                                maxLength={15}
                                 value={phone}
                                 onChange={(e)=>setPhone(e.target.value.trim())}
                                 onBlur={onSubmitData}
