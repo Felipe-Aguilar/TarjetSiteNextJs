@@ -6,6 +6,7 @@ interface Props {
     close: ()=>void;
     url: string;
     message?: string;
+    ImagenPopup: string;
 }
 
 const animate = {
@@ -14,12 +15,14 @@ const animate = {
     transition: {delay: 0.2}
 }
 
-const OtherMessage = ({ close, url, message }: Props) => {
+const OtherMessage = ({ close, url, message, ImagenPopup }: Props) => {
+    const imageSrc = ImagenPopup ? ImagenPopup : '/images/ilustracion-link.webp';
+
     return ( 
         <div className="pop">
             <motion.div className="container" {...animate}>
                 <Image 
-                    src={'/images/ilustracion-link.webp'}
+                    src={imageSrc}
                     alt="Ilustración enlace externo"
                     width={500}
                     height={500}

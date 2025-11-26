@@ -23,7 +23,8 @@ interface Props {
         SiteGoogle?: string;
         customUrl?: string;
         message?: string;
-        Tema?: string; // Nuevo campo para el tema
+        Tema?: string; 
+        ImagenPopup: string;
     };
     tokenServer: string | undefined | null;
     uuidServer: string | undefined | null;
@@ -142,6 +143,7 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                             customUrl={customUrl}
                             message={message}
                             onClose={() => setShowPopup(false)}
+                            ImagenPopup={userData.ImagenPopup}
                         />
                     )}
 

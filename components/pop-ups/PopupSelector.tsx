@@ -12,9 +12,10 @@ interface PopupSelectorProps {
     customUrl?: string;
     message?: string;
     onClose: () => void;
+    ImagenPopup: string;
 }
 
-const PopupSelector = ({ tipoPopup, phone, token, googleUrl, customUrl, message, onClose }: PopupSelectorProps) => {
+const PopupSelector = ({ tipoPopup, phone, token, googleUrl, customUrl, message, onClose, ImagenPopup }: PopupSelectorProps) => {
     const popupType = tipoPopup || 'PopWhats';
 
     switch(popupType) {
@@ -38,6 +39,7 @@ const PopupSelector = ({ tipoPopup, phone, token, googleUrl, customUrl, message,
                      close={onClose}
                      url={customUrl || ''}
                      message={message}
+                     ImagenPopup={ImagenPopup}
                    />;
             
         default:
