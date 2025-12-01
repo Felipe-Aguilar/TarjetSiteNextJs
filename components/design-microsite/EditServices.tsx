@@ -86,17 +86,18 @@ const EditServices = ({ userData } : Props) => {
                     ServSubTitulo: '',
                     ServImg: '',
                     ServIcono: '',
-                    ServSiteId: 2 // Forzamos a que siempre sea imagen por ahora
+                    ServSiteId: 2 // Valor por defecto
                 };
                 
+                // IMPORTANTE: Mantener el ServSiteId original de la BD
                 initialSecond[serviceKey] = {
                     ServNum: serviceData.ServNum,
                     ServDescrip: serviceData.ServDescrip || '',
                     ServSubTitulo: serviceData.ServSubTitulo || '',
                     ServImg: serviceData.ServImg || '',
                     ServIcono: serviceData.ServIcono || '',
-                    ServSiteId: 2, // Siempre imagen por ahora
-                    isVideo: false // Deshabilitado temporalmente
+                    ServSiteId: serviceData.ServSiteId || 2, // Usar el original
+                    isVideo: serviceData.ServSiteId === 3 // Determinar si es video basado en ServSiteId
                 };
             }
 
@@ -186,20 +187,18 @@ const EditServices = ({ userData } : Props) => {
     */
 
     const clearInfo = async (key: string) => {
-        // Actualiza el estado local
         const updatedServices = {
             ...secondServices,
             [key]: {
                 ...secondServices[key],
                 ServSubTitulo: '',
                 ServDescrip: '',
-                ServImg: ''
+                ServImg: '',
             }
         };
         
         setSecondServices(updatedServices);
         
-        // Prepara y envía los datos inmediatamente
         await EditData({
             userData,
             servicesForm: {

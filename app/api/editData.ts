@@ -90,6 +90,17 @@ export default async function EditData({ userData, dataForm, contactForm, social
 
     let listRedesSociales = socialForm?.ListRedesSociales || [];
 
+    // Obtener servicios actuales de la BD para mantener los ServSiteId correctos
+    const currentServices = userData.Serv || [];
+    
+    // Crear un mapa de servicios actuales por ServNum
+    const currentServicesMap: Record<string, any> = {};
+    if (currentServices.length > 0) {
+        currentServices.forEach(service => {
+            currentServicesMap[service.ServNum] = service;
+        });
+    }
+
     const response = await fetch('https://souvenir-site.com/WebTarjet/APIUsuDtos/ActualizaUsu', {
         method: 'POST',
         mode: 'cors',
@@ -146,8 +157,8 @@ export default async function EditData({ userData, dataForm, contactForm, social
                     "DirEstado": contactForm?.Estado ?? userData.Estado,
                     "DirMapsGeoloc": contactForm?.MapsGeoloc ?? userData.MapsGeoloc
                 }],
-                    "Serv": [
-                    // Servicios 1-4 (listas simples)
+                "Serv": [
+                    // Servicios 1-4 (listas simples) - Siempre SiteId: 1
                     {
                         "ServNum": "1",
                         "ServDescrip": servicesForm ? servicesForm.FirstServices.service1 : userData.Serv ? userData.Serv![0].ServDescrip : '',
@@ -180,14 +191,17 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServIcono": "",
                         "ServSiteId": 1
                     },
-                    // Servicios 5-14 (bloques con imagen)
+                    // Servicios 5-14 (bloques con imagen o video)
                     {
                         "ServNum": "5",
                         "ServDescrip": servicesForm ? servicesForm.SecondServices.service9.ServDescrip : userData.Serv ? userData.Serv![4].ServDescrip : '',
                         "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service9.ServSubTitulo : userData.Serv ? userData.Serv![4].ServSubTitulo : '',
                         "ServImg": servicesForm ? servicesForm.SecondServices.service9.ServImg : userData.Serv ? userData.Serv![4].ServImg : '',
                         "ServIcono": "",
-                        "ServSiteId": 2
+                        // Mantener el ServSiteId original si existe, de lo contrario usar el del form o por defecto 2
+                        "ServSiteId": servicesForm 
+                            ? servicesForm.SecondServices.service9.ServSiteId 
+                            : (userData.Serv && userData.Serv[4]?.ServSiteId) || 2
                     },
                     {
                         "ServNum": "6",
@@ -195,7 +209,9 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service10.ServSubTitulo : userData.Serv ? userData.Serv![5].ServSubTitulo : '',
                         "ServImg": servicesForm ? servicesForm.SecondServices.service10.ServImg : userData.Serv ? userData.Serv![5].ServImg : '',
                         "ServIcono": "",
-                        "ServSiteId": 2
+                        "ServSiteId": servicesForm 
+                            ? servicesForm.SecondServices.service10.ServSiteId 
+                            : (userData.Serv && userData.Serv[5]?.ServSiteId) || 2
                     },
                     {
                         "ServNum": "7",
@@ -203,7 +219,9 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service11.ServSubTitulo : userData.Serv ? userData.Serv![6].ServSubTitulo : '',
                         "ServImg": servicesForm ? servicesForm.SecondServices.service11.ServImg : userData.Serv ? userData.Serv![6].ServImg : '',
                         "ServIcono": "",
-                        "ServSiteId": 2
+                        "ServSiteId": servicesForm 
+                            ? servicesForm.SecondServices.service11.ServSiteId 
+                            : (userData.Serv && userData.Serv[6]?.ServSiteId) || 2
                     },
                     {
                         "ServNum": "8",
@@ -211,7 +229,9 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service12.ServSubTitulo : userData.Serv ? userData.Serv![7].ServSubTitulo : '',
                         "ServImg": servicesForm ? servicesForm.SecondServices.service12.ServImg : userData.Serv ? userData.Serv![7].ServImg : '',
                         "ServIcono": "",
-                        "ServSiteId": 2
+                        "ServSiteId": servicesForm 
+                            ? servicesForm.SecondServices.service12.ServSiteId 
+                            : (userData.Serv && userData.Serv[7]?.ServSiteId) || 2
                     },
                     {
                         "ServNum": "9",
@@ -219,7 +239,9 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service13.ServSubTitulo : userData.Serv ? userData.Serv![8].ServSubTitulo : '',
                         "ServImg": servicesForm ? servicesForm.SecondServices.service13.ServImg : userData.Serv ? userData.Serv![8].ServImg : '',
                         "ServIcono": "",
-                        "ServSiteId": 2
+                        "ServSiteId": servicesForm 
+                            ? servicesForm.SecondServices.service13.ServSiteId 
+                            : (userData.Serv && userData.Serv[8]?.ServSiteId) || 2
                     },
                     {
                         "ServNum": "10",
@@ -227,7 +249,9 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service14.ServSubTitulo : userData.Serv ? userData.Serv![9].ServSubTitulo : '',
                         "ServImg": servicesForm ? servicesForm.SecondServices.service14.ServImg : userData.Serv ? userData.Serv![9].ServImg : '',
                         "ServIcono": "",
-                        "ServSiteId": 2
+                        "ServSiteId": servicesForm 
+                            ? servicesForm.SecondServices.service14.ServSiteId 
+                            : (userData.Serv && userData.Serv[9]?.ServSiteId) || 2
                     },
                     {
                         "ServNum": "11",
@@ -235,7 +259,9 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service15.ServSubTitulo : userData.Serv ? userData.Serv![10].ServSubTitulo : '',
                         "ServImg": servicesForm ? servicesForm.SecondServices.service15.ServImg : userData.Serv ? userData.Serv![10].ServImg : '',
                         "ServIcono": "",
-                        "ServSiteId": 2
+                        "ServSiteId": servicesForm 
+                            ? servicesForm.SecondServices.service15.ServSiteId 
+                            : (userData.Serv && userData.Serv[10]?.ServSiteId) || 2
                     },
                     {
                         "ServNum": "12",
@@ -243,7 +269,9 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service16.ServSubTitulo : userData.Serv ? userData.Serv![11].ServSubTitulo : '',
                         "ServImg": servicesForm ? servicesForm.SecondServices.service16.ServImg : userData.Serv ? userData.Serv![11].ServImg : '',
                         "ServIcono": "",
-                        "ServSiteId": 2
+                        "ServSiteId": servicesForm 
+                            ? servicesForm.SecondServices.service16.ServSiteId 
+                            : (userData.Serv && userData.Serv[11]?.ServSiteId) || 2
                     },
                     {
                         "ServNum": "13",
@@ -251,7 +279,9 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service17.ServSubTitulo : userData.Serv ? userData.Serv![12].ServSubTitulo : '',
                         "ServImg": servicesForm ? servicesForm.SecondServices.service17.ServImg : userData.Serv ? userData.Serv![12].ServImg : '',
                         "ServIcono": "",
-                        "ServSiteId": 2
+                        "ServSiteId": servicesForm 
+                            ? servicesForm.SecondServices.service17.ServSiteId 
+                            : (userData.Serv && userData.Serv[12]?.ServSiteId) || 2
                     },
                     {
                         "ServNum": "14",
@@ -259,9 +289,11 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServSubTitulo": servicesForm ? servicesForm.SecondServices.service18.ServSubTitulo : userData.Serv ? userData.Serv![13].ServSubTitulo : '',
                         "ServImg": servicesForm ? servicesForm.SecondServices.service18.ServImg : userData.Serv ? userData.Serv![13].ServImg : '',
                         "ServIcono": "",
-                        "ServSiteId": 2
+                        "ServSiteId": servicesForm 
+                            ? servicesForm.SecondServices.service18.ServSiteId 
+                            : (userData.Serv && userData.Serv[13]?.ServSiteId) || 2
                     },
-                    // Servicios 15-18 (listas simples adicionales)
+                    // Servicios 15-18 (listas simples adicionales) - Siempre SiteId: 1
                     {
                         "ServNum": "15",
                         "ServDescrip": servicesForm ? servicesForm.FirstServices.service5 : userData.Serv ? userData.Serv![14].ServDescrip : '',
@@ -295,10 +327,9 @@ export default async function EditData({ userData, dataForm, contactForm, social
                         "ServSiteId": 1
                     }
                 ]
-                }
+            }
         })
     });
-
 
     const data = await response.json();
 
