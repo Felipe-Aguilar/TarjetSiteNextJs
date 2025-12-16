@@ -289,9 +289,9 @@ END:VCARD`;
                     </motion.a>
                 ) }
 
-                { userData.Telefono1 && (
+                { userData.Telefono3 && (
                     <motion.a 
-                        href={`tel:${formatPhoneNumber(userData.Telefono1)}`} 
+                        href={`tel:${formatPhoneNumber(userData.Telefono3)}`} 
                         target='_blank' {...animate} 
                         transition={{delay: 1.4}} 
                         className={style.tel}
