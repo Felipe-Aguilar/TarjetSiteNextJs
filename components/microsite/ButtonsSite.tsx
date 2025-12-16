@@ -1,7 +1,7 @@
 import { UserDataResponse } from '@/interfaces/userData-interface';
 import { motion } from 'framer-motion';
 import { Fragment, use, useEffect, useState } from 'react';
-import { BsWhatsapp } from 'react-icons/bs';
+import { BsWhatsapp, BsTelephoneOutbound } from 'react-icons/bs';
 import { Link } from 'react-scroll';
 import { useRouter } from 'next/navigation';
 
@@ -285,6 +285,20 @@ END:VCARD`;
     
                         <span>
                             <BsWhatsapp />
+                        </span>
+                    </motion.a>
+                ) }
+
+                { userData.Telefono3 && (
+                    <motion.a 
+                        href={`tel:${formatPhoneNumber(userData.Telefono3)}`} 
+                        target='_blank' {...animate} 
+                        transition={{delay: 1.4}} 
+                        className={style.tel}
+                    >
+                        Llamame
+                        <span>
+                            <BsTelephoneOutbound />
                         </span>
                     </motion.a>
                 ) }
