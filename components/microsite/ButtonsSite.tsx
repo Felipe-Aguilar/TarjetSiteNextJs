@@ -289,14 +289,14 @@ END:VCARD`;
                     </motion.a>
                 ) }
 
-                { userData.Telefono3 && (
+                { userData.Telefono1 && (
                     <motion.a 
-                        href={`tel:${formatPhoneNumber(userData.Telefono3)}`} 
+                        href={`tel:${formatPhoneNumber(userData.Telefono1)}`} 
                         target='_blank' {...animate} 
                         transition={{delay: 1.4}} 
                         className={style.tel}
                     >
-                        Llamame
+                        Llámame ahora
                         <span>
                             <BsTelephoneOutbound />
                         </span>
