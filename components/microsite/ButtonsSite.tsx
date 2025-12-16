@@ -135,7 +135,7 @@ END:VCARD`;
 
         
         const generateGoogleWalletUrl = async () => {
-            console.log('🚀 Iniciando generateGoogleWalletUrl...');
+            console.log('Iniciando generateGoogleWalletUrl...');
             setLoadingWallet(true);
             setWalletError('');
             
@@ -185,8 +185,6 @@ END:VCARD`;
           
 
         useEffect(() => {
-            console.log('🔄 useEffect ejecutándose...');
-            
             const userAgent = navigator.userAgent.toLowerCase();
             console.log('🖥️ User Agent:', userAgent);
             

@@ -4,6 +4,8 @@ import style from './mytarjet.module.scss';
 import userData from '@/app/api/userData';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import ChristmasEffects from '@/components/ChristmasEffects';
 import Card from '@/components/mytarjet/Card';
 import ButtonsShare from '@/components/mytarjet/ButtonsShare';
 import MyTarjetSearch from '@/components/mytarjet/MyTarjetSearch';
@@ -43,6 +45,8 @@ const MyTarjet = async ({ params }: { params: { token: string } }) => {
     
 
     return ( 
+        <>
+        <ChristmasEffects />
         <div className="greenWhite">
             <div className="background">
                 <div className={`body ${style.MyTarjet}`}>
@@ -121,6 +125,7 @@ const MyTarjet = async ({ params }: { params: { token: string } }) => {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 

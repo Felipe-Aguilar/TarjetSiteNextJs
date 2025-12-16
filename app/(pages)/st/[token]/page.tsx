@@ -3,6 +3,7 @@ import MicrositeHome from "@/components/microsite/MicrositeHome";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { Fragment } from "react";
+import ChristmasEffects from '@/components/ChristmasEffects';
 
 interface Props {
     params: { token:string }
@@ -74,6 +75,7 @@ const SitePage = async ({params} : Props) => {
 
     return ( 
         <Fragment>
+            <ChristmasEffects />
             <MicrositeHome userData={data} tokenServer={session?.user?.email} uuidServer={session?.user?.name}/>
         </Fragment>
     );

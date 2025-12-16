@@ -1,5 +1,6 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import ChristmasEffects from '@/components/ChristmasEffects';
 
 import Image from 'next/image';
 import style from './login.module.scss';
@@ -24,6 +25,7 @@ const Login = async () => {
 
     return ( 
         <div className='green'>
+            <ChristmasEffects />
             <div className="background">
                 <div className="body">
                     <div className={`contain ${style.Login}`}>
