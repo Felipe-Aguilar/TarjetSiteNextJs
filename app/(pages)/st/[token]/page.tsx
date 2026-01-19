@@ -50,7 +50,8 @@ const getData = async (token: string) => {
     const basicData = await userData(userId.usuId);
     
     // Obtener configuración del sitio
-    const siteResponse = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${userId.usuId}`);
+    const timestamp = new Date().getTime();
+    const siteResponse = await fetch(`https://souvenir-site.com/WebTarjet/APIUsuDtos/ConsultaMiSite?Siteusuid=${userId.usuId}&_=${timestamp}`);
     const siteData = await siteResponse.json();
     
     
