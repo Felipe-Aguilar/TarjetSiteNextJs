@@ -25,6 +25,7 @@ interface Props {
         message?: string;
         Tema?: string; 
         ImagenPopup: string;
+        RegistroTarjet?: boolean;
     };
     tokenServer: string | undefined | null;
     uuidServer: string | undefined | null;
@@ -34,6 +35,10 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const [showStickyImage, setShowStickyImage] = useState<boolean>(true);
     const tema = userData.Tema || ''; // Usar el tema del usuario o un valor por defecto
+    
+    // Verificar si el usuario está registrado
+    const isUserRegistered = userData.RegistroTarjet === true;
+    
     // Determinar qué tema usar
     const getThemeStyle = () => {
         switch(tema) {
@@ -54,12 +59,12 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
     const message = userData.message;
 
     useEffect(() => {
-        if (userData.MostrarPopup) {
+        if (userData.MostrarPopup && isUserRegistered) {
             setTimeout(() => {
                 setShowPopup(true);
             }, 3500);
         }
-    }, [userData.MostrarPopup]);    
+    }, [userData.MostrarPopup, isUserRegistered]);    
 
     useEffect(() => {
         const encodedTokenId = btoa(userData.TokenId);
@@ -106,6 +111,57 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
         });
     }, [userData.TokenId]);
 
+    console.log('Datos del usuario en MicrositeHome:', userData);
+
+    // Si el usuario no está registrado, mostrar mensaje de error
+    if (!isUserRegistered) {
+        return (
+            <div className={tema.length > 1 ? style.Site : 'greenWhite'}>
+                <div className="background">
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        minHeight: '100vh',
+                        padding: '20px',
+                        textAlign: 'center'
+                    }}>
+                        <div style={{
+                            maxWidth: '500px',
+                            padding: '40px',
+                            backgroundColor: '#fff',
+                            borderRadius: '12px',
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                            fontFamily: 'Arial, sans-serif'
+                        }}>
+                            <div style={{
+                                fontSize: '64px',
+                                marginBottom: '20px'
+                            }}>
+                                🔍
+                            </div>
+                            <h2 style={{
+                                color: '#333',
+                                marginBottom: '15px',
+                                fontSize: '24px'
+                            }}>
+                                Usuario no encontrado o eliminado
+                            </h2>
+                            <p style={{
+                                color: '#666',
+                                lineHeight: '1.6',
+                                marginBottom: '20px'
+                            }}>
+                                Si Usted es el propietario y piensa que se trata de un error, 
+                                contáctenos para más información.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return ( 
         <div className={tema.length > 1 ? style.Site : 'greenWhite'}>
             <div className="background">
@@ -148,7 +204,7 @@ const MicrositeHome = ({userData, tokenServer, uuidServer}: Props) => {
                     )}
 
                     {/* Imagen sticky con botón de cerrar */}
-                    {((userData.AppP.toLowerCase()) == "castro" || (userData.AppM.toLowerCase()) == "castro") && showStickyImage && (
+                    {((userData.AppP?.toLowerCase()) == "castro" || (userData.AppM?.toLowerCase()) == "castro") && showStickyImage && (
                         <div style={{
                             position: 'fixed',
                             bottom: '20px',
